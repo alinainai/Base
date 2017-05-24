@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_background"
+    android:orientation="vertical" >
+
+    <include layout="@layout/default_main_cart_title" />
+
+    <RelativeLayout
+        android:id="@+id/rl_anju"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100"
+        android:layout_marginTop="@dimen/px_20"
+        android:background="@drawable/layout_selector_bg" >
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="@dimen/px_70"
+            android:layout_height="@dimen/px_70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_30"
+            android:src="@mipmap/anjuticket" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img_right"
+            android:layout_toRightOf="@+id/img"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="满减券"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/font_size_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_8"
+                android:text="满减券,让您购物无忧"
+                android:textColor="@color/bottom_tab_text_color_nor"
+                android:textSize="@dimen/font_size_24" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_30"
+            android:src="@drawable/con_btn_right" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_yi"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100"
+        android:layout_marginTop="@dimen/px_20"
+        android:background="@drawable/layout_selector_bg" >
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="@dimen/px_70"
+            android:layout_height="@dimen/px_70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_30"
+            android:src="@mipmap/easyticket" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img_right1"
+            android:layout_toRightOf="@+id/img1"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="折扣券"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/font_size_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_8"
+                android:text="更多优惠尽在乐购"
+                android:textColor="@color/bottom_tab_text_color_nor"
+                android:textSize="@dimen/font_size_24" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_right1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_30"
+            android:src="@drawable/con_btn_right" />
+    </RelativeLayout>
+    
+    <!-- 兑换优惠券 -->
+    <RelativeLayout
+        android:id="@+id/rl_dui"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100"
+        android:layout_marginTop="@dimen/px_20"
+        android:background="@drawable/layout_selector_bg" >
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="@dimen/px_70"
+            android:layout_height="@dimen/px_70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_30"
+            android:src="@mipmap/forticket" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img_right2"
+            android:layout_toRightOf="@+id/img2"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/px_20" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="兑换优惠券"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/font_size_28" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_8"
+                android:text="准确输入兑换码领取优惠券,更多优惠拿不停"
+                android:textColor="@color/bottom_tab_text_color_nor"
+                android:textSize="@dimen/font_size_24" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/img_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_30"
+            android:src="@drawable/con_btn_right" />
+    </RelativeLayout>
+
+</LinearLayout>

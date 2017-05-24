@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/layout_selector_bg"
+    android:layout_height="@dimen/px_90"
+    android:layout_marginTop="1dp"
+    >
+    <TextView
+        android:id="@+id/pro_choice_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_30_px"
+        android:textColor="#333333"
+        android:text="北京市"
+        android:layout_marginLeft="@dimen/px_50"
+        android:layout_centerVertical="true"/>
+    <ImageView
+        android:id="@+id/pro_choice_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/px_30"
+        android:src="@mipmap/more_arrow"
+        android:layout_centerVertical="true"/>
+</RelativeLayout>

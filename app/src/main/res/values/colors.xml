@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="sv_blue">#688fdb</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="base_background">#f9f9f9</color>
+    <color name="base_bg">#ffffff</color>
+    <color name="bottom_tab_text_color_pre">#83ae2b</color>
+    <color name="bottom_tab_text_color_nor">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="base_divider_color">#efefef</color>
+    <color name="alpha_color">#66000000</color>
+    <color name="cff3e19">#ff3e19</color>
+    <color name="login_background">#86b624</color>
+    <color name="base_text_info_color">#666666</color>
+    <color name="black">#000000</color>
+    <color name="base_text_color">#333333</color>
+    <color name="camera_color">#178ae2</color>
+    <color name="base_search_hint_color">#cccccc</color>
+    <color name="order_dialog_info_color">#88b625</color>
+    <color name="money_color">#fe3a2e</color>
+    <color name="pink">#FFB6C1</color>
+    <color name="red">#ea5858</color>
+    <color name="blue">#046eb8</color>
+    <color name="product_dot_pre">#ff4f64</color>
+    <color name="gray">#9c9c9c</color>
+    <color name="title_text_6">#FF529bd0</color>
+    <color name="yellow">#FFF7D23E</color>
+    <color name="trans">#00000000</color>
+    <color name="action_sheet_gray">#8F8F8F</color>
+    <color name="action_sheet_ed">#FF0000</color>
+    <color name="actionsheet_gray">#8F8F8F</color>
+    <color name="cff5000">#ff5000</color>
+    <color name="cdcdcdc">#dcdcdc</color>
+
+    <color name="qr_code_flashlight_bg">#66000000</color>
+    <color name="qr_code_finder_mask">#80000000</color>
+    <color name="qr_code_flash_light_text_color">#66FFFFFF</color>
+    <color name="qr_code_finder_frame">#FFFFFFFF</color>
+    <color name="qr_code_finder_laser">#ef8394</color>
+
+    <color name="alertdialog_line">#c6c6c6</color>
+    <color name="actionsheet_blue">#037BFF</color>
+    <color name="actionsheet_red">#FD4A2E</color>
+
+
+</resources>

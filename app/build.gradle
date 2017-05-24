@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'android-apt'
+apply plugin: 'kotlin-android-extensions'
+
+
+def releaseTime() {
+    return new Date().format("MMddHHmm", TimeZone.getDefault())
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId "trunk.doi.base"
+        minSdkVersion 21
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField("boolean", "YLog", "true");
+        }
+
+        release {
+            minifyEnabled true
+            shrinkResources true // 移除无用资源
+            zipAlignEnabled true // 开启压缩
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName = "base_${defaultConfig.versionName}_${releaseTime()}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+            buildConfigField("boolean", "YLog", "false");
+        }
+    }
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+    sourceSets.main.jniLibs.srcDirs = ['libs']
+}
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile "com.android.support:appcompat-v7:$support_version"
+    compile "com.android.support:recyclerview-v7:$support_version"
+    compile "com.android.support:cardview-v7:$support_version"
+    compile "com.android.support:palette-v7:$support_version"
+    compile "com.android.support:design:$support_version"
+    // 用于Java编写执行Java测试用例。
+    //https://github.com/ZeroBrain/AndroidPermissions
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.android.support.constraint:constraint-layout:1.0.0'
+    compile 'com.jakewharton:butterknife:+'
+    compile 'io.reactivex:rxjava:+'
+    compile 'io.reactivex:rxandroid:+'
+    compile 'com.trello:rxlifecycle:+'
+    compile 'com.trello:rxlifecycle-components:+'
+    compile 'com.squareup.retrofit2:retrofit:+'
+    compile 'com.squareup.retrofit2:converter-gson:+'
+    compile 'com.squareup.retrofit2:converter-scalars:+'
+    compile 'com.squareup.retrofit2:adapter-rxjava:+'
+    compile 'com.squareup.okhttp3:okhttp:+'
+    compile 'com.squareup.okhttp3:logging-interceptor:+'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.github.chrisbanes.photoview:library:+'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.google.android.gms:play-services-ads:10.2.6'
+    testCompile 'junit:junit:4.12'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+}
+repositories {
+    mavenCentral()
+}

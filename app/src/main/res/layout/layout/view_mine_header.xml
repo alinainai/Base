@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?><!-- 头像和标签开始 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/px_430"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_160"
+        android:layout_above="@+id/mine_title_bar_rl"
+        android:layout_marginBottom="@dimen/px_20">
+
+        <LinearLayout
+            android:id="@+id/mine_detail_ll"
+            android:layout_width="@dimen/px_200"
+            android:layout_height="@dimen/px_40"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/mine_account_shape_layout"
+            android:gravity="center_vertical"
+            android:padding="0dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_30"
+                android:text="@string/my_account"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/px_84"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/px_170"
+            android:background="@drawable/mine_shape_layout"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="0dp">
+
+            <TextView
+                android:id="@+id/mine_nickName_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_20"
+                android:text="@string/login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_size_32" />
+
+            <TextView
+                android:id="@+id/mine_nameType_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/px_30"
+                android:layout_marginRight="@dimen/px_20"
+                android:text="@string/pt_user"
+                android:textColor="#ffd200"
+                android:textSize="@dimen/font_size_24" />
+        </LinearLayout>
+
+        <anjuyi.cc.edeco.view.CircleImageView
+            android:id="@+id/mine_user_icon_img"
+            android:layout_width="@dimen/px_160"
+            android:layout_height="@dimen/px_160"
+            android:layout_marginStart="@dimen/px_30"
+            android:src="@mipmap/user_icon"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/mine_title_bar_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mine_collection_service_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/alpha_color"
+            android:gravity="center"
+            android:text="版块一"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_30" />
+
+        <TextView
+            android:id="@+id/mine_collection_shop_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_1"
+            android:layout_weight="1"
+            android:background="@color/alpha_color"
+            android:gravity="center"
+            android:text="版块二"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_30" />
+
+        <TextView
+            android:id="@+id/mine_browse_history_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_1"
+            android:layout_weight="1"
+            android:background="@color/alpha_color"
+            android:gravity="center"
+            android:text="版块三"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_size_30" />
+    </LinearLayout>
+</RelativeLayout><!-- 头像和标签结束 -->

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/trans"
+    >
+
+    <LinearLayout
+        android:layout_below="@+id/ll_share"
+        android:orientation="vertical"
+     android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    >
+        <View
+            style="@style/divider"
+            />
+        <Button
+            android:text="取消"
+            android:background="@drawable/layout_selector_bg"
+            android:textSize="@dimen/text_size_30_px"
+            android:id="@+id/btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            />
+        <View
+            style="@style/divider"
+            />
+    </LinearLayout>
+    <View
+        android:id="@+id/view_head"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@color/trans"
+        />
+    <LinearLayout
+        android:id="@+id/ll_share"
+        android:paddingTop="@dimen/px_80"
+        android:paddingBottom="20dp"
+        android:layout_marginTop="@dimen/px_100"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_share_moments"
+            android:background="@drawable/layout_selector_bg"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:src="@mipmap/ic_share_moments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="朋友圈"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_share_wechat"
+            android:background="@drawable/layout_selector_bg"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:src="@mipmap/ic_share_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="微信好友"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_share_sina"
+            android:background="@drawable/layout_selector_bg"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:src="@mipmap/ic_share_weibo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="新浪微博"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_share_qq"
+            android:background="@drawable/layout_selector_bg"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <ImageView
+                android:src="@mipmap/ic_share_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="QQ"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/ll_share_qzone"
+            android:background="@drawable/layout_selector_bg"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <ImageView
+                android:src="@mipmap/ic_share_qzone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:text="QQ空间"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_marginStart="20dp"
+        android:id="@+id/img_icon"
+        android:layout_width="@dimen/px_160"
+        android:layout_height="@dimen/px_160"
+        android:src="@mipmap/icon_logo"
+        />
+
+
+</RelativeLayout>

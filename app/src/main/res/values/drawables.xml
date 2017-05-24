@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="service_classify_normal">#ffffff</drawable>
+    <drawable name="service_classify_press">#f9f9f9</drawable>
+</resources>

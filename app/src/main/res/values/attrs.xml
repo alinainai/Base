@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PullToZoomView">
+        <attr name="headerView" format="reference" />
+        <attr name="contentView" format="reference" />
+        <attr name="zoomView" format="reference" />
+        <attr name="isHeaderParallax" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Lock9View">
+        <attr name="nodeSrc" format="color|reference" />
+        <attr name="nodeOnSrc" format="color|reference" />
+        <attr name="lineColor" format="color" />
+        <attr name="lineWidth" format="dimension" />
+    </declare-styleable>
+
+
+    <declare-styleable name="CircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+    </declare-styleable>
+
+
+    <!--上下滚动消息属性-->
+    <declare-styleable name="JDAdverView">
+        <attr name="gap" format="integer" />
+        <attr name="animDuration" format="integer" />
+    </declare-styleable>
+
+</resources>

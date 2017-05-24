@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">MrLee</string>
+
+    <string name="button_login">Login</string>
+    <string name="button_signup">Sign Up</string>
+    <string name="button_confirm_login">Confirm Login</string>
+    <string name="button_cancel_login">Cancel Login</string>
+    <string name="button_confirm_signup">Confirm Sign Up</string>
+    <string name="button_cancel_signup">Cancel Sign Up</string>
+
+    <string name="classify">分类</string>
+    <string name="shopping">视频</string>
+    <string name="mine">我的</string>
+    <string name="my_account">我的账户</string>
+    <string name="login">登录</string>
+    <string name="pt_user">普通用户</string>
+    <string name="order">订单</string>
+    <string name="obligation">待付款</string>
+    <string name="service">待服务</string>
+    <string name="evaluate">待评价</string>
+    <string name="assist">辅助</string>
+    <string name="subscribe">预约</string>
+    <string name="coupons">优惠券</string>
+    <string name="sharemoney">分享赚钱</string>
+    <string name="collection">收藏</string>
+    <string name="message">消息</string>
+    <string name="setting">设置</string>
+    <string name="title">标题</string>
+    <string name="install_service_tv">配装服务</string>
+    <string name="basic_building_tv">基础建材</string>
+    <string name="service_classify_recommend">为你推荐</string>
+    <string name="service_classify_brand_recommend">品牌推荐</string>
+    <string name="setting_feedback">意见反馈</string>
+    <string name="setting_recommend_friends">推荐好友</string>
+    <string name="setting_service_terms">服务条款</string>
+    <string name="setting_about_us">关于我们</string>
+    <string name="setting_clear_cache">清除缓存</string>
+    <string name="setting_check_update">检查更新</string>
+    <string name="update_version_num">当前版本 V</string>
+    <string name="setting_exit_login">退出登录</string>
+    <string name="feed_back_type">反馈类型</string>
+    <string name="feed_function_opinion">功能意见</string>
+    <string name="feed_back_input_hint">请提出您宝贵的意见，我们将不断的优化</string>
+    <string name="feed_back_input_tv">*限100字</string>
+    <string name="feed_back_phone_input">请输入您的手机号/邮箱</string>
+    <string name="mine_head_pic">头像</string>
+    <string name="mine_nickname">昵称</string>
+    <string name="mine_username">用户名</string>
+    <string name="mine_sex">性别</string>
+    <string name="mine_birsty">出生日期</string>
+    <string name="band_phone">绑定手机</string>
+    <string name="mine_service_address">服务地址管理</string>
+    <string name="mine_city">所在城市</string>
+
+    <string name="home">首页</string>
+    <string name="title_activity_scan_qr_code">扫一扫</string>
+    <string name="qc_code_close">关闭</string>
+    <string name="qr_code_select_picture">照片</string>
+    <string name="qr_code_open_flash_light">打开闪光灯</string>
+    <string name="qr_code_close_flash_light">关闭闪光灯</string>
+    <string name="qr_code_auto_scan_notification">将二维码放入框内，即可自动扫描</string>
+    <string name="qr_code_notification">提示</string>
+    <string name="qr_code_camera_not_open">您的相机功能好像没有打开哦~去\"设置>隐私>相机\"设置一下吧</string>
+    <string name="qr_code_positive_button_know">知道了</string>
+    <string name="qr_code_positive_button_confirm">确认</string>
+    <string name="qr_code_could_not_read_qr_code_from_picture">没有读出图片中的链接，换张图片试试吧~</string>
+    <string name="qr_code_could_not_read_qr_code_from_scanner">对不起，无法打开扫出的内容</string>
+    <string name="qr_code_camera_not_found">未检测到相机</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_ad_mob">AdMobActivity</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="interstitial_ad_sample">Interstitial Ad Sample</string>
+    <string name="start_level">Level 1</string>
+    <string name="next_level">Next Level</string>
+    <!-- -
+        This is an ad unit ID for an interstitial test ad. Replace with your own interstitial ad unit id.
+        For more information, see https://support.google.com/admob/answer/3052638
+    <!- -->
+    <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
+</resources>
+
+
+

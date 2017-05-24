@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/default_main_cart_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/base_background">
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_system"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/layout_selector_bg"
+                android:padding="5dp">
+                <ImageView
+                    android:id="@+id/message_icon_ajy"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="@dimen/px_30"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/messege_icon" />
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/item_title_ajy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/message_icon_ajy"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_toRightOf="@+id/message_icon_ajy"
+                    android:text="系统通知"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_32" />
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/time_ajy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="2016-06-27  16:47:50"
+                    android:textColor="@color/bottom_tab_text_color_nor"
+                    android:textSize="@dimen/font_size_28" />
+                <TextView
+                    android:id="@+id/content_ajy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_title_ajy"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/message_icon_ajy"
+                    android:ellipsize="end"
+                    android:paddingRight="@dimen/px_30"
+                    android:text="暂无消息"
+                    android:textColor="@color/base_text_info_color"
+                    android:textSize="@dimen/font_size_32" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_wchat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/layout_selector_bg"
+                android:padding="5dp">
+                <ImageView
+                    android:id="@+id/message_icon_1"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="@dimen/px_30"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/messege_icon" />
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/item_title_wchat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/message_icon_1"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_toRightOf="@+id/message_icon_1"
+                    android:text="微信公众号"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_32" />
+                <TextView
+                    android:layout_marginTop="6dp"
+                    android:id="@+id/time_wchat_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="2016-06-27  16:47:50"
+                    android:textColor="@color/bottom_tab_text_color_nor"
+                    android:textSize="@dimen/font_size_28" />
+                <TextView
+                    android:id="@+id/content_wchat_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/item_title_wchat"
+                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginTop="6dp"
+                    android:layout_toRightOf="@+id/message_icon_1"
+                    android:ellipsize="end"
+                    android:paddingRight="@dimen/px_30"
+                    android:text="暂无消息"
+                    android:textColor="@color/base_text_info_color"
+                    android:textSize="@dimen/font_size_32" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

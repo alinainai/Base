@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/base_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!-- 标题 -->
+    <include
+        android:id="@+id/include_search"
+        layout="@layout/default_main_cart_title" />
+
+    <RelativeLayout
+        android:layout_below="@id/include_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- 基础建材 -->
+        <TextView
+            android:id="@+id/service_classify_fixed_tv"
+            android:layout_width="@dimen/px_140"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="不动的字"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <!-- 左侧ListView -->
+        <ListView
+            android:id="@+id/service_classify_left_mListView"
+            android:layout_width="@dimen/px_140"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/service_classify_fixed_tv"
+            android:divider="@color/base_divider_color"
+            android:dividerHeight="@dimen/px_1"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" >
+        </ListView>
+
+        <!-- 整体右侧 -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/service_classify_fixed_tv" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="@dimen/px_20" >
+                
+                <!-- 最上面的图片 -->
+                <ImageView
+                    android:src="@mipmap/ic_launcher"
+                    android:id="@+id/service_classify_top_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_200" />
+
+                <!-- 为你推荐的字 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_34"
+                    android:text="@string/service_classify_recommend"
+                    android:textColor="@color/base_text_info_color"
+                    android:textSize="@dimen/font_size_18" />
+
+                <!-- 为你推荐的GridView -->
+                <anjuyi.cc.edeco.view.GridViewForScrollView
+                    android:id="@+id/service_classify_you_recommend_mGridView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/px_24"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:horizontalSpacing="@dimen/px_5"
+                    android:verticalSpacing="@dimen/px_40">
+                </anjuyi.cc.edeco.view.GridViewForScrollView>
+
+            <!-- 整个品牌推荐-->
+            <LinearLayout
+                android:id="@+id/service_classify_brand_recommend_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <!-- 品牌推荐的字 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/px_34"
+                    android:text="@string/service_classify_brand_recommend"
+                    android:textColor="@color/base_text_info_color"
+                    android:textSize="@dimen/font_size_18" />
+
+                <!-- 品牌推荐的GridView -->
+                <anjuyi.cc.edeco.view.GridViewForScrollView
+                    android:id="@+id/service_classify_brand_recommend_mGridViews"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/px_24"
+                    android:listSelector="@android:color/transparent"
+                    android:numColumns="3"
+                    android:scrollbars="none"
+                    android:horizontalSpacing="@dimen/px_5"
+                    android:verticalSpacing="@dimen/px_40">
+                </anjuyi.cc.edeco.view.GridViewForScrollView>
+
+            </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+</RelativeLayout>
