@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -71,6 +73,13 @@ public class BaseApplication extends MultiDexApplication {
                         }catch (IOException e){}}
                 }).start();
         }
+        //内存泄露
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
 
         instance = this;//初始化appliacation
         //极光推送

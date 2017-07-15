@@ -101,7 +101,8 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
             return;
         }
         mSubtype = getArguments().getString(SUB_TYPE);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.pink, R.color.red, R.color.yellow);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.white, R.color.yellow, R.color.pink);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //实现首次自动显示加载提示
         mSwipeRefreshLayout.post(new Runnable() {
@@ -112,8 +113,6 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
         });
 
     }
-
-
 
     @Override
     public void onSuccess(List<GankItemData> data) {

@@ -39,7 +39,6 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 import trunk.doi.base.R;
 
@@ -59,9 +58,9 @@ public class CircleImageView extends AppCompatImageView {
     private final RectF mDrawableRect = new RectF();
     private final RectF mBorderRect = new RectF();
 
-    private final Matrix mShaderMatrix = new Matrix();
-    private final Paint mBitmapPaint = new Paint();
-    private final Paint mBorderPaint = new Paint();
+    private final Matrix mShaderMatrix = new Matrix();//矩阵
+    private final Paint mBitmapPaint = new Paint();//图片画笔
+    private final Paint mBorderPaint = new Paint();//border画笔
     private final Paint mFillPaint = new Paint();
 
     private int mBorderColor = DEFAULT_BORDER_COLOR;

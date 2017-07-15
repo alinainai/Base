@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
             put(1, ClassifyFragment.TAG);
             put(2, AccountFragment.Companion.getTAG());
             put(3, CartFragment.TAG);
-            put(4, MineFragment.TAG);
+            put(4, MineFragment.Companion.getTAG());
         }
     };
 
@@ -188,9 +188,9 @@ public class MainActivity extends BaseActivity {
             }
             return mShoppingFragment;
         }
-        if (MineFragment.TAG.equals(tag)) {
+        if (MineFragment.Companion.getTAG().equals(tag)) {
             if (mMineFragment == null) {
-                mMineFragment = MineFragment.newInstance();
+                mMineFragment = MineFragment.Companion.newInstance();
             }
             return mMineFragment;
         }

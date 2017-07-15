@@ -29,9 +29,10 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -51,10 +52,14 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".ui.activity.extra.SettingActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.test.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.list.ListActivity"
+            android:label="@string/title_activity_list"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
