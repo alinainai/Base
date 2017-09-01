@@ -10,8 +10,8 @@
     <LinearLayout
         android:id="@+id/ll_back"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_80"
-        android:background="@color/cff3e19"
+        android:layout_height="@dimen/px_100"
+        android:background="@color/c26c4e9"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -20,9 +20,9 @@
             android:layout_width="@dimen/px_76"
             android:layout_height="@dimen/px_76"
             android:layout_marginLeft="@dimen/px_8"
-            android:background="@drawable/ripple_title"
+            android:background="@drawable/selector_title"
             android:scaleType="centerInside"
-            android:src="@mipmap/fab_back" />
+            android:src="@mipmap/close" />
 
         <TextView
             android:id="@+id/main_cart_title"
@@ -35,13 +35,13 @@
             android:maxLines="1"
             android:text="加载中"
             android:textColor="#fff"
-            android:textSize="@dimen/font_title" />
+            android:textSize="@dimen/text_size_36_px" />
 
         <ImageView
             android:id="@+id/img_refresh"
             android:layout_width="@dimen/px_76"
             android:layout_height="@dimen/px_76"
-            android:background="@drawable/ripple_title"
+            android:background="@drawable/selector_title"
             android:layout_marginRight="@dimen/px_8"
             android:scaleType="centerInside"
             android:src="@mipmap/refresh" />
@@ -56,36 +56,11 @@
         android:indeterminateOnly="false"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar_states" />
-    
-    
-    <RelativeLayout
-        android:layout_weight="1"
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <WebView
-            android:id="@+id/webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_back"
-            android:layout_marginBottom="@dimen/px_32"
-            android:layout_marginRight="@dimen/px_32"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            app:fabSize="mini"
-            app:backgroundTint="@color/cff3e19"
-            android:src="@mipmap/fab_back"
-            />
-
-
-    </RelativeLayout>
-
-
-
+        android:layout_height="match_parent"
+        />
+    
 
 </LinearLayout>

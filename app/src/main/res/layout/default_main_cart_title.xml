@@ -3,7 +3,7 @@
     android:id="@+id/rl_title"
     android:layout_width="match_parent"
     android:layout_height="@dimen/px_80"
-    android:background="@color/cff3e19"
+    android:background="@color/c26c4e9"
     android:padding="0dp"
    >
     <View
@@ -13,7 +13,7 @@
 
     <LinearLayout
         android:layout_centerVertical="true"
-        android:background="@drawable/ripple_title"
+        android:background="@drawable/selector_title"
         android:id="@+id/ll_back"
         android:layout_marginLeft="@dimen/px_8"
         android:layout_width="@dimen/px_76"
@@ -37,7 +37,7 @@
         android:layout_centerInParent="true"
         android:text="标题"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_title" />
+        android:textSize="@dimen/px_36" />
 
     <TextView
         android:id="@+id/tvRight"
@@ -54,7 +54,7 @@
         android:layout_marginRight="@dimen/px_8"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:background="@drawable/ripple_title"
+        android:background="@drawable/selector_title"
         android:id="@+id/ll_cart_right"
         android:layout_width="@dimen/px_76"
         android:layout_height="@dimen/px_76"

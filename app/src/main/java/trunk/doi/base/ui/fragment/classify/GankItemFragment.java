@@ -14,10 +14,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
+import trunk.doi.base.adapter.GankItemAdapter;
 import trunk.doi.base.adapter.rvadapter.OnItemClickListeners;
 import trunk.doi.base.adapter.rvadapter.OnLoadMoreListener;
 import trunk.doi.base.adapter.rvadapter.ViewHolder;
 import trunk.doi.base.base.mvp.BaseMvpFragment;
+import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 
 /**
@@ -37,6 +39,7 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
 
+
     @Override
     protected GankItemPresenter initPresenter() {
         return new GankItemPresenter();
@@ -47,7 +50,7 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
      */
     @Override
     protected void fetchData() {
-        mPresenter.getGankItemData("data/" + mSubtype + "/10/" + PAGE_COUNT);
+        mPresenter.getGankItemData("data/" + mSubtype + "/18/" + PAGE_COUNT);
     }
 
     @Override
@@ -89,7 +92,6 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
 
     }
 
-
     @Override
     public void setListener(View view, Bundle savedInstanceState) {
 
@@ -101,8 +103,8 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
             return;
         }
         mSubtype = getArguments().getString(SUB_TYPE);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.white, R.color.yellow, R.color.pink);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.c26c4e9));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //实现首次自动显示加载提示
         mSwipeRefreshLayout.post(new Runnable() {

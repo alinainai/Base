@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.view.View;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
@@ -105,7 +104,7 @@ public class AppUtils {
     {
         try
         {
-            PackageManager packageManager = context.getPackageManager();
+            PackageManager packageManager = context.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             int labelRes = packageInfo.applicationInfo.labelRes;
             return context.getResources().getString(labelRes);
@@ -122,7 +121,7 @@ public class AppUtils {
     public static String getVersionName(Context context)
     {
         try {
-            PackageManager packageManager = context.getPackageManager();
+            PackageManager packageManager = context.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
@@ -130,12 +129,27 @@ public class AppUtils {
         }
         return null;
     }
+
+    /**
+     * [获取应用程序版本名称信息]
+     */
+    public static int getVersionCode(Context context)
+    {
+        try {
+            PackageManager packageManager = context.getApplicationContext().getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     /**
      * 获取设备ID
      */
     public static String getDeviceId(Context context)
     {
-            TelephonyManager tm = (TelephonyManager) context
+            TelephonyManager tm = (TelephonyManager) context.getApplicationContext()
                     .getSystemService(Context.TELEPHONY_SERVICE);
             return tm.getDeviceId();
     }
@@ -202,47 +216,6 @@ public class AppUtils {
         return data;
     }
 
-
-    //添加蒙版
-    public interface OnMbClickListener{
-        void OnMbClick(View arg0);
-    }
-//    public  static void addmbImg(Activity activity,int resId,final OnMbClickListener listener){
-//
-//        final WindowManager windowManager = activity.getWindowManager();
-//        // 动态初始化图层
-//        final ImageView  img = new ImageView(activity);
-//        img.setLayoutParams(new WindowManager.LayoutParams(
-//                android.view.ViewGroup.LayoutParams.MATCH_PARENT,
-//                android.view.ViewGroup.LayoutParams.MATCH_PARENT));
-//        img.setScaleType(ImageView.ScaleType.FIT_XY);
-//        img.setImageResource(resId);
-//        // 设置LayoutParams参数
-//        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-//        // 设置显示的类型，TYPE_PHONE指的是来电话的时候会被覆盖，其他时候会在最前端，显示位置在stateBar下面，其他更多的值请查阅文档
-//        params.type = WindowManager.LayoutParams.TYPE_PHONE;
-//        // 设置显示格式
-//        params.format = PixelFormat.RGBA_8888;
-//        // 设置对齐方式
-//        params.gravity = Gravity.LEFT | Gravity.TOP;
-//        // 设置宽高
-//        params.width = windowManager.getDefaultDisplay()
-//                .getWidth();
-//
-//        params.height = windowManager.getDefaultDisplay()
-//                .getHeight() - getStatusHeight(context);
-//        // 添加到当前的窗口上
-//        windowManager.addView(img, params);
-//        // 点击图层之后，将图层移除
-//        img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View arg0) {
-//                windowManager.removeView(img);
-//                listener.OnMbClick(arg0);
-//            }
-//        });
-//
-//    }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {

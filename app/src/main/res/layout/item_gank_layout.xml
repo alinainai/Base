@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/gank_item_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/px_100"
+            android:layout_height="@dimen/px_100"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
             android:src="@mipmap/user_icon"
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/gank_item_icon"
-                android:textSize="16sp" />
+                android:textSize="@dimen/px_24" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="daimajia"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/px_20" />
 
                 <ImageView
                     android:scaleType="center"
@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2016"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/px_20" />
 
             </LinearLayout>
 

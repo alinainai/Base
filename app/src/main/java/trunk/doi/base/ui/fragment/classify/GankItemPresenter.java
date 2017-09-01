@@ -1,12 +1,19 @@
 package trunk.doi.base.ui.fragment.classify;
 
 
+import com.google.gson.JsonSyntaxException;
+
+import java.net.SocketTimeoutException;
 import java.util.List;
 
+import retrofit2.HttpException;
 import rx.Subscriber;
+import trunk.doi.base.base.BaseApplication;
 import trunk.doi.base.base.mvp.BasePresenter;
-import trunk.doi.base.https.HttpResult;
+import trunk.doi.base.bean.GankItemData;
+import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.util.ToastUtils;
 
 
 /**
@@ -28,7 +35,18 @@ public class GankItemPresenter extends BasePresenter<GankItemView> {
 
             }
             @Override
-            public void onError(Throwable e) {
+            public void onError(Throwable throwable) {
+
+                if (throwable instanceof SocketTimeoutException) {
+                    ToastUtils.showShort(BaseApplication.instance, "连接超时");
+                } else if (throwable instanceof JsonSyntaxException) {
+                    ToastUtils.showShort(BaseApplication.instance, "数据解析错误");
+                } else if (throwable instanceof HttpException) {
+                    ToastUtils.showShort(BaseApplication.instance, "连接异常");
+                } else {
+                    ToastUtils.showShort(BaseApplication.instance, "连接异常");
+                }
+
                 mView.onError();
             }
 

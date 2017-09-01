@@ -8,6 +8,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import rx.Observable;
+import trunk.doi.base.bean.HttpResult;
 
 /**
  * 作者：Mr.Lee on 2016-8-15 18:30

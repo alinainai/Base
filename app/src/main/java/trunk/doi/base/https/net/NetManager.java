@@ -41,6 +41,9 @@ public class NetManager {
         private static final NetManager INSTANCE = new NetManager();
     }
 
+
+
+
     private NetManager() { }
 
     public <S> S create(Class<S> service) {
@@ -87,6 +90,12 @@ public class NetManager {
         builder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
+//        new HttpLoggingInterceptor.Logger() {
+//            @Override
+//            public void log(String message) {
+//                Log.e("TAG","message="+message);
+//            }
+//        }
         //配置log打印拦截器
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);

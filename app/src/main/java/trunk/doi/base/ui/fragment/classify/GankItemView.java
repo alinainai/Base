@@ -3,6 +3,7 @@ package trunk.doi.base.ui.fragment.classify;
 import java.util.List;
 
 import trunk.doi.base.base.mvp.IBaseView;
+import trunk.doi.base.bean.GankItemData;
 
 
 /**

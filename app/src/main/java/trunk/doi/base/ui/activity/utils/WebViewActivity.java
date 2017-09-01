@@ -167,22 +167,20 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (webView != null) {
-                if (webView.canGoBack()) {
-                    webView.goBack();// 返回前一个页面
-                    return true;
-                }
+    public void onBackPressed() {
+
+        if (webView != null) {
+            if (webView.canGoBack()) {
+                webView.goBack();// 返回前一个页面
+                return;
             }
         }
-        return super.onKeyDown(keyCode, event);
+        super.onBackPressed();
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+    public void finish() {
+        super.finish();
         overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
     }
 
@@ -195,7 +193,7 @@ public class WebViewActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    @OnClick({R.id.img_back,R.id.main_cart_title,R.id.img_refresh,R.id.fab_back})
+    @OnClick({R.id.img_back,R.id.main_cart_title,R.id.img_refresh})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -213,16 +211,6 @@ public class WebViewActivity extends BaseActivity {
                 break;
             case R.id.img_refresh:
                 webView.reload();
-                break;
-            case R.id.fab_back:
-                if (webView != null) {
-                    if (webView.canGoBack()) {
-                        webView.goBack();// 返回前一个页面
-                        return;
-                    }
-                }
-                finish();
-                overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
                 break;
         }
     }

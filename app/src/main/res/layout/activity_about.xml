@@ -3,156 +3,540 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_background"
-    android:orientation="vertical">、
-
-
-    <!-- 标题 -->
-    <include layout="@layout/default_main_cart_title" />
+    android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#f3f4f9"
+            >
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
+                android:id="@+id/ll_part_1a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="?selectableItemBackground"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="5dp">
+                android:background="#f9f9f9"
+                android:orientation="horizontal"
+                >
 
-                <LinearLayout
-                    android:background="@mipmap/about_header_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    >
-                    <trunk.doi.base.view.CircleImageView
-                        android:layout_marginTop="@dimen/px_70"
-                        android:layout_width="@dimen/px_160"
-                        android:layout_height="@dimen/px_160"
-                        android:id="@+id/mine_user_icon_img"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/user_icon"
-                        app:civ_border_color="@color/base_background"
-                        app:civ_border_width="1dp"
-                        />
+                <ImageView
+                    android:id="@+id/img_part_1"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_154"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="#fff"
+                    />
+                <View
+                    android:layout_width="@dimen/px_1"
+                    android:layout_height="match_parent"
+                    android:background="@color/cefefef" />
+                <ImageView
+                    android:id="@+id/img_part_2"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_154"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="#fff" />
 
-                <TextView
-                    android:layout_marginTop="@dimen/px_32"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="3dp"
-                    android:padding="5dp"
-                    android:text="坚持坚持不忘初心方得始终"
-                    android:textSize="14sp" />
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </LinearLayout>
 
-            <android.support.v7.widget.CardView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="@color/cefefef" />
+
+            <LinearLayout
+                android:id="@+id/ll_part_1b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:padding="@dimen/activity_horizontal_margin"
-                android:background="?selectableItemBackground"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="5dp">
+                android:background="#fff"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    android:id="@+id/img_part_3"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_154"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="#fff"  />
+                <View
+                    android:layout_width="@dimen/px_1"
+                    android:layout_height="match_parent"
+                    android:background="@color/cefefef" />
+
+                <ImageView
+                    android:id="@+id/img_part_4"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/px_154"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="#fff"
+                    />
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginTop="@dimen/px_20"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_200"
+                android:src="@color/white"
+                />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rl_horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_200"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="@dimen/px_20"
+                android:background="@color/white"
+                android:paddingBottom="@dimen/px_40"
+                android:paddingTop="@dimen/px_40"
+                android:scrollbars="none" />
+
+            <LinearLayout
+                android:id="@+id/ll_preferential"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
+                android:background="#fff"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_40"
+                        android:layout_marginLeft="@dimen/px_30"
                         android:layout_marginTop="@dimen/px_30"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="3dp"
-                        android:padding="5dp"
-                        android:text="项目地址：https://github.com/alinainai/trunk"
-                        android:textSize="15sp" />
-                    <ImageView
-                        android:id="@+id/img_qc"
-                        android:scaleType="center"
-                        android:layout_marginTop="@dimen/px_40"
-                        android:layout_width="@dimen/px_160"
-                        android:layout_height="@dimen/px_160"
-                        android:src="@mipmap/user_icon"
-                        />
+                        android:layout_weight="1"
+                        android:text="超值特惠"
+                        android:textColor="#000"
+                        android:textSize="@dimen/px_34" />
 
                     <TextView
-                        android:layout_marginTop="@dimen/px_32"
+                        android:id="@+id/tv_gift_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:drawableRight="@mipmap/right_arrow"
                         android:gravity="center"
-                        android:textColor="@color/white"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="3dp"
-                        android:padding="5dp"
-                        android:text="坚持坚持不忘初心方得始终"
-                        android:textSize="14sp" />
+                        android:text="好礼换不停"
+                        android:textColor="#666"
+                        android:textSize="@dimen/px_24" />
                 </LinearLayout>
 
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="?selectableItemBackground"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="5dp">
+                <ImageView
+                    android:id="@+id/img_preferential_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_180"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_30"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_default" />
 
-                <TextView
-                    android:id="@+id/textView"
+                <LinearLayout
+                    android:id="@+id/ll_preferential_below"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="3dp"
-                    android:padding="5dp"
-                    android:text="金樽清酒斗十千，玉盘珍羞直万钱。
-停杯投箸不能食，拔剑四顾心茫然。
-欲渡黄河冰塞川，将登太行雪满山。"
-                    android:textSize="15sp" />
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/px_20"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_30"
+                    android:paddingTop="@dimen/px_30">
+
+                    <ImageView
+                        android:id="@+id/img_preferential_2"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/px_214"
+                        android:layout_weight="1"
+                        android:padding="@dimen/px_3"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_default" />
+
+                    <ImageView
+                        android:id="@+id/img_preferential_3"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/px_214"
+                        android:layout_marginLeft="@dimen/px_26"
+                        android:layout_marginRight="@dimen/px_26"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_default" />
+
+                    <ImageView
+                        android:id="@+id/img_preferential_4"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/px_214"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_default" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_news"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:background="?selectableItemBackground"
-                android:layout_marginBottom="50dp"
-                app:cardCornerRadius="3dp"
-                app:cardElevation="5dp">
+                android:layout_marginTop="@dimen/px_20"
+                android:background="#fff"
+                android:orientation="vertical">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lineSpacingExtra="3dp"
-                    android:gravity="center_vertical"
-                    android:padding="5dp"
-                    android:text="闲来垂钓碧溪上，忽复乘舟梦日边。
-行路难，行路难，多歧路，今安在。
-长风破浪会有时，直挂云帆济沧海。"
-                    android:textSize="15sp" />
-            </android.support.v7.widget.CardView>
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_40"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:layout_weight="1"
+                        android:text="新闻资讯"
+                        android:textColor="#000"
+                        android:textSize="@dimen/px_34" />
+
+                    <TextView
+                        android:id="@+id/tv_more_news"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="更多精彩"
+                        android:textColor="#666"
+                        android:textSize="@dimen/px_24" />
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:src="@mipmap/right_arrow" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/img_news_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/px_180"
+                    android:background="#fff"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_30"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_default" />
+
+                <LinearLayout
+                    android:id="@+id/ll_news_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_news_title_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_40"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginTop="@dimen/px_20"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="2"
+                        android:text="资讯标题"
+                        android:textColor="#000"
+                        android:textSize="@dimen/px_28" />
+
+                    <TextView
+                        android:id="@+id/tv_news_date_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:text="2010-02-10"
+                        android:textColor="#999"
+                        android:textSize="@dimen/px_22" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_30">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:background="@color/cefefef" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_news_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_30">
+
+                        <ImageView
+                            android:id="@+id/img_news_2"
+                            android:layout_width="@dimen/px_100"
+                            android:layout_height="@dimen/px_100"
+                            android:background="#fff"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_default" />
+
+                        <TextView
+                            android:id="@+id/tv_news_title_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_toRightOf="@+id/img_news_2"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:text="资讯内容"
+                            android:textColor="#000"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/tv_news_date_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="2010-01-01"
+                            android:textColor="#999"
+                            android:textSize="@dimen/px_22" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:background="@color/cefefef" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_news_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:paddingBottom="@dimen/px_30">
+
+                        <ImageView
+                            android:id="@+id/img_news_3"
+                            android:layout_width="@dimen/px_100"
+                            android:layout_height="@dimen/px_100"
+                            android:background="#fff"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_default" />
+
+                        <TextView
+                            android:id="@+id/tv_news_title_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_toRightOf="@+id/img_news_3"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:text="资讯内容"
+                            android:textColor="#000"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/tv_news_date_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="2010-01-01"
+                            android:textColor="#999"
+                            android:textSize="@dimen/px_22" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_financial_classroom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/px_20"
+                android:background="#fff"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/px_40"
+                        android:layout_marginLeft="@dimen/px_30"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:layout_weight="1"
+                        android:text="理财课堂"
+                        android:textColor="#000"
+                        android:textSize="@dimen/px_34" />
+
+                    <TextView
+                        android:id="@+id/tv_class_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/px_80"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/px_30"
+                        android:drawableRight="@mipmap/right_arrow"
+                        android:gravity="center"
+                        android:text="更多"
+                        android:textColor="#666"
+                        android:textSize="@dimen/px_24" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/px_20"
+                    android:background="#fff"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/px_30"
+                    android:paddingRight="@dimen/px_30">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_class_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_class_1"
+                            android:layout_width="@dimen/px_100"
+                            android:layout_height="@dimen/px_100"
+                            android:background="#fff"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_default" />
+
+                        <TextView
+                            android:id="@+id/tv_class_title_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_toRightOf="@+id/img_class_1"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:text="资讯内容"
+                            android:textColor="#000"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/tv_class_date_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="2010-01-01"
+                            android:textColor="#999"
+                            android:textSize="@dimen/px_22" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/px_1"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:background="@color/cefefef" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_class_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_30"
+                        android:paddingBottom="@dimen/px_30">
+
+                        <ImageView
+                            android:id="@+id/img_class_2"
+                            android:layout_width="@dimen/px_100"
+                            android:layout_height="@dimen/px_100"
+                            android:background="#fff"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/img_default" />
+
+                        <TextView
+                            android:id="@+id/tv_class_title_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/px_30"
+                            android:layout_toRightOf="@+id/img_class_2"
+                            android:ellipsize="end"
+                            android:lines="2"
+                            android:text="资讯内容"
+                            android:textColor="#000"
+                            android:textSize="@dimen/px_28" />
+
+                        <TextView
+                            android:id="@+id/tv_class_date_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:ellipsize="end"
+                            android:lines="1"
+                            android:text="2010-01-01"
+                            android:textColor="#999"
+                            android:textSize="@dimen/px_22" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-        </ScrollView>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100"
+        android:background="@color/c26c4e9">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="发现"
+            android:textColor="@color/white"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:id="@+id/iv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/px_40"
+            android:src="@mipmap/ac_message" />
+
+    </RelativeLayout>
+
 </LinearLayout>

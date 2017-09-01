@@ -15,5 +15,7 @@
     <item type="id" name="quit"/>
     <item type="id" name="restart_preview"/>
 
+    <item name="viewpager_inner" type="id"/>
+
 
 </resources>

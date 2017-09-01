@@ -20,6 +20,9 @@ buildscript {
 
 allprojects {
     repositories {
+        maven {
+            url "http://maven.aliyun.com/nexus/content/repositories/releases"
+        }
         maven { url "https://jitpack.io" }
         mavenCentral()
         jcenter()

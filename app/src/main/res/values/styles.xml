@@ -25,27 +25,27 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/cff3e19</item>
-        <item name="colorPrimaryDark">#E3170D</item>
+        <item name="colorPrimary">@color/c26c4e9</item>
+        <item name="colorPrimaryDark">@color/c26c4e9</item>
         <item name="colorAccent">#eee</item>
-        <item name="colorButtonNormal">@color/cff3e19</item>
+        <item name="colorButtonNormal">@color/c26c4e9</item>
         <item name="colorControlHighlight">#eee</item>
         <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
     </style>
 
-    <style name="startpage" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@mipmap/about_header_bg</item>
-    </style>
+
 
     <!--设置dialogbutton颜色-->
     <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <!--修改AlertDialog按钮的颜色-->
-        <item name="colorAccent">@color/cff3e19</item>
+        <item name="colorAccent">@color/c26c4e9</item>
     </style>
 
     <style name="AppThemeNoStatus" parent="AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="divider">

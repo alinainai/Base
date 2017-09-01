@@ -80,6 +80,19 @@
     <!- -->
     <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="title_activity_list">LIstActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
+    <string name="qq_header_reset">下拉刷新</string>
+    <string name="qq_header_pull">下拉刷新</string>
+    <string name="qq_header_pull_over">释放立即刷新</string>
+    <string name="qq_header_refreshing">正在刷新...</string>
+    <string name="qq_header_completed">刷新成功</string>
+    <string name="pref_key_transition_time">pref_key_transition_time</string>
+
 </resources>
 
 

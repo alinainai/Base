@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/base_background"
+    android:orientation="vertical">
+
+    <!-- 标题 -->
+    <include layout="@layout/default_main_cart_title" />
+
+    <!-- 头像 -->
+    <RelativeLayout
+        android:id="@+id/detail_headIcon_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_100"
+        android:background="@drawable/layout_selector_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_head_pic"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <trunk.doi.base.view.CircleImageView
+            android:id="@+id/mine_user_icon_img"
+            android:layout_width="@dimen/px_84"
+            android:layout_height="@dimen/px_84"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/px_60"
+            android:src="@mipmap/user_icon"
+            app:civ_border_color="@color/base_background"
+            app:civ_border_width="1dp" />
+
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <View style="@style/divider" />
+    <!-- 昵称 -->
+    <RelativeLayout
+        android:id="@+id/detail_nickName_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@drawable/layout_selector_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_nickname"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:id="@+id/detail_nickName_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img1"
+            android:gravity="center_vertical"
+            android:text="@string/mine_nickname"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26" />
+
+        <ImageView
+            android:id="@+id/img1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <View style="@style/divider" />
+
+
+    <!-- 用户名 -->
+    <RelativeLayout
+        android:id="@+id/detail_userName_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@drawable/layout_selector_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_username"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img7"
+            android:gravity="center_vertical"
+            android:text="@string/mine_username"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26" />
+
+        <ImageView
+            android:id="@+id/img7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <View style="@style/divider" />
+
+    <!-- 性别 -->
+    <RelativeLayout
+        android:gravity="center_vertical"
+        android:id="@+id/detail_sex_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@drawable/layout_selector_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_sex"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:id="@+id/detail_sex_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/img2"
+            android:text="@string/mine_sex"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26" />
+
+        <ImageView
+            android:id="@+id/img2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+    <!-- 分割线 -->
+    <View style="@style/divider" />
+
+    <!-- 出生日期 -->
+    <RelativeLayout
+        android:id="@+id/detail_birthday_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@drawable/layout_selector_bg"
+        android:clickable="true" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_birsty"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:id="@+id/detail_birthday_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img3"
+            android:gravity="center_vertical"
+            android:text="@string/mine_birsty"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26" />
+
+        <ImageView
+            android:id="@+id/img3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+
+
+    <!-- 绑定手机 -->
+    <RelativeLayout
+        android:id="@+id/detail_band_phone_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:layout_marginTop="@dimen/px_20"
+        android:background="@drawable/layout_selector_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/band_phone"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:id="@+id/detail_phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img4"
+            android:gravity="center_vertical"
+            android:text="@string/band_phone"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26" />
+
+        <ImageView
+            android:id="@+id/img4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+    <View style="@style/divider" />
+    <!-- 服务地址管理 -->
+    <RelativeLayout
+        android:id="@+id/detail_service_address_rl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:background="@drawable/layout_selector_bg" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/px_32"
+            android:gravity="center_vertical"
+            android:text="@string/mine_service_address"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/font_size_26" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/img6"
+            android:gravity="center_vertical"
+            android:text="@string/mine_city"
+            android:textColor="@color/bottom_tab_text_color_nor"
+            android:textSize="@dimen/font_size_26"
+             />
+
+        <ImageView
+            android:id="@+id/img6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/con_btn_right" />
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>

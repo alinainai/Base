@@ -18,7 +18,7 @@ public class ToastUtils {
 	 * @param message
 	 */
 	public static void showShort(Context context, CharSequence message) {
-		showShort(context,  message,false);
+		showShort(context, message,false);
 	}
 	/**
 	 * 短时间显示Toast
@@ -29,7 +29,7 @@ public class ToastUtils {
 	 */
 	public static void showShort(Context context, CharSequence message,boolean isShowCenter) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+			toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
 			if(isShowCenter){
 				toast.setGravity(Gravity.CENTER, 0, 0);
 			}
@@ -47,7 +47,7 @@ public class ToastUtils {
 	 */
 	public static void showShort(Context context, int message) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+			toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_SHORT);
 			// toast.setGravity(Gravity.CENTER, 0, 0);
 		} else {
 			toast.setText(message);
@@ -63,7 +63,7 @@ public class ToastUtils {
 	 */
 	public static void showLong(Context context, CharSequence message) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+			toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
 			// toast.setGravity(Gravity.CENTER, 0, 0);
 		} else {
 			toast.setText(message);
@@ -79,7 +79,7 @@ public class ToastUtils {
 	 */
 	public static void showLong(Context context, int message) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, Toast.LENGTH_LONG);
+			toast = Toast.makeText(context.getApplicationContext(), message, Toast.LENGTH_LONG);
 			// toast.setGravity(Gravity.CENTER, 0, 0);
 		} else {
 			toast.setText(message);
@@ -95,7 +95,7 @@ public class ToastUtils {
 	 */
 	public static void show(Context context, CharSequence message, int duration) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, duration);
+			toast = Toast.makeText(context.getApplicationContext(), message, duration);
 			// toast.setGravity(Gravity.CENTER, 0, 0);
 		} else {
 			toast.setText(message);
@@ -112,7 +112,7 @@ public class ToastUtils {
 	 */
 	public static void show(Context context, int message, int duration) {
 		if (null == toast) {
-			toast = Toast.makeText(context, message, duration);
+			toast = Toast.makeText(context.getApplicationContext(), message, duration);
 			// toast.setGravity(Gravity.CENTER, 0, 0);
 		} else {
 			toast.setText(message);

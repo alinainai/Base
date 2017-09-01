@@ -13,10 +13,10 @@ android {
     buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "trunk.doi.base"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -69,10 +69,9 @@ dependencies {
     compile "com.android.support:palette-v7:$support_version"
     compile "com.android.support:design:$support_version"
     // 用于Java编写执行Java测试用例。
+
     //https://github.com/ZeroBrain/AndroidPermissions
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
-
     compile 'com.android.support.constraint:constraint-layout:1.0.0'
     compile 'com.jakewharton:butterknife:+'
     compile 'io.reactivex:rxjava:+'
@@ -90,11 +89,15 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:+'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-ads:10.2.6'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.aliyun.ams:alicloud-android-hotfix:3.0.8'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    compile 'com.yarolegovich:mp:1.0.5'
+    compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
 }
 repositories {
     mavenCentral()

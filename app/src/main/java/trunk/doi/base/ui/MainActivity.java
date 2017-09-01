@@ -1,11 +1,16 @@
 package trunk.doi.base.ui;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -21,11 +26,11 @@ import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
-import trunk.doi.base.ui.fragment.AccountFragment;
-import trunk.doi.base.ui.fragment.BlankFragment;
 import trunk.doi.base.ui.fragment.CartFragment;
-import trunk.doi.base.ui.fragment.ClassifyFragment;
 import trunk.doi.base.ui.fragment.MineFragment;
+import trunk.doi.base.ui.fragment.account.AccountFragment;
+import trunk.doi.base.ui.fragment.blank.BlankFragment;
+import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 import trunk.doi.base.util.ToastUtils;
 
 
@@ -59,9 +64,24 @@ public class MainActivity extends BaseActivity {
     private int index;
     // 当前fragment的index
     public int currentTabIndex;
-
     private Subscription rxSbscription;
 
+
+    private void setStatusColor(int color){
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.rgb(0x8f,0xc4,0x50));
+            getWindow().setStatusBarColor(getResources().getColor(color));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
+            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+        }
+
+    }
 
     private static final Map<Integer, String> FRAGMENS = new HashMap<Integer, String>() {
         {
@@ -88,18 +108,23 @@ public class MainActivity extends BaseActivity {
                 switch (i) {
                     case R.id.home_btn:
                         index = 0;
+                        setStatusColor(R.color.trans);
                         break;
                     case R.id.classify_btn:
                         index = 1;
+                        setStatusColor(R.color.cff3e19);
                         break;
                     case R.id.account_btn:
                         index = 2;
+                        setStatusColor(R.color.cff3e19);
                         break;
                     case R.id.shopping_btn:
                         index = 3;
+                        setStatusColor(R.color.cff3e19);
                         break;
                     case R.id.mine_btn:
                         index = 4;
+                        setStatusColor(R.color.cff3e19);
                         break;
                 }
                 changeFragment(currentTabIndex, index);
@@ -134,6 +159,8 @@ public class MainActivity extends BaseActivity {
                     }
                 });
 
+        setStatusColor(R.color.trans);
+
     }
 
     @Override
@@ -146,13 +173,13 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initData() {
         resetButton();
-    }
 
+    }
 
     public void changeFragment(int from, int to) {
         FragmentTransaction transaction = mFragManager.beginTransaction();
         //Fragment切换时的动画
-      //  transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        transaction.setTransition(FragmentTransaction.TRANSIT_NONE);
         Fragment tofragment = mFragManager.findFragmentByTag(FRAGMENS.get(to));
 
         if (tofragment == null) {
@@ -210,7 +237,19 @@ public class MainActivity extends BaseActivity {
         currentTabIndex = 0;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (!rxSbscription.isUnsubscribed()) {
+            rxSbscription.unsubscribe();
+        }
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

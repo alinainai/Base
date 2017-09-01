@@ -7,7 +7,7 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-import trunk.doi.base.https.HttpResult;
+import trunk.doi.base.bean.HttpResult;
 
 /**
  * Author: Othershe

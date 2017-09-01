@@ -3,141 +3,148 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_background"
-    android:orientation="vertical">、
-
+    android:orientation="vertical"
+    >
 
     <!-- 标题 -->
     <include layout="@layout/default_main_cart_title" />
 
+    <trunk.doi.base.view.pullrefresh.RefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
+
     <LinearLayout
-        android:background="#fff"
         android:id="@+id/lLayout_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
-    <!-- 意见反馈 -->
-    <TextView
-        android:id="@+id/setting_feedback_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_85"
-        android:background="@drawable/ripple_shadow"
-        android:gravity="center_vertical"
-        android:drawableRight="@mipmap/right_arrow"
-        android:text="@string/setting_feedback"
-        android:textColor="@color/base_text_color"
-        android:paddingLeft="@dimen/px_32"
-        android:paddingRight="@dimen/px_32"
-        android:textSize="@dimen/font_size_26"
-        />
-    <!-- 分割线 -->
-    <View style="@style/divider"
-        android:layout_marginLeft="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"
-        />
-
-    <!-- 推荐好友 -->
-    <TextView
-        android:id="@+id/setting_recommend_friends_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_85"
-        android:background="@drawable/ripple_shadow"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/px_32"
-        android:paddingRight="@dimen/px_32"
-        android:text="@string/setting_recommend_friends"
-        android:drawableRight="@mipmap/right_arrow"
-        android:textColor="@color/base_text_color"
-        android:textSize="@dimen/font_size_26" />
-    <!-- 分割线 -->
-    <View style="@style/divider"
-        android:layout_marginLeft="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"/>
-
-    <!-- 服务条款 -->
-    <TextView
-        android:drawableRight="@mipmap/right_arrow"
-        android:id="@+id/setting_service_terms_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_85"
-        android:background="@drawable/ripple_shadow"
-        android:gravity="center_vertical"
-        android:text="@string/setting_service_terms"
-        android:textColor="@color/base_text_color"
-        android:textSize="@dimen/font_size_26"
-        android:paddingLeft="@dimen/px_32"
-        android:paddingRight="@dimen/px_32"
-        />
-    <!-- 分割线 -->
-    <View style="@style/divider"
-        android:layout_marginLeft="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"/>
-
-    <!-- 关于我们 -->
-    <TextView
-        android:id="@+id/setting_about_us_tv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_85"
-        android:background="@drawable/ripple_shadow"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/px_32"
-        android:paddingRight="@dimen/px_32"
-        android:text="@string/setting_about_us"
-        android:drawableRight="@mipmap/right_arrow"
-        android:textColor="@color/base_text_color"
-        android:textSize="@dimen/font_size_26" />
-    <!-- 分割线 -->
-    <View style="@style/divider"
-        android:layout_marginLeft="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"
-        />
-
-    <!-- 清除本地缓存 -->
-    <RelativeLayout
-        android:id="@+id/setting_clear_cache_rl"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_85"
-        android:clickable="true"
-        android:background="@drawable/ripple_shadow"
-        android:paddingLeft="@dimen/px_32"
-        android:paddingRight="@dimen/px_32"
-        >
-
-        <!-- 清除缓存 -->
+        <!-- 意见反馈 -->
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:id="@+id/setting_feedback_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
+            android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:text="@string/setting_clear_cache"
+            android:paddingLeft="@dimen/px_32"
+            android:paddingRight="@dimen/px_32"
+            android:text="@string/setting_feedback"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/px_32" />
+        <!-- 分割线 -->
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="@dimen/px_32"
+            android:layout_marginRight="@dimen/px_32" />
 
-        <!-- 缓存大小的显示 -->
+        <!-- 推荐好友 -->
         <TextView
-            android:id="@+id/setting_cache_size_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
+            android:id="@+id/setting_recommend_friends_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
+            android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
-            android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
-    </RelativeLayout>
-    <!-- 分割线 -->
-    <View style="@style/divider"
-        android:layout_marginLeft="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"
-        />
+            android:paddingLeft="@dimen/px_32"
+            android:paddingRight="@dimen/px_32"
+            android:text="@string/setting_recommend_friends"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/px_32" />
+        <!-- 分割线 -->
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="@dimen/px_32"
+            android:layout_marginRight="@dimen/px_32" />
 
-    <!-- 检查更新 -->
+        <!-- 服务条款 -->
+        <TextView
+            android:id="@+id/setting_service_terms_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
+            android:drawableRight="@mipmap/right_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_32"
+            android:paddingRight="@dimen/px_32"
+            android:text="@string/setting_service_terms"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/px_32" />
+        <!-- 分割线 -->
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="@dimen/px_32"
+            android:layout_marginRight="@dimen/px_32" />
+
+        <!-- 关于我们 -->
+        <TextView
+            android:id="@+id/setting_about_us_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
+            android:drawableRight="@mipmap/right_arrow"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/px_32"
+            android:paddingRight="@dimen/px_32"
+            android:text="@string/setting_about_us"
+            android:textColor="@color/base_text_color"
+            android:textSize="@dimen/px_32" />
+        <!-- 分割线 -->
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="@dimen/px_32"
+            android:layout_marginRight="@dimen/px_32" />
+
+        <!-- 清除本地缓存 -->
+        <RelativeLayout
+            android:id="@+id/setting_clear_cache_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
+            android:clickable="true"
+            android:paddingLeft="@dimen/px_32"
+            android:paddingRight="@dimen/px_32">
+
+            <!-- 清除缓存 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/setting_clear_cache"
+                android:textColor="@color/base_text_color"
+                android:textSize="@dimen/px_32" />
+
+            <!-- 缓存大小的显示 -->
+            <TextView
+                android:id="@+id/setting_cache_size_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:textColor="@color/bottom_tab_text_color_nor"
+                android:textSize="@dimen/px_32" />
+        </RelativeLayout>
+        <!-- 分割线 -->
+        <View
+            style="@style/divider"
+            android:layout_marginLeft="@dimen/px_32"
+            android:layout_marginRight="@dimen/px_32" />
+
+        <!-- 检查更新 -->
         <RelativeLayout
             android:id="@+id/setting_check_update_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_85"
-            android:background="@drawable/ripple_shadow"
+            android:layout_height="@dimen/px_100"
+            android:background="@drawable/layout_selector_bg"
             android:paddingLeft="@dimen/px_32"
-            android:paddingRight="@dimen/px_32"
-            >
+            android:paddingRight="@dimen/px_32">
 
             <!-- 检查更新 -->
             <TextView
@@ -146,7 +153,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/setting_check_update"
                 android:textColor="@color/base_text_color"
-                android:textSize="@dimen/font_size_26" />
+                android:textSize="@dimen/px_32" />
 
             <TextView
                 android:id="@+id/update_version_num_tv"
@@ -156,23 +163,26 @@
                 android:gravity="center_vertical"
                 android:text="1.0.0"
                 android:textColor="@color/bottom_tab_text_color_nor"
-                android:textSize="@dimen/font_size_26" />
+                android:textSize="@dimen/px_32" />
         </RelativeLayout>
 
 
         <!-- 退出登录 -->
-    <Button
-        android:id="@+id/setting_exit_login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/px_80"
-        android:layout_marginLeft="@dimen/px_30"
-        android:layout_marginRight="@dimen/px_30"
-        android:layout_marginTop="@dimen/px_20"
-        android:background="@drawable/ripple_shadow"
-        android:padding="0dp"
-        android:text="@string/setting_exit_login"
-        android:textColor="@color/white"
-        android:textSize="@dimen/font_size_30" />
+        <Button
+            android:id="@+id/setting_exit_login_btn"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_100"
+            android:layout_marginBottom="@dimen/px_30"
+            android:layout_marginLeft="@dimen/px_30"
+            android:layout_marginRight="@dimen/px_30"
+            android:layout_marginTop="@dimen/px_50"
+            android:background="@drawable/layout_selector_bg"
+            android:padding="0dp"
+            android:text="@string/setting_exit_login"
+            android:textColor="@color/c26c4e9"
+            android:textSize="@dimen/px_32" />
     </LinearLayout>
+    </ScrollView>
+    </trunk.doi.base.view.pullrefresh.RefreshLayout>
 
 </LinearLayout>
