@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+        <TextView
+            android:gravity="center"
+            android:id="@+id/main_cart_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/px_80"
+            android:text="标题"
+            android:textColor="@color/black"
+            android:textSize="@dimen/px_36"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            />
 
-    <android.support.v4.widget.SwipeRefreshLayout
+        <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/type_item_swipfreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -15,7 +31,6 @@
             android:overScrollMode="never"
             android:scrollbars="vertical" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
 
-
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

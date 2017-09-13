@@ -72,6 +72,7 @@ dependencies {
 
     //https://github.com/ZeroBrain/AndroidPermissions
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
     compile 'com.android.support.constraint:constraint-layout:1.0.0'
     compile 'com.jakewharton:butterknife:+'
     compile 'io.reactivex:rxjava:+'
@@ -96,8 +97,6 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile 'com.yarolegovich:mp:1.0.5'
-    compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
 }
 repositories {
     mavenCentral()

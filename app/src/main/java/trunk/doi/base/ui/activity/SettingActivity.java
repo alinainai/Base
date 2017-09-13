@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.ui.activity.test.MainActivity;
+import trunk.doi.base.ui.activity.test.ViewMvActivity;
 import trunk.doi.base.ui.activity.test.shop.ShopActivity;
 import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
 import trunk.doi.base.view.pullrefresh.RefreshLayout;
@@ -72,6 +73,8 @@ public class SettingActivity extends BaseActivity {
 
 
 
+
+
     @OnClick({R.id.ll_back, R.id.setting_feedback_tv, R.id.setting_recommend_friends_tv, R.id.setting_service_terms_tv, R.id.setting_about_us_tv, R.id.setting_cache_size_tv, R.id.setting_check_update_rl, R.id.setting_exit_login_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -88,12 +91,16 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(SettingActivity.this,MainActivity.class));
                 break;
             case R.id.setting_about_us_tv:
+                startActivity(new Intent(SettingActivity.this,ContactActivity.class));
                 break;
             case R.id.setting_cache_size_tv:
+
+
                 break;
             case R.id.setting_check_update_rl:
                 break;
             case R.id.setting_exit_login_btn:
+                startActivity(new Intent(SettingActivity.this,ViewMvActivity.class));
                 break;
         }
     }

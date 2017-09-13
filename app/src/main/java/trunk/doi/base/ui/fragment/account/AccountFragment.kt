@@ -23,7 +23,7 @@ class AccountFragment : BaseFragment() {
 
     override fun initView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?) {
 
-
+      
 
     }
 

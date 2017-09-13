@@ -6,6 +6,11 @@
     android:animateLayoutChanges="true"
     android:background="#efefef"
     android:orientation="vertical">
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/c26c4e9" />
 
     <RelativeLayout
         android:layout_width="match_parent"

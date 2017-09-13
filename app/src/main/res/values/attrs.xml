@@ -29,6 +29,22 @@
         <attr name="animDuration" format="integer" />
     </declare-styleable>
 
+
+    <!--************ QMUILoading ***********-->
+    <declare-styleable name="QMUILoadingView">
+        <attr name="qmui_loading_view_size" format="dimension"/>
+        <attr name="android:color"/>
+    </declare-styleable>
+    <attr name="QMUILoadingStyle" format="reference"/>
+
+    <!-- EmptyView start -->
+    <declare-styleable name="QMUIEmptyView">
+        <attr name="qmui_show_loading" format="boolean"/>
+        <attr name="qmui_title_text" format="string"/>
+        <attr name="qmui_detail_text" format="string"/>
+        <attr name="qmui_btn_text" format="string"/>
+    </declare-styleable>
+
     <declare-styleable name="ShootRefreshView">
         <attr name="strokeColor" format="color|reference" />
         <attr name="strokeWidth" format="dimension|reference" />

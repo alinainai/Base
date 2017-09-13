@@ -3,11 +3,16 @@
     android:layout_width="150dp"
     android:layout_height="70dp"
     android:layout_margin="4dp"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    >
 
     <TextView
+        android:clickable="true"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
         android:gravity="center"
         android:id="@+id/image"
+        android:textColor="@color/bottom_text_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

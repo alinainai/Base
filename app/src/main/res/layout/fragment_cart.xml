@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/img1"
-        android:scaleType="fitXY"
-        android:src="@mipmap/splash"
+    <View
+        android:id="@+id/status_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-    <ImageView
-        android:id="@+id/img_close"
-        android:background="#fff"
-        android:src="@mipmap/close"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/px_32"
-        android:layout_marginRight="@dimen/px_32"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        />
-
+        android:layout_height="20dp"
+        android:background="@color/c26c4e9" />
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
@@ -72,11 +58,4 @@
         </LinearLayout>
     </ScrollView>
 
-
-    <View
-        android:background="#f00"
-        android:layout_height="@dimen/px_100"
-        android:layout_width="match_parent"
-        />
-
-</RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="trunk.doi.base.ui.activity.ContactActivity">
+
+
+    <TextView
+        android:id="@+id/tv_get"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取数据"
+        />
+
+    <TextView
+        android:id="@+id/tv_get_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="获取权限"
+        />
+
+    <TextView
+            android:id="@+id/tv_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+
+
+
+
+</LinearLayout>

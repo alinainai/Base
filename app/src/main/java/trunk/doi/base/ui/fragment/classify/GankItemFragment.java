@@ -40,6 +40,7 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
 
 
+
     @Override
     protected GankItemPresenter initPresenter() {
         return new GankItemPresenter();
@@ -107,6 +108,8 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.c26c4e9));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         //实现首次自动显示加载提示
+
+
         mSwipeRefreshLayout.post(new Runnable() {
             @Override
             public void run() {

@@ -16,14 +16,26 @@ import trunk.doi.base.ui.activity.test.discretescrollview.transform.ScaleTransfo
  * Created by yarolegovich on 07.03.2017.
  */
 
-public class ShopActivity extends AppCompatActivity implements DiscreteScrollView.CurrentItemChangeListener,
-        View.OnClickListener {
+public class ShopActivity extends AppCompatActivity implements View.OnClickListener {
 
     private List<Item> data;
     private Shop shop;
 
 
     private DiscreteScrollView itemPicker;
+    private DiscreteScrollView itemPicker_1;
+
+    private String aName;
+    private String aPrice;
+
+    private DiscreteScrollView.CurrentItemChangeListener changeListener= new DiscreteScrollView.CurrentItemChangeListener(){
+
+        @Override
+        public void onCurrentItemChanged(RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+
+        }
+    };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,18 +45,35 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
 
 
         shop = Shop.get();
-        data = shop.getData();
+        data =shop.getData();
         itemPicker = (DiscreteScrollView) findViewById(R.id.item_picker);
-        itemPicker.setCurrentItemChangeListener(this);
+        itemPicker.setCurrentItemChangeListener(null);
+        itemPicker.setCurrentItemChangeListener(new DiscreteScrollView.CurrentItemChangeListener() {
+            @Override
+            public void onCurrentItemChanged(RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+                itemPicker_1.smoothScrollToPosition(adapterPosition);
+                aName=data.get(adapterPosition).getName();
+            }
+        });
         itemPicker.setAdapter(new ShopAdapter(data));
         itemPicker.setItemTransitionTimeMillis(150);
         itemPicker.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
                 .build());
 
+        itemPicker_1 = (DiscreteScrollView) findViewById(R.id.item_picker_1);
 
-
-
+        itemPicker_1.setCurrentItemChangeListener(new DiscreteScrollView.CurrentItemChangeListener() {
+            @Override
+            public void onCurrentItemChanged(RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+                aPrice=data.get(adapterPosition).getPrice();
+            }
+        });
+        itemPicker_1.setAdapter(new ShopAdapter(data));
+        itemPicker_1.setItemTransitionTimeMillis(150);
+        itemPicker_1.setItemTransformer(new ScaleTransformer.Builder()
+                .setMinScale(0.8f)
+                .build());
 
 
     }
@@ -54,12 +83,6 @@ public class ShopActivity extends AppCompatActivity implements DiscreteScrollVie
 
     }
 
-
-
-    @Override
-    public void onCurrentItemChanged(RecyclerView.ViewHolder viewHolder, int position) {
-
-    }
 
 
 }

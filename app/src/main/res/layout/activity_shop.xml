@@ -18,6 +18,11 @@
         android:id="@+id/item_picker"
         android:layout_width="match_parent"
         android:layout_height="300dp" />
+    <trunk.doi.base.ui.activity.test.discretescrollview.DiscreteScrollView
+        android:background="#0f0"
+        android:id="@+id/item_picker_1"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
     <ImageView android:layout_width="match_parent"
         android:layout_height="450dp"
         android:background="#f00"

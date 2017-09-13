@@ -10,9 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,12 +27,8 @@ import trunk.doi.base.util.ScreenUtils;
  */
 public class ClassifyFragment extends BaseFragment {
     public static final String TAG = "ClassifyFragment";
-    @BindView(R.id.img_back)
-    ImageView imgBack;
-    @BindView(R.id.ll_back)
-    LinearLayout llBack;
-    @BindView(R.id.main_cart_title)
-    TextView mainCartTitle;
+//    @BindView(R.id.main_cart_title)
+//    TextView mainCartTitle;
     @BindView(R.id.tablayout)
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
@@ -68,8 +61,7 @@ public class ClassifyFragment extends BaseFragment {
             mStatusBar.setVisibility(View.GONE);
         }
 
-        mainCartTitle.setText("分类");
-        llBack.setVisibility(View.GONE);
+//        mainCartTitle.setText("分类");
         mTitles= AppUtils.stringArrayToList(context, R.array.gank);
         mFragments = new ArrayList<>();
         for (String subtype : mTitles) {

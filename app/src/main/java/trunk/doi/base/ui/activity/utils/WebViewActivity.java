@@ -4,20 +4,24 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.http.SslError;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.tencent.smtt.export.external.interfaces.SslError;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.sdk.DownloadListener;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -159,6 +163,7 @@ public class WebViewActivity extends BaseActivity {
         //    settings.setBlockNetworkImage(true); //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
         //   String t = Uri.parse(url).getQueryParameter("title");
 
+        webView.setDownloadListener(new GQDownloadListener());
     }
 
     @Override
@@ -197,12 +202,6 @@ public class WebViewActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
-                if (webView != null) {
-                    if (webView.canGoBack()) {
-                        webView.goBack();// 返回前一个页面
-                        return;
-                    }
-                }
                 finish();
                 overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
                 break;
@@ -213,5 +212,20 @@ public class WebViewActivity extends BaseActivity {
                 webView.reload();
                 break;
         }
+    }
+    public class GQDownloadListener implements DownloadListener {
+
+        @Override
+        public void onDownloadStart(String url, String userAgent,
+                                    String contentDisposition, String mimetype, long contentLength) {
+            //检测是下载apk
+            if (url.endsWith(".apk")) {
+                //通过uri与Intent来调用系统通知，查看进度
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        }
+
     }
 }

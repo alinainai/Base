@@ -11,6 +11,7 @@ import com.squareup.leakcanary.LeakCanary;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
+import com.tencent.smtt.sdk.QbSdk;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,7 +79,9 @@ public class BaseApplication extends MultiDexApplication {
                         }catch (IOException e){}}
                 }).start();
         }
-        //内存泄露
+
+
+        //内存泄露检测框架
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
@@ -86,6 +89,15 @@ public class BaseApplication extends MultiDexApplication {
         }
         LeakCanary.install(this);
         instance = this;//初始化appliacation
+
+
+
+        //初始化腾讯x5内核
+        // QbSdk 的预加载接口 initX5Environment ，可参考接入示例，第一个参数传入 context，第二个参数传入 callback，不需要 callback 的可以传入 null
+        QbSdk.initX5Environment(instance,null);
+
+
+        //封装阿里热修复
         // initialize最好放在attachBaseContext最前面
         SophixManager.getInstance().setContext(this)
                 .setAppVersion(String.valueOf(AppUtils.getVersionName(BaseApplication.instance)))
@@ -179,7 +191,6 @@ public class BaseApplication extends MultiDexApplication {
         super.onLowMemory();
         System.gc();
     }
-
 
 
 }

@@ -1,7 +1,6 @@
 package trunk.doi.base.ui;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -74,7 +73,7 @@ public class MainActivity extends BaseActivity {
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.rgb(0x8f,0xc4,0x50));
+//            getWindow().setStatusBarColor(Color.rgb(0x8f,0xc4,0x50));
             getWindow().setStatusBarColor(getResources().getColor(color));
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
@@ -112,19 +111,19 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.classify_btn:
                         index = 1;
-                        setStatusColor(R.color.cff3e19);
+                        setStatusColor(R.color.gradientPartlyCloudy_c1);
                         break;
                     case R.id.account_btn:
                         index = 2;
-                        setStatusColor(R.color.cff3e19);
+                        setStatusColor(R.color.gradientPartlyCloudy_c1);
                         break;
                     case R.id.shopping_btn:
                         index = 3;
-                        setStatusColor(R.color.cff3e19);
+                        setStatusColor(R.color.gradientPartlyCloudy_c1);
                         break;
                     case R.id.mine_btn:
                         index = 4;
-                        setStatusColor(R.color.cff3e19);
+                        setStatusColor(R.color.gradientPartlyCloudy_c1);
                         break;
                 }
                 changeFragment(currentTabIndex, index);

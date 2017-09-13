@@ -108,5 +108,8 @@
         <item>@color/gradientClear_c3</item>
     </array>
 
+    <color name="status_color">@color/c0c9ee3</color>
+
+
 
 </resources>

@@ -1,5 +1,6 @@
 package trunk.doi.base.ui.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.net.SocketTimeoutException;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import retrofit2.HttpException;
 import rx.Subscriber;
@@ -18,6 +20,7 @@ import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.https.api.MessageApi;
 import trunk.doi.base.https.net.NetManager;
 import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.util.ScreenUtils;
 import trunk.doi.base.util.ToastUtils;
 
 /**
@@ -25,6 +28,12 @@ import trunk.doi.base.util.ToastUtils;
  * 首页的fragment  (首页第四个栏目)
  */
 public class CartFragment extends BaseFragment {
+
+
+    @BindView(R.id.status_bar)
+    View mStatusBar;
+
+
 
     public static final String TAG = "CartFragment";
 
@@ -42,7 +51,13 @@ public class CartFragment extends BaseFragment {
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mStatusBar.setVisibility(View.VISIBLE);
+            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(context);
+            mStatusBar.setLayoutParams(mStatusBar.getLayoutParams());
+        } else {
+            mStatusBar.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -55,12 +70,10 @@ public class CartFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.img_close,R.id.img_get})
+    @OnClick({R.id.img_get})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.img_close:
 
-                break;
             case R.id.img_get:
 
                 Log.e("TAG","img_get");
