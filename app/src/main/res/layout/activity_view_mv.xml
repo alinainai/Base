@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     >
-
-        <trunk.doi.base.ui.activity.test.CustomImageView
-            android:id="@+id/cs_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="hello"
             />
-
-</RelativeLayout>
-
+        <Button
+            android:id="@+id/readUserButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Get a User"
+            />
+        <Button
+            android:id="@+id/readEventButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Get a Event"
+            />
+        <Button
+            android:id="@+id/writeEventButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Input a Event"
+            />
+</LinearLayout>
 

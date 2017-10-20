@@ -67,4 +67,30 @@
     </declare-styleable>
 
 
+    <declare-styleable name="TouchPullView">
+        <attr name="pColor" format="color" />
+        <attr name="pRadius" format="dimension" />
+        <attr name="pDragHeight" format="dimension"></attr>
+        <attr name="pTangentAngle" format="integer" />
+        <attr name="pTargetWidth" format="dimension" />
+        <attr name="pTargetGravityHeight" format="dimension" />
+        <attr name="pContentDrawable" format="reference" />
+        <attr name="pContentDrawableMargin" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="HorizontalProgressbarWithProgress">
+        <attr name="progress_unreach_color" format="color" />
+        <attr name="progress_unreach_height" format="dimension" />
+        <attr name="progress_reach_color" format="color"></attr>
+        <attr name="progress_reach_height" format="dimension" />
+        <attr name="progress_text_color" format="color" />
+        <attr name="progress_text_size" format="dimension" />
+        <attr name="progress_text_offset" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundProgressBarWithProgress">
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
+
+
 </resources>

@@ -25,8 +25,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/gradientPartlyCloudy_c2</item>
-        <item name="colorPrimaryDark">@color/gradientPartlyCloudy_c1</item>
+        <item name="colorPrimary">@color/c26c4e9</item>
+        <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">#eee</item>
         <item name="colorButtonNormal">@color/c26c4e9</item>
         <item name="colorControlHighlight">#eee</item>

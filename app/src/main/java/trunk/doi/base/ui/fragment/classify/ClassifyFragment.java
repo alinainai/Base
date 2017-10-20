@@ -10,6 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,7 @@ import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.base.mvp.BaseMvpFragment;
 import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.ScreenUtils;
+import trunk.doi.base.view.BadgeView;
 
 /**
  * Created by ly on 2016/5/30 11:05.
@@ -39,6 +42,9 @@ public class ClassifyFragment extends BaseFragment {
     private List<BaseMvpFragment> mFragments;
     private List<String> mTitles= new ArrayList<>();
     private TypePageAdapter mTypeAdapter;
+
+    private ArrayList<BadgeView> badges=new ArrayList<>();
+    private List<Integer> mBadgeCountList = new ArrayList<Integer>();
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -73,6 +79,13 @@ public class ClassifyFragment extends BaseFragment {
         mViewPager.setOffscreenPageLimit(mTitles.size() - 1);
         mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mTabLayout.setupWithViewPager(mViewPager);
+        for(int i=0;i<mTabLayout.getTabCount();i++){
+
+
+
+        }
+
+
     }
 
     @Override
@@ -83,6 +96,40 @@ public class ClassifyFragment extends BaseFragment {
     public void initData(Bundle savedInstanceState) {
 
 
+
+
+
+    }
+
+    /**
+     * 设置Tablayout上的标题的角标
+     */
+    private void setUpTabBadge() {
+        // 1. 最简单
+//        for (int i = 0; i < mFragmentList.size(); i++) {
+//            mBadgeViews.get(i).setTargetView(((ViewGroup) mTabLayout.getChildAt(0)).getChildAt(i));
+//            mBadgeViews.get(i).setText(formatBadgeNumber(mBadgeCountList.get(i)));
+//        }
+
+        // 2. 最实用
+        for (int i = 0; i < mFragments.size(); i++) {
+            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+
+            // 更新Badge前,先remove原来的customView,否则Badge无法更新
+            View customView = tab.getCustomView();
+            if (customView != null) {
+                ViewParent parent = customView.getParent();
+                if (parent != null) {
+                    ((ViewGroup) parent).removeView(customView);
+                }
+            }
+
+            // 更新CustomView
+            tab.setCustomView(mTypeAdapter.getTabItemView(i));
+        }
+
+        // 需加上以下代码,不然会出现更新Tab角标后,选中的Tab字体颜色不是选中状态的颜色
+        mTabLayout.getTabAt(mTabLayout.getSelectedTabPosition()).getCustomView().setSelected(true);
     }
 
     public class TypePageAdapter extends FragmentPagerAdapter {
@@ -112,5 +159,16 @@ public class ClassifyFragment extends BaseFragment {
         public CharSequence getPageTitle(int position) {
             return titles.get(position);
         }
+
+        public View getTabItemView(int position) {
+            View view = LayoutInflater.from(getActivity()).inflate(R.layout.tab_layout_item, null);
+            TextView textView = (TextView) view.findViewById(R.id.textview);
+            textView.setText(titles.get(position));
+            View target = view.findViewById(R.id.badgeview_target);
+            return view;
+        }
+
+
+
     }
 }

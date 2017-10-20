@@ -8,6 +8,13 @@ def releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
 
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+def verCode = 14
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -18,8 +25,19 @@ android {
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
     }
+
+//    signingConfigs {
+//        signingConfig {
+//            keyAlias 'xxx'
+//            keyPassword 'xxx'
+//            storeFile file('xxx')
+//            storePassword 'xxx'
+//        }
+//    }
+
     buildTypes {
 
         debug {
@@ -34,15 +52,15 @@ android {
             zipAlignEnabled true // 开启压缩
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def outputFile = output.outputFile
-                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                        def fileName = "base_${defaultConfig.versionName}_${releaseTime()}.apk"
-                        output.outputFile = new File(outputFile.parent, fileName)
-                    }
-                }
-            }
+//            applicationVariants.all { variant ->
+//                variant.outputs.each { output ->
+//                    def outputFile = output.outputFile
+//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                        def fileName = "base_${defaultConfig.versionName}_${releaseTime()}.apk"
+//                        output.outputFile = new File(outputFile.parent, fileName)
+//                    }
+//                }
+//            }
             buildConfigField("boolean", "YLog", "false");
         }
     }
@@ -97,6 +115,7 @@ dependencies {
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    compile 'com.jakewharton:disklrucache:2.0.2'
 }
 repositories {
     mavenCentral()

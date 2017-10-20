@@ -130,6 +130,8 @@ public class AppUtils {
         return null;
     }
 
+
+
     /**
      * [获取应用程序版本名称信息]
      */

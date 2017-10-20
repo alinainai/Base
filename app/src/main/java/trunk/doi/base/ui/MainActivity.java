@@ -111,19 +111,19 @@ public class MainActivity extends BaseActivity {
                         break;
                     case R.id.classify_btn:
                         index = 1;
-                        setStatusColor(R.color.gradientPartlyCloudy_c1);
+                        setStatusColor(R.color.black);
                         break;
                     case R.id.account_btn:
                         index = 2;
-                        setStatusColor(R.color.gradientPartlyCloudy_c1);
+                        setStatusColor(R.color.black);
                         break;
                     case R.id.shopping_btn:
                         index = 3;
-                        setStatusColor(R.color.gradientPartlyCloudy_c1);
+                        setStatusColor(R.color.black);
                         break;
                     case R.id.mine_btn:
                         index = 4;
-                        setStatusColor(R.color.gradientPartlyCloudy_c1);
+                        setStatusColor(R.color.black);
                         break;
                 }
                 changeFragment(currentTabIndex, index);

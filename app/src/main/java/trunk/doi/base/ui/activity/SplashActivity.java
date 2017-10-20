@@ -51,6 +51,13 @@ public class SplashActivity extends BaseActivity {
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        String[] pers={  android.Manifest.permission.READ_PHONE_STATE,
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                    android.Manifest.permission.RECEIVE_SMS};
+            PermissionUtils.requestAppPermissions(SplashActivity.this,1008,pers);
+
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
 //            View decorView = getWindow().getDecorView();
 //            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -77,12 +84,12 @@ public class SplashActivity extends BaseActivity {
 //
 //        }else{
 
-            if(!PermissionUtils.hasPermissions(SplashActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                PermissionUtils.requestPermissions(SplashActivity.this,1001,android.Manifest.permission.READ_EXTERNAL_STORAGE);
-            }else{
-                // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-                SophixManager.getInstance().queryAndLoadNewPatch();
-            }
+//            if(!PermissionUtils.hasPermissions(SplashActivity.this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+//                PermissionUtils.requestPermissions(SplashActivity.this,1001,android.Manifest.permission.READ_EXTERNAL_STORAGE);
+//            }else{
+//                // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
+//                SophixManager.getInstance().queryAndLoadNewPatch();
+//            }
 
             handler.postDelayed(toMain,1000);
 
@@ -191,7 +198,7 @@ public class SplashActivity extends BaseActivity {
 //    public void onClick(View view) {
 //        switch (view.getId()) {
 //            case R.id.tv_to_main:
-//                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+//                SplashActivity.this.startActivity(new Intent(SplashActivity.this, LruActivity.class));
 //                SplashActivity.this.finish();
 //                SplashActivity.this.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 //                break;
