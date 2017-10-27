@@ -23,11 +23,10 @@ import rx.Subscription;
 import rx.functions.Action1;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
+import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.ui.fragment.CartFragment;
-import trunk.doi.base.ui.fragment.MineFragment;
-import trunk.doi.base.ui.fragment.account.AccountFragment;
 import trunk.doi.base.ui.fragment.blank.BlankFragment;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 import trunk.doi.base.util.ToastUtils;
@@ -53,11 +52,11 @@ public class MainActivity extends BaseActivity {
     RadioGroup rg_radio;
      //container
     private FragmentManager mFragManager;//fragment管理器
-    private ClassifyFragment mClassifyFragment;//分类的fragment
-    private CartFragment mShoppingFragment;//购物车的fragment
-    private AccountFragment mAccountFragment;//我的账户
-    private BlankFragment mHomeFragment;//首页的fragment
-    private MineFragment mMineFragment;//我的fragment
+    private BaseFragment mClassifyFragment;//分类的fragment
+    private BaseFragment mShoppingFragment;//购物车的fragment
+    private BaseFragment mAccountFragment;//我的账户
+    private BaseFragment mHomeFragment;//首页的fragment
+    private BaseFragment mMineFragment;//我的fragment
 
     public static boolean content = false;
     private int index;
@@ -86,9 +85,9 @@ public class MainActivity extends BaseActivity {
         {
             put(0, BlankFragment.TAG);
             put(1, ClassifyFragment.TAG);
-            put(2, AccountFragment.Companion.getTAG());
+            put(2, BlankFragment.TAG);
             put(3, CartFragment.TAG);
-            put(4, MineFragment.Companion.getTAG());
+            put(4, BlankFragment.TAG);
         }
     };
 
@@ -214,18 +213,8 @@ public class MainActivity extends BaseActivity {
             }
             return mShoppingFragment;
         }
-        if (MineFragment.Companion.getTAG().equals(tag)) {
-            if (mMineFragment == null) {
-                mMineFragment = MineFragment.Companion.newInstance();
-            }
-            return mMineFragment;
-        }
-        if (AccountFragment.Companion.getTAG().equals(tag)) {
-            if (mAccountFragment == null) {
-                mAccountFragment = AccountFragment.Companion.newInstance();
-            }
-            return mAccountFragment;
-        }
+
+
         return null;
     }
 

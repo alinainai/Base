@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'android-apt'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.jakewharton.butterknife'
+
 
 
 def releaseTime() {
@@ -17,7 +16,7 @@ def verCode = 14
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "trunk.doi.base"
         minSdkVersion 19
@@ -29,14 +28,6 @@ android {
 
     }
 
-//    signingConfigs {
-//        signingConfig {
-//            keyAlias 'xxx'
-//            keyPassword 'xxx'
-//            storeFile file('xxx')
-//            storePassword 'xxx'
-//        }
-//    }
 
     buildTypes {
 
@@ -47,21 +38,8 @@ android {
         }
 
         release {
-            minifyEnabled true
-            shrinkResources true // 移除无用资源
-            zipAlignEnabled true // 开启压缩
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-//            applicationVariants.all { variant ->
-//                variant.outputs.each { output ->
-//                    def outputFile = output.outputFile
-//                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
-//                        def fileName = "base_${defaultConfig.versionName}_${releaseTime()}.apk"
-//                        output.outputFile = new File(outputFile.parent, fileName)
-//                    }
-//                }
-//            }
-            buildConfigField("boolean", "YLog", "false");
         }
     }
     configurations.all {
@@ -89,10 +67,9 @@ dependencies {
     // 用于Java编写执行Java测试用例。
 
     //https://github.com/ZeroBrain/AndroidPermissions
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
     compile 'com.android.support.constraint:constraint-layout:1.0.0'
-    compile 'com.jakewharton:butterknife:+'
+
     compile 'io.reactivex:rxjava:+'
     compile 'io.reactivex:rxandroid:+'
     compile 'com.trello:rxlifecycle:+'
@@ -108,15 +85,17 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:+'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.google.android.gms:play-services-ads:10.2.6'
-    compile 'com.android.support:design:25.3.1'
+
     compile 'com.aliyun.ams:alicloud-android-hotfix:3.0.8'
     testCompile 'junit:junit:4.12'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile 'com.jakewharton:disklrucache:2.0.2'
 }
 repositories {
     mavenCentral()
+    google()
 }

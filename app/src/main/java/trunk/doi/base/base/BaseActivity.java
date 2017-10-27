@@ -19,15 +19,15 @@ import trunk.doi.base.util.ScreenShotListenManager;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
-    protected Context context;
+    protected Context mContext;
     protected Unbinder mUnbinder;
-    protected ScreenShotListenManager manager;
+//    protected ScreenShotListenManager manager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
        // System.gc();
-//        ActivityController.addActivity(this);
+        ActivityController.addActivity(this);
         //允许使用转换动画
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -39,39 +39,56 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(initLayoutId());
 
         mUnbinder = ButterKnife.bind(this);
-        context = this;
+        mContext = this;
         initView( savedInstanceState);
         setListener();
         initData();
 
-        manager = ScreenShotListenManager.newInstance(context);
-        manager.setListener(
-                new ScreenShotListenManager.OnScreenShotListener() {
-                    public void onShot(String imagePath) {
-
-                        new CustomDialog(BaseActivity.this,imagePath){
-
-                            @Override
-                            public void sure() {
-
-                            }
-                        }.show();
-                    }
-                }
-        );
+//        manager = ScreenShotListenManager.newInstance(context);
+//        manager.setListener(
+//                new ScreenShotListenManager.OnScreenShotListener() {
+//                    public void onShot(String imagePath) {
+//
+//                        new CustomDialog(BaseActivity.this,imagePath){
+//
+//                            @Override
+//                            public void sure() {
+//
+//                            }
+//                        }.show();
+//                    }
+//                }
+//        );
 
     }
 
+    /**
+     * 设置布局ID
+     * @return
+     */
     protected abstract int initLayoutId();
+
+    /**
+     * 初始化布局
+     * @param savedInstanceState
+     */
     protected abstract void initView( @Nullable Bundle savedInstanceState);//savedInstanceState获取照片时使用
+
+    /**
+     * 设置监听器
+     */
     protected abstract void setListener();
+
+    /**
+     * 初始化数据
+     */
     protected abstract void initData();
 
     @Override
     protected void onDestroy() {
         mUnbinder.unbind();
         super.onDestroy();
-//        ActivityController.removeActivity(this);
+        ActivityController.removeActivity(this);
     }
 
     @Override

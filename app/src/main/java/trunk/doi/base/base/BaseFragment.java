@@ -17,7 +17,7 @@ import butterknife.Unbinder;
  * fragment基类
  */
 public abstract class BaseFragment extends RxFragment {
-    protected Context context;
+    protected Context mContext;
     public View rootView;
     protected Unbinder mUnbinder;
 
@@ -33,7 +33,7 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity();
+        mContext = getActivity();
     }
 
     @Override

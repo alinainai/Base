@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by ly on 2016/5/30 14:52.
  * 通用适配器
+ * 适用于ListView 和 GirdView
  */
 public abstract class CommonAdapter<T> extends BaseAdapter{
     protected LayoutInflater mInflater;

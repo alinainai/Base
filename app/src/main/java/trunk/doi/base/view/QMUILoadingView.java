@@ -14,7 +14,7 @@ import trunk.doi.base.R;
 
 /**
  * 用于显示 Loading 的 {@link View}，支持颜色和大小的设置。
- *
+ * 类似于ios
  * @author cginechen
  * @date 2016-09-21
  */
