@@ -45,6 +45,7 @@ public class AppUtils {
 
     /**
      * 格式化double类型，使其保留2位小数
+     *
      * @param number
      * @return
      */
@@ -55,6 +56,7 @@ public class AppUtils {
 
     /**
      * 格式化double类型，不保留小数
+     *
      * @param number
      * @return
      */
@@ -157,12 +159,13 @@ public class AppUtils {
         return "";
 
     }
+
     /**
      * base64加密
      */
     public static String base64Encode(String number) {
 
-        if(TextUtils.isEmpty(number)){
+        if (TextUtils.isEmpty(number)) {
             return "";
         }
         return Base64.encodeToString(number.getBytes(), Base64.DEFAULT);
@@ -173,20 +176,21 @@ public class AppUtils {
      */
     public static String base64Decode(String number) {
 
-        if(TextUtils.isEmpty(number)){
+        if (TextUtils.isEmpty(number)) {
             return "";
         }
-        return new String( Base64.decode(number.getBytes(), Base64.DEFAULT));
+        return new String(Base64.decode(number.getBytes(), Base64.DEFAULT));
     }
 
     /**
      * double类型的price变 ￥0.00
+     *
      * @param price
      * @return
      */
-    public static String formatPrice(double price){
+    public static String formatPrice(double price) {
         DecimalFormat df = new DecimalFormat("0.00");
-        String format ="￥" +df.format(price);
+        String format = "￥" + df.format(price);
         return format;
     }
 
@@ -197,21 +201,21 @@ public class AppUtils {
      * @param uri
      * @return the file path or null
      */
-    public static String getRealFilePathFromUri(final Context context, final Uri uri ) {
-        if ( null == uri ) return null;
+    public static String getRealFilePathFromUri(final Context context, final Uri uri) {
+        if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
-        if ( scheme == null )
+        if (scheme == null)
             data = uri.getPath();
-        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
-        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
-            if ( null != cursor ) {
-                if ( cursor.moveToFirst() ) {
-                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
-                    if ( index > -1 ) {
-                        data = cursor.getString( index );
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
                     }
                 }
                 cursor.close();
@@ -248,7 +252,6 @@ public class AppUtils {
         drawable.draw(canvas);
         return bitmap;
     }
-
 
 
 }
