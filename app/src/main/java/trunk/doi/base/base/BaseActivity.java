@@ -1,12 +1,14 @@
 package trunk.doi.base.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Window;
 
-import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
+
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -19,7 +21,7 @@ import trunk.doi.base.util.ScreenShotListenManager;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
-    protected Context mContext;
+    protected Activity mContext;
     protected Unbinder mUnbinder;
 //    protected ScreenShotListenManager manager;
 

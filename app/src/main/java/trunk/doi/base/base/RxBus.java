@@ -1,9 +1,9 @@
 package trunk.doi.base.base;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
 
 /**
  * 1、
@@ -14,11 +14,11 @@ import rx.subjects.Subject;
 public class RxBus {
 
     private static volatile RxBus mInstance;
-    private final Subject<Object, Object> bus;
+    private final Subject<Object> bus;
 
     private RxBus() {
        // Subject同时充当了Observer和Observable的角色，Subject是非线程安全的，要避免该问题，需要将 Subject转换为一个 SerializedSubject，上述RxBus类中把线程非安全的PublishSubject包装成线程安全的Subject。
-        bus = new SerializedSubject<>(PublishSubject.create());
+        bus = PublishSubject.create().toSerialized();
     }
 
     /**

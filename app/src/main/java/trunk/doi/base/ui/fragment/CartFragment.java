@@ -1,27 +1,18 @@
 package trunk.doi.base.ui.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.JsonSyntaxException;
-
-import java.net.SocketTimeoutException;
-
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.HttpException;
-import rx.Subscriber;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
-import trunk.doi.base.https.api.MessageApi;
-import trunk.doi.base.https.net.NetManager;
-import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.ui.activity.LoginActivity;
 import trunk.doi.base.util.ScreenUtils;
-import trunk.doi.base.util.ToastUtils;
 
 /**
  * Created by ly on 2016/5/30 11:05.
@@ -53,7 +44,7 @@ public class CartFragment extends BaseFragment {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mStatusBar.setVisibility(View.VISIBLE);
-            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(context);
+            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
             mStatusBar.setLayoutParams(mStatusBar.getLayoutParams());
         } else {
             mStatusBar.setVisibility(View.GONE);
@@ -76,37 +67,8 @@ public class CartFragment extends BaseFragment {
 
             case R.id.img_get:
 
-                Log.e("TAG","img_get");
 
-                RxManager.getInstance().doSubscribe(NetManager.getInstance().create(MessageApi.class).
-                      getMessageData("18600524853"),
-                        new Subscriber<Object>() {
-                    @Override
-                    public void onCompleted() {
-
-
-                    }
-                    @Override
-                    public void onError(Throwable throwable) {
-
-                        throwable.printStackTrace();
-                        if (throwable instanceof SocketTimeoutException) {
-                            ToastUtils.showShort(context,"连接超时");
-                        } else if(throwable instanceof JsonSyntaxException){
-                            ToastUtils.showShort(context,"请求数据错误");
-                        }else if(throwable instanceof HttpException){
-                            ToastUtils.showShort(context,"连接异常");
-                        }else{
-                            ToastUtils.showShort(context,"连接异常");
-                        }
-                    }
-                    @Override
-                    public void onNext(Object message) {
-                        Log.e("TAG",message.toString());
-
-                    }
-                });
-
+                startActivity(new Intent(mContext, LoginActivity.class));
 
 
                 break;

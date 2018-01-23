@@ -1,5 +1,6 @@
 package trunk.doi.base.util;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -11,10 +12,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +27,7 @@ import java.util.List;
  * 跟App相关的辅助类
  */
 public class AppUtils {
-    private AppUtils()
-    {
+    private AppUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
@@ -50,6 +52,7 @@ public class AppUtils {
         DecimalFormat df = new DecimalFormat("#,##0.00");
         return df.format(number);
     }
+
     /**
      * 格式化double类型，不保留小数
      * @param number
@@ -94,22 +97,19 @@ public class AppUtils {
      * 校验E-Mail 地址
      * 同密码一样，下面是E-mail地址合规性的正则检查语句。
      */
-    public static  final String ISEMAIL = "[\\\\w!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[\\\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\\\w](?:[\\\\w-]*[\\\\w])?\\\\.)+[\\\\w](?:[\\\\w-]*[\\\\w])?";
+    public static final String ISEMAIL = "[\\\\w!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[\\\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\\\w](?:[\\\\w-]*[\\\\w])?\\\\.)+[\\\\w](?:[\\\\w-]*[\\\\w])?";
 
 
     /**
      * 获取应用程序名称
      */
-    public static String getAppName(Context context)
-    {
-        try
-        {
+    public static String getAppName(Context context) {
+        try {
             PackageManager packageManager = context.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
             int labelRes = packageInfo.applicationInfo.labelRes;
             return context.getResources().getString(labelRes);
-        } catch (PackageManager.NameNotFoundException e)
-        {
+        } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         return null;
@@ -118,8 +118,7 @@ public class AppUtils {
     /**
      * [获取应用程序版本名称信息]
      */
-    public static String getVersionName(Context context)
-    {
+    public static String getVersionName(Context context) {
         try {
             PackageManager packageManager = context.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -131,12 +130,10 @@ public class AppUtils {
     }
 
 
-
     /**
      * [获取应用程序版本名称信息]
      */
-    public static int getVersionCode(Context context)
-    {
+    public static int getVersionCode(Context context) {
         try {
             PackageManager packageManager = context.getApplicationContext().getPackageManager();
             PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
@@ -146,14 +143,19 @@ public class AppUtils {
         }
         return 0;
     }
+
     /**
      * 获取设备ID
      */
-    public static String getDeviceId(Context context)
-    {
+    public static String getDeviceId(Context context) {
+
+        if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             TelephonyManager tm = (TelephonyManager) context.getApplicationContext()
                     .getSystemService(Context.TELEPHONY_SERVICE);
             return tm.getDeviceId();
+        }
+        return "";
+
     }
     /**
      * base64加密
@@ -218,6 +220,22 @@ public class AppUtils {
         return data;
     }
 
+    /**
+     * byte(字节)根据长度转成kb(千字节)和mb(兆字节)
+     *
+     * @param bytes
+     * @return
+     */
+    public static String bytes2kb(long bytes) {
+        BigDecimal filesize = new BigDecimal(bytes);
+        BigDecimal megabyte = new BigDecimal(1024 * 1024);
+        float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
+        if (returnValue > 1)
+            return (returnValue + "M");
+        BigDecimal kilobyte = new BigDecimal(1024);
+        returnValue = filesize.divide(kilobyte, 2, BigDecimal.ROUND_UP).floatValue();
+        return (returnValue + "K");
+    }
 
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {

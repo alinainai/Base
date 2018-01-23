@@ -1,45 +1,55 @@
 package trunk.doi.base.https.rx;
 
 import android.content.Context;
-import android.widget.Toast;
+import android.text.TextUtils;
 
-import java.io.IOException;
-import java.net.ConnectException;
+import com.google.gson.JsonSyntaxException;
+
+
 import java.net.SocketTimeoutException;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 import trunk.doi.base.base.BaseApplication;
+import trunk.doi.base.util.ToastUtils;
 
 
 /**
  * Author: Othershe
  * Time:  2016/8/11 17:45
  */
-public abstract class RxSubscriber<T> extends Subscriber<T> {
+public abstract class RxSubscriber<T> implements Observer<T> {
     private Context mContext;
     private boolean mIsShowLoading;//是否显示加载loading
 
     public RxSubscriber(boolean isShowLoading) {
-        mContext = BaseApplication.instance;
+        mContext = BaseApplication.getInstance();
         mIsShowLoading = isShowLoading;
     }
 
     @Override
-    public void onCompleted() {
+    public void onSubscribe(Disposable d) {
+        showLoading();
+    }
+
+    @Override
+    public void onComplete() {
         cancelLoading();
     }
 
     @Override
     public void onError(Throwable e) {
-
         cancelLoading();
-        //统一处理请求异常的情况
+        e.printStackTrace();
         if (e instanceof SocketTimeoutException) {
-        } else if (e instanceof ConnectException) {
-        } else if (e instanceof IOException) {
-            Toast.makeText(mContext, "网络链接异常...", Toast.LENGTH_SHORT).show();
+            ToastUtils.showShort(mContext, "连接超时...");
+        } else if (e instanceof JsonSyntaxException) {
+            ToastUtils.showShort(mContext, "数据解析错误...");
+        } else if (e instanceof HttpException) {
+            ToastUtils.showShort(mContext, TextUtils.isEmpty(e.toString()) ? "网络链接异常..." : e.getMessage());
         } else {
-            e.printStackTrace();
+            ToastUtils.showShort(mContext, "连接异常");
         }
         _onError();
     }
@@ -47,12 +57,6 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
     @Override
     public void onNext(T t) {
         _onNext(t);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        showLoading();
     }
 
     /**

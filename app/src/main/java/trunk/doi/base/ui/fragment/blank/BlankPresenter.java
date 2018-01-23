@@ -3,11 +3,11 @@ package trunk.doi.base.ui.fragment.blank;
 
 import java.util.List;
 
-import rx.Subscriber;
 import trunk.doi.base.base.mvp.BasePresenter;
 import trunk.doi.base.bean.BeautyResult;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.https.rx.RxSubscriber;
 
 
 /**
@@ -22,21 +22,30 @@ public class BlankPresenter extends BasePresenter<BlankView> {
     }
 
     public void getItemData(String suburl) {
-        mSubscription = RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new Subscriber<BeautyResult<List<GankItemData>>>() {
-
+        RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxSubscriber<BeautyResult<List<GankItemData>>>(false) {
             @Override
-            public void onCompleted() {
-
-            }
-            @Override
-            public void onError(Throwable e) {
-                mView.onError();
+            protected void _onNext(BeautyResult<List<GankItemData>> gankItemData) {
+                mView.onSuccess(gankItemData.getResults());
             }
 
             @Override
-            public void onNext(BeautyResult<List<GankItemData>> gankItemDatas) {
-                mView.onSuccess(gankItemDatas.getResults());
+            protected void _onError() {
+
             }
+
+//            @Override
+//            public void onComplete() {
+//
+//            }
+//            @Override
+//            public void onError(Throwable e) {
+//                mView.onError();
+//            }
+//
+//            @Override
+//            public void onNext(BeautyResult<List<GankItemData>> gankItemDatas) {
+//                mView.onSuccess(gankItemDatas.getResults());
+//            }
         });
     }
 }

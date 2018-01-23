@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import trunk.doi.base.R;
-import trunk.doi.base.ui.activity.test.ShootRefreshView;
+import trunk.doi.base.view.ShootRefreshView;
 
 /**
  * 作者：Mr.Lee on 2017-8-29 11:32

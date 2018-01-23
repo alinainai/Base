@@ -3,14 +3,18 @@ package trunk.doi.base.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,20 +24,13 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import rx.Subscriber;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseApplication;
-import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.bean.User;
 import trunk.doi.base.dialog.ActionSheetDialog;
-import trunk.doi.base.https.AppHttpApi;
-import trunk.doi.base.https.net.NetManager;
-import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.dialog.ApkDownDialog;
 import trunk.doi.base.ui.activity.utils.ImageZoomActivity;
-import trunk.doi.base.util.NetUtils;
 import trunk.doi.base.view.CircleImageView;
 
 /**
@@ -80,6 +77,7 @@ public class MineDetailActivity extends BaseActivity {
     private User user=new User();
     private File tempFile;//图片文件
 
+    private String fileurl = "https://dl.gqget.com/dl/pkg/apk/get_android/GqiP2p.apk";
 
     /**
      * @param dirPath
@@ -107,9 +105,6 @@ public class MineDetailActivity extends BaseActivity {
         mainCartTitle.setText("个人信息");
         if (savedInstanceState != null && savedInstanceState.containsKey("tempFile")) {
             tempFile = (File) savedInstanceState.getSerializable("tempFile");
-        } else {
-            tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
-                    "icon" + ".jpg");
         }
     }
 
@@ -141,60 +136,27 @@ public class MineDetailActivity extends BaseActivity {
                 break;
             case R.id.mine_user_icon_img:
                 if(TextUtils.isEmpty(user.getIconImg())){
-                    new ActionSheetDialog(MineDetailActivity.this)
-                            .builder()
-                            .setCancelable(true)
-                            .setCanceledOnTouchOutside(true)
-                            .addSheetItem("从手机相册中选择", ActionSheetDialog.SheetItemColor.Blue,
-                                    new ActionSheetDialog.OnSheetItemClickListener() {
-                                        @Override
-                                        public void onClick(int which) {
-                                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                            startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
-
-                                        }
-                                    })
-                            .addSheetItem("通过相机选择", ActionSheetDialog.SheetItemColor.Blue,
-                                    new ActionSheetDialog.OnSheetItemClickListener() {
-                                        @Override
-                                        public void onClick(int which) {
-                                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-                                            startActivityForResult(intent, RESULT_CAPTURE);
-                                        }
-                                    }).show();
+                    showImgSelectDialog();
                     return;
                 }
-                Intent intent = new Intent(context, ImageZoomActivity.class);
+                Intent intent = new Intent(mContext, ImageZoomActivity.class);
                 ArrayList<String> urls = new ArrayList<>();
                 intent.putStringArrayListExtra("imgpath", urls);
                 startActivity(intent);
                 break;
             case R.id.detail_headIcon_rl:
-                new ActionSheetDialog(MineDetailActivity.this)
-                        .builder()
-                        .setCancelable(true)
-                        .setCanceledOnTouchOutside(true)
-                        .addSheetItem("从手机相册中选择", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-                                        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                        startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
-
-                                    }
-                                })
-                        .addSheetItem("通过相机选择", ActionSheetDialog.SheetItemColor.Blue,
-                                new ActionSheetDialog.OnSheetItemClickListener() {
-                                    @Override
-                                    public void onClick(int which) {
-                                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempFile));
-                                        startActivityForResult(intent, RESULT_CAPTURE);
-                                    }
-                                }).show();
+                showImgSelectDialog();
                 break;
             case R.id.detail_nickName_rl:
+
+                new ApkDownDialog(mContext, fileurl, false) {
+
+                    @Override
+                    public void sure() {
+
+                    }
+                }.show();
+
                 break;
             case R.id.detail_userName_rl:
                 break;
@@ -211,6 +173,47 @@ public class MineDetailActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 显示选择图片的dialog
+     */
+    private void showImgSelectDialog() {
+
+        new ActionSheetDialog(MineDetailActivity.this)
+                .builder()
+                .setCancelable(true)
+                .setCanceledOnTouchOutside(true)
+                .addSheetItem("从手机相册中选择", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+                                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
+
+                            }
+                        })
+                .addSheetItem("通过相机选择", ActionSheetDialog.SheetItemColor.Blue,
+                        new ActionSheetDialog.OnSheetItemClickListener() {
+                            @Override
+                            public void onClick(int which) {
+                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+                                Uri imageUri;
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    String authority = mContext.getPackageName() + ".provider";
+                                    imageUri = FileProvider.getUriForFile(mContext, authority, tempFile);
+                                } else {
+                                    imageUri = Uri.fromFile(tempFile);
+                                }
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                startActivityForResult(intent, RESULT_CAPTURE);
+                            }
+                        }).show();
+
+
+    }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -223,7 +226,14 @@ public class MineDetailActivity extends BaseActivity {
         switch (requestCode) {
             case RESULT_CAPTURE:
                 if (resultCode == RESULT_OK) {
-                    cropRawPhoto(Uri.fromFile(tempFile));
+                    Uri contentUri;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        String authority = mContext.getPackageName() + ".provider";
+                        contentUri = FileProvider.getUriForFile(mContext, authority, tempFile);
+                    } else {
+                        contentUri = Uri.fromFile(tempFile);
+                    }
+                    cropRawPhoto(contentUri);
                 }
                 break;
             case RESULT_PICK:
@@ -236,6 +246,7 @@ public class MineDetailActivity extends BaseActivity {
 
                 if (resultCode == RESULT_OK) {
                     if (intent != null) {
+
                         setImageToHeadView(intent, tempFile);
                     }
                 }
@@ -259,6 +270,9 @@ public class MineDetailActivity extends BaseActivity {
         intent.putExtra("outputX", 200);
         intent.putExtra("outputY", 200);
         intent.putExtra("return-data", true);
+        // 授予目录临时共享权限  7.0新加的权限
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         startActivityForResult(intent, CROP_PHOTO);
     }
     /**
@@ -274,27 +288,11 @@ public class MineDetailActivity extends BaseActivity {
                 photo.compress(Bitmap.CompressFormat.PNG, 90, out);
                 out.flush();
                 out.close();
-                if (NetUtils.isConnected(context)) {
-                    RequestBody imgbody = RequestBody.create(MediaType.parse("multipart/form-data"), f);
-                    RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "123456");
-                    RxManager.getInstance().doSubscribe(NetManager.getInstance().create(AppHttpApi.uploadIcon.class).
-                                    getIconUrl(imgbody, name),
-                            new Subscriber<HttpResult<String>>() {
-                                @Override
-                                public void onCompleted() {
-                                }
+                Glide.with(mContext)
+                        .asBitmap()
+                        .load(f)
+                        .into(mineUserIconImg);
 
-                                @Override
-                                public void onError(Throwable e) {
-                                    Log.e("TAG",e.toString());
-                                }
-
-                                @Override
-                                public void onNext(HttpResult<String> s) {
-                                    Log.e("TAG",s.toString());
-                                }
-                            });
-                }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {

@@ -3,21 +3,24 @@ package trunk.doi.base.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.taobao.sophix.PatchStatus;
-import com.taobao.sophix.SophixManager;
-import com.taobao.sophix.listener.PatchLoadStatusListener;
 import com.tencent.smtt.sdk.QbSdk;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
+import trunk.doi.base.service.LocationService;
 import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.SDCardUtils;
 import trunk.doi.base.util.SPUtils;
@@ -30,7 +33,7 @@ import trunk.doi.base.util.ToastUtils;
  */
 public class BaseApplication extends MultiDexApplication {
 
-    public static BaseApplication instance;
+    private static BaseApplication mInstance;
 
     public static final String DATAFILE= Environment
             .getExternalStorageDirectory()+File.separator+"mackjack"+ File.separator+"httpUrlfile";  //缓存文件夹
@@ -41,6 +44,9 @@ public class BaseApplication extends MultiDexApplication {
 
     private int activityCount;//activity的count数
     public boolean isBackGround=false;//是否在前台
+    //百度定位
+    public LocationService locationService;
+
 
     @Override
     public void onCreate() {
@@ -58,6 +64,16 @@ public class BaseApplication extends MultiDexApplication {
             File file = new File(AJYFILE_LOG);
             file.mkdirs();
         }
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+//                .addInterceptor(new LoggerInterceptor("TAG"))
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                //其他配置
+                .build();
+
+        OkHttpUtils.initClient(okHttpClient);
+
         //地址
         if (!(new File(DATABASE)).exists()) {
                 // 获得封装testDatabase.db文件的InputStream对象
@@ -88,43 +104,17 @@ public class BaseApplication extends MultiDexApplication {
             return;
         }
         LeakCanary.install(this);
-        instance = this;//初始化appliacation
-
+        mInstance = this;//初始化appliacation
 
 
         //初始化腾讯x5内核
         // QbSdk 的预加载接口 initX5Environment ，可参考接入示例，第一个参数传入 context，第二个参数传入 callback，不需要 callback 的可以传入 null
-        QbSdk.initX5Environment(instance,null);
+        QbSdk.initX5Environment(mInstance, null);
+        //百度地图定位
+        locationService = new LocationService(getApplicationContext());
 
 
-        //封装阿里热修复
-        // initialize最好放在attachBaseContext最前面
-//        SophixManager.getInstance().setContext(this)
-//                .setAppVersion(String.valueOf(AppUtils.getVersionName(BaseApplication.instance)))
-//                .setAesKey(null)
-//                .setEnableDebug(false) //正式发布该参数必须为false, false会对补丁做签名校验, 否则就可能存在安全漏洞风险
-//                .setPatchLoadStatusStub(new PatchLoadStatusListener() {
-//                    @Override
-//                    public void onLoad(final int mode, final int code, final String info, final int handlePatchVersion) {
-//                        // 补丁加载回调通知
-//                        if (code == PatchStatus.CODE_LOAD_SUCCESS) {
-//                            // 表明补丁加载成功
-//                            ToastUtils.showShort(instance,"补丁加载完成");
-//                        } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
-//                            // 表明新补丁生效需要重启. 开发者可提示用户或者强制重启;
-//                            // 建议: 用户可以监听进入后台事件, 然后应用自杀
-//                            // 1.3.2.3 killProcessSafely方法
-//                            // 可以在PatchLoadStatusListener监听到CODE_LOAD_RELAUNCH后在合适的时机，调用此方法杀死进程。注意，不可以直接Process.killProcess(Process.myPid())来杀进程，
-//                            // 这样会扰乱Sophix的内部状态。因此如果需要杀死进程，建议使用这个方法，它在内部做一些适当处理后才杀死本进程。
-//
-//                        } else if (code == PatchStatus.CODE_LOAD_FAIL) {
-//                            // 内部引擎异常, 推荐此时清空本地补丁, 防止失败补丁重复加载
-//                            // SophixManager.getInstance().cleanPatches();
-//                        } else {
-//                            // 其它错误信息, 查看PatchStatus类说明
-//                        }
-//                    }
-//                }).initialize();
+
 
 
         /**
@@ -192,5 +182,28 @@ public class BaseApplication extends MultiDexApplication {
         System.gc();
     }
 
+    //如果要像微信一样，所有字体都不允许随系统调节而发生大小变化，要怎么办呢？
+    // 利用Android的Configuration类中的fontScale属性，其默认值为1，
+    // 会随系统调节字体大小而发生变化，如果我们强制让其等于默认值，就可以实现字体不随调节改变，
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (newConfig.fontScale != 1)//非默认值
+            getResources();
+        super.onConfigurationChanged(newConfig);
+    }
+
+    public Resources getResources() {
+        Resources res = super.getResources();
+        if (res.getConfiguration().fontScale != 1) {//非默认值
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
+    }
+
+    public static Application getInstance() {
+        return mInstance;
+    }
 
 }

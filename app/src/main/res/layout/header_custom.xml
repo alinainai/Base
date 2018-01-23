@@ -18,7 +18,7 @@
         tools:text="下拉刷新"
         />
 
-    <trunk.doi.base.ui.activity.test.ShootRefreshView
+    <trunk.doi.base.view.ShootRefreshView
         android:id="@+id/shoot_refresh_view"
         android:layout_marginTop="@dimen/px_20"
         android:layout_marginBottom="@dimen/px_40"

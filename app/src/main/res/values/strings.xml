@@ -8,6 +8,9 @@
     <string name="button_confirm_signup">Confirm Sign Up</string>
     <string name="button_cancel_signup">Cancel Sign Up</string>
 
+    <string name="startlocation">开始定位</string>
+    <string name="stoplocation">停止定位</string>
+
     <string name="classify">分类</string>
     <string name="shopping">视频</string>
     <string name="mine">我的</string>

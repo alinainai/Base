@@ -11,10 +11,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.ui.activity.cache.LruActivity;
-import trunk.doi.base.ui.activity.test.MainActivity;
-import trunk.doi.base.ui.activity.test.ViewMvActivity;
-import trunk.doi.base.ui.activity.test.shop.ShopActivity;
+
 import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
 import trunk.doi.base.view.pullrefresh.RefreshLayout;
 
@@ -79,24 +76,18 @@ public class SettingActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.setting_feedback_tv:
-                startActivity(new Intent(SettingActivity.this,GuesterActivity.class));
                 break;
             case R.id.setting_recommend_friends_tv:
-                startActivity(new Intent(SettingActivity.this,ShopActivity.class));
                 break;
             case R.id.setting_service_terms_tv:
-                startActivity(new Intent(SettingActivity.this,MainActivity.class));
                 break;
             case R.id.setting_about_us_tv:
-                startActivity(new Intent(SettingActivity.this,ContactActivity.class));
                 break;
             case R.id.setting_cache_size_tv:
                 break;
             case R.id.setting_check_update_rl:
-                startActivity(new Intent(SettingActivity.this,LruActivity.class));
                 break;
             case R.id.setting_exit_login_btn:
-                startActivity(new Intent(SettingActivity.this,ViewMvActivity.class));
                 break;
         }
     }

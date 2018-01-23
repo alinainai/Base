@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.base.Const;
+import trunk.doi.base.util.Const;
 import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.bean.User;
@@ -91,7 +91,7 @@ public class LoginActivity extends BaseActivity {
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             statusBar.setVisibility(View.VISIBLE);
-            statusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(context);
+            statusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
             statusBar.setLayoutParams(statusBar.getLayoutParams());
         } else {
             statusBar.setVisibility(View.GONE);
@@ -155,16 +155,17 @@ public class LoginActivity extends BaseActivity {
     public void initData() {
 
         try{
-             videoFile = getFileStreamPath(VIDEO_NAME);
-            if (!videoFile.exists()) {
-                videoFile = copyVideoFile();
-            }
-            playVideo(videoFile);
+//             videoFile = getFileStreamPath(VIDEO_NAME);
+//            if (!videoFile.exists()) {
+//                videoFile = copyVideoFile();
+//            }
+            //   playVideo(videoFile);
 
         }catch (Exception e){
             //如果有异常背景变为黑
-            re_login.setBackgroundColor(Color.BLACK);
+//            re_login.setBackgroundColor(Color.BLACK);
         }
+        re_login.setBackgroundColor(Color.BLACK);
 
     }
 
@@ -224,7 +225,7 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.forget_pwd:
 
-                new AlertDialog(context).builder().setTitle("退出登录")
+                new AlertDialog(mContext).builder().setTitle("退出登录")
                         .setMsg("是否退出登录")
                         .setPositiveButton("确认", new View.OnClickListener() {
                             @Override
@@ -249,8 +250,8 @@ public class LoginActivity extends BaseActivity {
                 user.setPhone(accountNum.getEditableText().toString());
                 user.setPassword(password.getEditableText().toString());
                 user.setUsername(accountNum.getEditableText().toString());
-                SPUtils.saveString(context, Const.USER_INFO,new Gson().toJson(user),toString());
-                SPUtils.saveBoolean(context, Const.LOGIN_STATE,true);
+                SPUtils.saveString(mContext, Const.USER_INFO, new Gson().toJson(user), toString());
+                SPUtils.saveBoolean(mContext, Const.LOGIN_STATE, true);
                 finish();
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 
@@ -265,13 +266,13 @@ public class LoginActivity extends BaseActivity {
 //                    @Override
 //                    public void onError(Throwable throwable) {
 //                        if (throwable instanceof SocketTimeoutException) {
-//                            ToastUtils.showShort(context,"连接超时");
+//                            ToastUtils.showShort(mContext,"连接超时");
 //                        } else if(throwable instanceof JsonSyntaxException){
-//                            ToastUtils.showShort(context,"请求数据错误");
+//                            ToastUtils.showShort(mContext,"请求数据错误");
 //                        }else if(throwable instanceof HttpException){
-//                            ToastUtils.showShort(context,"连接异常");
+//                            ToastUtils.showShort(mContext,"连接异常");
 //                        }else{
-//                            ToastUtils.showShort(context,"连接异常");
+//                            ToastUtils.showShort(mContext,"连接异常");
 //                        }
 //                    }
 //                    @Override

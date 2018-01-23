@@ -53,7 +53,7 @@ public class AboutActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mStatusBar.setVisibility(View.VISIBLE);
-            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(context);
+            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
             mStatusBar.setLayoutParams(mStatusBar.getLayoutParams());
         } else {
             mStatusBar.setVisibility(View.GONE);

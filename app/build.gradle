@@ -1,30 +1,27 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
-
-
 def releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
 
-def getDate() {
-    def date = new Date()
-    def formattedDate = date.format('yyyyMMddHHmm')
-    return formattedDate
-}
-def verCode = 14
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion parent.ext.buildToolsVersion
     defaultConfig {
         applicationId "trunk.doi.base"
-        minSdkVersion 19
-        targetSdkVersion 23
+        minSdkVersion parent.ext.minSdkVersion
+        targetSdkVersion parent.ext.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        ndk{abiFilters "armeabi"}
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath true
+            }
+        }
 
     }
 
@@ -59,41 +56,56 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    //noinspection GradleCompatible
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
     compile "com.android.support:palette-v7:$support_version"
     compile "com.android.support:design:$support_version"
     // 用于Java编写执行Java测试用例。
-
     //https://github.com/ZeroBrain/AndroidPermissions
     compile files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
-    compile 'com.android.support.constraint:constraint-layout:1.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile 'io.reactivex:rxjava:+'
-    compile 'io.reactivex:rxandroid:+'
-    compile 'com.trello:rxlifecycle:+'
-    compile 'com.trello:rxlifecycle-components:+'
-    compile 'com.squareup.retrofit2:retrofit:+'
-    compile 'com.squareup.retrofit2:converter-gson:+'
-    compile 'com.squareup.retrofit2:converter-scalars:+'
-    compile 'com.squareup.retrofit2:adapter-rxjava:+'
-    compile 'com.squareup.okhttp3:okhttp:+'
-    compile 'com.squareup.okhttp3:logging-interceptor:+'
-    compile 'com.google.code.gson:gson:2.2.4'
-    compile 'com.android.support:multidex:1.0.0'
-    compile 'com.github.chrisbanes.photoview:library:+'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.google.android.gms:play-services-ads:10.2.6'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.8'
+    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
 
-    compile 'com.aliyun.ams:alicloud-android-hotfix:3.0.8'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+//    compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'com.android.support:multidex:1.0.2'
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
+
+    compile 'com.github.bumptech.glide:glide:4.4.0'
+    annotationProcessor  'com.github.bumptech.glide:compiler:4.4.0'
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.4.0'
+
+
+    compile 'com.google.android.gms:play-services-ads:11.8.0'
+    //ali热修复
+    //    compile 'com.aliyun.ams:alicloud-android-hotfix:3.0.8'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile 'com.jakewharton:disklrucache:2.0.2'
+    //内存泄漏检测
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //磁盘缓存
+    //    compile 'com.jakewharton:disklrucache:2.0.2'
+    implementation files('libs/BaiduLBS_Android.jar')
+    //自动化测试
+    implementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
+    implementation 'com.zhy:okhttputils:2.6.2'
 }
 repositories {
     mavenCentral()

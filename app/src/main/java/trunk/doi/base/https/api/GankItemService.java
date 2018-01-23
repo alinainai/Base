@@ -3,9 +3,10 @@ package trunk.doi.base.https.api;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
+import trunk.doi.base.bean.BeautyResult;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.bean.GankItemData;
 
@@ -17,4 +18,7 @@ public interface GankItemService {
     String BASE_URL = "http://gank.io/api/";
     @GET("{suburl}")
     Observable<HttpResult<List<GankItemData>>> getGankItemData(@Path("suburl") String suburl);
+
+    @GET("{suburl}")
+    Observable<BeautyResult<List<GankItemData>>> getBeautyData(@Path("suburl") String suburl);
 }

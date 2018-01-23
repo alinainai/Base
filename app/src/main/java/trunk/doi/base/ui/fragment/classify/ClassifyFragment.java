@@ -61,14 +61,14 @@ public class ClassifyFragment extends BaseFragment {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mStatusBar.setVisibility(View.VISIBLE);
-            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(context);
+            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
             mStatusBar.setLayoutParams(mStatusBar.getLayoutParams());
         } else {
             mStatusBar.setVisibility(View.GONE);
         }
 
 //        mainCartTitle.setText("分类");
-        mTitles= AppUtils.stringArrayToList(context, R.array.gank);
+        mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
         mFragments = new ArrayList<>();
         for (String subtype : mTitles) {
             mFragments.add(GankItemFragment.newInstance(subtype));

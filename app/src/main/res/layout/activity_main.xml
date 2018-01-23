@@ -47,7 +47,7 @@
             android:drawableTop="@drawable/home_main_s"
             android:gravity="center"
             android:scaleType="centerCrop"
-            android:text="@string/classify"
+            android:text="产品"
             android:textColor="@color/bottom_text_color"
             android:textSize="8dp" />
 
@@ -60,7 +60,7 @@
             android:drawablePadding="1dp"
             android:drawableTop="@drawable/home_main_s"
             android:gravity="center"
-            android:text="备用"
+            android:text="信息"
             android:textColor="@color/bottom_text_color"
             android:textSize="8dp" />
 
@@ -74,22 +74,8 @@
             android:drawableTop="@drawable/home_main_s"
             android:gravity="center"
             android:scaleType="matrix"
-            android:text="备用"
+            android:text="我的"
             android:textColor="@color/bottom_text_color"
             android:textSize="8dp" />
-
-        <RadioButton
-            android:gravity="center"
-            android:id="@+id/mine_btn"
-            android:textSize="8dp"
-            android:textColor="@color/bottom_text_color"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawablePadding="1dp"
-            android:drawableTop="@drawable/home_main_s"
-            android:scaleType="matrix"
-            android:text="@string/mine" />
     </RadioGroup>
 </RelativeLayout>

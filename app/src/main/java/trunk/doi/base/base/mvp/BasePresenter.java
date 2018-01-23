@@ -1,7 +1,6 @@
 package trunk.doi.base.base.mvp;
 
 
-import rx.Subscription;
 
 /**
  * Author: Othershe
@@ -9,7 +8,6 @@ import rx.Subscription;
  */
 public class BasePresenter<V> {
     public V mView;
-    protected Subscription mSubscription;
 
     public void attach(V view) {
         mView = view;
@@ -17,8 +15,6 @@ public class BasePresenter<V> {
 
     public void detach() {
         mView = null;
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-        }
+
     }
 }

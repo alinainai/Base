@@ -206,3 +206,7 @@
 -keep class com.ta.utdid2.device.**{*;}
 #防止inline
 -dontoptimize
+#百度定位的混淆
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**

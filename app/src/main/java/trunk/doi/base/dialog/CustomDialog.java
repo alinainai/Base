@@ -45,8 +45,6 @@ public abstract class CustomDialog {
 
             Glide.with(activity)
                     .load(dir)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(img_sheet);
 
             img_close.setOnClickListener(new View.OnClickListener() {

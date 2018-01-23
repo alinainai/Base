@@ -10,24 +10,23 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.taobao.sophix.SophixManager;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action0;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseApplication;
 import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.util.AppUtils;
-import trunk.doi.base.util.Constants;
+import trunk.doi.base.util.Const;
 import trunk.doi.base.util.PermissionUtils;
 import trunk.doi.base.util.SPUtils;
 import trunk.doi.base.util.ToastUtils;
@@ -36,7 +35,6 @@ public class SplashActivity extends BaseActivity {
 
 
     private Handler handler =new Handler();
-    private Subscription subscription;
 
     @BindView(R.id.tv_version)
     TextView tv_version;
@@ -70,8 +68,8 @@ public class SplashActivity extends BaseActivity {
 //            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
 //        }
 
-        tv_version.setText("当前版本 v"+ AppUtils.getVersionName(BaseApplication.instance));
-        String version=SPUtils.loadString(SplashActivity.this, Constants.APP_VERSION);
+        tv_version.setText("当前版本 v" + AppUtils.getVersionName(BaseApplication.getInstance()));
+        String version = SPUtils.loadString(SplashActivity.this, Const.APP_VERSION);
 //        if(TextUtils.isEmpty(version) || !version.equals(AppUtils.getVersionName(SplashActivity.this))){
 //
 //             String[] pers={  android.Manifest.permission.READ_PHONE_STATE,
@@ -104,46 +102,51 @@ public class SplashActivity extends BaseActivity {
     /**
      * 使用RxJava实现倒计时
      */
-    private void countDown() {
-        final long count = 5;
-        Subscription Subscription= Observable.interval(1, TimeUnit.SECONDS)
-                .take(6)//计时次数
-                .map(new Func1<Long, Long>() {
-                    @Override
-                    public Long call(Long integer) {
-                        return count - integer;
-                    }
-                })
-                .doOnSubscribe(new Action0() {
-                    @Override
-                    public void call() { //开始
-                        Log.e("TAG","call");
-
-                    }
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Long>() {
-
-                    @Override
-                    public void onCompleted() { //结束
-                        Log.e("TAG","onCompleted");
-
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e("TAG","onError");
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        Log.e("TAG","onNext"+aLong);
-
-                    }
-                });
-    }
+//    private void countDown() {
+//        final long count = 5;
+//        Observable.interval(1, TimeUnit.SECONDS)
+//                .take(6)//计时次数
+//                .map(new Function<Long, Object>() {
+//                    @Override
+//                    public Long apply(Long integer) {
+//                        return count - integer;
+//                    }
+//                })
+//                .doOnSubscribe(new Action() {
+//                    @Override
+//                    public void run() { //开始
+//                        Log.e("TAG","call");
+//
+//                    }
+//                })
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<Long>() {
+//
+//                    @Override
+//                    public void onComplete() { //结束
+//                        Log.e("TAG","onCompleted");
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.e("TAG","onError");
+//                    }
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(Long aLong) {
+//                        Log.e("TAG","onNext"+aLong);
+//
+//                    }
+//                });
+//    }
 
 
 
@@ -161,9 +164,6 @@ public class SplashActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         handler.removeCallbacks(toMain);
-        if (subscription != null) {
-            subscription.unsubscribe();
-        }
     }
 
     @Override
@@ -175,7 +175,7 @@ public class SplashActivity extends BaseActivity {
                     //do something
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-                        SophixManager.getInstance().queryAndLoadNewPatch();
+//                        SophixManager.getInstance().queryAndLoadNewPatch();
                     } else {
                         ToastUtils.showShort(SplashActivity.this,"请去设置中开启软件读取文件信息的权限，否则软件不能正常使用");
                     }

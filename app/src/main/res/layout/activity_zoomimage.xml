@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     >
-    <anjuyi.cc.edeco.view.ZoomViewPager
+
+    <trunk.doi.base.view.ZoomViewPager
         android:id="@+id/zoomViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

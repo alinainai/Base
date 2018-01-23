@@ -1,5 +1,7 @@
 package trunk.doi.base.https.net;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -21,7 +23,6 @@ import javax.net.ssl.X509TrustManager;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import trunk.doi.base.base.BaseApplication;
@@ -31,7 +32,7 @@ import trunk.doi.base.base.BaseApplication;
  * Time:  2016/8/11 14:30
  */
 public class NetManager {
-    private static final int DEFAULT_TIMEOUT = 5;
+    private static final int DEFAULT_TIMEOUT = 10;
 
     public static NetManager getInstance() {
         return SingletonHolder.INSTANCE;
@@ -41,25 +42,37 @@ public class NetManager {
         private static final NetManager INSTANCE = new NetManager();
     }
 
-
-
-
     private NetManager() { }
 
+    /**
+     * Gosn解析
+     *
+     * @param service
+     * @param <S>
+     * @return
+     */
     public <S> S create(Class<S> service) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(getOkHttpClient())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(getBaseUrl(service))
                 .build();
         return retrofit.create(service);
     }
+
+    /**
+     * Scalars解析
+     *
+     * @param service
+     * @param <S>
+     * @return
+     */
     public <S> S create1(Class<S> service) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(getOkHttpClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(getBaseUrl(service))
                 .build();
         return retrofit.create(service);
@@ -82,6 +95,10 @@ public class NetManager {
         return "";
     }
 
+    /**
+     * 返回Okhttp对象
+     * @return
+     */
     private OkHttpClient getOkHttpClient() {
 
         //配置超时拦截器
@@ -90,23 +107,18 @@ public class NetManager {
         builder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
-//        new HttpLoggingInterceptor.Logger() {
-//            @Override
-//            public void log(String message) {
-//                Log.e("TAG","message="+message);
-//            }
-//        }
         //配置log打印拦截器
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor).retryOnConnectionFailure(false).addNetworkInterceptor(loggingInterceptor);
 
 
+        //封装https证书
         X509TrustManager trustManager;
         SSLSocketFactory sslSocketFactory;
         InputStream inputStream=null;
         try {
-            inputStream = BaseApplication.instance.getAssets().open("srca.cer"); // 得到证书的输入流
+            inputStream = BaseApplication.getInstance().getAssets().open("srca.cer"); // 得到证书的输入流
             try {
                 trustManager = trustManagerForCertificates(inputStream);//以流的方式读入证书
                 SSLContext sslContext = SSLContext.getInstance("TLS");

@@ -44,7 +44,6 @@ public class ImageZoomActivity extends BaseActivity {
 
     private int current;
     private List<String> urls;
-    private String url;
 
     private TypePageAdapter adapter;
     private List<BaseFragment> mFragments=new ArrayList<>();
@@ -61,7 +60,6 @@ public class ImageZoomActivity extends BaseActivity {
         viewPager.setPageMargin((int) getResources().getDisplayMetrics().density * 10);
         urls = getIntent().getStringArrayListExtra("imgpath");
         current = getIntent().getIntExtra("current", 0);
-        url=urls.get(current);
 
     }
 
@@ -72,7 +70,6 @@ public class ImageZoomActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-              //  url=urls.get(arg0);
                 current=position;
                 tv_title.setText(String.valueOf((position + 1)) + "/" + String.valueOf(urls.size()));
             }
@@ -91,11 +88,12 @@ public class ImageZoomActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        tv_title.setText(String.valueOf((current + 1)) + "/" + String.valueOf(urls.size()));
 
         if(urls.size()==0){
             return;
         }
+        tv_title.setText(String.valueOf((current + 1)) + "/" + String.valueOf(urls.size()));
+
         for (String url : urls) {
             mFragments.add(ImageZoomFragment.newInstance(url));
         }
@@ -123,16 +121,12 @@ public class ImageZoomActivity extends BaseActivity {
 
                 break;
             case R.id.tv_save:
-
                 ((ImageZoomFragment) mFragments.get(current)).saveDrawble();
-
                 break;
         }
     }
 
-
-
-    public class TypePageAdapter extends FragmentPagerAdapter {
+    public static class TypePageAdapter extends FragmentPagerAdapter {
         private List<BaseFragment> fragments;
         private List<String> titles;
 
@@ -160,50 +154,5 @@ public class ImageZoomActivity extends BaseActivity {
             return String.valueOf(position);
         }
     }
-
-//    private static class SamplePagerAdapter extends PagerAdapter {
-//        private List<String> urlString;
-//        private Context context;
-//
-//        public SamplePagerAdapter(List<String> urlString, Context context) {
-//            // Create a background thread and a handler for it
-//            this.urlString = urlString;
-//            this.context = context;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return urlString.size();
-//        }
-//
-//        @Override
-//        public View instantiateItem(final ViewGroup container,
-//                                    final int position) {
-//            PhotoView zoomImageView = new PhotoView(container.getContext());
-//
-//            zoomImageView.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
-//                @Override
-//                public void onPhotoTap(View view, float x, float y) {
-//                    ((Activity)context).finish();
-//                }
-//            });
-//
-//            //此处没有缓存到本地
-//          //  GlideUtils.getInstance().LoadContextBitmap(context, urlString.get(position), zoomImageView, R.mipmap.loading_image, R.mipmap.loading_image, null);
-//            container.addView(zoomImageView, LayoutParams.MATCH_PARENT,
-//                    LayoutParams.MATCH_PARENT);
-//            return zoomImageView;
-//        }
-//
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            container.removeView((View) object);
-//        }
-//
-//        @Override
-//        public boolean isViewFromObject(View view, Object object) {
-//            return view == object;
-//        }
-//    }
 
 }

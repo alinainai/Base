@@ -3,7 +3,7 @@ package trunk.doi.base.ui.fragment.classify;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.api.GankItemService;

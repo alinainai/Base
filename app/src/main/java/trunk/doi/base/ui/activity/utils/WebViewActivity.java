@@ -69,7 +69,7 @@ public class WebViewActivity extends BaseActivity {
         mainCartTitle.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
                 builder.setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -79,7 +79,7 @@ public class WebViewActivity extends BaseActivity {
                         ClipData mClipData = ClipData.newPlainText("Label", url);
                         // 将ClipData内容放到系统剪贴板里。
                         cm.setPrimaryClip(mClipData);
-                        ToastUtils.showShort(context,"地址复制成功");
+                        ToastUtils.showShort(mContext, "地址复制成功");
                     }
                 }).setTitle("提示")
                         .setMessage("是否复制当前网页地址到剪切板")

@@ -3,7 +3,7 @@ package trunk.doi.base.ui.fragment.blank;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import trunk.doi.base.bean.BeautyResult;
 import trunk.doi.base.bean.GankItemData;
 

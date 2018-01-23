@@ -14,10 +14,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.adapter.GankItemAdapter;
-import trunk.doi.base.adapter.rvadapter.OnItemClickListeners;
-import trunk.doi.base.adapter.rvadapter.OnLoadMoreListener;
-import trunk.doi.base.adapter.rvadapter.ViewHolder;
+import trunk.doi.base.base.adapter.GankItemAdapter;
+import trunk.doi.base.base.adapter.rvadapter.OnItemClickListeners;
+import trunk.doi.base.base.adapter.rvadapter.OnLoadMoreListener;
+import trunk.doi.base.base.adapter.rvadapter.ViewHolder;
 import trunk.doi.base.base.mvp.BaseMvpFragment;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
@@ -62,12 +62,12 @@ public class GankItemFragment extends BaseMvpFragment<GankItemView, GankItemPres
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        mGankItemAdapter = new GankItemAdapter(context, new ArrayList<GankItemData>(), true);
+        mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<GankItemData>(), true);
         mGankItemAdapter.setLoadingView(R.layout.view_loading);
         mGankItemAdapter.setOnItemClickListener(new OnItemClickListeners<GankItemData>() {
             @Override
             public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
-                Intent intent = new Intent(context, WebViewActivity.class);
+                Intent intent = new Intent(mContext, WebViewActivity.class);
                 intent.putExtra("url", gankItemData.getUrl());
                 startActivity(intent);
                 getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

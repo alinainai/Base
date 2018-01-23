@@ -7,12 +7,12 @@ import java.net.SocketTimeoutException;
 import java.util.List;
 
 import retrofit2.HttpException;
-import rx.Subscriber;
 import trunk.doi.base.base.BaseApplication;
 import trunk.doi.base.base.mvp.BasePresenter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.rx.RxManager;
+import trunk.doi.base.https.rx.RxSubscriber;
 import trunk.doi.base.util.ToastUtils;
 
 
@@ -28,31 +28,16 @@ public class GankItemPresenter extends BasePresenter<GankItemView> {
     }
 
     public void getGankItemData(String suburl) {
-        mSubscription = RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new Subscriber<HttpResult<List<GankItemData>>>() {
+        RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxSubscriber<HttpResult<List<GankItemData>>>(false) {
 
             @Override
-            public void onCompleted() {
-
+            protected void _onNext(HttpResult<List<GankItemData>> listHttpResult) {
+                mView.onSuccess(listHttpResult.getResults());
             }
+
             @Override
-            public void onError(Throwable throwable) {
-
-                if (throwable instanceof SocketTimeoutException) {
-                    ToastUtils.showShort(BaseApplication.instance, "连接超时");
-                } else if (throwable instanceof JsonSyntaxException) {
-                    ToastUtils.showShort(BaseApplication.instance, "数据解析错误");
-                } else if (throwable instanceof HttpException) {
-                    ToastUtils.showShort(BaseApplication.instance, "连接异常");
-                } else {
-                    ToastUtils.showShort(BaseApplication.instance, "连接异常");
-                }
-
+            protected void _onError() {
                 mView.onError();
-            }
-
-            @Override
-            public void onNext(HttpResult<List<GankItemData>> gankItemDatas) {
-                mView.onSuccess(gankItemDatas.getResults());
             }
         });
     }

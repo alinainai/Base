@@ -1,5 +1,6 @@
 package trunk.doi.base.ui.fragment.blank;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.adapter.GalleryAdapter;
+import trunk.doi.base.base.adapter.GalleryAdapter;
 import trunk.doi.base.base.mvp.BaseMvpFragment;
 import trunk.doi.base.bean.GankItemData;
+import trunk.doi.base.ui.activity.MineDetailActivity;
+import trunk.doi.base.ui.activity.utils.ImageZoomActivity;
 import trunk.doi.base.view.ImageCycleView;
 import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
 import trunk.doi.base.view.pullrefresh.RefreshLayout;
@@ -126,6 +130,7 @@ public class BlankFragment extends BaseMvpFragment<BlankView, BlankPresenter> im
     private ArrayList<GankItemData> urlList=new ArrayList<>();
     private ImageCycleView.ImageCycleViewListener<GankItemData> mAdCycleViewListener;
 
+
     public BlankFragment() {
 
 
@@ -192,7 +197,7 @@ public class BlankFragment extends BaseMvpFragment<BlankView, BlankPresenter> im
 
                 Glide.with(BlankFragment.this)
                         .load(imageURL.getUrl())
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
                         .into(imageView);
 
 
@@ -231,10 +236,19 @@ public class BlankFragment extends BaseMvpFragment<BlankView, BlankPresenter> im
 
     }
 
-    @OnClick({img_part_1, R.id.img_part_2, R.id.img_part_3, R.id.img_part_4})
+    @OnClick({R.id.img_part_1, R.id.img_part_2, R.id.img_part_3, R.id.img_part_4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case img_part_1:
+            case R.id.img_part_1:
+
+                Intent intent = new Intent(mContext, ImageZoomActivity.class);
+                ArrayList<String> urls = new ArrayList<>();
+                urls.add("http://7xi8d6.com1.z0.glb.clouddn.com/20171114101305_NIAzCK_rakukoo_14_11_2017_10_12_58_703.jpeg");
+                intent.putStringArrayListExtra("imgpath", urls);
+                startActivity(intent);
+
+                //  startActivity(new Intent(getActivity(), ImageZoomActivity.class));
+
                 break;
             case R.id.img_part_2:
                 break;
@@ -257,19 +271,19 @@ public class BlankFragment extends BaseMvpFragment<BlankView, BlankPresenter> im
 
         Glide.with(this)
                 .load(data.get(0).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPart1);
         Glide.with(this)
                 .load(data.get(1).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPart2);
         Glide.with(this)
                 .load(data.get(2).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPart3);
         Glide.with(this)
                 .load(data.get(3).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPart4);
 
         if(data.size()>5){
@@ -285,40 +299,40 @@ public class BlankFragment extends BaseMvpFragment<BlankView, BlankPresenter> im
         }
         Glide.with(this)
                 .load(data.get(6).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPreferential1);
         Glide.with(this)
                 .load(data.get(5).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPreferential2);
         Glide.with(this)
                 .load(data.get(4).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPreferential3);
         Glide.with(this)
                 .load(data.get(3).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgPreferential4);
 
         Glide.with(this)
                 .load(data.get(3).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgNews1);
         Glide.with(this)
                 .load(data.get(2).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgNews2);
         Glide.with(this)
                 .load(data.get(1).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgNews3);
         Glide.with(this)
                 .load(data.get(7).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgClass1);
         Glide.with(this)
                 .load(data.get(8).getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.RESOURCE))
                 .into(imgClass2);
     }
 }

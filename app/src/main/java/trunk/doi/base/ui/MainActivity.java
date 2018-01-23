@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,14 +14,17 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import rx.Subscription;
-import rx.functions.Action1;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseFragment;
@@ -40,14 +44,7 @@ import trunk.doi.base.util.ToastUtils;
 public class MainActivity extends BaseActivity {
 
 
-    @BindView(R.id.home_btn)
-    RadioButton homeBtn;//首页
-    @BindView(R.id.classify_btn)
-    RadioButton classifyBtn;//分类
-    @BindView(R.id.shopping_btn)
-    RadioButton shoppingBtn;//购物车
-    @BindView(R.id.mine_btn)
-    RadioButton mineBtn;//我的
+
     @BindView(R.id.rg_radio)
     RadioGroup rg_radio;
      //container
@@ -62,8 +59,7 @@ public class MainActivity extends BaseActivity {
     private int index;
     // 当前fragment的index
     public int currentTabIndex;
-    private Subscription rxSbscription;
-
+    private Disposable rxSbscription;
 
     private void setStatusColor(int color){
 
@@ -87,7 +83,6 @@ public class MainActivity extends BaseActivity {
             put(1, ClassifyFragment.TAG);
             put(2, BlankFragment.TAG);
             put(3, CartFragment.TAG);
-            put(4, BlankFragment.TAG);
         }
     };
 
@@ -109,6 +104,11 @@ public class MainActivity extends BaseActivity {
                         setStatusColor(R.color.trans);
                         break;
                     case R.id.classify_btn:
+//                        if(!SPUtils.loadBoolean(MainActivity.this, "test",false)){
+//                            ((RadioButton) rg_radio.getChildAt(currentTabIndex)).setChecked(true);
+//                            mContext.startActivity(new Intent(mContext, MineDetailActivity.class));
+//                            return;
+//                        }
                         index = 1;
                         setStatusColor(R.color.black);
                         break;
@@ -120,10 +120,6 @@ public class MainActivity extends BaseActivity {
                         index = 3;
                         setStatusColor(R.color.black);
                         break;
-                    case R.id.mine_btn:
-                        index = 4;
-                        setStatusColor(R.color.black);
-                        break;
                 }
                 changeFragment(currentTabIndex, index);
                 // 把当前tab设为选中状态
@@ -132,9 +128,9 @@ public class MainActivity extends BaseActivity {
         });
 
         rxSbscription= RxBus.getDefault().toObservable(MainEvent.class)
-                .subscribe(new Action1<MainEvent>() {
+                .subscribe(new Consumer<MainEvent>() {
                     @Override
-                    public void call(MainEvent event) {
+                    public void accept(MainEvent event) throws Exception {
 
                         switch (event.getId()){
                             case 0:
@@ -193,6 +189,7 @@ public class MainActivity extends BaseActivity {
         transaction.show(tofragment).commitAllowingStateLoss();
     }
 
+    @Nullable
     private Fragment getFragmentFromFactory(String tag) {
         if (BlankFragment.TAG.equals(tag)) {
             if (mHomeFragment == null) {
@@ -228,8 +225,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!rxSbscription.isUnsubscribed()) {
-            rxSbscription.unsubscribe();
+        if (!rxSbscription.isDisposed()) {
+            rxSbscription.dispose();
         }
     }
 
@@ -256,7 +253,7 @@ public class MainActivity extends BaseActivity {
         Timer tExit;
         if (!isExit) {
             isExit = true; // 准备退出
-            ToastUtils.showShort(context, "再按一次退出程序");
+            ToastUtils.showShort(mContext, "再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
