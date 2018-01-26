@@ -27,7 +27,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.util.ToastUtils;
+import trunk.doi.base.util.ToastUtil;
 
 public class WebViewActivity extends BaseActivity {
 
@@ -79,7 +79,7 @@ public class WebViewActivity extends BaseActivity {
                         ClipData mClipData = ClipData.newPlainText("Label", url);
                         // 将ClipData内容放到系统剪贴板里。
                         cm.setPrimaryClip(mClipData);
-                        ToastUtils.showShort(mContext, "地址复制成功");
+                        ToastUtil.show(mContext, "地址复制成功");
                     }
                 }).setTitle("提示")
                         .setMessage("是否复制当前网页地址到剪切板")

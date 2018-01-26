@@ -58,25 +58,5 @@ public class RxBus {
     public <T> Observable<T> toObservable(Class<T> eventType) {
         return bus.ofType(eventType);
     }
-    //发送事件
-   /* RxBus.getInstance().post(new MineEvent("007","小明"));*/
-    //接收事件
-          /*  rxSbscription=RxBus.getInstance().toObserverable(MineEvent.class)
-            .subscribe(new Action1<MineEvent>() {
-                @Override
-                public void call(MineEvent studentEvent) {
-                    textView.setText("id:"+ studentEvent.getId()+"  name:"+ studentEvent.getName());
-                }
-            });*/
-  //  注：rxSbscription是Sbscription的对象，我们这里把RxBus.getInstance().toObserverable(MineEvent.class)赋值给rxSbscription以方便生命周期结束时取消订阅事件
-
-    //取消订阅
-  /*  @Override
-    protected void onDestroy() {
-        if (!rxSbscription.isUnsubscribed()){
-            rxSbscription.unsubscribe();
-        }
-        super.onDestroy();
-    }*/
 
 }

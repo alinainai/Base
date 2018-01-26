@@ -43,11 +43,6 @@ public abstract class BaseFragment extends RxFragment {
         rootView = inflater.inflate(initLayoutId(), container, false);
         mUnbinder = ButterKnife.bind(this, rootView);
         initView( inflater, container,savedInstanceState);
-        // 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-//        ViewGroup parent = (ViewGroup) rootView.getParent();
-//        if (parent != null) {
-//            parent.removeView(rootView);
-//        }
         return rootView;
     }
 

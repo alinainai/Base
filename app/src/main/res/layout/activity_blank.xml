@@ -19,6 +19,12 @@
             android:background="#f9f9f9"
             android:orientation="vertical">
 
+            <trunk.doi.base.view.TitleView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleText="首页"
+                />
+
             <trunk.doi.base.view.ImageCycleView
                 android:id="@+id/icv_vp"
                 android:layout_width="match_parent"

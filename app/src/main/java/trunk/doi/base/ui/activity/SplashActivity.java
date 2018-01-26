@@ -29,7 +29,7 @@ import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.Const;
 import trunk.doi.base.util.PermissionUtils;
 import trunk.doi.base.util.SPUtils;
-import trunk.doi.base.util.ToastUtils;
+import trunk.doi.base.util.ToastUtil;
 
 public class SplashActivity extends BaseActivity {
 
@@ -177,7 +177,7 @@ public class SplashActivity extends BaseActivity {
                         // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
 //                        SophixManager.getInstance().queryAndLoadNewPatch();
                     } else {
-                        ToastUtils.showShort(SplashActivity.this,"请去设置中开启软件读取文件信息的权限，否则软件不能正常使用");
+                        ToastUtil.show(SplashActivity.this,"请去设置中开启软件读取文件信息的权限，否则软件不能正常使用");
                     }
                 }
             }

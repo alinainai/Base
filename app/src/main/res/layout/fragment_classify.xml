@@ -1,61 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/base_background"
-        android:orientation="vertical"
-        >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
     <View
         android:id="@+id/status_bar"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/c26c4e9" />
+        android:layout_height="25dp"
+        android:background="@color/cff3e19" />
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        >
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
     <!-- 标题 -->
-            <!--<TextView-->
-                <!--android:gravity="center"-->
-                <!--android:id="@+id/main_cart_title"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="@dimen/px_80"-->
-                <!--android:text="标题"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="@dimen/px_36"-->
-                <!--app:layout_scrollFlags="scroll|snap|enterAlways"-->
-                <!--/>-->
+    <TextView
+        android:id="@+id/main_cart_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/px_80"
+        android:gravity="center"
+        android:text="标题"
+        android:background="@color/cff3e19"
+        android:textColor="@color/white"
+        android:textSize="@dimen/px_36" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_100"
-        android:background="@color/gradientPartlyCloudy_c3"
+        android:layout_height="@dimen/px_90"
+        android:background="@color/cff3e19"
+        android:paddingBottom="@dimen/px_5"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#efefef"
         app:tabTextAppearance="@style/TabLayoutTextStyle"
-        android:paddingBottom="@dimen/px_5"
-        app:layout_scrollFlags="scroll|snap|enterAlways"
-        />
-        </android.support.design.widget.AppBarLayout>
+        app:tabTextColor="@color/white" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />
-
-    </android.support.design.widget.CoordinatorLayout>
-
-    </LinearLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</LinearLayout>
 
 

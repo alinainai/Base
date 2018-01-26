@@ -14,9 +14,6 @@ import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -31,9 +28,9 @@ import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.ui.fragment.CartFragment;
-import trunk.doi.base.ui.fragment.blank.BlankFragment;
-import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.util.ToastUtils;
+import trunk.doi.base.ui.fragment.BlankFragment;
+import trunk.doi.base.ui.fragment.ClassifyFragment;
+import trunk.doi.base.util.ToastUtil;
 
 
 /**
@@ -253,7 +250,7 @@ public class MainActivity extends BaseActivity {
         Timer tExit;
         if (!isExit) {
             isExit = true; // 准备退出
-            ToastUtils.showShort(mContext, "再按一次退出程序");
+            ToastUtil.show(mContext, "再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

@@ -108,10 +108,7 @@
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
 
-        <!-- **********************glide配置************************* -->
-        <!--<meta-data-->
-        <!--android:name="trunk.doi.base.util.glideutils.SimpleGlideModule"-->
-        <!--android:value="GlideModule" />-->
+
 
         <!-- **********************百度定位************************* -->
         <meta-data
@@ -134,7 +131,7 @@
         <!-- android:name="com.taobao.android.hotfix.RSASECRET" -->
         <!-- android:value="MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCOQtLr8FaZU+fOV4HkWDaChB8yP+zP85VwTHhNt33qBjvYuLc8j0ch5YW7T85nq0XWujJRaaNKGpa32jAT0vnLY+p9urY2UYmYlJCb7J07x9BBVoZhma7897PR5YSW5ShLYIMBbqfjxTT+4EptwYTM3W+I0cmRsxGuxP2wUXum4esmBtH0QfVuwpeAMYpBrn/7Pxo8KI+eD6TT6OmAWjrtCDK53Z/2RmJCH/1EsitZ+RqVGML2XMN7pnLHPslHiSBiIV0bXlQCfTw5oYrLUJXPuhiR5Xxc71nMP7kC+d3lCPmaJnAR/LDfbXU8aEGL+H/5+6KBV3LJ1EN3ok82VUuJAgMBAAECggEBAIYIuddoav8ticLkudIdtsYDm6zpg8Jt+seClPqMPosm8m3/o0zgpaFvMi/IQm10dmmYpt4DzMB+CrEQVqnm5klWS1HIf/LvoddralAuf/oaCcH1tsjwVmmrK/Y/7EuLfwp91RCdZHt6i7L0OcvtP6URoQtktSiccbWbjnX4X6tb2ma/awCqQNGqFAvCe5qySEhnWD9ME/XJpmxfkuIJcwh+JybFyH6tWb5O1LVHT93bKVPCtZ8r+FYHQFj2YfBhgBepJmVb5Klc1azP89OvlZcMGyzlf387HCLCc8axened6KfR5pYU7SitD2MdujoLpqYepBYMHhHnC7PRBwlcQjECgYEAwD8tLVoAPfTCbFePhp/3D/+Tu3dSvLMHd8cGxX/u/zpq/ZVhX0cGcCYF8xZk76E6vEMUOU1xCQHxGNJPenW806MBEYkbrINjKKJvqJfMTiQP3Bpk/BYyJNIbAk7rhH/hptEl0EM/UKmEzk14XkGPbZ6G2SkN1b1Tf7GhK3EniE0CgYEAvXAZNKDeUdbESBLAo4k/ZDsJpGsOt7vQuReWlXHa14YD7MvGVNccDoCuGqGs1HuOvS8nfqtfbWb3XaVSPB0tioVEtobFT0ckVE1T+A1JAzB09sX7ZMowJdL/wjQfl29LBNWJmLKFMWvI1fba+FlQzXX21fh4OuS0nZotwUG2ri0CgYEAlSJtUXk4Jtfw20sxtCXz6x1A5XSzYl8fs/NZdWzBYo1W4lE3sEnQ3L8ibmk49AwHHHSNA8bnoS04cyDzNvSO/z68XXYXWcSy75rTM95OR3ACPaTcIhK144p6GVhPrAHocxhcVStVuqVGuSOv9K63LTqFMYF/kgfE9pI9jQ3CtSECgYBJEfc2/KIkkSHO5yTVL7h68ebLO9xGdLSS4I1eAbe3EGNtMEDFMuAInAwMC7a9kxdA0/J5AqNhcKkTvxQUSfDqEHOrsBpldPyHY/hyorU5/LPxB/brLq4ZuOScRTy2TeBy8ecMNjf4Eyo5lelqiBEJ32mhqSC/Hr6oV/M0KyPK1QKBgBPy3dEkzsSYbuQdOOOk6c5qULZpeI/4tmUeorXE3VG/fJ3ZWtGn0QKI166MgfahkJg3Kb4188v8sS/Y88Y0I80dzbpRmUxW4XBqvcD7ykbHur9COvM/C3XaAuMhjbtxNsNQEfwF8fiKMnkrvOusTDY+/YhPqMs+xe+IBh5U3dZY" /> -->
 
-        <activity android:name=".ui.activity.Main2Activity">
+        <activity android:name=".ui.activity.AutoTestActivity">
 
 
         </activity>

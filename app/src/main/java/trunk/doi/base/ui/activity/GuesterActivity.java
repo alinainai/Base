@@ -16,7 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.util.ToastUtils;
+import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.view.Lock9View;
 import trunk.doi.base.view.LockPatternIndicator;
 
@@ -87,7 +87,7 @@ public class GuesterActivity extends BaseActivity {
         lock9View.setCallBack(new Lock9View.CallBack() {
             @Override
             public void onFinish(String password) {
-                ToastUtils.showShort(mContext, password);
+                ToastUtil.show(mContext, password);
 
                 lpi_indicator.setDefaultIndicator();
                 if(!TextUtils.isEmpty(password)){
@@ -133,7 +133,7 @@ public class GuesterActivity extends BaseActivity {
             } else if (input_num == 2) {//二次确认手势手势设置成功
                 if (lock_key.equals(password)) {
                   //  SPUtils.getInstance().putString(userMobile + Const.LOCK_KEEP_KEY, lock_key);
-                    ToastUtils.showShort(mContext, "手势密码设置成功");
+                    ToastUtil.show(mContext, "手势密码设置成功");
                     finish();
                     overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 } else {
@@ -156,7 +156,7 @@ public class GuesterActivity extends BaseActivity {
                 tv_lock_Remind_info.startAnimation(shake);
                 input_num++;
                 if (input_num > error_num)
-                    ToastUtils.showShort(mContext, "输入次数用完了");//进行操作
+                    ToastUtil.show(mContext, "输入次数用完了");//进行操作
             }
         }
     }

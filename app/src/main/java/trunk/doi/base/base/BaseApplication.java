@@ -21,10 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import trunk.doi.base.service.LocationService;
-import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.SDCardUtils;
 import trunk.doi.base.util.SPUtils;
-import trunk.doi.base.util.ToastUtils;
 
 
 /**

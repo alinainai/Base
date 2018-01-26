@@ -1,6 +1,8 @@
 package trunk.doi.base.https.rx;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Debug;
 import android.text.TextUtils;
 
 import com.google.gson.JsonSyntaxException;
@@ -11,8 +13,9 @@ import java.net.SocketTimeoutException;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
-import trunk.doi.base.base.BaseApplication;
-import trunk.doi.base.util.ToastUtils;
+import trunk.doi.base.BuildConfig;
+import trunk.doi.base.dialog.QMUITipDialog;
+import trunk.doi.base.util.ToastUtil;
 
 
 /**
@@ -21,37 +24,64 @@ import trunk.doi.base.util.ToastUtils;
  */
 public abstract class RxSubscriber<T> implements Observer<T> {
     private Context mContext;
-    private boolean mIsShowLoading;//是否显示加载loading
+    private boolean mShowLoading;//是否显示加载loading
+    private boolean mShowToast;//是否显示加载loading
+    private QMUITipDialog loadDialog;
 
-    public RxSubscriber(boolean isShowLoading) {
-        mContext = BaseApplication.getInstance();
-        mIsShowLoading = isShowLoading;
+    public RxSubscriber(Context context, boolean showLoading,boolean showToast) {
+        mContext = context;
+        mShowLoading = showLoading;
+        mShowToast = showToast;
+        if (context instanceof Activity) {
+            loadDialog = new QMUITipDialog.Builder(context)
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("正在加载")
+                    .create();
+        }
     }
 
     @Override
     public void onSubscribe(Disposable d) {
-        showLoading();
+        if (mShowLoading) {
+            if (loadDialog != null) {
+                loadDialog.show();
+                ToastUtil.cancel();
+            }
+        }
     }
 
+    /**
+     * 完成
+     */
     @Override
     public void onComplete() {
-        cancelLoading();
+
+        if (loadDialog != null && loadDialog.isShowing()) {
+            loadDialog.dismiss();
+        }
+
     }
+
 
     @Override
     public void onError(Throwable e) {
-        cancelLoading();
-        e.printStackTrace();
+        String errorMsg="";
         if (e instanceof SocketTimeoutException) {
-            ToastUtils.showShort(mContext, "连接超时...");
+            errorMsg="连接超时";
         } else if (e instanceof JsonSyntaxException) {
-            ToastUtils.showShort(mContext, "数据解析错误...");
+            errorMsg="数据解析错误";
         } else if (e instanceof HttpException) {
-            ToastUtils.showShort(mContext, TextUtils.isEmpty(e.toString()) ? "网络链接异常..." : e.getMessage());
+            errorMsg="网络链接异常";
         } else {
-            ToastUtils.showShort(mContext, "连接异常");
+            errorMsg="连接异常";
         }
-        _onError();
+        if(!TextUtils.isEmpty(errorMsg)&&mShowToast){
+            ToastUtil.show(mContext, errorMsg);
+        }
+        _onError(999);
+        if(BuildConfig.DEBUG){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -59,19 +89,9 @@ public abstract class RxSubscriber<T> implements Observer<T> {
         _onNext(t);
     }
 
-    /**
-     * 可在此处统一显示loading view
-     */
-    private void showLoading() {
-        if (mIsShowLoading) {
-        }
-    }
-
-    private void cancelLoading() {
-    }
 
     protected abstract void _onNext(T t);
 
-    protected abstract void _onError();
+    protected abstract void _onError(int code);
 
 }

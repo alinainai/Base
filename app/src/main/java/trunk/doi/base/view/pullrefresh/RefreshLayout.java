@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Scroller;
 
 import trunk.doi.base.R;
+
 
 /**
  * 作者：Mr.Lee on 2017-8-29 10:17
@@ -90,7 +90,7 @@ public class RefreshLayout extends ViewGroup {
         // 添加默认的头部，先简单的用一个ImageView代替头部
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(R.drawable.indicator_arrow);
-        imageView.setBackgroundColor(Color.BLACK);
+        imageView.setBackgroundColor(Color.WHITE);
         setRefreshHeader(imageView);
     }
 
@@ -178,7 +178,6 @@ public class RefreshLayout extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        Log.e(TAG, "onLayout=======");
         final int width = getMeasuredWidth();
         final int height = getMeasuredHeight();
         if (getChildCount() == 0) {
@@ -234,7 +233,6 @@ public class RefreshLayout extends ViewGroup {
         final int actionMasked = ev.getActionMasked(); // support Multi-touch
         switch (actionMasked) {
             case MotionEvent.ACTION_DOWN:
-                Log.e(TAG, "ACTION_DOWN");
                 activePointerId = ev.getPointerId(0);
                 isAutoRefresh = false;
                 isTouch = true;
@@ -252,7 +250,6 @@ public class RefreshLayout extends ViewGroup {
 
             case MotionEvent.ACTION_MOVE:
                 if (activePointerId == INVALID_POINTER) {
-                    Log.e(TAG, "Got ACTION_MOVE event but don't have an active pointer id.");
                     return super.dispatchTouchEvent(ev);
                 }
                 lastEvent = ev;
@@ -263,7 +260,9 @@ public class RefreshLayout extends ViewGroup {
                 lastMotionX = x;
                 lastMotionY = y;
 
-                if (!mIsBeginDragged && Math.abs(y - initDownY) > touchSlop) {
+                if (!mIsBeginDragged && Math.abs(y - initDownY) >50
+                        && Math.abs(y - initDownY) > Math.abs(x-initDownX)
+                        && Math.abs(y - initDownY) > touchSlop) {
                     mIsBeginDragged = true;
                 }
 
@@ -293,7 +292,6 @@ public class RefreshLayout extends ViewGroup {
             case MotionEvent.ACTION_POINTER_DOWN:
                 int pointerIndex = MotionEventCompat.getActionIndex(ev);
                 if (pointerIndex < 0) {
-                    Log.e(TAG, "Got ACTION_POINTER_DOWN event but have an invalid action index.");
                     return super.dispatchTouchEvent(ev);
                 }
                 lastMotionX = ev.getX(pointerIndex);
@@ -329,9 +327,9 @@ public class RefreshLayout extends ViewGroup {
         float extraOS = targetY - totalDragDistance;
         float slingshotDist = totalDragDistance;
         float tensionSlingshotPercent = Math.max(0, Math.min(extraOS, slingshotDist * 2) / slingshotDist);
-        float tensionPercent = (float) (tensionSlingshotPercent  - Math.pow(tensionSlingshotPercent / 2, 2));
+        float tensionPercent = (float) (tensionSlingshotPercent - Math.pow(tensionSlingshotPercent / 2, 2));
 
-        if(offset > 0) { // 下拉的时候才添加阻力
+        if (offset > 0) { // 下拉的时候才添加阻力
             offset = (int) (offset * (1f - tensionPercent));
             targetY = Math.max(0, currentTargetOffsetTop + offset);
         }
@@ -412,7 +410,6 @@ public class RefreshLayout extends ViewGroup {
         refreshHeader.offsetTopAndBottom(offset);
         lastTargetOffsetTop = currentTargetOffsetTop;
         currentTargetOffsetTop = target.getTop();
-//        Log.e(TAG, "moveSpinner: currentTargetOffsetTop = "+ currentTargetOffsetTop);
         invalidate();
     }
 

@@ -1,7 +1,6 @@
 package trunk.doi.base.util.glideutils;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -77,7 +76,6 @@ public class SimpleGlideModule extends AppGlideModule {
             sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
             return sslContext;
         } catch (Exception e) {
-            Log.e(SimpleGlideModule.class.getSimpleName(), "ssl出现异常");
             return null;
         }
     }

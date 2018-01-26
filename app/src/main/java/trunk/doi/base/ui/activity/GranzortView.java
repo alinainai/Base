@@ -137,7 +137,7 @@ public class GranzortView extends View {
 
     }
 
-    private void initHandler() {
+    private  void initHandler() {
         mHanlder = new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -230,6 +230,7 @@ public class GranzortView extends View {
     }
 
     private void initPaint() {
+
         paint = new Paint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(Color.WHITE);
         paint.setStyle(Paint.Style.STROKE);

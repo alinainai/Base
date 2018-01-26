@@ -18,14 +18,13 @@ import java.io.File;
 import okhttp3.Call;
 import okhttp3.Request;
 import trunk.doi.base.R;
-import trunk.doi.base.util.ToastUtils;
-import trunk.doi.base.view.RoundProgressbar;
+import trunk.doi.base.view.RoundProgressBar;
 
 
 public abstract class ApkDownDialog {
 
     private TextView success_text_view;
-    private RoundProgressbar round_progress;
+    private RoundProgressBar round_progress;
     protected Dialog dialog;
 
     public abstract void sure();
@@ -42,7 +41,7 @@ public abstract class ApkDownDialog {
             View view = activity.getLayoutInflater().inflate(
                     R.layout.dialog_download, null);
             success_text_view = (TextView) view.findViewById(R.id.success_text_view);
-            round_progress = (RoundProgressbar) view.findViewById(R.id.round_progress);
+            round_progress = (RoundProgressBar) view.findViewById(R.id.round_progress);
             OkHttpUtils//
                     .get()//
                     .url(url)//
@@ -62,7 +61,6 @@ public abstract class ApkDownDialog {
                         public void onError(Call request, Exception e, int a) {
 
                             dismiss();
-                            ToastUtils.showShort(activity, "下载失败");
                         }
 
                         @Override

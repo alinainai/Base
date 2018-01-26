@@ -37,13 +37,7 @@
     </declare-styleable>
     <attr name="QMUILoadingStyle" format="reference"/>
 
-    <!-- EmptyView start -->
-    <declare-styleable name="QMUIEmptyView">
-        <attr name="qmui_show_loading" format="boolean"/>
-        <attr name="qmui_title_text" format="string"/>
-        <attr name="qmui_detail_text" format="string"/>
-        <attr name="qmui_btn_text" format="string"/>
-    </declare-styleable>
+
 
     <declare-styleable name="ShootRefreshView">
         <attr name="strokeColor" format="color|reference" />
@@ -52,7 +46,7 @@
         <attr name="gradientEndColor" format="color|reference" />
     </declare-styleable>
 
-    <declare-styleable name="RoundProgressbar">
+    <declare-styleable name="RoundProgressBar">
         <attr name="roundcolor" format="color" />
         <attr name="roundProgressColor" format="color" />
         <attr name="roundWidth" format="dimension"></attr>
@@ -91,6 +85,23 @@
     <declare-styleable name="RoundProgressBarWithProgress">
         <attr name="radius" format="dimension" />
     </declare-styleable>
+
+
+
+    <declare-styleable name="TitleView">
+        <attr name="titleText" format="string|reference" />
+        <attr name="titleColor" format="color|reference" />
+        <attr name="titleTextSize" format="dimension|reference" />
+        <attr name="backColor" format="color|reference" />
+        <attr name="rightText" format="string|reference" />
+        <attr name="rightTextColor" format="color|reference" />
+        <attr name="rightTextSize" format="dimension|reference" />
+        <attr name="backIcon" format="color|reference" />
+        <attr name="dividerHide" format="boolean" />
+        <attr name="rightHide" format="boolean" />
+    </declare-styleable>
+
+
 
 
 </resources>

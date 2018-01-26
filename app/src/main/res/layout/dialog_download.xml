@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
 
-        <trunk.doi.base.view.RoundProgressbar
+        <trunk.doi.base.view.RoundProgressBar
             android:id="@+id/round_progress"
             android:layout_width="@dimen/px_140"
             android:layout_height="@dimen/px_140"

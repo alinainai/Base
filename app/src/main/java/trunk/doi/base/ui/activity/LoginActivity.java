@@ -254,33 +254,6 @@ public class LoginActivity extends BaseActivity {
                 SPUtils.saveBoolean(mContext, Const.LOGIN_STATE, true);
                 finish();
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-
-//                RxManager.getInstance().doSubscribe(NetManager.getInstance().create(AppHttpApi.UserApi.class).
-//                        getLogin(password.getEditableText().toString(),accountNum.getEditableText().toString()),
-//                        new Subscriber<HttpResult<User>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//
-//                    }
-//                    @Override
-//                    public void onError(Throwable throwable) {
-//                        if (throwable instanceof SocketTimeoutException) {
-//                            ToastUtils.showShort(mContext,"连接超时");
-//                        } else if(throwable instanceof JsonSyntaxException){
-//                            ToastUtils.showShort(mContext,"请求数据错误");
-//                        }else if(throwable instanceof HttpException){
-//                            ToastUtils.showShort(mContext,"连接异常");
-//                        }else{
-//                            ToastUtils.showShort(mContext,"连接异常");
-//                        }
-//                    }
-//                    @Override
-//                    public void onNext(HttpResult<User> loginUserServiceResult) {
-//                        Log.e("TAG",loginUserServiceResult.toString());
-//
-//                    }
-//                });
                 break;
             case R.id.qq://起吊qq
                 break;

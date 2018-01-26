@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="gank">
-        <item>all1</item>
+        <item>all</item>
         <item>Android</item>
         <item>iOS</item>
         <item>前端</item>
