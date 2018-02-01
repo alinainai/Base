@@ -16,9 +16,9 @@ import trunk.doi.base.util.ScreenUtils;
 
 /**
  * Created by ly on 2016/5/30 11:05.
- * 首页的fragment  (首页第三个栏目)
+ * 首页的fragment  (首页第四个栏目)
  */
-public class CartFragment extends BaseFragment {
+public class MineFragment extends BaseFragment {
 
 
     @BindView(R.id.status_bar)
@@ -26,17 +26,17 @@ public class CartFragment extends BaseFragment {
 
 
 
-    public static final String TAG = "CartFragment";
+    public static final String TAG = "MineFragment";
 
 
-    public static CartFragment newInstance() {
-        return new CartFragment();
+    public static MineFragment newInstance() {
+        return new MineFragment();
     }
 
 
     @Override
     protected int initLayoutId() {
-        return R.layout.fragment_cart;
+        return R.layout.fragment_mine;
     }
 
     @Override
@@ -61,19 +61,6 @@ public class CartFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.img_get})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
 
-            case R.id.img_get:
-
-
-                startActivity(new Intent(mContext, LoginActivity.class));
-
-
-                break;
-
-        }
-    }
 
 }

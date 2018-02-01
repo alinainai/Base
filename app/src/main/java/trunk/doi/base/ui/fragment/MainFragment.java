@@ -42,10 +42,10 @@ import trunk.doi.base.view.pullrefresh.RefreshLayout;
  * Created by ly on 2016/5/30 11:05.
  * 首页的fragment  (首页第一个栏目)
  */
-public class BlankFragment extends BaseFragment {
+public class MainFragment extends BaseFragment {
 
 
-    public static final String TAG = "BlankFragment";
+    public static final String TAG = "MainFragment";
     @BindView(R.id.img_part_1)
     ImageView imgPart1;
     @BindView(R.id.img_part_2)
@@ -132,10 +132,10 @@ public class BlankFragment extends BaseFragment {
     private ImageCycleView.ImageCycleViewListener<GankItemData> mAdCycleViewListener;
 
 
-    public BlankFragment() {}
+    public MainFragment() {}
 
-    public static BlankFragment newInstance() {
-        BlankFragment fragment = new BlankFragment();
+    public static MainFragment newInstance() {
+        MainFragment fragment = new MainFragment();
         return fragment;
     }
 
@@ -193,7 +193,7 @@ public class BlankFragment extends BaseFragment {
             @Override
             public void displayImage(GankItemData imageURL, ImageView imageView) {
 
-                Glide.with(BlankFragment.this)
+                Glide.with(MainFragment.this)
                         .load(imageURL.getUrl())
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.ALL))
                         .into(imageView);

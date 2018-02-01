@@ -54,6 +54,7 @@ public class ClassifyFragment extends BaseFragment {
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        //添加状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             mStatusBar.setVisibility(View.VISIBLE);
             mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);

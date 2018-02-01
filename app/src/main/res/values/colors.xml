@@ -6,7 +6,7 @@
     <color name="sv_blue">#688fdb</color>
     <color name="colorAccent">#FF4081</color>
     <color name="base_background">#f9f9f9</color>
-    <color name="base_bg">#ffffff</color>
+    <color name="base_bg">#f6f4f5</color>
     <color name="bottom_tab_text_color_pre">#83ae2b</color>
     <color name="bottom_tab_text_color_nor">#999999</color>
     <color name="white">#FFFFFF</color>
@@ -36,11 +36,7 @@
     <color name="cdcdcdc">#dcdcdc</color>
     <color name="c26c4e9">#26c4e9</color>
 
-    <color name="qr_code_flashlight_bg">#66000000</color>
-    <color name="qr_code_finder_mask">#80000000</color>
-    <color name="qr_code_flash_light_text_color">#66FFFFFF</color>
-    <color name="qr_code_finder_frame">#FFFFFFFF</color>
-    <color name="qr_code_finder_laser">#ef8394</color>
+
 
     <color name="alertdialog_line">#c6c6c6</color>
     <color name="actionsheet_blue">#037BFF</color>
@@ -55,60 +51,83 @@
     <color name="shopSecondary">#727272</color>
     <color name="shopRatedStar">#ffeb5a</color>
     <color name="shopFabRipple">#51b2ac</color>
-
     <color name="weatherAccent">#84ceca</color>
+    <color name="status_color">@color/black</color>
 
-    <color name="gradientPeriodicClouds_c1">#3453d1</color>
-    <color name="gradientPeriodicClouds_c2">#6d69ff</color>
-    <color name="gradientPeriodicClouds_c3">#cd47c6</color>
+    <color name="c999999">#999999</color>
+    <color name="c333333">#333333</color>
+    <color name="c666666">#666666</color>
+    <color name="cff6b16">#ff6b16</color>
+    <color name="cea6f6f">#ea6f6f</color>
+    <color name="c71d37a">#71d37a</color>
+    <color name="cc39f8a">#c39f8a</color>
+    <color name="cbbbbbb">#bbbbbb</color>
+    <color name="cffffff">#ffffff</color>
+    <color name="cf5f5f5">#f5f5f5</color>
+    <color name="ceeeeee">#eeeeee</color>
+    <color name="cf7e6dc">#f7e6dc</color>
+    <color name="ce84a55">#e84a55</color>
+    <color name="cde3743">#de3743</color>
+    <color name="cff9e74">#ff9e74</color>
+    <color name="cfd767f">#fd767f</color>
+    <color name="c7fe188">#7fe188</color>
+    <color name="cdddddd">#dddddd</color>
+    <color name="cffd0bb">#ffd0bb</color>
+    <color name="cff773c">#ff773c</color>
+    <color name="cb50a37">#b50a37</color>
+    <color name="cf1f1f1">#f1f1f1</color>
+    <color name="ce84b56">#e84b56</color>
+    <color name="c222222">#222222</color>
+    <color name="ce7e7e7">#e7e7e7</color>
+    <color name="cdddcdc">#dddcdc</color>
+    <color name="cef6c2d">#ef6c2d</color>
+    <color name="cffd2ba">#ffd2ba</color>
+    <color name="cff833f">#ff833f</color>
+    <color name="cffd1b8">#ffd1b8</color>
+    <color name="c000000">#000000</color>
+    <color name="c4f78d7">#4f78d7</color>
+    <color name="cc6cbd7">#c6cbd7</color>
+    <color name="c4f74c0">#4f74c0</color>
+    <color name="c67439b">#67439b</color>
+    <color name="c34aaf3">#34aaf3</color>
 
-    <array name="gradientPeriodicClouds">
-        <item>@color/gradientPeriodicClouds_c1</item>
-        <item>@color/gradientPeriodicClouds_c2</item>
-        <item>@color/gradientPeriodicClouds_c3</item>
-    </array>
+    <color name="c6c94f2">#6c94f2</color>
+    <color name="caaaaaa">#aaaaaa</color>
+    <color name="c282828">#282828</color>
+    <color name="cd4d7d8">#d4d7d8</color>
+    <color name="ce1e1e1">#e1e1e1</color>
 
-    <color name="gradientCloudy_c1">#62bff5</color>
-    <color name="gradientCloudy_c2">#61b3e5</color>
-    <color name="gradientCloudy_c3">#5d8fb2</color>
+    <color name="c7297e7">#7297e7</color>
+    <color name="c7879d5">#7879d5</color>
+    <color name="cfc7946">#fc7946</color>
 
-    <array name="gradientCloudy">
-        <item>@color/gradientCloudy_c1</item>
-        <item>@color/gradientCloudy_c2</item>
-        <item>@color/gradientCloudy_c3</item>
-    </array>
+    <color name="cc7c7cd">#c7c7cd</color>
 
-    <color name="gradientMostlyCloudy_c1">#51bbf5</color>
-    <color name="gradientMostlyCloudy_c2">#71c3ee</color>
-    <color name="gradientMostlyCloudy_c3">#f3e5d2</color>
+    <color name="c9a9a9a">#9a9a9a</color>
+    <color name="c030303">#030303</color>
+    <color name="c6f7070">#6f7070</color>
+    <color name="cadadad">#adadad</color>
+    <color name="c7589df">#7589df</color>
 
-    <array name="gradientMostlyCloudy">
-        <item>@color/gradientMostlyCloudy_c1</item>
-        <item>@color/gradientMostlyCloudy_c2</item>
-        <item>@color/gradientMostlyCloudy_c3</item>
-    </array>
+    <color name="cadaef7">#adaef7</color>
+    <color name="ce3e3fc">#e3e3fc</color>
+    <color name="c7589DF">#7589DF</color>
+    <color name="cced6ff">#CED6FF</color>
+    <color name="c55FD644B">#55FD644B</color>
+    <color name="cFD644B">#FD644B</color>
+    <color name="ca2a2a2">#a2a2a2</color>
+    <color name="cff593e">#ff593e</color>
+    <color name="cfafafa">#fafafa</color>
+    <color name="ceaf1f9">#eaf1f9</color>
+    <color name="caebdda">#aebdda</color>
+    <color name="ceaeaea">#eaeaea</color>
+    <color name="c7688ae">#7688ae</color>
+    <color name="ce5edfd">#e5edfd</color>
+    <color name="c808080">#808080</color>
+    <color name="c6293f9">#6293f9</color>
+    <color name="cbababa">#bababa</color>
 
-    <color name="gradientPartlyCloudy_c1">#5b64be</color>
-    <color name="gradientPartlyCloudy_c2">#6084df</color>
-    <color name="gradientPartlyCloudy_c3">#64a2ff</color>
 
-    <array name="gradientPartlyCloudy">
-        <item>@color/gradientPartlyCloudy_c1</item>
-        <item>@color/gradientPartlyCloudy_c2</item>
-        <item>@color/gradientPartlyCloudy_c3</item>
-    </array>
-
-    <color name="gradientClear_c1">#6d4fbe</color>
-    <color name="gradientClear_c2">#6c56be</color>
-    <color name="gradientClear_c3">#a189f1</color>
-
-    <array name="gradientClear">
-        <item>@color/gradientClear_c1</item>
-        <item>@color/gradientClear_c2</item>
-        <item>@color/gradientClear_c3</item>
-    </array>
-
-    <color name="status_color">@color/c0c9ee3</color>
 
 
 

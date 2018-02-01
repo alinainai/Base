@@ -4,13 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="#efefef"
+    android:background="@color/base_bg"
     android:orientation="vertical">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="@color/cff3e19" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_100"
-        android:background="@color/c26c4e9">
+        android:background="@color/cff3e19">
 
         <ImageView
             android:id="@+id/img_message"
@@ -45,7 +51,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/px_158"
-                android:background="@color/c26c4e9">
+                android:background="@color/cff3e19">
 
                 <trunk.doi.base.view.CircleImageView
                     android:id="@+id/iv_head"
@@ -282,7 +288,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
+                android:layout_height="@dimen/px_100"
                 android:layout_marginTop="@dimen/px_20"
                 android:background="#fff"
                 android:gravity="center_vertical"
@@ -357,7 +363,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
+                android:layout_height="@dimen/px_100"
                 android:background="#fff"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -426,66 +432,47 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
+                android:id="@+id/ll_wdtyj"
                 android:layout_marginTop="@dimen/px_20"
-                android:background="#fff"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                style="@style/mine_line_bg"
+                >
 
-                <LinearLayout
-                    android:id="@+id/ll_wdtyj"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ac_taste_money" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ac_taste_money" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
-                        android:text="我的体验金"
-                        android:textColor="#333"
-                        android:textSize="@dimen/px_30" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_15"
+                    android:text="我的体验金"
+                    android:textColor="#333"
+                    android:textSize="@dimen/px_30" />
 
 
-                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/px_1"
+                android:background="#e5e5e5" />
+            <LinearLayout
+                android:id="@+id/ll_safe"
+                style="@style/mine_line_bg">
 
-                <View
-                    android:layout_width="@dimen/px_1"
-                    android:layout_height="match_parent"
-                    android:background="#e5e5e5" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ac_bank_card" />
 
-                <LinearLayout
-                    android:id="@+id/ll_safe"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_15"
+                    android:text="银行卡管理"
+                    android:textColor="#333"
+                    android:textSize="@dimen/px_30" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ac_bank_card" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
-                        android:text="银行卡管理"
-                        android:textColor="#333"
-                        android:textSize="@dimen/px_30" />
-
-                </LinearLayout>
             </LinearLayout>
 
             <View
@@ -493,50 +480,36 @@
                 android:layout_height="@dimen/px_1"
                 android:background="#e5e5e5" />
 
+
             <LinearLayout
+                android:id="@+id/ll_jyjl"
+                style="@style/mine_line_bg">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ac_transaction_record" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/px_15"
+                    android:text="交易记录"
+                    android:textColor="#333"
+                    android:textSize="@dimen/px_30" />
+
+            </LinearLayout>
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/px_90"
-                android:background="#fff"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="@dimen/px_1"
+                android:background="#e5e5e5" />
 
-                <LinearLayout
-                    android:id="@+id/ll_jyjl"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ac_transaction_record" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
-                        android:text="交易记录"
-                        android:textColor="#333"
-                        android:textSize="@dimen/px_30" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="@dimen/px_1"
-                    android:layout_height="match_parent"
-                    android:background="#e5e5e5" />
 
                 <LinearLayout
                     android:id="@+id/ll_fxpc"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                    android:layout_marginBottom="@dimen/px_100"
+                    style="@style/mine_line_bg">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -560,12 +533,8 @@
                         android:textSize="@dimen/px_24" />
 
                 </LinearLayout>
-            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
-
-
 
 </LinearLayout>

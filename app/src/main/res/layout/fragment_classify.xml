@@ -16,17 +16,17 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_80"
         android:gravity="center"
-        android:text="标题"
         android:background="@color/cff3e19"
         android:textColor="@color/white"
-        android:textSize="@dimen/px_36" />
+        android:textSize="@dimen/text_size_32_px" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_90"
+        android:layout_height="@dimen/px_80"
         android:background="@color/cff3e19"
         android:paddingBottom="@dimen/px_5"
+        app:tabMode="scrollable"
         app:tabIndicatorColor="@color/white"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/TabLayoutTextStyle"

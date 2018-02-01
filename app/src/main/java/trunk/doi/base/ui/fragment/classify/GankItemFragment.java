@@ -82,6 +82,9 @@ public class GankItemFragment extends BaseFragment {
 
         mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<GankItemData>(), true);
         mGankItemAdapter.setLoadingView(R.layout.view_loading);
+        mGankItemAdapter.setLoadFailedView(R.layout.view_error);
+        mGankItemAdapter.setLoadEndView(R.layout.view_nom);
+
         mGankItemAdapter.setOnItemClickListener(new OnItemClickListener<GankItemData>() {
             @Override
             public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
@@ -162,18 +165,19 @@ public class GankItemFragment extends BaseFragment {
                        if(listHttpResult!=null&&listHttpResult.getResults()!=null&&listHttpResult.getResults().size()>0){
                            if (isLoadMore) {
                                if (listHttpResult.getResults().size() == 0) {
-                                   mGankItemAdapter.setLoadEndView(R.layout.view_nom);
+                                   mGankItemAdapter.loadEnd();
                                } else {
                                    mGankItemAdapter.setLoadMoreData(listHttpResult.getResults());
                                    mTempPageCount++;
                                }
                            } else {
+                               mGankItemAdapter.reset();
                                mGankItemAdapter.setNewData(listHttpResult.getResults());
                                mSwipeRefreshLayout.setRefreshing(false);
                            }
                        }else{
                            if (isLoadMore) {
-                               mGankItemAdapter.setLoadFailedView(R.layout.view_error);
+                               mGankItemAdapter.loadFailed();
                            } else {
                                mSwipeRefreshLayout.setRefreshing(false);
                            }
