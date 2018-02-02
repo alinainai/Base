@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_background"
+    android:background="@color/base_bg"
     android:orientation="vertical"
     >
 
-    <!-- 标题 -->
-    <include layout="@layout/default_main_cart_title" />
-
-    <trunk.doi.base.view.pullrefresh.RefreshLayout
-        android:id="@+id/refresh"
+    <trunk.doi.base.view.TitleView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:titleText="设置"
+        />
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,7 +32,7 @@
         <TextView
             android:id="@+id/setting_feedback_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
@@ -38,7 +40,7 @@
             android:paddingRight="@dimen/px_32"
             android:text="@string/setting_feedback"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/px_32" />
+            android:textSize="@dimen/text_size_28_px" />
         <!-- 分割线 -->
         <View
             style="@style/divider"
@@ -49,7 +51,7 @@
         <TextView
             android:id="@+id/setting_recommend_friends_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
@@ -57,7 +59,7 @@
             android:paddingRight="@dimen/px_32"
             android:text="@string/setting_recommend_friends"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/px_32" />
+            android:textSize="@dimen/text_size_28_px" />
         <!-- 分割线 -->
         <View
             style="@style/divider"
@@ -68,7 +70,7 @@
         <TextView
             android:id="@+id/setting_service_terms_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
@@ -76,7 +78,7 @@
             android:paddingRight="@dimen/px_32"
             android:text="@string/setting_service_terms"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/px_32" />
+            android:textSize="@dimen/text_size_28_px" />
         <!-- 分割线 -->
         <View
             style="@style/divider"
@@ -87,7 +89,7 @@
         <TextView
             android:id="@+id/setting_about_us_tv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:drawableRight="@mipmap/right_arrow"
             android:gravity="center_vertical"
@@ -95,7 +97,7 @@
             android:paddingRight="@dimen/px_32"
             android:text="@string/setting_about_us"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/px_32" />
+            android:textSize="@dimen/text_size_28_px" />
         <!-- 分割线 -->
         <View
             style="@style/divider"
@@ -106,7 +108,7 @@
         <RelativeLayout
             android:id="@+id/setting_clear_cache_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:clickable="true"
             android:paddingLeft="@dimen/px_32"
@@ -119,7 +121,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/setting_clear_cache"
                 android:textColor="@color/base_text_color"
-                android:textSize="@dimen/px_32" />
+                android:textSize="@dimen/text_size_28_px" />
 
             <!-- 缓存大小的显示 -->
             <TextView
@@ -129,7 +131,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
                 android:textColor="@color/bottom_tab_text_color_nor"
-                android:textSize="@dimen/px_32" />
+                android:textSize="@dimen/text_size_28_px" />
         </RelativeLayout>
         <!-- 分割线 -->
         <View
@@ -141,7 +143,7 @@
         <RelativeLayout
             android:id="@+id/setting_check_update_rl"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_96"
             android:background="@drawable/layout_selector_bg"
             android:paddingLeft="@dimen/px_32"
             android:paddingRight="@dimen/px_32">
@@ -153,7 +155,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/setting_check_update"
                 android:textColor="@color/base_text_color"
-                android:textSize="@dimen/px_32" />
+                android:textSize="@dimen/text_size_28_px" />
 
             <TextView
                 android:id="@+id/update_version_num_tv"
@@ -163,15 +165,16 @@
                 android:gravity="center_vertical"
                 android:text="1.0.0"
                 android:textColor="@color/bottom_tab_text_color_nor"
-                android:textSize="@dimen/px_32" />
+                android:textSize="@dimen/text_size_28_px" />
         </RelativeLayout>
 
 
         <!-- 退出登录 -->
-        <Button
+        <TextView
+            android:gravity="center"
             android:id="@+id/setting_exit_login_btn"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/px_100"
+            android:layout_height="@dimen/px_90"
             android:layout_marginBottom="@dimen/px_30"
             android:layout_marginLeft="@dimen/px_30"
             android:layout_marginRight="@dimen/px_30"
@@ -183,6 +186,5 @@
             android:textSize="@dimen/px_32" />
     </LinearLayout>
     </ScrollView>
-    </trunk.doi.base.view.pullrefresh.RefreshLayout>
 
 </LinearLayout>

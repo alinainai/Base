@@ -9,18 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         >
+
         <TextView
             android:id="@+id/title_bar_back"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
+            android:layout_height="48dp"
             android:drawableStart="@mipmap/titlebar_back_icon"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:paddingBottom="10dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="10dp"
             android:visibility="visible" />
 
         <TextView
@@ -34,29 +34,20 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="title"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/title_bar_right"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:minWidth="45dp"
-            android:orientation="horizontal">
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/title_size" />
             <TextView
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
                 android:id="@+id/title_bar_edt"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="48dp"
                 android:gravity="center"
                 android:minWidth="50dp"
-                android:text="编辑"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-        </LinearLayout>
+                android:textColor="@color/title_right_color"
+                android:textSize="@dimen/title_right_size" />
     </RelativeLayout>
 
     <View

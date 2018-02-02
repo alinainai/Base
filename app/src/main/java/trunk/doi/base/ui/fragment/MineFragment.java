@@ -15,6 +15,7 @@ import butterknife.Unbinder;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.ui.activity.LoginActivity;
+import trunk.doi.base.ui.activity.SettingActivity;
 import trunk.doi.base.util.ScreenUtils;
 import trunk.doi.base.view.CircleImageView;
 
@@ -27,8 +28,6 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.status_bar)
     View mStatusBar;
-
-
     public static final String TAG = "MineFragment";
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
@@ -78,6 +77,7 @@ public class MineFragment extends BaseFragment {
             case R.id.img_message:
                 break;
             case R.id.img_set:
+                startActivityAnim(new Intent(mContext, SettingActivity.class));
                 break;
             case R.id.iv_head:
                 startActivityAnim(new Intent(mContext, LoginActivity.class));

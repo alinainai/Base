@@ -74,7 +74,7 @@ public class GankItemFragment extends BaseFragment {
 
     @Override
     protected int initLayoutId() {
-        return R.layout.fragment_type_item_layout;
+        return R.layout.layout_base_refresh_recycler;
     }
 
     @Override
