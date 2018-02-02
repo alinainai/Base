@@ -23,7 +23,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_head_pic"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <trunk.doi.base.view.CircleImageView
             android:id="@+id/mine_user_icon_img"
@@ -53,7 +53,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_nickname"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:id="@+id/detail_nickName_tv"
@@ -63,7 +63,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_nickname"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <ImageView
             android:id="@+id/img1"
@@ -91,7 +91,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_username"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:id="@+id/userName"
@@ -101,7 +101,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_username"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <ImageView
             android:id="@+id/img7"
@@ -130,7 +130,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_sex"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:layout_centerVertical="true"
@@ -140,7 +140,7 @@
             android:layout_toLeftOf="@+id/img2"
             android:text="@string/mine_sex"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <ImageView
             android:id="@+id/img2"
@@ -168,7 +168,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_birsty"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:id="@+id/detail_birthday_tv"
@@ -178,7 +178,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_birsty"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <ImageView
             android:id="@+id/img3"
@@ -205,7 +205,7 @@
             android:gravity="center_vertical"
             android:text="@string/band_phone"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:id="@+id/detail_phone_tv"
@@ -215,7 +215,7 @@
             android:gravity="center_vertical"
             android:text="@string/band_phone"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <ImageView
             android:id="@+id/img4"
@@ -240,7 +240,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_service_address"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_26" />
+            android:textSize="@dimen/text_size_26_px" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -249,7 +249,7 @@
             android:gravity="center_vertical"
             android:text="@string/mine_city"
             android:textColor="@color/bottom_tab_text_color_nor"
-            android:textSize="@dimen/font_size_26"
+            android:textSize="@dimen/text_size_26_px"
              />
 
         <ImageView

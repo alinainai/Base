@@ -123,8 +123,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         mUnbinder.unbind();
-        super.onDestroy();
         ActivityController.getActivityController().removeActivity(this);
+        super.onDestroy();
     }
 
     @Override

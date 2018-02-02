@@ -48,7 +48,7 @@
         android:layout_marginRight="@dimen/px_30"
         android:padding="@dimen/px_10"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_32" />
+        android:textSize="@dimen/text_size_32_px" />
 
     <LinearLayout
         android:layout_marginRight="@dimen/px_8"

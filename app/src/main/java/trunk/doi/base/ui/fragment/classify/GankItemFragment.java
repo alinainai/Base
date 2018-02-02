@@ -88,10 +88,8 @@ public class GankItemFragment extends BaseFragment {
         mGankItemAdapter.setOnItemClickListener(new OnItemClickListener<GankItemData>() {
             @Override
             public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
-                Intent intent = new Intent(mContext, WebViewActivity.class);
-                intent.putExtra("url", gankItemData.getUrl());
-                startActivity(intent);
-                getActivity().overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                startActivityAnim(new Intent(mContext, WebViewActivity.class)
+                        .putExtra("url", gankItemData.getUrl()));
             }
         });
 

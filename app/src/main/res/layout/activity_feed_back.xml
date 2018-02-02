@@ -23,7 +23,7 @@
             android:layout_marginLeft="@dimen/px_30"
             android:text="@string/feed_back_type"
             android:textColor="@color/base_text_color"
-            android:textSize="@dimen/font_size_30" />
+            android:textSize="@dimen/text_size_30_px" />
 
         <!-- 功能意见的字 -->
         <TextView
@@ -34,7 +34,7 @@
             android:layout_toLeftOf="@+id/feed_back_right_img"
             android:text="@string/feed_function_opinion"
             android:textColor="@color/base_text_info_color"
-            android:textSize="@dimen/font_size_30" />
+            android:textSize="@dimen/text_size_30_px" />
 
         <ImageView
             android:id="@+id/feed_back_right_img"
@@ -67,7 +67,7 @@
             android:minHeight="@dimen/px_260"
             android:textColor="@color/base_text_color"
             android:textColorHint="@color/base_search_hint_color"
-            android:textSize="@dimen/font_size_28" />
+            android:textSize="@dimen/text_size_28_px" />
 
         <TextView
             android:layout_width="match_parent"
@@ -77,7 +77,7 @@
             android:maxLength="100"
             android:text="@string/feed_back_input_tv"
             android:textColor="@color/base_search_hint_color"
-            android:textSize="@dimen/font_size_28" />
+            android:textSize="@dimen/text_size_28_px" />
     </LinearLayout>
 
     <!-- 手机号输入 -->
@@ -91,7 +91,7 @@
         android:paddingLeft="@dimen/px_30"
         android:textColor="@color/base_text_color"
         android:textColorHint="@color/base_search_hint_color"
-        android:textSize="@dimen/font_size_28" />
+        android:textSize="@dimen/text_size_28_px" />
 
     <!-- 提交按钮 -->
     <Button
@@ -104,6 +104,6 @@
         android:text="提交"
         android:background="@drawable/layout_selector_bg"
         android:textColor="@color/black"
-        android:textSize="@dimen/font_size_32" />
+        android:textSize="@dimen/text_size_32_px" />
 
 </LinearLayout>

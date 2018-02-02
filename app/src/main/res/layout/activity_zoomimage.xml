@@ -23,7 +23,7 @@
             android:layout_centerInParent="true"
             android:text="标题"
             android:textColor="@color/white"
-            android:textSize="@dimen/font_size_38" />
+            android:textSize="@dimen/text_size_38_px" />
 
         <LinearLayout
             android:id="@+id/ll_back"
@@ -57,7 +57,7 @@
         android:layout_marginBottom="@dimen/px_30"
         android:background="@color/alpha_color"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_32" />
+        android:textSize="@dimen/text_size_32_px" />
     <TextView
         android:id="@+id/tv_save"
         android:layout_width="wrap_content"
@@ -70,6 +70,6 @@
         android:layout_marginBottom="@dimen/px_30"
         android:background="@color/alpha_color"
         android:textColor="@color/white"
-        android:textSize="@dimen/font_size_32" />
+        android:textSize="@dimen/text_size_32_px" />
 
 </RelativeLayout>

@@ -91,11 +91,9 @@
     <declare-styleable name="TitleView">
         <attr name="titleText" format="string|reference" />
         <attr name="titleColor" format="color|reference" />
-        <attr name="titleTextSize" format="dimension|reference" />
         <attr name="backColor" format="color|reference" />
         <attr name="rightText" format="string|reference" />
         <attr name="rightTextColor" format="color|reference" />
-        <attr name="rightTextSize" format="dimension|reference" />
         <attr name="backIcon" format="color|reference" />
         <attr name="dividerHide" format="boolean" />
         <attr name="rightHide" format="boolean" />

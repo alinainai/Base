@@ -3,27 +3,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <!-- 间隔 -->
-    <dimen name="fab_margin">16dp</dimen>
-
-    <dimen name="bottom_hight">58dp</dimen>
-    <dimen name="toolbar_height">58dp</dimen>
-
-    <dimen name="default_padding_top">8dp</dimen>
-    <dimen name="default_padding_bottom">8dp</dimen>
-    <dimen name="inner_padding_left">0dp</dimen>
-    <dimen name="inner_padding_right">0dp</dimen>
-    <dimen name="floating_label_text_size">12sp</dimen>
-    <dimen name="bottom_text_size">12sp</dimen>
-    <dimen name="inner_components_spacing">8dp</dimen>
-    <dimen name="bottom_ellipsis_height">4dp</dimen>
+    <dimen name="title_size">@dimen/text_size_32_px</dimen>
+    <dimen name="title_right_size">@dimen/text_size_28_px</dimen>
+    <dimen name="title_bar_size">@dimen/px_100</dimen>
 
 
-    <dimen name="indicator_right_padding">10dp</dimen>
-    <dimen name="indicator_corner_radius">12dp</dimen>
-    <dimen name="indicator_internal_padding">4dp</dimen>
-    <dimen name="header_footer_left_right_padding">24dp</dimen>
-    <dimen name="header_footer_top_bottom_padding">12dp</dimen>
 
     <dimen name="px_1">0.5dp</dimen>
     <dimen name="px_2">1.0dp</dimen>
@@ -745,6 +729,7 @@
     <dimen name="px_718">359.0dp</dimen>
     <dimen name="px_719">359.5dp</dimen>
     <dimen name="px_720">360.0dp</dimen>
+
     <dimen name="text_size_22_px">11.0sp</dimen>
     <dimen name="text_size_24_px">12.0sp</dimen>
     <dimen name="text_size_26_px">13.0sp</dimen>

@@ -7,12 +7,19 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.tencent.smtt.export.external.interfaces.SslError;
@@ -24,27 +31,29 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
+import trunk.doi.base.util.StatusBarUtils;
 import trunk.doi.base.util.ToastUtil;
 
 public class WebViewActivity extends BaseActivity {
 
 
-    @BindView(R.id.img_back)
-    ImageView imgBack;
     @BindView(R.id.main_cart_title)
     TextView mainCartTitle;
     @BindView(R.id.progressbar)
     ProgressBar bar;
-    @BindView(R.id.webview)
-    WebView webView;
 
+    @BindView(R.id.rl_webview)
+    RelativeLayout rl_webview;
+
+    private WebView webView;
 
     private String url;
     private String mTitle;
-
 
 
     @Override
@@ -55,11 +64,20 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
+        if (StatusBarUtils.setStatusBarLightMode(mContext)) {
+            mStatusBar.setBackgroundColor(getResources().getColor(R.color.white));
+        } else {
+            mStatusBar.setBackgroundColor(getResources().getColor(R.color.black));
+        }
+
         url = getIntent().getStringExtra("url");//地址
         mTitle = getIntent().getStringExtra("title");//标题
-        if(!TextUtils.isEmpty(mTitle)){
+        if (!TextUtils.isEmpty(mTitle)) {
             mainCartTitle.setText(mTitle);
         }
+        webView=new WebView(mContext);
+        webView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+        rl_webview.addView(webView);
     }
 
     @Override
@@ -69,7 +87,7 @@ public class WebViewActivity extends BaseActivity {
         mainCartTitle.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(mContext);
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -93,15 +111,15 @@ public class WebViewActivity extends BaseActivity {
             //设置进度条
             @Override
             public void onProgressChanged(WebView view, int progress) {
-                if (progress == 100) {
-                    bar.setVisibility(View.GONE);
-                } else {
-                    try{
+                try {
+                    if (progress == 100) {
+                        bar.setVisibility(View.GONE);
+                    } else {
                         bar.setVisibility(View.VISIBLE);
                         bar.setProgress(progress);
-                    }catch (NullPointerException e){
-
                     }
+                } catch (NullPointerException e) {
+
                 }
                 super.onProgressChanged(view, progress);
             }
@@ -110,12 +128,14 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                if(TextUtils.isEmpty(mTitle)){
-                    if(!TextUtils.isEmpty(title))
-                        mainCartTitle.setText(title);
+                if (TextUtils.isEmpty(mTitle)) {
+                    if (!TextUtils.isEmpty(title)) {
+                        if (null != mainCartTitle) {
+                            mainCartTitle.setText(title);
+                        }
+                    }
                 }
             }
-
         });
         webView.setWebViewClient(new WebViewClient() {
 
@@ -123,10 +143,12 @@ public class WebViewActivity extends BaseActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
             }
+
             @Override
             public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
                 return super.shouldOverrideKeyEvent(view, event);
             }
+
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed();
@@ -142,6 +164,7 @@ public class WebViewActivity extends BaseActivity {
             public void onPageFinished(WebView view, String url) {
 
             }
+
             @SuppressWarnings("deprecation")
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -155,14 +178,28 @@ public class WebViewActivity extends BaseActivity {
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setJavaScriptEnabled(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); //自适应屏幕
-        //   settings.setDomStorageEnabled(true);  //开启DOM
-        //   settings.setDefaultTextEncodingName("utf-8"); //设置编码
-        //  settings.setAllowFileAccess(true);// 支持文件流
-        // settings.setUseWideViewPort(true);// 调整到适合webview大小
-        //   settings.setLoadWithOverviewMode(true);// 调整到适合webview大小
-        //    settings.setBlockNetworkImage(true); //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
-        //   String t = Uri.parse(url).getQueryParameter("title");
 
+        settings.setTextZoom(90);
+        settings.setDomStorageEnabled(true);  //开启DOM
+        settings.setDefaultTextEncodingName("utf-8"); //设置编码
+        settings.setAllowFileAccess(true);// 支持文件流
+        settings.setUseWideViewPort(true);// 设置此属性，可任意比例缩放
+        settings.setLoadWithOverviewMode(true);// 调整到适合webview大小
+        //打开页面时， 自适应屏幕：
+        settings.setSupportZoom(true);
+        settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && BuildConfig.DEBUG) {
+            WebView.setWebContentsDebuggingEnabled(true);
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            settings.setMixedContentMode(WebSettings.LOAD_DEFAULT);
+            settings.setBlockNetworkImage(false);
+        }
+        // 禁用硬件加速
+        //  webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         webView.setDownloadListener(new GQDownloadListener());
     }
 
@@ -180,39 +217,58 @@ public class WebViewActivity extends BaseActivity {
                 return;
             }
         }
-        super.onBackPressed();
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
+        finishAnim();
     }
 
     @Override
     protected void onDestroy() {
-
         if (webView != null) {
             webView.destroy();
         }
+        if (webView != null) {
+            // 如果先调用destroy()方法，则会命中if (isDestroyed()) return;这一行代码，需要先onDetachedFromWindow()，再destory()
+            try {
+                ViewParent parent = webView.getParent();
+                if (parent != null) {
+                    ((ViewGroup) parent).removeView(webView);
+                }
+                // 退出时调用此方法，移除绑定的服务，否则某些特定系统会报错
+                webView.clearHistory();
+                webView.getSettings().setJavaScriptEnabled(false);
+                webView.removeAllViews();
+                webView.destroy();
+                webView=null;
+            } catch (Exception ex) {
+
+            }
+        }
+        StatusBarUtils.setStatusBarDarkMode(mContext);
         super.onDestroy();
     }
 
-    @OnClick({R.id.img_back,R.id.main_cart_title,R.id.img_refresh})
-    public void onClick(View view) {
+
+
+    @OnClick({R.id.img_back, R.id.img_refresh})
+    public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
-                finish();
-                overridePendingTransition(android.R.anim.slide_in_left,android.R.anim.slide_out_right);
-                break;
-            case R.id.main_cart_title:
+
+                if (webView != null) {
+                    if (webView.canGoBack()) {
+                        webView.goBack();// 返回前一个页面
+                        return;
+                    }
+                }
+                finishAnim();
 
                 break;
             case R.id.img_refresh:
-                webView.reload();
+                finishAnim();
                 break;
         }
     }
+
+
     public class GQDownloadListener implements DownloadListener {
 
         @Override

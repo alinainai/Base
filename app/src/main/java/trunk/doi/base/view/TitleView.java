@@ -31,13 +31,11 @@ public class TitleView extends LinearLayout{
 
     private String titleText;
     private int titleTextColor;
-    private float titltTextSize = 16;
 
     private Drawable backIcon;
 
     private String rightText;
     private int rightTextColor;
-    private float rightTextSize = 14;
 
     private int backColor;
     private boolean rightHide;
@@ -61,14 +59,12 @@ public class TitleView extends LinearLayout{
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TitleView);
         titleText = typedArray.getString(R.styleable.TitleView_titleText);
-        titltTextSize = typedArray.getDimension(R.styleable.TitleView_titleTextSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 16, getResources().getDisplayMetrics()));
         titleTextColor = typedArray.getColor(R.styleable.TitleView_titleColor, ContextCompat.getColor(getContext(),R.color.black) );
 
         backColor = typedArray.getColor(R.styleable.TitleView_backColor, ContextCompat.getColor(getContext(),R.color.white) );
 
         rightText = typedArray.getString(R.styleable.TitleView_rightText);
         rightTextColor = typedArray.getColor(R.styleable.TitleView_rightTextColor, ContextCompat.getColor(getContext(),R.color.black) );
-        rightTextSize = typedArray.getDimension(R.styleable.TitleView_rightTextSize, TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, 16, getResources().getDisplayMetrics()));
 
         backIcon = typedArray.getDrawable(R.styleable.TitleView_backIcon);
         rightHide = typedArray.getBoolean(R.styleable.TitleView_rightHide,true);
@@ -96,11 +92,9 @@ public class TitleView extends LinearLayout{
         setTitleColor(titleTextColor);
         setTitleText(titleText);
         setBackgroundColor(backColor);
-        setTitleSize(titltTextSize);
         setBarLineHide(dividerHide);
         setRightHide(rightHide);
         setRightColor(rightTextColor);
-        setRightSize(rightTextSize);
         if(null==backIcon){
             backIcon=ContextCompat.getDrawable(getContext(),R.mipmap.titlebar_back_icon);
             setBackDrawable(backIcon);
@@ -178,7 +172,7 @@ public class TitleView extends LinearLayout{
     /**
      * 设置返回键监听事件
      */
-    public void setBackListener(View.OnClickListener clickListener) {
+    public void setOnBackListener(View.OnClickListener clickListener) {
         if(clickListener!=null){
             v1TvLeft.setOnClickListener(clickListener);
         }

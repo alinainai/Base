@@ -155,17 +155,16 @@ public class LoginActivity extends BaseActivity {
     public void initData() {
 
         try{
-//             videoFile = getFileStreamPath(VIDEO_NAME);
-//            if (!videoFile.exists()) {
-//                videoFile = copyVideoFile();
-//            }
-            //   playVideo(videoFile);
+             videoFile = getFileStreamPath(VIDEO_NAME);
+            if (!videoFile.exists()) {
+                videoFile = copyVideoFile();
+            }
+               playVideo(videoFile);
 
         }catch (Exception e){
             //如果有异常背景变为黑
-//            re_login.setBackgroundColor(Color.BLACK);
+            re_login.setBackgroundResource(R.mipmap.bg_color);
         }
-        re_login.setBackgroundColor(Color.BLACK);
 
     }
 

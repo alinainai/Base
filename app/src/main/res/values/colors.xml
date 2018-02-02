@@ -129,6 +129,11 @@
 
 
 
+    <color name="title_color">@color/black</color>
+    <color name="title_right_color">@color/black</color>
+    <color name="title_bar_color">@color/white</color>
+
+
 
 
 </resources>
