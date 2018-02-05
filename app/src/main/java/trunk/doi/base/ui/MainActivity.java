@@ -26,7 +26,7 @@ import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
-import trunk.doi.base.ui.fragment.CartFragment;
+import trunk.doi.base.ui.fragment.InfoFragment;
 import trunk.doi.base.ui.fragment.MainFragment;
 import trunk.doi.base.ui.fragment.ClassifyFragment;
 import trunk.doi.base.ui.fragment.MineFragment;
@@ -44,9 +44,9 @@ public class MainActivity extends BaseActivity {
     RadioGroup rg_radio;
      //container
     private FragmentManager mFragManager;//fragment管理器
-    private BaseFragment mClassifyFragment;//分类的fragment
-    private BaseFragment mShoppingFragment;//购物车的fragment
     private BaseFragment mHomeFragment;//首页的fragment
+    private BaseFragment mClassifyFragment;//分类的fragment
+    private BaseFragment mInfoFragment;//购物车的fragment
     private BaseFragment mMineFragment;//我的fragment
 
     private int index;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         {
             put(0, MainFragment.TAG);
             put(1, ClassifyFragment.TAG);
-            put(2, MainFragment.TAG);
+            put(2, InfoFragment.TAG);
             put(3, MineFragment.TAG);
         }
     };
@@ -116,9 +116,6 @@ public class MainActivity extends BaseActivity {
                             case 3:
                                 changeFragment(currentTabIndex, 3);
                                 break;
-                            case 4:
-                                changeFragment(currentTabIndex, 4);
-                                break;
                         }
                         ((RadioButton) rg_radio.getChildAt(event.getId())).setChecked(true);
                     }
@@ -169,11 +166,11 @@ public class MainActivity extends BaseActivity {
             }
             return mClassifyFragment;
         }
-        if (CartFragment.TAG.equals(tag)) {
-            if (mShoppingFragment == null) {
-                mShoppingFragment = CartFragment.newInstance();
+        if (InfoFragment.TAG.equals(tag)) {
+            if (mInfoFragment == null) {
+                mInfoFragment = InfoFragment.newInstance();
             }
-            return mShoppingFragment;
+            return mInfoFragment;
         }
         if (MineFragment.TAG.equals(tag)) {
             if (mMineFragment == null) {

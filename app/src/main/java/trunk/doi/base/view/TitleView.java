@@ -36,6 +36,7 @@ public class TitleView extends FrameLayout{
 
     private int backColor;
     private boolean dividerHide;
+    private boolean backHide;
 
 
     public TitleView(Context context) {
@@ -64,6 +65,7 @@ public class TitleView extends FrameLayout{
 
         backIcon = typedArray.getDrawable(R.styleable.TitleView_backIcon);
         dividerHide = typedArray.getBoolean(R.styleable.TitleView_dividerHide,false);
+        backHide = typedArray.getBoolean(R.styleable.TitleView_backHide,false);
 
         typedArray.recycle();
 
@@ -90,7 +92,10 @@ public class TitleView extends FrameLayout{
         if(null==backIcon){
             backIcon=ContextCompat.getDrawable(getContext(),R.mipmap.titlebar_back_icon);
             setBackDrawable(backIcon);
+        }else{
+            setBackDrawable(backIcon);
         }
+        setBackHide(backHide);
         if(!TextUtils.isEmpty(rightText)){
             setRightText(rightText);
         }
@@ -155,6 +160,25 @@ public class TitleView extends FrameLayout{
             }else{
                 if(barLine.getVisibility()==View.GONE){
                     barLine.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    /**
+     * 分割线隐藏
+     * @param isHide
+     */
+    public void setBackHide(boolean isHide) {
+        this.backHide=isHide;
+        if(null!=v1TvLeft){
+            if(isHide){
+                if(v1TvLeft.getVisibility()==View.VISIBLE){
+                    v1TvLeft.setVisibility(View.GONE);
+                }
+            }else{
+                if(v1TvLeft.getVisibility()==View.GONE){
+                    v1TvLeft.setVisibility(View.VISIBLE);
                 }
             }
         }

@@ -11,8 +11,7 @@ import android.widget.FrameLayout;
 /**
  * Created by zhy on 15/8/26.
  */
-public class LoadingAndRetryLayout extends FrameLayout
-{
+public class LoadingAndRetryLayout extends FrameLayout {
     private View mLoadingView;
     private View mRetryView;
     private View mContentView;
@@ -22,43 +21,34 @@ public class LoadingAndRetryLayout extends FrameLayout
     private static final String TAG = LoadingAndRetryLayout.class.getSimpleName();
 
 
-    public LoadingAndRetryLayout(Context context, AttributeSet attrs, int defStyleAttr)
-    {
+    public LoadingAndRetryLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mInflater = LayoutInflater.from(context);
     }
 
 
-    public LoadingAndRetryLayout(Context context, AttributeSet attrs)
-    {
+    public LoadingAndRetryLayout(Context context, AttributeSet attrs) {
         this(context, attrs, -1);
     }
 
-    public LoadingAndRetryLayout(Context context)
-    {
+    public LoadingAndRetryLayout(Context context) {
         this(context, null);
     }
 
-    private boolean isMainThread()
-    {
+    private boolean isMainThread() {
         return Looper.myLooper() == Looper.getMainLooper();
     }
 
     /**
      * 显示进度
      */
-    public void showLoading()
-    {
-        if (isMainThread())
-        {
+    public void showLoading() {
+        if (isMainThread()) {
             showView(mLoadingView);
-        } else
-        {
-            post(new Runnable()
-            {
+        } else {
+            post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     showView(mLoadingView);
                 }
             });
@@ -68,18 +58,13 @@ public class LoadingAndRetryLayout extends FrameLayout
     /**
      * 显示重新加载
      */
-    public void showRetry()
-    {
-        if (isMainThread())
-        {
+    public void showRetry() {
+        if (isMainThread()) {
             showView(mRetryView);
-        } else
-        {
-            post(new Runnable()
-            {
+        } else {
+            post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     showView(mRetryView);
                 }
             });
@@ -90,18 +75,13 @@ public class LoadingAndRetryLayout extends FrameLayout
     /**
      * 显示成功内容
      */
-    public void showContent()
-    {
-        if (isMainThread())
-        {
+    public void showContent() {
+        if (isMainThread()) {
             showView(mContentView);
-        } else
-        {
-            post(new Runnable()
-            {
+        } else {
+            post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     showView(mContentView);
                 }
             });
@@ -111,18 +91,13 @@ public class LoadingAndRetryLayout extends FrameLayout
     /**
      * 显示空内容
      */
-    public void showEmpty()
-    {
-        if (isMainThread())
-        {
+    public void showEmpty() {
+        if (isMainThread()) {
             showView(mEmptyView);
-        } else
-        {
-            post(new Runnable()
-            {
+        } else {
+            post(new Runnable() {
                 @Override
-                public void run()
-                {
+                public void run() {
                     showView(mEmptyView);
                 }
             });
@@ -130,12 +105,10 @@ public class LoadingAndRetryLayout extends FrameLayout
     }
 
 
-    private void showView(View view)
-    {
+    private void showView(View view) {
         if (view == null) return;
 
-        if (view == mLoadingView)
-        {
+        if (view == mLoadingView) {
             mLoadingView.setVisibility(View.VISIBLE);
             if (mRetryView != null)
                 mRetryView.setVisibility(View.GONE);
@@ -143,8 +116,7 @@ public class LoadingAndRetryLayout extends FrameLayout
                 mContentView.setVisibility(View.GONE);
             if (mEmptyView != null)
                 mEmptyView.setVisibility(View.GONE);
-        } else if (view == mRetryView)
-        {
+        } else if (view == mRetryView) {
             mRetryView.setVisibility(View.VISIBLE);
             if (mLoadingView != null)
                 mLoadingView.setVisibility(View.GONE);
@@ -152,8 +124,7 @@ public class LoadingAndRetryLayout extends FrameLayout
                 mContentView.setVisibility(View.GONE);
             if (mEmptyView != null)
                 mEmptyView.setVisibility(View.GONE);
-        } else if (view == mContentView)
-        {
+        } else if (view == mContentView) {
             mContentView.setVisibility(View.VISIBLE);
             if (mLoadingView != null)
                 mLoadingView.setVisibility(View.GONE);
@@ -161,8 +132,7 @@ public class LoadingAndRetryLayout extends FrameLayout
                 mRetryView.setVisibility(View.GONE);
             if (mEmptyView != null)
                 mEmptyView.setVisibility(View.GONE);
-        } else if (view == mEmptyView)
-        {
+        } else if (view == mEmptyView) {
             mEmptyView.setVisibility(View.VISIBLE);
             if (mLoadingView != null)
                 mLoadingView.setVisibility(View.GONE);
@@ -175,30 +145,25 @@ public class LoadingAndRetryLayout extends FrameLayout
 
     }
 
-    public View setContentView(int layoutId)
-    {
+    public View setContentView(int layoutId) {
         return setContentView(mInflater.inflate(layoutId, this, false));
     }
 
-    public View setLoadingView(int layoutId)
-    {
+    public View setLoadingView(int layoutId) {
         return setLoadingView(mInflater.inflate(layoutId, this, false));
     }
 
-    public View setEmptyView(int layoutId)
-    {
+    public View setEmptyView(int layoutId) {
         return setEmptyView(mInflater.inflate(layoutId, this, false));
     }
 
-    public View setRetryView(int layoutId)
-    {
+    public View setRetryView(int layoutId) {
         return setRetryView(mInflater.inflate(layoutId, this, false));
     }
-    public View setLoadingView(View view)
-    {
+
+    public View setLoadingView(View view) {
         View loadingView = mLoadingView;
-        if (loadingView != null)
-        {
+        if (loadingView != null) {
             Log.w(TAG, "you have already set a loading view and would be instead of this new one.");
         }
         removeView(loadingView);
@@ -207,11 +172,9 @@ public class LoadingAndRetryLayout extends FrameLayout
         return mLoadingView;
     }
 
-    public View setEmptyView(View view)
-    {
+    public View setEmptyView(View view) {
         View emptyView = mEmptyView;
-        if (emptyView != null)
-        {
+        if (emptyView != null) {
             Log.w(TAG, "you have already set a empty view and would be instead of this new one.");
         }
         removeView(emptyView);
@@ -220,11 +183,9 @@ public class LoadingAndRetryLayout extends FrameLayout
         return mEmptyView;
     }
 
-    public View setRetryView(View view)
-    {
+    public View setRetryView(View view) {
         View retryView = mRetryView;
-        if (retryView != null)
-        {
+        if (retryView != null) {
             Log.w(TAG, "you have already set a retry view and would be instead of this new one.");
         }
         removeView(retryView);
@@ -234,11 +195,9 @@ public class LoadingAndRetryLayout extends FrameLayout
 
     }
 
-    public View setContentView(View view)
-    {
+    public View setContentView(View view) {
         View contentView = mContentView;
-        if (contentView != null)
-        {
+        if (contentView != null) {
             Log.w(TAG, "you have already set a retry view and would be instead of this new one.");
         }
         removeView(contentView);
@@ -247,23 +206,19 @@ public class LoadingAndRetryLayout extends FrameLayout
         return mContentView;
     }
 
-    public View getRetryView()
-    {
+    public View getRetryView() {
         return mRetryView;
     }
 
-    public View getLoadingView()
-    {
+    public View getLoadingView() {
         return mLoadingView;
     }
 
-    public View getContentView()
-    {
+    public View getContentView() {
         return mContentView;
     }
 
-    public View getEmptyView()
-    {
+    public View getEmptyView() {
         return mEmptyView;
     }
 }

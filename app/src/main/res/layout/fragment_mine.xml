@@ -20,21 +20,18 @@
 
         <ImageView
             android:id="@+id/img_message"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px_20"
+            android:scaleType="centerInside"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
             android:src="@mipmap/ac_message" />
 
         <ImageView
             android:id="@+id/img_set"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/px_28"
-            android:layout_toLeftOf="@+id/img_message"
-            android:paddingLeft="@dimen/px_10"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside"
+            android:layout_toStartOf="@+id/img_message"
             android:src="@mipmap/ac_set" />
     </RelativeLayout>
 
@@ -58,7 +55,7 @@
                     android:layout_width="@dimen/px_115"
                     android:layout_height="@dimen/px_115"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/px_30"
+                    android:layout_marginStart="@dimen/px_30"
                     android:src="@mipmap/user_icon"
                     app:civ_border_color="@color/white"
                     app:civ_border_width="@dimen/px_2" />
@@ -68,9 +65,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/iv_head"
-                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginStart="@dimen/px_20"
                     android:layout_marginTop="@dimen/px_10"
-                    android:layout_toRightOf="@+id/iv_head"
+                    android:layout_toEndOf="@+id/iv_head"
                     android:text="尛尛酥"
                     android:textColor="@color/white"
                     android:textSize="@dimen/px_30" />
@@ -80,9 +77,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_name"
-                    android:layout_marginLeft="@dimen/px_20"
+                    android:layout_marginStart="@dimen/px_20"
                     android:layout_marginTop="@dimen/px_10"
-                    android:layout_toRightOf="@+id/iv_head"
+                    android:layout_toEndOf="@+id/iv_head"
                     android:text="185****2340"
                     android:textColor="@color/white"
                     android:textSize="@dimen/px_30" />
@@ -91,9 +88,9 @@
                     android:id="@+id/tv_intent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="@dimen/px_40"
+                    android:layout_marginEnd="@dimen/px_40"
                     android:layout_marginTop="@dimen/px_10"
                     android:drawablePadding="@dimen/px_15"
                     android:drawableTop="@mipmap/ac_invite"
@@ -202,7 +199,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_14"
+                        android:layout_marginStart="@dimen/px_14"
                         android:text="提现"
                         android:textColor="#666"
                         android:textSize="@dimen/px_34" />
@@ -231,7 +228,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_14"
+                        android:layout_marginStart="@dimen/px_14"
                         android:text="充值"
                         android:textColor="#ff3e19"
                         android:textSize="@dimen/px_34" />
@@ -248,8 +245,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/px_1"
-                    android:layout_marginLeft="@dimen/px_40"
-                    android:layout_marginRight="@dimen/px_40"
+                    android:layout_marginStart="@dimen/px_40"
+                    android:layout_marginEnd="@dimen/px_40"
                     android:background="#e5e5e5" />
             </LinearLayout>
 
@@ -301,7 +298,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                    android:paddingStart="@dimen/px_30">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -311,7 +308,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginStart="@dimen/px_15"
                         android:text="我的出借"
                         android:textColor="#333"
                         android:textSize="@dimen/px_30" />
@@ -338,7 +335,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                    android:paddingStart="@dimen/px_30">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -348,7 +345,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginStart="@dimen/px_15"
                         android:text="债权转让"
                         android:textColor="#333"
                         android:textSize="@dimen/px_30" />
@@ -375,7 +372,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                    android:paddingStart="@dimen/px_30">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -385,7 +382,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginStart="@dimen/px_15"
                         android:text="我的宝箱"
                         android:textColor="#333"
                         android:textSize="@dimen/px_30" />
@@ -412,7 +409,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/px_30">
+                    android:paddingStart="@dimen/px_30">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -422,7 +419,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginStart="@dimen/px_15"
                         android:text="冠豆"
                         android:textColor="#333"
                         android:textSize="@dimen/px_30" />
@@ -445,7 +442,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_15"
+                    android:layout_marginStart="@dimen/px_15"
                     android:text="我的体验金"
                     android:textColor="#333"
                     android:textSize="@dimen/px_30" />
@@ -468,7 +465,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_15"
+                    android:layout_marginStart="@dimen/px_15"
                     android:text="银行卡管理"
                     android:textColor="#333"
                     android:textSize="@dimen/px_30" />
@@ -493,7 +490,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/px_15"
+                    android:layout_marginStart="@dimen/px_15"
                     android:text="交易记录"
                     android:textColor="#333"
                     android:textSize="@dimen/px_30" />
@@ -519,7 +516,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/px_15"
+                        android:layout_marginStart="@dimen/px_15"
                         android:text="风险评测"
                         android:textColor="#333"
                         android:textSize="@dimen/px_30" />

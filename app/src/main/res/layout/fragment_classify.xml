@@ -11,14 +11,15 @@
         android:background="@color/cff3e19" />
 
     <!-- 标题 -->
-    <TextView
-        android:id="@+id/main_cart_title"
+    <trunk.doi.base.view.TitleView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_80"
-        android:gravity="center"
-        android:background="@color/cff3e19"
-        android:textColor="@color/white"
-        android:textSize="@dimen/text_size_32_px" />
+        android:layout_height="wrap_content"
+        app:backHide="true"
+        app:dividerHide="true"
+        app:titleText="分类"
+        app:titleColor="@color/white"
+        app:backColor="@color/cff3e19"
+        />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"

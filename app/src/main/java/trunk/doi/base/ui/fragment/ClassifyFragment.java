@@ -27,8 +27,7 @@ import trunk.doi.base.util.ScreenUtils;
  */
 public class ClassifyFragment extends BaseFragment {
     public static final String TAG = "ClassifyFragment";
-    @BindView(R.id.main_cart_title)
-    TextView mainCartTitle;
+
     @BindView(R.id.tablayout)
     TabLayout mTabLayout;
     @BindView(R.id.viewpager)
@@ -62,7 +61,6 @@ public class ClassifyFragment extends BaseFragment {
         } else {
             mStatusBar.setVisibility(View.GONE);
         }
-        mainCartTitle.setText("分类");
         mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
         mFragments = new ArrayList<>();
         for (String subtype : mTitles) {

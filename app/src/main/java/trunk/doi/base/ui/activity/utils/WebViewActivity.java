@@ -111,15 +111,14 @@ public class WebViewActivity extends BaseActivity {
             //设置进度条
             @Override
             public void onProgressChanged(WebView view, int progress) {
-                try {
+
+                if(!mContext.isDestroyed()){
                     if (progress == 100) {
                         bar.setVisibility(View.GONE);
                     } else {
                         bar.setVisibility(View.VISIBLE);
                         bar.setProgress(progress);
                     }
-                } catch (NullPointerException e) {
-
                 }
                 super.onProgressChanged(view, progress);
             }
@@ -127,14 +126,16 @@ public class WebViewActivity extends BaseActivity {
             //设置标题
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-                if (TextUtils.isEmpty(mTitle)) {
-                    if (!TextUtils.isEmpty(title)) {
-                        if (null != mainCartTitle) {
-                            mainCartTitle.setText(title);
+                if(!mContext.isDestroyed()){
+                    if (TextUtils.isEmpty(mTitle)) {
+                        if (!TextUtils.isEmpty(title)) {
+                            if (null != mainCartTitle) {
+                                mainCartTitle.setText(title);
+                            }
                         }
                     }
                 }
+                super.onReceivedTitle(view, title);
             }
         });
         webView.setWebViewClient(new WebViewClient() {

@@ -97,6 +97,7 @@
         <attr name="rightTextSize" format="dimension|reference" />
         <attr name="backIcon" format="color|reference" />
         <attr name="dividerHide" format="boolean" />
+        <attr name="backHide" format="boolean" />
     </declare-styleable>
 
 
