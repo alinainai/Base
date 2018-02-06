@@ -15,9 +15,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +28,6 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
@@ -249,7 +245,7 @@ public class WebViewActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.img_back, R.id.img_refresh})
+    @OnClick({R.id.img_back, R.id.img_refresh, R.id.img_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_back:
@@ -265,6 +261,11 @@ public class WebViewActivity extends BaseActivity {
                 break;
             case R.id.img_refresh:
                 finishAnim();
+                break;
+            case R.id.img_menu:
+
+
+
                 break;
         }
     }

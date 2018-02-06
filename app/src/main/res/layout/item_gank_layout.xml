@@ -7,43 +7,38 @@
     android:layout_marginTop="5dp"
     >
     <RelativeLayout
+        android:background="@drawable/layout_selector_bg"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/gank_item_icon"
-            android:layout_width="@dimen/px_100"
-            android:layout_height="@dimen/px_100"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:src="@mipmap/user_icon"
-            />
+
         <TextView
             android:id="@+id/gank_item_desc"
-            android:layout_alignTop="@+id/gank_item_icon"
-            android:layout_toEndOf="@id/gank_item_icon"
             android:layout_marginStart="10dp"
             android:text="content"
+            android:ellipsize="end"
             android:maxLines="2"
+            android:lines="2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/c333333"
             android:textSize="@dimen/text_size_26_px" />
 
         <TextView
-            android:layout_alignBottom="@+id/gank_item_icon"
-            android:layout_toEndOf="@id/gank_item_icon"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/gank_item_desc"
             android:layout_marginStart="10dp"
             android:id="@+id/gank_item_who"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="daimajia"
-            android:textColor="@color/c666666"
+            android:textColor="@color/c999999"
             android:textSize="@dimen/text_size_22_px" />
 
         <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/gank_item_desc"
             android:id="@+id/img_user_icon"
-            android:layout_alignBottom="@+id/gank_item_icon"
             android:layout_alignParentEnd="true"
             android:scaleType="center"
             android:layout_width="14dp"
@@ -57,7 +52,7 @@
             android:id="@+id/gank_item_publishedat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/c666666"
+            android:textColor="@color/c999999"
             android:textSize="@dimen/text_size_22_px" />
 
     </RelativeLayout>

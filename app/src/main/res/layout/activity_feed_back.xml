@@ -111,7 +111,7 @@
         android:layout_marginTop="@dimen/px_50"
         android:background="@drawable/layout_selector_bg"
         android:padding="0dp"
-        android:text="@string/setting_exit_login"
+        android:text="提交"
         android:textColor="@color/black"
         android:textSize="@dimen/text_size_30_px" />
 

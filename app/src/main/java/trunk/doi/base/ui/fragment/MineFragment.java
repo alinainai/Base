@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,7 +39,7 @@ public class MineFragment extends BaseFragment {
     @BindView(R.id.tv_phone)
     TextView tvPhone;
 
-
+    private List<String> strs=new ArrayList<>();
     public static MineFragment newInstance() {
         return new MineFragment();
     }
@@ -83,6 +86,9 @@ public class MineFragment extends BaseFragment {
                 startActivityAnim(new Intent(mContext, LoginActivity.class));
                 break;
             case R.id.tv_name:
+
+                tvName.setText(strs.get(0));
+
                 break;
             case R.id.tv_phone:
                 break;

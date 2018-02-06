@@ -25,11 +25,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/c26c4e9</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">#eee</item>
-        <item name="colorButtonNormal">@color/c26c4e9</item>
-        <item name="colorControlHighlight">#eee</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/cff3e19</item>
+        <item name="colorAccent">@color/cff3e19</item>
+        <item name="colorButtonNormal">@color/cff3e19</item>
+        <item name="colorControlHighlight">@color/cff3e19</item>
         <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
     </style>
 
@@ -38,7 +38,7 @@
     <!--设置dialogbutton颜色-->
     <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <!--修改AlertDialog按钮的颜色-->
-        <item name="colorAccent">@color/c26c4e9</item>
+        <item name="colorAccent">@color/cff3e19</item>
     </style>
 
     <style name="AppThemeNoStatus" parent="AppTheme">
@@ -151,6 +151,19 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/layout_selector_bg</item>
         <item name="android:paddingLeft">@dimen/px_30</item>
+    </style>
+
+
+    <style name="style_main_radio">
+        <item name="android:textSize">8sp</item>
+        <item name="android:textColor">@color/bottom_text_color</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">1dp</item>
+        <item name="android:scaleType">matrix</item>
+        <item name="android:gravity">center</item>
     </style>
 
 

@@ -107,6 +107,9 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CollectionActivity"
+            android:screenOrientation="portrait" />
 
 
 

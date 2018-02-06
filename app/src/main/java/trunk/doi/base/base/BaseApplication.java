@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import trunk.doi.base.service.LocationService;
+import trunk.doi.base.util.CrashHandler;
 import trunk.doi.base.util.SDCardUtils;
 import trunk.doi.base.util.SPUtils;
 
@@ -112,7 +113,7 @@ public class BaseApplication extends MultiDexApplication {
         locationService = new LocationService(getApplicationContext());
 
 
-
+        CrashHandler.getInstance().init(this);
 
 
         /**

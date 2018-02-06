@@ -3,25 +3,20 @@ package trunk.doi.base.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
+
 /**
  * Author: Othershe
  * Time: 2016/8/12 14:34
  */
+
+
 public class GankItemData implements Parcelable {
 
-    /**
-     * _id : 57aca861421aa949ef961f48
-     * createdAt : 2016-08-12T00:31:29.798Z
-     * desc : 一个简单，强大的广告活动弹窗控件
-     * publishedAt : 2016-08-12T11:39:10.578Z
-     * source : chrome
-     * type : Android
-     * url : https://github.com/yipianfengye/android-adDialog
-     * used : true
-     * who : Jason
-     */
+
 
     private String _id;
+
     private String createdAt;
     private String desc;
     private String[] images;
@@ -29,8 +24,13 @@ public class GankItemData implements Parcelable {
     private String source;
     private String type;
     private String url;
+
     private boolean used;
     private String who;
+
+
+
+
 
     public String get_id() {
         return _id;
@@ -112,6 +112,12 @@ public class GankItemData implements Parcelable {
         this.who = who;
     }
 
+
+
+    public GankItemData() {
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -131,9 +137,6 @@ public class GankItemData implements Parcelable {
         dest.writeString(this.who);
     }
 
-    public GankItemData() {
-    }
-
     protected GankItemData(Parcel in) {
         this._id = in.readString();
         this.createdAt = in.readString();
@@ -147,7 +150,7 @@ public class GankItemData implements Parcelable {
         this.who = in.readString();
     }
 
-    public static final Creator<GankItemData> CREATOR = new Creator<GankItemData>() {
+    public static final Parcelable.Creator<GankItemData> CREATOR = new Parcelable.Creator<GankItemData>() {
         @Override
         public GankItemData createFromParcel(Parcel source) {
             return new GankItemData(source);

@@ -27,10 +27,9 @@ public class GankItemAdapter extends CommonBaseAdapter<GankItemData> {
     @Override
     protected void convert(ViewHolder holder, GankItemData data, int position) {
         holder.setText(R.id.gank_item_desc, data.getDesc());
-        String who = TextUtils.isEmpty(data.getWho()) ? "null" : data.getWho();
+        String who = TextUtils.isEmpty(data.getWho()) ? "佚名" : data.getWho();
         holder.setText(R.id.gank_item_who, who);
         holder.setText(R.id.gank_item_publishedat, data.getPublishedAt().substring(0, 10));
-        ImageView image = holder.getView(R.id.gank_item_icon);
     }
 
     @Override

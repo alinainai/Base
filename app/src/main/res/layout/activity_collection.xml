@@ -5,18 +5,15 @@
     android:layout_height="match_parent"
     android:background="@color/base_bg"
     android:orientation="vertical">
-    <View
-        android:id="@+id/status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:background="@color/black" />
     <trunk.doi.base.view.TitleView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:backHide="true"
-        app:dividerHide="true"
-        app:titleText="视频"
+        app:titleText="我的收藏"
+        app:rightText="管理"
+        app:rightTextColor="@color/cff3e19"
         />
+    <include layout="@layout/layout_base_refresh_recycler" />
 
 
 </LinearLayout>
