@@ -12,6 +12,7 @@ import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 
+import trunk.doi.base.dialog.AlertDialog;
 import trunk.doi.base.view.TitleView;
 import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
 import trunk.doi.base.view.pullrefresh.RefreshLayout;
@@ -78,6 +79,14 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_check_update_rl:
                 break;
             case R.id.setting_exit_login_btn:
+
+                new AlertDialog(mContext).builder().setMsg("退出登录").setPositiveButton("确定", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finishAnim();
+                    }
+                }).setNegativeButton("取消",null).show();
+
                 break;
         }
     }

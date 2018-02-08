@@ -36,11 +36,10 @@ import trunk.doi.base.ui.activity.utils.WebViewActivity;
 public class GankItemFragment extends BaseFragment {
 
     private static final String SUB_TYPE="SUB_TYPE";
-    private int PAGE_COUNT = 1;//页数
+    private int mPage = 1;//页数
+    private final static int PAGE_COUNT = 10;//每页条数
     private String mSubtype;//分类
-    private int mTempPageCount = 2;
     private GankItemAdapter mGankItemAdapter;//适配器
-    private boolean isLoadMore;//是否还有
 
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
@@ -89,6 +88,7 @@ public class GankItemFragment extends BaseFragment {
             @Override
             public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
                 startActivityAnim(new Intent(mContext, WebViewActivity.class)
+                        .putExtra("title", gankItemData.getDesc())
                         .putExtra("url", gankItemData.getUrl()));
             }
         });
@@ -96,11 +96,6 @@ public class GankItemFragment extends BaseFragment {
         mGankItemAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(boolean isReload) {
-                if (PAGE_COUNT == mTempPageCount && !isReload) {
-                    return;
-                }
-                isLoadMore = true;
-                PAGE_COUNT = mTempPageCount;
                 loadData();
             }
         });
@@ -128,8 +123,7 @@ public class GankItemFragment extends BaseFragment {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                isLoadMore = false;
-                PAGE_COUNT = 1;
+                mPage = 1;
                 loadData();
             }
         });
@@ -155,48 +149,39 @@ public class GankItemFragment extends BaseFragment {
 
    private void loadData(){
 
-       RxManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getGankItemData("data/" + mSubtype + "/18/" + PAGE_COUNT),
+       RxManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getGankItemData("data/" + mSubtype + "/"+PAGE_COUNT+"/" + mPage),
                new RxSubscriber<HttpResult<List<GankItemData>>>(mContext,false,true) {
                    @Override
                    protected void _onNext(HttpResult<List<GankItemData>> listHttpResult) {
 
-                       if(listHttpResult!=null&&listHttpResult.getResults()!=null&&listHttpResult.getResults().size()>0){
-                           if (isLoadMore) {
-                               if (listHttpResult.getResults().size() == 0) {
-                                   mGankItemAdapter.loadEnd();
-                               } else {
-                                   mGankItemAdapter.setLoadMoreData(listHttpResult.getResults());
-                                   mTempPageCount++;
-                               }
-                           } else {
-                               mGankItemAdapter.reset();
-                               mGankItemAdapter.setNewData(listHttpResult.getResults());
-                               mSwipeRefreshLayout.setRefreshing(false);
-                           }
-                       }else{
-                           if (isLoadMore) {
-                               mGankItemAdapter.loadFailed();
-                           } else {
-                               mSwipeRefreshLayout.setRefreshing(false);
-                           }
-                       }
-
-                   }
-
-                   @Override
-                   protected void _onError(int code) {
-
-                       if (isLoadMore) {
-                           mGankItemAdapter.setLoadFailedView(R.layout.view_error);
-                       } else {
+                       if(mSwipeRefreshLayout.isRefreshing()){
                            mSwipeRefreshLayout.setRefreshing(false);
                        }
+                       if(listHttpResult!=null&&listHttpResult.getResults()!=null&&listHttpResult.getResults().size()>0){
+
+                           if (mPage==1) {
+                               mGankItemAdapter.reset();
+                               mGankItemAdapter.setNewData(listHttpResult.getResults());
+                           } else {
+                               mGankItemAdapter.setLoadMoreData(listHttpResult.getResults());
+                           }
+                           if (listHttpResult.getResults().size() < PAGE_COUNT) {//如果小于10个
+                               mGankItemAdapter.loadEnd();
+                           }
+                           mPage++;
+                       }else{
+                          mGankItemAdapter.loadFailed();
+                       }
 
                    }
+                   @Override
+                   protected void _onError(int code) {
+                       if(mSwipeRefreshLayout.isRefreshing()){
+                           mSwipeRefreshLayout.setRefreshing(false);
+                       }
+                       mGankItemAdapter.setLoadFailedView(R.layout.view_error);
+                   }
                });
-
-
-
 
    }
 

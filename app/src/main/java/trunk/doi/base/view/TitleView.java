@@ -229,7 +229,7 @@ public class TitleView extends FrameLayout{
     /**
      * 设置右边功能监听事件
      */
-    public void setRightListener(View.OnClickListener clickListener) {
+    public void setOnRightListener(View.OnClickListener clickListener) {
         if(null!=v1TvRight){
             if(clickListener!=null){
                 v1TvRight.setOnClickListener(clickListener);

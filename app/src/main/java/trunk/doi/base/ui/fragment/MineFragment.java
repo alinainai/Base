@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
+import trunk.doi.base.ui.activity.CollectionActivity;
 import trunk.doi.base.ui.activity.LoginActivity;
 import trunk.doi.base.ui.activity.SettingActivity;
 import trunk.doi.base.util.ScreenUtils;
@@ -78,6 +79,7 @@ public class MineFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_message:
+                startActivityAnim(new Intent(mContext, CollectionActivity.class));
                 break;
             case R.id.img_set:
                 startActivityAnim(new Intent(mContext, SettingActivity.class));
@@ -87,7 +89,6 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_name:
 
-                tvName.setText(strs.get(0));
 
                 break;
             case R.id.tv_phone:

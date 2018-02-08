@@ -10,7 +10,7 @@
     <color name="bottom_tab_text_color_pre">#83ae2b</color>
     <color name="bottom_tab_text_color_nor">#999999</color>
     <color name="white">#FFFFFF</color>
-    <color name="base_divider_color">#efefef</color>
+    <color name="base_divider_color">@color/base_bg</color>
     <color name="alpha_color">#66000000</color>
     <color name="cff3e19">#ff3e19</color>
     <color name="login_background">#86b624</color>

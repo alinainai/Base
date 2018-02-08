@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,11 +28,17 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
+import trunk.doi.base.bean.CollectionBean;
+import trunk.doi.base.dialog.MorePopupWindow;
+import trunk.doi.base.gen.DatabaseService;
 import trunk.doi.base.util.StatusBarUtils;
 import trunk.doi.base.util.ToastUtil;
 
@@ -42,14 +49,15 @@ public class WebViewActivity extends BaseActivity {
     TextView mainCartTitle;
     @BindView(R.id.progressbar)
     ProgressBar bar;
-
+    @BindView(R.id.img_menu)
+    ImageView img_menu;
     @BindView(R.id.rl_webview)
     RelativeLayout rl_webview;
-
     private WebView webView;
-
     private String url;
     private String mTitle;
+    private DatabaseService service;
+    private boolean loadFinish=false;
 
 
     @Override
@@ -79,29 +87,6 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void setListener() {
 
-
-        mainCartTitle.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //获取剪贴板管理器：
-                        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        // 创建普通字符型ClipData
-                        ClipData mClipData = ClipData.newPlainText("Label", url);
-                        // 将ClipData内容放到系统剪贴板里。
-                        cm.setPrimaryClip(mClipData);
-                        ToastUtil.show(mContext, "地址复制成功");
-                    }
-                }).setTitle("提示")
-                        .setMessage("是否复制当前网页地址到剪切板")
-                        .show();
-                return true;
-            }
-        });
-
         webView.setWebChromeClient(new WebChromeClient() {
 
             //设置进度条
@@ -127,6 +112,7 @@ public class WebViewActivity extends BaseActivity {
                         if (!TextUtils.isEmpty(title)) {
                             if (null != mainCartTitle) {
                                 mainCartTitle.setText(title);
+                                mTitle=title;
                             }
                         }
                     }
@@ -138,6 +124,8 @@ public class WebViewActivity extends BaseActivity {
 
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+                loadFinish=false;
                 super.onPageStarted(view, url, favicon);
             }
 
@@ -154,11 +142,14 @@ public class WebViewActivity extends BaseActivity {
             @SuppressWarnings("deprecation")
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                return false;
+                view.loadUrl(url);
+                return true;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
+
+                loadFinish=true;
 
             }
 
@@ -202,6 +193,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void initData() {
+        service=new DatabaseService(mContext);
         webView.loadUrl(url);
     }
 
@@ -240,6 +232,7 @@ public class WebViewActivity extends BaseActivity {
             }
         }
         StatusBarUtils.setStatusBarDarkMode(mContext);
+        service.closeDatabase();
         super.onDestroy();
     }
 
@@ -264,7 +257,47 @@ public class WebViewActivity extends BaseActivity {
                 break;
             case R.id.img_menu:
 
+                if(!loadFinish){
+                    ToastUtil.show(mContext,"页面正在加载中");
+                    return;
+                }
 
+                new MorePopupWindow(mContext){
+
+                    @Override
+                    public void share() {
+
+                    }
+
+                    @Override
+                    public void collection() {
+
+                       if(null!=service.query(url)) {
+                           ToastUtil.showCustomToast(mContext,"已添加过收藏",ToastUtil.TOAST_OF_WARING);
+                        }else{
+                           CollectionBean bean =new CollectionBean();
+                           bean.setUrl(url);
+                           bean.setDesc(mTitle);
+                           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                           bean.setDataTime(sdf.format(new Date()));
+                           service.addInfo(bean);
+                           ToastUtil.showCustomToast(mContext,"收藏成功",ToastUtil.TOAST_OF_SUCCESS);
+                       }
+                    }
+
+                    @Override
+                    public void copyLink() {
+
+                        //获取剪贴板管理器：
+                        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        // 创建普通字符型ClipData
+                        ClipData mClipData = ClipData.newPlainText("Label", url);
+                        // 将ClipData内容放到系统剪贴板里。
+                        cm.setPrimaryClip(mClipData);
+                        ToastUtil.showCustomToast(mContext,"地址复制成功",ToastUtil.TOAST_OF_SUCCESS);
+
+                    }
+                }.showAsDropDown(img_menu,2,0);
 
                 break;
         }

@@ -113,7 +113,7 @@ public class BaseApplication extends MultiDexApplication {
         locationService = new LocationService(getApplicationContext());
 
 
-        CrashHandler.getInstance().init(this);
+//        CrashHandler.getInstance().init(this);
 
 
         /**

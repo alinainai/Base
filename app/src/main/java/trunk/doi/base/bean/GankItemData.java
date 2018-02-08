@@ -20,9 +20,9 @@ public class GankItemData implements Parcelable {
     private String createdAt;
     private String desc;
     private String[] images;
-    private String publishedAt;
     private String source;
     private String type;
+    private String publishedAt;
     private String url;
 
     private boolean used;
@@ -161,4 +161,15 @@ public class GankItemData implements Parcelable {
             return new GankItemData[size];
         }
     };
+
+    @Override
+    public String toString() {
+        return "GankItemData{" +
+                "_id='" + _id + '\'' +
+                ", desc='" + desc + '\'' +
+                ", publishedAt='" + publishedAt + '\'' +
+                ", url='" + url + '\'' +
+                ", who='" + who + '\'' +
+                '}';
+    }
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="5dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/layout_selector_bg"
+    >
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:text="tv_desc"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:lines="2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c333333"
+            android:textSize="@dimen/text_size_26_px" />
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="tv_date"
+            android:id="@+id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c999999"
+            android:textSize="@dimen/text_size_24_px" />
+
+    <View style="@style/divider"/>
+
+</LinearLayout>
+
