@@ -19,6 +19,7 @@ import trunk.doi.base.base.adapter.rvadapter.ViewHolder;
 import trunk.doi.base.base.adapter.rvadapter.interfaces.OnItemClickListener;
 import trunk.doi.base.base.adapter.rvadapter.interfaces.OnLoadMoreListener;
 import trunk.doi.base.bean.CollectionBean;
+import trunk.doi.base.dialog.AlertDialog;
 import trunk.doi.base.gen.DatabaseService;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.ui.adapter.CollectionAdapter;
@@ -38,11 +39,7 @@ public class CollectionActivity extends BaseActivity {
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
-
     private CollectionAdapter mAdapter;//适配器
-
-    private int mPage = 1;//页数
-    private final static int PAGE_COUNT = 10;//每页条数
 
 
     private DatabaseService service;
@@ -55,7 +52,7 @@ public class CollectionActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        mAdapter = new CollectionAdapter(mContext, new ArrayList<CollectionBean>(), true,false);
+        mAdapter = new CollectionAdapter(mContext, new ArrayList<CollectionBean>(), true);
         mAdapter.setLoadingView(R.layout.view_loading);
         mAdapter.setLoadFailedView(R.layout.view_error);
         mAdapter.setLoadEndView(R.layout.view_nom);
@@ -75,6 +72,22 @@ public class CollectionActivity extends BaseActivity {
             @Override
             public void onLoadMore(boolean isReload) {
                 loadData();
+            }
+        });
+        mAdapter.setOnDeleteClickListener(new CollectionAdapter.OnDeleteClickListener() {
+            @Override
+            public void onItemClick(ViewHolder viewHolder,final CollectionBean data, int position) {
+
+                new AlertDialog(mContext).builder().setMsg("是否删除")
+                        .setNegativeButton("取消",null)
+                        .setPositiveButton("确认",new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        service.deleteGankInfo(data.get_id());
+                        loadData();
+                    }
+                }).show();
+
             }
         });
 
@@ -98,7 +111,6 @@ public class CollectionActivity extends BaseActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPage = 1;
                 loadData();
             }
         });
@@ -113,21 +125,11 @@ public class CollectionActivity extends BaseActivity {
 
     private void loadData() {
 
-        List<CollectionBean> datas = service.queryPage(mPage, PAGE_COUNT);
-
+        List<CollectionBean> datas = service.queryAll();
         if (datas.size() > 0) {
-
-            if (mPage == 1) {
                 mAdapter.reset();
                 mAdapter.setNewData(datas);
-            } else {
-                mAdapter.setLoadMoreData(datas);
-            }
-            if (datas.size() < PAGE_COUNT) {//如果小于10个
                 mAdapter.loadEnd();
-            }
-            mPage++;
-
         } else {
             mAdapter.loadFailed();
         }

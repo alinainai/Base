@@ -179,7 +179,7 @@ public class GankItemFragment extends BaseFragment {
                        if(mSwipeRefreshLayout.isRefreshing()){
                            mSwipeRefreshLayout.setRefreshing(false);
                        }
-                       mGankItemAdapter.setLoadFailedView(R.layout.view_error);
+                       mGankItemAdapter.loadFailed();
                    }
                });
 

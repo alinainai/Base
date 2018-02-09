@@ -77,7 +77,13 @@ public class WebViewActivity extends BaseActivity {
         url = getIntent().getStringExtra("url");//地址
         mTitle = getIntent().getStringExtra("title");//标题
         if (!TextUtils.isEmpty(mTitle)) {
-            mainCartTitle.setText(mTitle);
+            String title=null;
+            if(mTitle.length()>=7){
+                title=mTitle.substring(0,7)+"...";
+            }else{
+                title=mTitle;
+            }
+            mainCartTitle.setText(title);
         }
         webView=new WebView(mContext);
         webView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
