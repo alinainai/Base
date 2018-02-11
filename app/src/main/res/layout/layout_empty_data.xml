@@ -27,6 +27,7 @@
 
     <TextView
         android:id="@+id/tv_click"
+        android:duplicateParentState="false"
         android:layout_marginTop="16dp"
         android:padding="10dp"
         android:gravity="center"

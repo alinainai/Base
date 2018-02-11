@@ -110,18 +110,21 @@
         <activity
             android:name=".ui.activity.CollectionActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.MessageActivity"
+            android:screenOrientation="portrait" />
 
 
 
         <!-- **********************百度定位************************* -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="Uvyw99OTyBhh2MGMgU2TQU1Uqhur7nn3"></meta-data>
+            android:value="Uvyw99OTyBhh2MGMgU2TQU1Uqhur7nn3"/>
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote"/>
 
         <!-- 阿里热修复 -->
         <!-- <meta-data -->

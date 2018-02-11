@@ -20,6 +20,7 @@ import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.ui.activity.CollectionActivity;
 import trunk.doi.base.ui.activity.LoginActivity;
+import trunk.doi.base.ui.activity.MessageActivity;
 import trunk.doi.base.ui.activity.SettingActivity;
 import trunk.doi.base.util.ScreenUtils;
 import trunk.doi.base.view.CircleImageView;
@@ -90,14 +91,11 @@ public class MineFragment extends BaseFragment {
 
     }
 
-
-
-
     @OnClick({R.id.img_message, R.id.img_set, R.id.iv_head, R.id.tv_name, R.id.tv_phone,R.id.ll_wdtyj})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_message:
-
+                startActivityAnim(new Intent(mContext, MessageActivity.class));
                 break;
             case R.id.img_set:
                 startActivityAnim(new Intent(mContext, SettingActivity.class));

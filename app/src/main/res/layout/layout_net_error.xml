@@ -25,6 +25,7 @@
 
     <TextView
         android:id="@+id/tv_retry"
+        android:duplicateParentState="false"
         android:padding="10dp"
         android:background="@drawable/layout_selector_bg"
         android:layout_marginTop="@dimen/px_50"
