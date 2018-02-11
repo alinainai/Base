@@ -20,6 +20,7 @@ import trunk.doi.base.ui.adapter.SimpleFragmentPagerAdapter;
 import trunk.doi.base.ui.fragment.classify.GankItemFragment;
 import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.ScreenUtils;
+import trunk.doi.base.view.PagerSlidingTabStrip;
 
 /**
  * Created by ly on 2016/5/30 11:05.
@@ -28,8 +29,9 @@ import trunk.doi.base.util.ScreenUtils;
 public class ClassifyFragment extends BaseFragment {
     public static final String TAG = "ClassifyFragment";
 
-    @BindView(R.id.tablayout)
-    TabLayout mTabLayout;
+
+    @BindView(R.id.tabs)
+    PagerSlidingTabStrip tabs;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
     @BindView(R.id.status_bar)
@@ -66,11 +68,10 @@ public class ClassifyFragment extends BaseFragment {
         for (String subtype : mTitles) {
             mFragments.add(GankItemFragment.newInstance(subtype));
         }
-        mTypeAdapter = new SimpleFragmentPagerAdapter(mContext,getChildFragmentManager(),mFragments, mTitles);
+        mTypeAdapter = new SimpleFragmentPagerAdapter(mContext,getChildFragmentManager(),mFragments, AppUtils.stringArrayToList(mContext, R.array.gankTitle));
         mViewPager.setAdapter(mTypeAdapter);
         mViewPager.setOffscreenPageLimit(mTitles.size() - 1);
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mTabLayout.setupWithViewPager(mViewPager);
+        tabs.setViewPager(mViewPager);
 
     }
 

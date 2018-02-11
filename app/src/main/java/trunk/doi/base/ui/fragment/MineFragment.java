@@ -3,6 +3,7 @@ package trunk.doi.base.ui.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,6 @@ import trunk.doi.base.view.CircleImageView;
  */
 public class MineFragment extends BaseFragment {
 
-
     @BindView(R.id.status_bar)
     View mStatusBar;
     public static final String TAG = "MineFragment";
@@ -39,6 +39,8 @@ public class MineFragment extends BaseFragment {
     TextView tvName;
     @BindView(R.id.tv_phone)
     TextView tvPhone;
+    @BindView(R.id.srl_refresh)
+    SwipeRefreshLayout srl_refresh;
 
     private List<String> strs=new ArrayList<>();
     public static MineFragment newInstance() {
@@ -61,10 +63,26 @@ public class MineFragment extends BaseFragment {
         } else {
             mStatusBar.setVisibility(View.GONE);
         }
+
+        srl_refresh.setColorSchemeResources(R.color.cff3e19);
+        srl_refresh.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.white));
     }
 
     @Override
     public void setListener(View view, Bundle savedInstanceState) {
+
+        srl_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl_refresh.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        srl_refresh.setRefreshing(false);
+                    }
+                },700);
+            }
+        });
+
     }
 
     @Override
@@ -75,11 +93,11 @@ public class MineFragment extends BaseFragment {
 
 
 
-    @OnClick({R.id.img_message, R.id.img_set, R.id.iv_head, R.id.tv_name, R.id.tv_phone})
+    @OnClick({R.id.img_message, R.id.img_set, R.id.iv_head, R.id.tv_name, R.id.tv_phone,R.id.ll_wdtyj})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_message:
-                startActivityAnim(new Intent(mContext, CollectionActivity.class));
+
                 break;
             case R.id.img_set:
                 startActivityAnim(new Intent(mContext, SettingActivity.class));
@@ -89,9 +107,11 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.tv_name:
 
-
                 break;
             case R.id.tv_phone:
+                break;
+            case R.id.ll_wdtyj:
+                startActivityAnim(new Intent(mContext, CollectionActivity.class));
                 break;
         }
     }

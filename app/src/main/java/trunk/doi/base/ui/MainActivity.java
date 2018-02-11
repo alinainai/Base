@@ -42,6 +42,8 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.rg_radio)
     RadioGroup rg_radio;
+    @BindView(R.id.classify_btn)
+    RadioButton classify_btn;
      //container
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
@@ -120,6 +122,7 @@ public class MainActivity extends BaseActivity {
                         ((RadioButton) rg_radio.getChildAt(event.getId())).setChecked(true);
                     }
                 });
+
 
     }
 

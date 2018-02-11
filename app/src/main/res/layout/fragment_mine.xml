@@ -34,6 +34,10 @@
             android:layout_toStartOf="@+id/img_message"
             android:src="@mipmap/ac_set" />
     </RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -435,7 +439,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/px_15"
-                    android:text="我的体验金"
+                    android:text="我的收藏"
                     android:textColor="#333"
                     android:textSize="@dimen/px_30" />
 
@@ -525,5 +529,6 @@
 
         </LinearLayout>
     </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>

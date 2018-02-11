@@ -10,28 +10,26 @@
         android:layout_height="25dp"
         android:background="@color/cff3e19" />
 
-    <!-- 标题 -->
-    <trunk.doi.base.view.TitleView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:backHide="true"
-        app:dividerHide="true"
-        app:titleText="分类"
-        app:titleColor="@color/white"
-        app:backColor="@color/cff3e19"
-        />
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
+
+    <trunk.doi.base.view.PagerSlidingTabStrip
+        android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_80"
         android:background="@color/cff3e19"
-        android:paddingBottom="@dimen/px_5"
-        app:tabMode="scrollable"
-        app:tabIndicatorColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextAppearance="@style/TabLayoutTextStyle"
-        app:tabTextColor="@color/white" />
+        android:layout_height="@dimen/px_100"
+        android:layout_gravity="center"
+        app:pstsTabPaddingLeftRight="15dp"
+        app:pstsTabTextAllCaps="false"
+        app:pstsTabTextStyle="normal"
+        app:pstsTabBackground ="@color/cff3e19"
+        app:pstsIndicatorColor="@color/white"
+        app:pstsIndicatorHeight="2dp"
+        app:pstsTabTextColor="@color/white"
+        app:pstsTabTextSize="16sp" />
+
+    <View style="@style/divider" />
+
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

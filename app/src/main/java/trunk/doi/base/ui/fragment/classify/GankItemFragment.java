@@ -28,6 +28,8 @@ import trunk.doi.base.base.adapter.rvadapter.interfaces.OnItemClickListener;
 import trunk.doi.base.base.adapter.rvadapter.interfaces.OnLoadMoreListener;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
+import trunk.doi.base.util.ToastUtil;
+import trunk.doi.base.util.WrapContentLinearLayoutManager;
 
 /**
  * Author: Othershe
@@ -45,45 +47,66 @@ public class GankItemFragment extends BaseFragment {
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
+    @BindView(R.id.view_net_error)
+    View view_net_error;
+    @BindView(R.id.view_load)
+    View view_load;
+
 
     protected boolean mIsViewInitiated;
     protected boolean mIsVisibleToUser;
     protected boolean mIsDataInitiated;
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        mIsVisibleToUser = isVisibleToUser;
-        initFetchData();
-    }
+    private View.OnClickListener retryListener;
+    private View  mLoadingView;
+    private View  mLoadEmpty;
 
-   @Override
-   public void onActivityCreated(Bundle savedInstanceState) {
-       super.onActivityCreated(savedInstanceState);
-       mIsViewInitiated = true;
-       initFetchData();
-   }
+    private boolean isFirdtLoad;
 
-    private void initFetchData() {
-        if (mIsVisibleToUser && mIsViewInitiated && !mIsDataInitiated) {
-            loadData();
-            mIsDataInitiated = true;
-        }
-    }
 
     @Override
     protected int initLayoutId() {
-        return R.layout.layout_base_refresh_recycler;
+        return R.layout.layout_base_reload;
     }
 
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+        //mRecyclerView
+        LinearLayoutManager layoutManager = new WrapContentLinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        //刷新控件
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
         mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<GankItemData>(), true);
+        //RecyclerView 基础布局
+        mLoadingView=LayoutInflater.from(mContext).inflate(R.layout.layout_loading,(ViewGroup)mRecyclerView.getParent(),false);
+        mLoadEmpty=LayoutInflater.from(mContext).inflate(R.layout.layout_empty_data,(ViewGroup)mRecyclerView.getParent(),false);
+        //RecyclerView  footerView  布局
         mGankItemAdapter.setLoadingView(R.layout.view_loading);
         mGankItemAdapter.setLoadFailedView(R.layout.view_error);
         mGankItemAdapter.setLoadEndView(R.layout.view_nom);
 
+    }
+
+    @Override
+    public void setListener(View view, Bundle savedInstanceState) {
+
+        //加载失败布局
+        retryListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPage=1;
+                if(view_net_error.getVisibility()==View.VISIBLE){
+                    view_net_error.setVisibility(View.GONE);
+                }
+                view_load.setVisibility(View.VISIBLE);
+                loadData();
+//                ToastUtil.show(mContext,"云想衣裳花想容,春风拂槛露华浓.\n" + "若非群玉山头见,会向瑶台月下逢.");
+            }
+        };
+        //条目点击
         mGankItemAdapter.setOnItemClickListener(new OnItemClickListener<GankItemData>() {
             @Override
             public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
@@ -92,23 +115,23 @@ public class GankItemFragment extends BaseFragment {
                         .putExtra("url", gankItemData.getUrl()));
             }
         });
-
+        //加载更多
         mGankItemAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(boolean isReload) {
+                 loadData();
+            }
+        });
+        //刷新
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPage = 1;
                 loadData();
             }
         });
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mGankItemAdapter);
-
-    }
-
-    @Override
-    public void setListener(View view, Bundle savedInstanceState) {
+        view_net_error.findViewById(R.id.tv_retry).setOnClickListener(retryListener);
+        mLoadEmpty.findViewById(R.id.tv_click).setOnClickListener(retryListener);
 
     }
 
@@ -117,35 +140,15 @@ public class GankItemFragment extends BaseFragment {
         if (getArguments() == null) {
             return;
         }
+        mSwipeRefreshLayout.setEnabled(false);
         mSubtype = getArguments().getString(SUB_TYPE);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPage = 1;
-                loadData();
-            }
-        });
-        //实现首次自动显示加载提示
-
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-            }
-        });
-
+        mRecyclerView.setAdapter(mGankItemAdapter);
+        //RecyclerView  首次Loading布局
+        mGankItemAdapter.setEmptyView(mLoadingView);
     }
 
 
-    public static GankItemFragment newInstance(String subtype) {
-        GankItemFragment fragment = new GankItemFragment();
-        Bundle arguments = new Bundle();
-        arguments.putString(SUB_TYPE, subtype);
-        fragment.setArguments(arguments);
-        return fragment;
-    }
+
 
    private void loadData(){
 
@@ -157,6 +160,15 @@ public class GankItemFragment extends BaseFragment {
                        if(mSwipeRefreshLayout.isRefreshing()){
                            mSwipeRefreshLayout.setRefreshing(false);
                        }
+                       if(view_load.getVisibility()==View.VISIBLE){
+                           view_load.setVisibility(View.GONE);
+                       }
+                       if(isFirdtLoad){
+                           mGankItemAdapter.removeEmptyView();
+                           isFirdtLoad=false;
+                       }
+                       mSwipeRefreshLayout.setEnabled(true);
+
                        if(listHttpResult!=null&&listHttpResult.getResults()!=null&&listHttpResult.getResults().size()>0){
 
                            if (mPage==1) {
@@ -170,20 +182,70 @@ public class GankItemFragment extends BaseFragment {
                            }
                            mPage++;
                        }else{
-                          mGankItemAdapter.loadFailed();
+                           if(mPage>1){
+                               mGankItemAdapter.loadFailed();
+                           }else{
+                               mGankItemAdapter.reset();
+                               mGankItemAdapter.setReloadView(mLoadEmpty);
+                               mSwipeRefreshLayout.setEnabled(false);
+                           }
                        }
 
                    }
                    @Override
                    protected void _onError(int code) {
+                       mSwipeRefreshLayout.setEnabled(true);
                        if(mSwipeRefreshLayout.isRefreshing()){
                            mSwipeRefreshLayout.setRefreshing(false);
                        }
-                       mGankItemAdapter.loadFailed();
+                       if(view_load.getVisibility()==View.VISIBLE){
+                           view_load.setVisibility(View.GONE);
+                       }
+                       if(isFirdtLoad){
+                           mGankItemAdapter.removeEmptyView();
+                           isFirdtLoad=false;
+                       }
+                       if(mPage>1){
+                           mGankItemAdapter.loadFailed();
+                       }else{
+                           mGankItemAdapter.reset();
+                           view_net_error.setVisibility(View.VISIBLE);
+                           mSwipeRefreshLayout.setEnabled(false);
+                       }
                    }
                });
 
    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        mIsVisibleToUser = isVisibleToUser;
+        initFetchData();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mIsViewInitiated = true;
+        initFetchData();
+    }
+
+    //ViewPager懒加载方式
+    private void initFetchData() {
+        if (mIsVisibleToUser && mIsViewInitiated && !mIsDataInitiated) {
+            loadData();
+            mIsDataInitiated = true;
+        }
+    }
+
+    public static GankItemFragment newInstance(String subtype) {
+        GankItemFragment fragment = new GankItemFragment();
+        Bundle arguments = new Bundle();
+        arguments.putString(SUB_TYPE, subtype);
+        fragment.setArguments(arguments);
+        return fragment;
+    }
 
 
 }

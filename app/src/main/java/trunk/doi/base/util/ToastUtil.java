@@ -3,7 +3,6 @@ package trunk.doi.base.util;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,21 +61,19 @@ public class ToastUtil {
     private static void showMessage(final Context context, final CharSequence text,
                                     final int duration) {
 
-            FrameLayout layout = (FrameLayout) ((LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_toast, null, false);
-            TextView textView = (TextView) layout.findViewById(R.id.tv_item);
-            textView.setText(text);
-            ImageView image = (ImageView) layout.findViewById(R.id.iv_item);
-            image.setVisibility(View.GONE);
+        FrameLayout layout = (FrameLayout) ((LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_toast_text, null, false);
+        TextView textView = (TextView) layout.findViewById(R.id.tv_item);
+        textView.setText(text);
 
-            if (toast == null) {
-                toast = new Toast(context.getApplicationContext());
-                toast.setView(layout);//setting the view of custom toast layout
-            } else {
-                toast.setView(layout);//setting the view of custom toast layout
-            }
-           toast.setDuration(duration);
-           toast.setGravity(Gravity.CENTER, 0, 10);
-            toast.show();
+        if (toast == null) {
+            toast = new Toast(context.getApplicationContext());
+            toast.setView(layout);//setting the view of custom toast layout
+        } else {
+            toast.setView(layout);//setting the view of custom toast layout
+        }
+        toast.setDuration(duration);
+        toast.setGravity(Gravity.CENTER, 0, 10);
+        toast.show();
     }
 
     public static void showCustomToast(final Context context, final CharSequence text,
