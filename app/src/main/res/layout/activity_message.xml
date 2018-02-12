@@ -5,5 +5,15 @@
     android:layout_height="match_parent"
     >
 
+    <include layout="@layout/layout_bottom_bar_lottie"
+        />
+
+    <TextView
+        android:id="@+id/tv_click"
+        android:background="@drawable/layout_selector_bg"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        />
+
 
 </LinearLayout>

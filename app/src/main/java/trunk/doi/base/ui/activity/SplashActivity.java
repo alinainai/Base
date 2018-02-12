@@ -1,5 +1,6 @@
 package trunk.doi.base.ui.activity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -7,9 +8,12 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+
+import com.airbnb.lottie.LottieAnimationView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,6 +42,10 @@ public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.tv_version)
     TextView tv_version;
+    @BindView(R.id.v_animation)
+    LottieAnimationView v_animation;
+
+    private static final String ANIM_NAME="confetti.json";
 
     @Override
     protected int initLayoutId() {
@@ -47,7 +55,8 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        mStatusBar.setVisibility(View.GONE);
 
         String[] pers={  android.Manifest.permission.READ_PHONE_STATE,
                     android.Manifest.permission.CAMERA,
@@ -56,17 +65,6 @@ public class SplashActivity extends BaseActivity {
                     android.Manifest.permission.RECEIVE_SMS};
             PermissionUtils.requestAppPermissions(SplashActivity.this,1008,pers);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
-//            View decorView = getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(option);
-//            //   getWindow().setStatusBarColor(Color.rgb(0x8f,0xc4,0x50));
-//            getWindow().setStatusBarColor(getResources().getColor(color));
-//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
-//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-//        }
 
         tv_version.setText("当前版本 v" + AppUtils.getVersionName(BaseApplication.getInstance()));
         String version = SPUtils.loadString(SplashActivity.this, Const.APP_VERSION);
@@ -89,65 +87,29 @@ public class SplashActivity extends BaseActivity {
 //                SophixManager.getInstance().queryAndLoadNewPatch();
 //            }
 
-            handler.postDelayed(toMain,1000);
+//            handler.postDelayed(toMain,1000);
 
       //  countDown();
       //  }
 
 
+        v_animation.setAnimation(ANIM_NAME);
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        v_animation.setProgress(0f);
+        v_animation.playAnimation();
 
-    /**
-     * 使用RxJava实现倒计时
-     */
-//    private void countDown() {
-//        final long count = 5;
-//        Observable.interval(1, TimeUnit.SECONDS)
-//                .take(6)//计时次数
-//                .map(new Function<Long, Object>() {
-//                    @Override
-//                    public Long apply(Long integer) {
-//                        return count - integer;
-//                    }
-//                })
-//                .doOnSubscribe(new Action() {
-//                    @Override
-//                    public void run() { //开始
-//                        Log.e("TAG","call");
-//
-//                    }
-//                })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Observer<Long>() {
-//
-//                    @Override
-//                    public void onComplete() { //结束
-//                        Log.e("TAG","onCompleted");
-//
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("TAG","onError");
-//                    }
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(Long aLong) {
-//                        Log.e("TAG","onNext"+aLong);
-//
-//                    }
-//                });
-//    }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        v_animation.cancelAnimation();
+    }
 
 
     private Runnable toMain=new Runnable() {
@@ -163,7 +125,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacks(toMain);
+//        handler.removeCallbacks(toMain);
     }
 
     @Override
@@ -188,22 +150,39 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void setListener() {
 
+        v_animation.addAnimatorListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animator) {
+
+                SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                SplashActivity.this.finish();
+                SplashActivity.this.overridePendingTransition(0,android.R.anim.fade_out);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+
     }
 
     @Override
     protected void initData() {
 
     }
-//    @OnClick({R.id.tv_to_main})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.tv_to_main:
-//                SplashActivity.this.startActivity(new Intent(SplashActivity.this, LruActivity.class));
-//                SplashActivity.this.finish();
-//                SplashActivity.this.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-//                break;
-//        }
-//    }
+
 
 
 

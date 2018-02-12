@@ -87,11 +87,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.android.support:multidex:1.0.2'
     compile 'com.github.chrisbanes.photoview:library:1.2.4'
-
+    //Glide图片加载
     compile 'com.github.bumptech.glide:glide:4.4.0'
     annotationProcessor  'com.github.bumptech.glide:compiler:4.4.0'
     compile 'com.github.bumptech.glide:okhttp3-integration:4.4.0'
-
 
     compile 'com.google.android.gms:play-services-ads:11.8.0'
     //ali热修复
@@ -109,6 +108,8 @@ dependencies {
     //自动化测试
     implementation 'com.jayway.android.robotium:robotium-solo:5.6.3'
     implementation 'com.zhy:okhttputils:2.6.2'
+    //lottie动画框架
+    compile 'com.airbnb.android:lottie:2.5.0-rc1'
 
 }
 repositories {

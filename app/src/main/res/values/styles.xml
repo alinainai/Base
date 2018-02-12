@@ -144,9 +144,9 @@
     </style>
 
 
-
+    <!-- 我的页面条目的格式 -->
     <style name="mine_line_bg">
-        <item name="android:layout_height">@dimen/px_100</item>
+        <item name="android:layout_height">@dimen/px_96</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/layout_selector_bg</item>
@@ -154,6 +154,7 @@
     </style>
 
 
+    <!-- 首页radio_button的格式 -->
     <style name="style_main_radio">
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/bottom_text_color</item>
@@ -164,6 +165,23 @@
         <item name="android:drawablePadding">1dp</item>
         <item name="android:scaleType">matrix</item>
         <item name="android:gravity">center</item>
+    </style>
+    <!-- 首页radio_button的格式 -->
+    <style name="style_bar_ll">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:background">@drawable/layout_selector_bg</item>
+    </style>
+
+    <style name="style_bar_text">
+        <item name="android:textSize">8sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textColor">@color/bottom_tab_text_color_nor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 

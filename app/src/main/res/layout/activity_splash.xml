@@ -1,44 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/splash"
+    android:background="@color/white"
     >
 
-    <TextView
-        android:id="@+id/tv_title"
+    <com.airbnb.lottie.LottieAnimationView
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px_200"
-        android:textSize="48dp"
-        android:textColor="#fff"
-        android:text="星耀文学"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <TextView
-        android:layout_below="@+id/tv_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px_50"
-        android:textSize="@dimen/px_32"
-        android:textColor="#fff"
-        android:text="敞开心扉去学习"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_marginTop="100dp"
+        android:id="@+id/v_animation"
+        app:lottie_loop="false"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:duplicateParentState="true"/>
 
     <TextView
         android:id="@+id/tv_version"
         android:layout_marginBottom="@dimen/px_200"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/px_50"
         android:textSize="@dimen/px_32"
-        android:textColor="#fff"
+        android:textColor="@color/c333333"
         android:text="当前版本 v1.0.0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
-
 </RelativeLayout>

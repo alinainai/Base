@@ -13,6 +13,8 @@ import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 
 import trunk.doi.base.dialog.AlertDialog;
+import trunk.doi.base.dialog.ApkDownDialog;
+import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.view.TitleView;
 import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
 import trunk.doi.base.view.pullrefresh.RefreshLayout;
@@ -26,6 +28,8 @@ public class SettingActivity extends BaseActivity {
     TextView settingFeedbackTv;
     @BindView(R.id.update_version_num_tv)
     TextView updateVersionNumTv;
+
+    private String fileurl = "https://dl.gqget.com/dl/pkg/apk/get_android/GqiP2p.apk";
 
 
     @Override
@@ -77,6 +81,15 @@ public class SettingActivity extends BaseActivity {
             case R.id.setting_cache_size_tv:
                 break;
             case R.id.setting_check_update_rl:
+
+                new ApkDownDialog(mContext, fileurl, false) {
+
+                    @Override
+                    public void sure() {
+                        ToastUtil.show(mContext,"下载完成");
+                    }
+                }.show();
+
                 break;
             case R.id.setting_exit_login_btn:
 

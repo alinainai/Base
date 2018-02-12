@@ -59,13 +59,13 @@ public abstract class ApkDownDialog {
 
                         @Override
                         public void onError(Call request, Exception e, int a) {
-
                             dismiss();
                         }
 
                         @Override
                         public void onResponse(File file, int a) {
-                            Log.e("TAG", "onResponse :" + file.getAbsolutePath());
+                            sure();
+                            dismiss();
                         }
                     });
 

@@ -64,17 +64,17 @@
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoStatus">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <!-- 图展示界面 -->

@@ -77,7 +77,7 @@ public class MineDetailActivity extends BaseActivity {
     private User user=new User();
     private File tempFile;//图片文件
 
-    private String fileurl = "https://dl.gqget.com/dl/pkg/apk/get_android/GqiP2p.apk";
+
 
     /**
      * @param dirPath
@@ -148,14 +148,6 @@ public class MineDetailActivity extends BaseActivity {
                 showImgSelectDialog();
                 break;
             case R.id.detail_nickName_rl:
-
-                new ApkDownDialog(mContext, fileurl, false) {
-
-                    @Override
-                    public void sure() {
-
-                    }
-                }.show();
 
                 break;
             case R.id.detail_userName_rl:
