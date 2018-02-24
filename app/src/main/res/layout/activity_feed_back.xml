@@ -68,18 +68,18 @@
             android:background="@android:color/transparent"
             android:gravity="top"
             android:hint="@string/feed_back_input_hint"
-            android:maxLines="100"
+            android:maxLength="100"
             android:minHeight="@dimen/px_260"
             android:textColor="@color/base_text_color"
             android:textColorHint="@color/base_search_hint_color"
             android:textSize="@dimen/text_size_28_px" />
 
         <TextView
+            android:id="@+id/tv_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/px_14"
             android:gravity="right"
-            android:maxLength="100"
             android:text="@string/feed_back_input_tv"
             android:textColor="@color/base_search_hint_color"
             android:textSize="@dimen/text_size_28_px" />
@@ -87,15 +87,17 @@
 
     <!-- 手机号输入 -->
     <EditText
-        android:id="@+id/feed_back_phone_input_ed"
+        android:id="@+id/phone_input_ed"
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_80"
         android:layout_marginTop="@dimen/px_20"
         android:background="@color/white"
         android:hint="@string/feed_back_phone_input"
+        android:maxLength="20"
         android:paddingLeft="@dimen/px_30"
         android:textColor="@color/base_text_color"
         android:textColorHint="@color/base_search_hint_color"
+        android:maxLines="1"
         android:textSize="@dimen/text_size_28_px" />
 
 

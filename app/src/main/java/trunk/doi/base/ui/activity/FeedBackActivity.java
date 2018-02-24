@@ -1,6 +1,8 @@
 package trunk.doi.base.ui.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,11 +22,13 @@ public class FeedBackActivity extends BaseActivity {
 
     @BindView(R.id.feed_back_input_ed)
     EditText feedBackInputEd;//意见反馈输入
-    @BindView(R.id.feed_back_phone_input_ed)
+    @BindView(R.id.phone_input_ed)
     EditText feedBackPhoneInputEd;//手机号输入
 
     @BindView(R.id.tv_title)
     TitleView tvTitle;
+    @BindView(R.id.tv_num)
+    TextView tv_num;
 
     @Override
     protected int initLayoutId() {
@@ -46,6 +50,46 @@ public class FeedBackActivity extends BaseActivity {
             }
         });
 
+        feedBackInputEd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                if(editable.toString().length()>0){
+                    tv_num.setText(String.valueOf(editable.toString().length()+"/100"));
+                }else {
+                    tv_num.setText(getResources().getString(R.string.feed_back_input_tv));
+                }
+
+            }
+        });
+
+        feedBackPhoneInputEd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
 
     @Override
@@ -54,13 +98,11 @@ public class FeedBackActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.feed_back_input_ed, R.id.feed_back_phone_input_ed, R.id.feed_back_submit_btn,R.id.rl_type})
+    @OnClick({ R.id.feed_back_submit_btn,R.id.rl_type})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.feed_back_input_ed://意见反馈
-                break;
-            case R.id.feed_back_phone_input_ed://手机号
-                break;
+
+
             case R.id.feed_back_submit_btn://提交
                 break;
             case R.id.rl_type://反馈类型
