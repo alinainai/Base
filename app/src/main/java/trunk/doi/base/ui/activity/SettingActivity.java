@@ -12,6 +12,8 @@ import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 
+import trunk.doi.base.base.RxBus;
+import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.dialog.AlertDialog;
 import trunk.doi.base.dialog.ApkDownDialog;
 import trunk.doi.base.util.ToastUtil;
@@ -93,12 +95,16 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.setting_exit_login_btn:
 
-                new AlertDialog(mContext).builder().setMsg("退出登录").setPositiveButton("确定", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        finishAnim();
-                    }
-                }).setNegativeButton("取消",null).show();
+                new AlertDialog(mContext).builder()
+                        .setMsg("是否退出登录")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                RxBus.getDefault().post(new MainEvent(0,""));
+                                finishAnim();
+                            }
+                        }).setNegativeButton("取消", null).show();
+
 
                 break;
         }

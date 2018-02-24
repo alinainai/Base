@@ -13,9 +13,9 @@
         style="@style/style_bar_ll"
         >
         <ImageView
+            style="@style/style_bar_img"
             android:src="@drawable/home_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            />
 
         <TextView
             android:id="@+id/tv_bar_1"
@@ -31,8 +31,7 @@
 
         <ImageView
             android:src="@drawable/home_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/style_bar_img" />
 
         <TextView
             android:id="@+id/tv_bar_2"
@@ -48,8 +47,7 @@
         >
         <ImageView
             android:src="@drawable/home_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/style_bar_img" />
         <TextView
             android:id="@+id/tv_bar_3"
             android:text="信息"
@@ -63,8 +61,7 @@
         >
         <ImageView
             android:src="@drawable/home_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/style_bar_img" />
         <TextView
             android:id="@+id/tv_bar_4"
             android:text="我的"

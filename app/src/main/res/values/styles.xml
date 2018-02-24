@@ -177,9 +177,17 @@
     </style>
 
     <style name="style_bar_text">
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
         <item name="android:textSize">8sp</item>
-        <item name="android:clickable">true</item>
         <item name="android:textColor">@color/bottom_tab_text_color_nor</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="style_bar_img">
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

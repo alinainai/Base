@@ -1,17 +1,17 @@
 package trunk.doi.base.ui.activity;
 
-import android.graphics.Color;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,13 +28,9 @@ import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.util.Const;
-import trunk.doi.base.base.RxBus;
-import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.bean.User;
-import trunk.doi.base.dialog.AlertDialog;
 import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.SPUtils;
-import trunk.doi.base.util.ScreenUtils;
 import trunk.doi.base.view.MyVideoView;
 
 
@@ -79,23 +75,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.trans));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            statusBar.setVisibility(View.VISIBLE);
-            statusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
-            statusBar.setLayoutParams(statusBar.getLayoutParams());
-        } else {
-            statusBar.setVisibility(View.GONE);
-        }
+       mStatusBar.setVisibility(View.GONE);
 
     }
 
@@ -182,6 +162,7 @@ public class LoginActivity extends BaseActivity {
                 mediaPlayer.start();
             }
         });
+
     }
 
     /**
@@ -216,43 +197,23 @@ public class LoginActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.back_to_login:
-                finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                finishAnim();
                 break;
             case R.id.logup_phone:
 
                 break;
             case R.id.forget_pwd:
 
-                new AlertDialog(mContext).builder().setTitle("退出登录")
-                        .setMsg("是否退出登录")
-                        .setPositiveButton("确认", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                RxBus.getDefault().post(new MainEvent(0,""));
-                                finish();
-                                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-                            }
-                        }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                }).show();
-
-
-              //  overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 break;
             case R.id.btn_login:
-
                 User user = new User();
                 user.setPhone(accountNum.getEditableText().toString());
                 user.setPassword(password.getEditableText().toString());
                 user.setUsername(accountNum.getEditableText().toString());
                 SPUtils.saveString(mContext, Const.USER_INFO, new Gson().toJson(user), toString());
                 SPUtils.saveBoolean(mContext, Const.LOGIN_STATE, true);
-                finish();
-                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+                finishAnim();
                 break;
             case R.id.qq://起吊qq
                 break;
@@ -263,8 +224,30 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        finishAnim();
     }
+
+    @Override
+    protected void onDestroy() {
+        mVideoView.stopPlayback();
+        super.onDestroy();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase)
+    {
+        super.attachBaseContext(new ContextWrapper(newBase)
+        {
+            @Override
+            public Object getSystemService(String name)
+            {
+                if (Context.AUDIO_SERVICE.equals(name))
+                    return getApplicationContext().getSystemService(name);
+                return super.getSystemService(name);
+            }
+        });
+    }
+
+
 }
+
