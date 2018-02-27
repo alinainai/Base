@@ -12,17 +12,45 @@
 # If your project uses WebView with JS, uncomment the following
 # and specify the fully qualified class name to the JavaScript interface
 # class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+
+-keep public class android.net.http.SslError
+-keep public class android.webkit.WebViewClient
+
+-dontwarn android.net.http.SslError
+-dontwarn android.webkit.WebViewClient
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+-keepattributes SourceFile,LineNumberTable
+
+-keep public class * {
+    public protected <fields>;
+    public protected <methods>;
+}
+
+# Also keep - Enumerations. Keep the special static methods that are required in
+# enumeration classes.
+-keepclassmembers enum  * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# Keep names - Native method names. Keep all native class/method names.
+-keepclasseswithmembers,allowshrinking class * {
+    native <methods>;
+}
+
+## 注解支持
+-keepclassmembers class *{
+   void *(android.view.View);
+}
 
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-renamesourcefileattribute SourceFile
 
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
@@ -32,11 +60,13 @@
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
 -verbose
+-ignorewarnings
 
 # Optimization is turned off by default. Dex does not like code run
 # through the ProGuard optimize and preverify steps (and performs some
 # of these optimizations on its own).
 -dontoptimize
+# 不做预校验
 -dontpreverify
 # Note that if you want to enable optimization, you cannot just
 # include optimization flags in your own project configuration file;
@@ -73,13 +103,17 @@
 -keep class okhttp3.** { *; }
 -keep interface okhttp3.** { *; }
 -dontwarn okhttp3.**
--dontwarn okio.**
+
+-dontwarn javax.annotation.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 
 #picasso
 -dontwarn com.squareup.okhttp.**
 
 #okio
 -dontwarn okio.**
+-keep class okio.**{*;}
 
 #rxjava
 -dontwarn sun.misc.**
@@ -145,11 +179,6 @@
    public void *(android.view.View);
 }
 
-# For enumeration classes, see http://proguard.sourceforge.net/manual/examples.html#enumerations
--keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
-}
 
 -keepclassmembers class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator CREATOR;
@@ -159,6 +188,7 @@
     public static <fields>;
 }
 
+-dontwarn javax.inject.**
 # The support library contains references to newer platform versions.
 # Don't warn about those in case this app is linking against an older
 # platform version.  We know about them, and they are safe.
@@ -184,9 +214,10 @@
 #jPUSH
 -dontwarn cn.jpush.**
 -keep class cn.jpush.** { *; }
-
+-keep class * extends cn.jpush.android.helpers.JPushMessageReceiver { *; }
 -dontwarn cn.jiguang.**
 -keep class cn.jiguang.** { *; }
+
 
 #蒲公英
 -dontwarn com.pgyersdk.**
@@ -210,3 +241,124 @@
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
+
+#腾讯统计混淆
+-keep class com.tencent.stat.* { *;}
+-keep class com.tencent.mid.* { *;}
+
+#友盟社会化分享
+-dontshrink
+-dontoptimize
+-dontwarn com.google.android.maps.**
+-dontwarn android.webkit.WebView
+-dontwarn com.umeng.**
+-dontwarn com.tencent.weibo.sdk.**
+-dontwarn com.facebook.**
+-keep public class javax.**
+-keep public class android.webkit.**
+-dontwarn android.support.v4.**
+-keep enum com.facebook.**
+-keepattributes Exceptions,InnerClasses,Signature
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+
+-keep public interface com.facebook.**
+-keep public interface com.tencent.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+
+-keep public class com.umeng.socialize.* {*;}
+
+
+-keep class com.facebook.**
+-keep class com.facebook.** { *; }
+-keep class com.umeng.scrshot.**
+-keep public class com.tencent.** {*;}
+-keep class com.umeng.socialize.sensor.**
+-keep class com.umeng.socialize.handler.**
+-keep class com.umeng.socialize.handler.*
+-keep class com.umeng.weixin.handler.**
+-keep class com.umeng.weixin.handler.*
+-keep class com.umeng.qq.handler.**
+-keep class com.umeng.qq.handler.*
+-keep class UMMoreHandler{*;}
+-keep class com.tencent.mm.sdk.modelmsg.WXMediaMessage {*;}
+-keep class com.tencent.mm.sdk.modelmsg.** implements com.tencent.mm.sdk.modelmsg.WXMediaMessage$IMediaObject {*;}
+-keep class im.yixin.sdk.api.YXMessage {*;}
+-keep class im.yixin.sdk.api.** implements im.yixin.sdk.api.YXMessage$YXMessageData{*;}
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+-keep class com.tencent.mm.opensdk.** {
+   *;
+}
+-keep class com.tencent.wxop.** {
+   *;
+}
+-keep class com.tencent.mm.sdk.** {
+   *;
+}
+-dontwarn twitter4j.**
+-keep class twitter4j.** { *; }
+
+-keep class com.tencent.** {*;}
+-dontwarn com.tencent.**
+-keep class com.kakao.** {*;}
+-dontwarn com.kakao.**
+-keep public class com.umeng.com.umeng.soexample.R$*{
+    public static final int *;
+}
+-keep public class com.linkedin.android.mobilesdk.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+-keep class com.tencent.open.TDialog$*
+-keep class com.tencent.open.TDialog$* {*;}
+-keep class com.tencent.open.PKDialog
+-keep class com.tencent.open.PKDialog {*;}
+-keep class com.tencent.open.PKDialog$*
+-keep class com.tencent.open.PKDialog$* {*;}
+-keep class com.umeng.socialize.impl.ImageImpl {*;}
+-keep class com.sina.** {*;}
+-dontwarn com.sina.**
+-keep class  com.alipay.share.sdk.** {
+   *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+
+-keep class com.linkedin.** { *; }
+-keep class com.android.dingtalk.share.ddsharemodule.** { *; }
+-keepattributes Signature
+
+#云客服混淆
+-dontwarn javax.servlet.**
+-dontwarn org.jboss.marshalling.**
+-dontwarn org.osgi.**
+-dontwarn java.net.**
+-dontwarn java.nio.channels.**
+-dontwarn org.apache.commons.**
+-dontwarn org.apache.log4j.**
+-dontwarn org.jboss.logging.**
+-dontwarn org.slf4j.**
+-dontwarn org.jboss.netty.**
+-keep class org.jboss.netty.channel.socket.http.HttpTunnelingServlet {*;}
+-keep class com.moor.imkf.** { *; }
+-keep class com.j256.ormlite.** { *; }
+
+#okhttputils
+-dontwarn com.zhy.http.**
+-keep class com.zhy.http.**{*;}
+
+
+ #如果有其它包有warning，在报出warning的包加入下面类似的-dontwarn 报名
+-dontwarn com.trello.*.**
+-dontwarn com.tencent.smtt.**
+-dontwarn com.umeng.*.**

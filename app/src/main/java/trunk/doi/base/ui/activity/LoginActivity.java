@@ -230,7 +230,9 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        mVideoView.stopPlayback();
+        if (null!=mVideoView){
+            mVideoView.suspend();
+        }
         super.onDestroy();
     }
 
@@ -248,7 +250,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
-
 
 }
 
