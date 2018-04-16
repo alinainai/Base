@@ -3,6 +3,9 @@ package trunk.doi.base.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
@@ -12,6 +15,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
+import trunk.doi.base.util.Rotate3dAnimation;
 import trunk.doi.base.util.ToastUtil;
 
 
@@ -31,7 +35,11 @@ public class MessageActivity extends BaseActivity {
     @BindView(R.id.tv_bar_4)
     TextView tvBar4;
 
+    @BindView(R.id.img)
+    ImageView img;
+
     private int numSelector=1;
+    private boolean retuens;
 
     @Override
     protected int initLayoutId() {
@@ -57,13 +65,21 @@ public class MessageActivity extends BaseActivity {
     protected void initData() {
 
         setTextColor(1);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                applyRotation(0, 180);
+                retuens = true;
+            }
+        });
 
     }
 
 
 
 
-    @OnClick({R.id.ll_bar_1, R.id.ll_bar_2, R.id.ll_bar_3, R.id.ll_bar_4, R.id.tv_click})
+    @OnClick({R.id.ll_bar_1, R.id.ll_bar_2, R.id.ll_bar_3, R.id.ll_bar_4
+            , R.id.tv_click,R.id.img})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_bar_1:
@@ -88,6 +104,11 @@ public class MessageActivity extends BaseActivity {
                 break;
             case R.id.tv_click:
                 startActivityAnim(new Intent(mContext,MineDetailActivity.class));
+                break;
+            case R.id.img:
+
+
+
                 break;
         }
     }
@@ -134,4 +155,36 @@ public class MessageActivity extends BaseActivity {
     public void onBackPressed() {
         finishAnim();
     }
+
+    private void applyRotation(float start, float end) {
+        // 计算中心点
+        final float centerX = img.getWidth() / 2.0f;
+        final float centerY = img.getHeight() / 2.0f;
+
+        final Rotate3dAnimation rotation = new Rotate3dAnimation(this, start, end, centerX, centerY, 1.0f, false);
+        rotation.setDuration(300);
+        rotation.setFillAfter(false);
+        rotation.setInterpolator(new AccelerateInterpolator());
+
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (retuens) {
+                    retuens = false;
+                    applyRotation(180, 0);
+                }
+            }
+        });
+        img .startAnimation(rotation);
+    }
+
 }
