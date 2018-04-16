@@ -18,7 +18,7 @@ public class TrunkSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String CREATE_TABLE_COLLECTION = "create table collection ("
             + "_id integer primary key autoincrement,"
-            + "desc text, "
+            + "_desc text, "
             + "url text, "
             + "dataTime text) ";//数据库里的表
 
