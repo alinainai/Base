@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
+//kotlin
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 
 def static releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.3'
+    compileSdkVersion parent.ext.compileSdkVersion
     defaultConfig {
         applicationId "trunk.doi.base"
         minSdkVersion parent.ext.minSdkVersion
@@ -30,6 +33,12 @@ android {
         }
 
     }
+    //解决kotlin添加过程中出现的Error: Program type already present: org.intellij.lang.annotations.Identifier问题
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
@@ -43,6 +52,7 @@ android {
     signingConfigs {
 
         debug {
+            //用来解决打包时只选择v2，安装报错的问题
             v1SigningEnabled true
             v2SigningEnabled true
             storeFile file("../jks/bopai.keystore")
@@ -78,7 +88,7 @@ android {
             release {
                 //移除无用的资源文件
                 shrinkResources true
-                //启用multidex的支持
+                //启用multiDex的支持
                 multiDexEnabled true
                 //关闭混淆
                 minifyEnabled true
@@ -132,11 +142,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     //noinspection GradleCompatible
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:recyclerview-v7:$support_version"
-    implementation "com.android.support:cardview-v7:$support_version"
-    implementation "com.android.support:palette-v7:$support_version"
-    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:recyclerview-v7:28.0.0"
+    implementation "com.android.support:cardview-v7:28.0.0"
+    implementation "com.android.support:palette-v7:28.0.0"
+    implementation "com.android.support:design:28.0.0"
     // 用于Java编写执行Java测试用例。
     //https://github.com/ZeroBrain/AndroidPermissions
     implementation files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
@@ -183,6 +193,8 @@ dependencies {
     implementation 'com.zhy:okhttputils:2.6.2'
     //lottie动画框架
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
+    //添加kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
 repositories {
