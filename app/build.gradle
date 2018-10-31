@@ -195,7 +195,7 @@ dependencies {
     //lottie动画框架
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
     //添加kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.71"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 }
 repositories {
