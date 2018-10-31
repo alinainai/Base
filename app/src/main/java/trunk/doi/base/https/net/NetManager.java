@@ -8,17 +8,22 @@ import java.lang.reflect.Field;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -42,7 +47,8 @@ public class NetManager {
         private static final NetManager INSTANCE = new NetManager();
     }
 
-    private NetManager() { }
+    private NetManager() {
+    }
 
     /**
      * Gosn解析
@@ -77,6 +83,7 @@ public class NetManager {
                 .build();
         return retrofit.create(service);
     }
+
     /**
      * 解析接口中的BASE_URL，解决BASE_URL不一致的问题
      *
@@ -97,6 +104,7 @@ public class NetManager {
 
     /**
      * 返回Okhttp对象
+     *
      * @return
      */
     private OkHttpClient getOkHttpClient() {
@@ -111,39 +119,101 @@ public class NetManager {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor).retryOnConnectionFailure(false).addNetworkInterceptor(loggingInterceptor);
-
+        //无证书
+       builder.hostnameVerifier(notVerifyHostName());
+        return builder.sslSocketFactory(notVerifySSL(), getX509TrustManager()).build();
 
         //封装https证书
-        X509TrustManager trustManager;
-        SSLSocketFactory sslSocketFactory;
-        InputStream inputStream=null;
-        try {
-            inputStream = BaseApplication.getInstance().getAssets().open("srca.cer"); // 得到证书的输入流
-            try {
-                trustManager = trustManagerForCertificates(inputStream);//以流的方式读入证书
-                SSLContext sslContext = SSLContext.getInstance("TLS");
-                sslContext.init(null, new TrustManager[]{trustManager}, null);
-                sslSocketFactory = sslContext.getSocketFactory();
+//        X509TrustManager trustManager;
+//        SSLSocketFactory sslSocketFactory;
+//        InputStream inputStream = null;
+//        try {
+//            inputStream = BaseApplication.getInstance().getAssets().open("srca.cer"); // 得到证书的输入流
+//            try {
+//                trustManager = trustManagerForCertificates(inputStream);//以流的方式读入证书
+//                SSLContext sslContext = SSLContext.getInstance("TLS");
+//                sslContext.init(null, new TrustManager[]{trustManager}, null);
+//                sslSocketFactory = sslContext.getSocketFactory();
+//
+//            } catch (GeneralSecurityException e) {
+//                throw new RuntimeException(e);
+//            }
+//
+//            return builder.sslSocketFactory(sslSocketFactory, trustManager).build();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//
+//            if (null != inputStream) {
+//                try {
+//                    inputStream.close();
+//                } catch (IOException e) {
+//
+//                }
+//            }
+//        }
+//        return null;
+    }
 
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException(e);
+    /**
+     *  取消验证HostName
+     * @return
+     */
+    private HostnameVerifier notVerifyHostName() {
+
+
+        return new HostnameVerifier() {
+            @Override
+            public boolean verify(String hostname, SSLSession session) {
+                return true;
             }
+        };
 
-            return builder.sslSocketFactory(sslSocketFactory, trustManager).build();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
+    }
+    /**
+     *  取消验证ssl
+     * @return
+     */
+    private SSLSocketFactory notVerifySSL() {
+        try {
+            SSLContext sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, new X509TrustManager[]{getX509TrustManager()}, null);
+            return sslContext.getSocketFactory();
+        } catch (GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
 
-            if(null!=inputStream){
-                try{
-                    inputStream.close();
-                }catch (IOException e){
+
+    }
+
+    /**
+     * 获取证书X509TrustManager对象
+     * @return
+     */
+    private X509TrustManager getX509TrustManager() {
+
+
+           return new X509TrustManager() {
+
+                @Override
+                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
 
                 }
-            }
-        }
-        return null;
+
+                @Override
+                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+
+                }
+
+                @Override
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return new java.security.cert.X509Certificate[0];
+                }
+            };
+
+
     }
+
 
     /**
      * 以流的方式添加信任证书
@@ -201,6 +271,7 @@ public class NetManager {
 
     /**
      * 添加password
+     *
      * @param password
      * @return
      * @throws GeneralSecurityException
@@ -215,7 +286,6 @@ public class NetManager {
             throw new AssertionError(e);
         }
     }
-
 
 
 }
