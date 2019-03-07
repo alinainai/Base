@@ -51,14 +51,7 @@ public class InfoFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void setListener(View view, Bundle savedInstanceState) {
-    }
 
-    @Override
-    public void initData(Bundle savedInstanceState) {
-
-    }
 
 
 

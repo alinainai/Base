@@ -108,10 +108,7 @@ public class MineDetailActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public void setListener() {
 
-    }
 
     @Override
     public void initData() {

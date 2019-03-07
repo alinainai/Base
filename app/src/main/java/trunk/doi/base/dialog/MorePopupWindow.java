@@ -40,26 +40,17 @@ public abstract class MorePopupWindow  {
             pop_2_tv= view.findViewById(R.id.ll_share);
             pop_3_tv= view.findViewById(R.id.ll_linked);
 
-            pop_1_tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    collection();
-                    dismiss();
-                }
+            pop_1_tv.setOnClickListener(view1 -> {
+                collection();
+                dismiss();
             });
-            pop_2_tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    share();
-                    dismiss();
-                }
+            pop_2_tv.setOnClickListener(view12 -> {
+                share();
+                dismiss();
             });
-            pop_3_tv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    copyLink();
-                    dismiss();
-                }
+            pop_3_tv.setOnClickListener(view13 -> {
+                copyLink();
+                dismiss();
             });
 
             mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);

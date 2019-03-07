@@ -40,8 +40,8 @@ public abstract class ApkDownDialog {
         if (dialog == null) {
             View view = activity.getLayoutInflater().inflate(
                     R.layout.dialog_download, null);
-            success_text_view = (TextView) view.findViewById(R.id.success_text_view);
-            round_progress = (RoundProgressBar) view.findViewById(R.id.round_progress);
+            success_text_view =  view.findViewById(R.id.success_text_view);
+            round_progress =  view.findViewById(R.id.round_progress);
             OkHttpUtils//
                     .get()//
                     .url(url)//

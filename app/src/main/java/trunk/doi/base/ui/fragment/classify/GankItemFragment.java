@@ -10,12 +10,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
+import trunk.doi.base.base.mvp.BaseMvpActivity;
+import trunk.doi.base.base.mvp.BaseMvpFragment;
 import trunk.doi.base.bean.BeautyResult;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.api.GankItemService;
@@ -32,10 +37,10 @@ import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
 
 /**
- * Author: Othershe
+ * Author:
  * Time: 2016/8/12 14:28
  */
-public class GankItemFragment extends BaseFragment {
+public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,GankItemPresenter> implements IGankItem.GankItemView {
 
     private static final String SUB_TYPE="SUB_TYPE";
     private int mPage = 1;//页数
@@ -53,11 +58,6 @@ public class GankItemFragment extends BaseFragment {
     View view_load;
 
 
-    protected boolean mIsViewInitiated;
-    protected boolean mIsVisibleToUser;
-    protected boolean mIsDataInitiated;
-
-    private View.OnClickListener retryListener;
     private View  mLoadingView;
     private View  mLoadEmpty;
 
@@ -79,7 +79,7 @@ public class GankItemFragment extends BaseFragment {
         //刷新控件
         mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
-        mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<GankItemData>(), true);
+        mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<>(), true);
         //RecyclerView 基础布局
         mLoadingView=LayoutInflater.from(mContext).inflate(R.layout.layout_loading,(ViewGroup)mRecyclerView.getParent(),false);
         mLoadEmpty=LayoutInflater.from(mContext).inflate(R.layout.layout_empty_data,(ViewGroup)mRecyclerView.getParent(),false);
@@ -91,44 +91,27 @@ public class GankItemFragment extends BaseFragment {
     }
 
     @Override
-    public void setListener(View view, Bundle savedInstanceState) {
+    public void setListener() {
 
         //加载失败布局
-        retryListener=new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPage=1;
-                if(view_net_error.getVisibility()==View.VISIBLE){
-                    view_net_error.setVisibility(View.GONE);
-                }
-                view_load.setVisibility(View.VISIBLE);
-                loadData();
-//                ToastUtil.show(mContext,"云想衣裳花想容,春风拂槛露华浓.\n" + "若非群玉山头见,会向瑶台月下逢.");
+        View.OnClickListener retryListener = view -> {
+            mPage = 1;
+            if (view_net_error.getVisibility() == View.VISIBLE) {
+                view_net_error.setVisibility(View.GONE);
             }
+            view_load.setVisibility(View.VISIBLE);
+            loadData();
         };
         //条目点击
-        mGankItemAdapter.setOnItemClickListener(new OnItemClickListener<GankItemData>() {
-            @Override
-            public void onItemClick(ViewHolder viewHolder, GankItemData gankItemData, int position) {
-                startActivityAnim(new Intent(mContext, WebViewActivity.class)
-                        .putExtra("title", gankItemData.getDesc())
-                        .putExtra("url", gankItemData.getUrl()));
-            }
-        });
+        mGankItemAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> startActivityAnim(new Intent(mContext, WebViewActivity.class)
+                .putExtra("title", gankItemData.getDesc())
+                .putExtra("url", gankItemData.getUrl())));
         //加载更多
-        mGankItemAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(boolean isReload) {
-                 loadData();
-            }
-        });
+        mGankItemAdapter.setOnLoadMoreListener(isReload -> loadData());
         //刷新
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPage = 1;
-                loadData();
-            }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            mPage = 1;
+            loadData();
         });
         view_net_error.findViewById(R.id.tv_retry).setOnClickListener(retryListener);
         mLoadEmpty.findViewById(R.id.tv_click).setOnClickListener(retryListener);
@@ -136,11 +119,9 @@ public class GankItemFragment extends BaseFragment {
     }
 
     @Override
-    public void initData(Bundle savedInstanceState) {
-        if (getArguments() == null) {
-            return;
-        }
+    public void initData() {
         mSwipeRefreshLayout.setEnabled(false);
+        assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
         mRecyclerView.setAdapter(mGankItemAdapter);
         //RecyclerView  首次Loading布局
@@ -152,92 +133,21 @@ public class GankItemFragment extends BaseFragment {
 
    private void loadData(){
 
-       RxManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getGankItemData("data/" + mSubtype + "/"+PAGE_COUNT+"/" + mPage),
-               new RxSubscriber<HttpResult<List<GankItemData>>>(mContext,false,true) {
-                   @Override
-                   protected void _onNext(HttpResult<List<GankItemData>> listHttpResult) {
-
-                       if(mSwipeRefreshLayout.isRefreshing()){
-                           mSwipeRefreshLayout.setRefreshing(false);
-                       }
-                       if(view_load.getVisibility()==View.VISIBLE){
-                           view_load.setVisibility(View.GONE);
-                       }
-                       if(isFirdtLoad){
-                           mGankItemAdapter.removeEmptyView();
-                           isFirdtLoad=false;
-                       }
-                       mSwipeRefreshLayout.setEnabled(true);
-
-                       if(listHttpResult!=null&&listHttpResult.getResults()!=null&&listHttpResult.getResults().size()>0){
-
-                           if (mPage==1) {
-                               mGankItemAdapter.reset();
-                               mGankItemAdapter.setNewData(listHttpResult.getResults());
-                           } else {
-                               mGankItemAdapter.setLoadMoreData(listHttpResult.getResults());
-                           }
-                           if (listHttpResult.getResults().size() < PAGE_COUNT) {//如果小于10个
-                               mGankItemAdapter.loadEnd();
-                           }
-                           mPage++;
-                       }else{
-                           if(mPage>1){
-                               mGankItemAdapter.loadFailed();
-                           }else{
-                               mGankItemAdapter.reset();
-                               mGankItemAdapter.setReloadView(mLoadEmpty);
-                               mSwipeRefreshLayout.setEnabled(false);
-                           }
-                       }
-
-                   }
-                   @Override
-                   protected void _onError(int code) {
-                       mSwipeRefreshLayout.setEnabled(true);
-                       if(mSwipeRefreshLayout.isRefreshing()){
-                           mSwipeRefreshLayout.setRefreshing(false);
-                       }
-                       if(view_load.getVisibility()==View.VISIBLE){
-                           view_load.setVisibility(View.GONE);
-                       }
-                       if(isFirdtLoad){
-                           mGankItemAdapter.removeEmptyView();
-                           isFirdtLoad=false;
-                       }
-                       if(mPage>1){
-                           mGankItemAdapter.loadFailed();
-                       }else{
-                           mGankItemAdapter.reset();
-                           view_net_error.setVisibility(View.VISIBLE);
-                           mSwipeRefreshLayout.setEnabled(false);
-                       }
-                   }
-               });
+       mPresenter.getGankItemData(String.format(Locale.CHINA,"data/%s/10/%d",mSubtype,mPage));
 
    }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        mIsVisibleToUser = isVisibleToUser;
-        initFetchData();
+    protected GankItemPresenter initPresenter() {
+        return  new GankItemPresenter();
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mIsViewInitiated = true;
-        initFetchData();
+    protected void fetchData() {
+        loadData();
     }
 
-    //ViewPager懒加载方式
-    private void initFetchData() {
-        if (mIsVisibleToUser && mIsViewInitiated && !mIsDataInitiated) {
-            loadData();
-            mIsDataInitiated = true;
-        }
-    }
+
 
     public static GankItemFragment newInstance(String subtype) {
         GankItemFragment fragment = new GankItemFragment();
@@ -248,4 +158,72 @@ public class GankItemFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onSuccess(List<GankItemData> data) {
+
+        if(mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        if(view_load.getVisibility()==View.VISIBLE){
+            view_load.setVisibility(View.GONE);
+        }
+        if(isFirdtLoad){
+            mGankItemAdapter.removeEmptyView();
+            isFirdtLoad=false;
+        }
+        mSwipeRefreshLayout.setEnabled(true);
+
+        if(data.size()>0){
+
+            if (mPage==1) {
+                mGankItemAdapter.reset();
+                mGankItemAdapter.setNewData(data);
+            } else {
+                mGankItemAdapter.setLoadMoreData(data);
+            }
+            if (data.size() < PAGE_COUNT) {//如果小于10个
+                mGankItemAdapter.loadEnd();
+            }
+            mPage++;
+        }else{
+            if(mPage>1){
+                mGankItemAdapter.loadFailed();
+            }else{
+                mGankItemAdapter.reset();
+                mGankItemAdapter.setReloadView(mLoadEmpty);
+                mSwipeRefreshLayout.setEnabled(false);
+            }
+        }
+
+    }
+
+    @Override
+    public void onError() {
+        mSwipeRefreshLayout.setEnabled(true);
+        if(mSwipeRefreshLayout.isRefreshing()){
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        if(view_load.getVisibility()==View.VISIBLE){
+            view_load.setVisibility(View.GONE);
+        }
+        if(isFirdtLoad){
+            mGankItemAdapter.removeEmptyView();
+            isFirdtLoad=false;
+        }
+        if(mPage>1){
+            mGankItemAdapter.loadFailed();
+        }else{
+            mGankItemAdapter.reset();
+            view_net_error.setVisibility(View.VISIBLE);
+            mSwipeRefreshLayout.setEnabled(false);
+        }
+    }
+
+    @Override
+    public LifecycleTransformer bindLifecycle() {
+        //RxAppCompatActivity中的方法bindToLifecycle()
+         LifecycleTransformer objectLifecycleTransformer = bindToLifecycle();
+         return bindToLifecycle();
+
+    }
 }

@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
-import trunk.doi.base.service.LocationService;
 import trunk.doi.base.util.CrashHandler;
 import trunk.doi.base.util.SDCardUtils;
 import trunk.doi.base.util.SPUtils;
@@ -43,8 +42,7 @@ public class BaseApplication extends MultiDexApplication {
 
     private int activityCount;//activity的count数
     public boolean isBackGround=false;//是否在前台
-    //百度定位
-    public LocationService locationService;
+
 
 
     @Override
@@ -109,10 +107,9 @@ public class BaseApplication extends MultiDexApplication {
         //初始化腾讯x5内核
         // QbSdk 的预加载接口 initX5Environment ，可参考接入示例，第一个参数传入 context，第二个参数传入 callback，不需要 callback 的可以传入 null
         QbSdk.initX5Environment(mInstance, null);
-        //百度地图定位
-        locationService = new LocationService(getApplicationContext());
 
 
+        //crash日志收集
 //        CrashHandler.getInstance().init(this);
 
 

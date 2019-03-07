@@ -95,6 +95,9 @@
     <string name="qq_header_refreshing">正在刷新...</string>
     <string name="qq_header_completed">刷新成功</string>
     <string name="pref_key_transition_time">pref_key_transition_time</string>
+    <string name="str_net_error">网络异常，点击重试</string>
+    <string name="str_no_data">暂无数据</string>
+    <string name="str_loading">疯狂加载中</string>
 
 </resources>
 

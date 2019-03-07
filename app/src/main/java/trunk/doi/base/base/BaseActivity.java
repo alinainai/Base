@@ -1,6 +1,5 @@
 package trunk.doi.base.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -12,8 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -21,12 +18,11 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import trunk.doi.base.R;
-import trunk.doi.base.dialog.CustomDialog;
-import trunk.doi.base.util.ScreenShotListenManager;
+import trunk.doi.base.util.ActivityController;
 import trunk.doi.base.util.ScreenUtils;
 
 /**
- * Created by ly on 2016/5/27 11:08.
+ * Created by  on 2016/5/27 11:08.
  * Activity的基类
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
@@ -75,7 +71,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 初始化页面内容
-     * //savedInstanceState获取照片时使用
+     * savedInstanceState获取照片时使用
      */
     private void initContentView(@Nullable Bundle savedInstanceState) {
 
@@ -113,7 +109,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**
      * 设置监听器
      */
-    protected abstract void setListener();
+    protected  void setListener(){
+
+    }
 
     /**
      * 初始化数据
@@ -128,22 +126,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
-        /**
-         * 点击空白处隐藏软键盘
-         */
+        //点击空白处隐藏软键盘
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
                 if (manager == null) {

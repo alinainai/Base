@@ -30,6 +30,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -284,7 +285,7 @@ public class WebViewActivity extends BaseActivity {
                            CollectionBean bean =new CollectionBean();
                            bean.setUrl(url);
                            bean.setDesc(mTitle);
-                           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+                           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
                            bean.setDataTime(sdf.format(new Date()));
                            service.addInfo(bean);
                            ToastUtil.showCustomToast(mContext,"收藏成功",ToastUtil.TOAST_OF_SUCCESS);

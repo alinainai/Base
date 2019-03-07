@@ -70,26 +70,13 @@ public class MineFragment extends BaseFragment {
     }
 
     @Override
-    public void setListener(View view, Bundle savedInstanceState) {
+    public void setListener() {
 
-        srl_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                srl_refresh.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        srl_refresh.setRefreshing(false);
-                    }
-                },700);
-            }
-        });
+        srl_refresh.setOnRefreshListener(() -> srl_refresh.postDelayed(() -> srl_refresh.setRefreshing(false),700));
 
     }
 
-    @Override
-    public void initData(Bundle savedInstanceState) {
 
-    }
 
     @OnClick({R.id.img_message, R.id.img_set, R.id.iv_head, R.id.tv_name, R.id.tv_phone,R.id.ll_wdtyj})
     public void onViewClicked(View view) {

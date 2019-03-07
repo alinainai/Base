@@ -1,5 +1,6 @@
 package trunk.doi.base.https.net;
 
+import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.IOException;
@@ -25,12 +26,14 @@ import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import trunk.doi.base.base.BaseApplication;
+
 
 /**
  * Author: Othershe
@@ -60,7 +63,9 @@ public class NetManager {
     public <S> S create(Class<S> service) {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(getOkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder()
+                        .setLenient()
+                        .create()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(getBaseUrl(service))
                 .build();
@@ -102,6 +107,16 @@ public class NetManager {
         return "";
     }
 
+    private Interceptor addQueryParameterInterceptor = chain -> {
+        Request request = chain.request()
+                .newBuilder()
+                .addHeader("Content-Type", "application/json;charset=UTF-8")
+                .addHeader("Accept", "*/*")
+                .addHeader("Connection", "close")
+                .build();
+        return chain.proceed(request);
+    };
+
     /**
      * 返回Okhttp对象
      *
@@ -113,6 +128,7 @@ public class NetManager {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        builder.addInterceptor(addQueryParameterInterceptor);
         builder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
         //配置log打印拦截器

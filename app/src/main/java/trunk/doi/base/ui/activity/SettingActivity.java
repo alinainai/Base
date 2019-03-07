@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -16,10 +15,10 @@ import trunk.doi.base.base.RxBus;
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.dialog.AlertDialog;
 import trunk.doi.base.dialog.ApkDownDialog;
+import trunk.doi.base.ui.activity.about.AboutActivity;
 import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.view.TitleView;
-import trunk.doi.base.view.pullrefresh.CustomRefreshHeader;
-import trunk.doi.base.view.pullrefresh.RefreshLayout;
+
 
 public class SettingActivity extends BaseActivity {
 

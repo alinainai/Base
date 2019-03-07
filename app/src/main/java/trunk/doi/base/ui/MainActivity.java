@@ -21,7 +21,7 @@ import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import trunk.doi.base.R;
-import trunk.doi.base.base.ActivityController;
+import trunk.doi.base.util.ActivityController;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.base.RxBus;

@@ -7,21 +7,10 @@ package trunk.doi.base.bean;
 public class HttpResult<T> {
 
 
-
-
     private int code;//结果码
     private String msg;//原因
     private T results;//数据类型
 
-
-    public HttpResult() {
-    }
-
-    public HttpResult(int code, String msg, T results) {
-        this.code = code;
-        this.msg = msg;
-        this.results = results;
-    }
 
     public int getCode() {
         return code;
@@ -43,16 +32,7 @@ public class HttpResult<T> {
         return results;
     }
 
-    public void setResults  (T data) {
-        this.results = data;
-    }
-
-    @Override
-    public String toString() {
-        return "HttpResult{" +
-                ", code='" + code + '\'' +
-                ", msg='" + msg + '\'' +
-                ", data=" + results.toString() +
-                '}';
+    public void setResults(T results) {
+        this.results = results;
     }
 }
