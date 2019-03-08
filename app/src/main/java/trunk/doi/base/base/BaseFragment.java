@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,61 +22,40 @@ import trunk.doi.base.R;
 public abstract class BaseFragment extends RxFragment {
     protected Context mContext;
     public View rootView;
-    protected Unbinder mUnbinder;
+    private Unbinder mBinder;
+    protected  final String TAG = this.getClass().getSimpleName();
 
     protected abstract int initLayoutId();
 
     public abstract void initView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState);
 
-    public void setListener() {
-    }
-
-    public void initData() {
-    }
-
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        initData();
-        Log.e("BaseFragment","onActivityCreated");
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mContext = getActivity();
-        Log.e("BaseFragment","onCreate");
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e("BaseFragment","onCreateView");
         rootView = inflater.inflate(initLayoutId(), container, false);
-        mUnbinder = ButterKnife.bind(this, rootView);
+        mBinder = ButterKnife.bind(this, rootView);
         initView(inflater, container, savedInstanceState);
         return rootView;
     }
 
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.e("BaseFragment","onViewCreated");
-        setListener();
+    public void onDestroy() {
+        mBinder.unbind();
+        super.onDestroy();
     }
 
 
-    protected void startActivityAnim(Intent intent) {
-        super.startActivity(intent);
-        //noinspection ConstantConditions
-        getActivity().overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_left_out);
-    }
 
-    protected void finishAnim() {
-        //noinspection ConstantConditions
-        getActivity().finish();
-        getActivity().overridePendingTransition(R.anim.base_slide_left_in, R.anim.base_slide_right_out);
-    }
+
+
+
 
 
 }

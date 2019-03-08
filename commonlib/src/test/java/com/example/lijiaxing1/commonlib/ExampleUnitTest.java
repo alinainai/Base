@@ -1,4 +1,4 @@
-package com.base.res;
+package com.example.lijiaxing1.commonlib;
 
 import org.junit.Test;
 

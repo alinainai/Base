@@ -126,18 +126,6 @@ public class BaseApplication extends MultiDexApplication {
                 if(isBackGround){
                     if( System.currentTimeMillis()- SPUtils.loadLong(BaseApplication.this,"locktime",0)>1000*10){
 
-//                        if(!"TestActivity".equals(activity.getClass().getSimpleName()) &&
-//                                !"SplashActivity".equals(activity.getClass().getSimpleName()) &&
-//                                !"LoginActivity".equals(activity.getClass().getSimpleName()) &&
-//                                !"RegisterActivity".equals(activity.getClass().getSimpleName()) &&
-//                                !"MineDetailActivity".equals(activity.getClass().getSimpleName()) &&
-//                                !"GuesterActivity".equals(activity.getClass().getSimpleName())
-//                                ){
-//                            Intent intent = new Intent(activity, GuesterActivity.class);
-//                            intent.putExtra("from",activity.getClass().getSimpleName());
-//                            activity.startActivity(intent);
-//                            activity.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-//                        }
                     }
                 }
                 activityCount++;

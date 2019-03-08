@@ -7,24 +7,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
-
 
 import com.airbnb.lottie.LottieAnimationView;
 
-import java.util.concurrent.TimeUnit;
-
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseApplication;
@@ -38,14 +26,14 @@ import trunk.doi.base.util.ToastUtil;
 public class SplashActivity extends BaseActivity {
 
 
-    private Handler handler =new Handler();
+
 
     @BindView(R.id.tv_version)
     TextView tv_version;
     @BindView(R.id.v_animation)
     LottieAnimationView v_animation;
 
-    private static final String ANIM_NAME="confetti.json";
+    private static final String ANIM_NAME = "confetti.json";
 
     @Override
     protected int initLayoutId() {
@@ -55,15 +43,15 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
 
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         mStatusBar.setVisibility(View.GONE);
 
-        String[] pers={  android.Manifest.permission.READ_PHONE_STATE,
-                    android.Manifest.permission.CAMERA,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
-                    android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                    android.Manifest.permission.RECEIVE_SMS};
-            PermissionUtils.requestAppPermissions(SplashActivity.this,1008,pers);
+        String[] pers = {android.Manifest.permission.READ_PHONE_STATE,
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                android.Manifest.permission.RECEIVE_SMS};
+        PermissionUtils.requestAppPermissions(SplashActivity.this, 1008, pers);
 
 
         tv_version.setText("当前版本 v" + AppUtils.getVersionName(BaseApplication.getInstance()));
@@ -89,8 +77,8 @@ public class SplashActivity extends BaseActivity {
 
 //            handler.postDelayed(toMain,1000);
 
-      //  countDown();
-      //  }
+        //  countDown();
+        //  }
 
 
         v_animation.setAnimation(ANIM_NAME);
@@ -112,12 +100,12 @@ public class SplashActivity extends BaseActivity {
     }
 
 
-    private Runnable toMain=new Runnable() {
+    private Runnable toMain = new Runnable() {
         @Override
         public void run() {
             SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
             SplashActivity.this.finish();
-            SplashActivity.this.overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+            SplashActivity.this.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
         }
     };
@@ -136,10 +124,9 @@ public class SplashActivity extends BaseActivity {
                 for (int i = 0; i < grantResults.length; i++) {
                     //do something
                     if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        // queryAndLoadNewPatch不可放在attachBaseContext 中，否则无网络权限，建议放在后面任意时刻，如onCreate中
-//                        SophixManager.getInstance().queryAndLoadNewPatch();
+
                     } else {
-                        ToastUtil.show(SplashActivity.this,"请去设置中开启软件读取文件信息的权限，否则软件不能正常使用");
+                        ToastUtil.show(SplashActivity.this, "请去设置中开启软件读取文件信息的权限，否则软件不能正常使用");
                     }
                 }
             }
@@ -161,7 +148,7 @@ public class SplashActivity extends BaseActivity {
 
                 SplashActivity.this.startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 SplashActivity.this.finish();
-                SplashActivity.this.overridePendingTransition(0,android.R.anim.fade_out);
+                SplashActivity.this.overridePendingTransition(0, android.R.anim.fade_out);
 
             }
 
@@ -182,9 +169,6 @@ public class SplashActivity extends BaseActivity {
     protected void initData() {
 
     }
-
-
-
 
 
 }

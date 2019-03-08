@@ -92,16 +92,16 @@ android {
                 signingConfig signingConfigs.release
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-                applicationVariants.all { variant ->
-                    variant.outputs.all { output ->
-                        def outputFile = output.outputFile
-                        if (outputFile != null && outputFile.name.endsWith(".apk")) {
-                            //这里修改apk文件名
-                            def fileName = "credit_${defaultConfig.versionName}_${buildType.name}_${releaseTime()}.apk"
-                            outputFileName = fileName
-                        }
-                    }
-                }
+//                applicationVariants.all { variant ->
+//                    variant.outputs.all { output ->
+//                        def outputFile = output.outputFile
+//                        if (outputFile != null && outputFile.name.endsWith(".apk")) {
+//                            //这里修改apk文件名
+//                            def fileName = "credit_${defaultConfig.versionName}_${buildType.name}_${releaseTime()}.apk"
+//                            outputFileName = fileName
+//                        }
+//                    }
+//                }
             }
         }
         repositories {

@@ -2,13 +2,11 @@ package trunk.doi.base.ui.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +35,6 @@ public class ClassifyFragment extends BaseFragment {
     @BindView(R.id.status_bar)
     View mStatusBar;
 
-    private List<Fragment> mFragments;
-    private List<String> mTitles = new ArrayList<>();
-    private SimpleFragmentPagerAdapter mTypeAdapter;
-
 
     public static ClassifyFragment newInstance() {
         return new ClassifyFragment();
@@ -63,21 +57,16 @@ public class ClassifyFragment extends BaseFragment {
         } else {
             mStatusBar.setVisibility(View.GONE);
         }
-        mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
-        mFragments = new ArrayList<>();
+        List<String> mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
+        List<Fragment> mFragments = new ArrayList<>();
         for (String subtype : mTitles) {
             mFragments.add(GankItemFragment.newInstance(subtype));
         }
-        mTypeAdapter = new SimpleFragmentPagerAdapter(mContext,getChildFragmentManager(),mFragments, AppUtils.stringArrayToList(mContext, R.array.gankTitle));
-        mViewPager.setAdapter(mTypeAdapter);
+        mViewPager.setAdapter(new SimpleFragmentPagerAdapter(mContext, getChildFragmentManager(), mFragments, AppUtils.stringArrayToList(mContext, R.array.gankTitle)));
         mViewPager.setOffscreenPageLimit(mTitles.size() - 1);
         tabs.setViewPager(mViewPager);
 
     }
-
-
-
-
 
 
 }

@@ -213,7 +213,7 @@ public class WebViewActivity extends BaseActivity {
                 return;
             }
         }
-        finishAnim();
+        finish();
     }
 
     @Override
@@ -256,11 +256,11 @@ public class WebViewActivity extends BaseActivity {
                         return;
                     }
                 }
-                finishAnim();
+                finish();
 
                 break;
             case R.id.img_refresh:
-                finishAnim();
+                finish();
                 break;
             case R.id.img_menu:
 

@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':componentservice', ':commonres'
+include ':app', ':commonlib', ':componentservice'

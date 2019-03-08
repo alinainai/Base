@@ -1,4 +1,4 @@
-package com.base.res;
+package com.example.lijiaxing1.commonlib;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.base.res.test", appContext.getPackageName());
+        assertEquals("com.example.lijiaxing1.commonlib.test", appContext.getPackageName());
     }
 }

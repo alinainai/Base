@@ -47,10 +47,7 @@ public class ImageZoomFragment extends BaseFragment {
 
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    }
 
-    @Override
-    public void initData() {
         if (getArguments() == null && getArguments().getString(URL_TAG) == null) {
             return;
         }
@@ -63,10 +60,7 @@ public class ImageZoomFragment extends BaseFragment {
         });
     }
 
-    public void saveDrawble() {
 
-
-    }
 
 
 }

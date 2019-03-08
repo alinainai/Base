@@ -28,18 +28,18 @@ import trunk.doi.base.util.ScreenUtils;
 public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected RxAppCompatActivity mContext;
-    protected Unbinder mUnbinder;
+    protected Unbinder mBinder;
     public InputMethodManager manager;
     protected View mStatusBar;
     FrameLayout viewContent;
 
-    private int viewContentId;//viewPageLayoutId
+    private int mLayoutId;//viewPageLayoutId
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // System.gc();
-        ActivityController.getActivityController().addActivity(this);
+
         //允许使用转换动画
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
@@ -61,7 +61,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
         mContext = this;
         //初始化界面内容layout
-        this.viewContentId = initLayoutId();
+        this.mLayoutId = initLayoutId();
         setContentView(R.layout.base_page_title);
         initContentView(savedInstanceState);
         setListener();
@@ -77,7 +77,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
         viewContent = findViewById(R.id.base_fragment_content);
         mStatusBar = findViewById(R.id.status_bar);
-        View viewPage = View.inflate(mContext, viewContentId, null);
+        View viewPage = View.inflate(mContext, mLayoutId, null);
         viewContent.addView(viewPage);
         //替换状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -88,7 +88,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             mStatusBar.setVisibility(View.GONE);
         }
         //添加ButterKnife绑定
-        mUnbinder = ButterKnife.bind(this, viewContent);
+        mBinder = ButterKnife.bind(this, viewContent);
         initView(savedInstanceState);
 
     }
@@ -120,8 +120,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mUnbinder.unbind();
-        ActivityController.getActivityController().removeActivity(this);
+        mBinder.unbind();
         super.onDestroy();
     }
 
@@ -139,20 +138,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    protected void startActivityAnim(Intent intent) {
-        super.startActivity(intent);
-        overridePendingTransition(R.anim.base_slide_right_in, R.anim.base_slide_left_out);
-    }
 
-    protected void finishAnim() {
-        super.finish();
-        overridePendingTransition(R.anim.base_slide_left_in, R.anim.base_slide_right_out);
-    }
 
-    @Override
-    public BaseApplication getApplicationContext() {
-        return (BaseApplication) super.getApplicationContext();
-    }
+
 
 
 }

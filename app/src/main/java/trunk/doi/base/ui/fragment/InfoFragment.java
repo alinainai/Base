@@ -1,6 +1,5 @@
 package trunk.doi.base.ui.fragment;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
-import trunk.doi.base.ui.activity.LoginActivity;
 import trunk.doi.base.util.ScreenUtils;
 
 /**
@@ -23,7 +20,6 @@ public class InfoFragment extends BaseFragment {
 
     @BindView(R.id.status_bar)
     View mStatusBar;
-
 
 
     public static final String TAG = "InfoFragment";
@@ -50,10 +46,6 @@ public class InfoFragment extends BaseFragment {
             mStatusBar.setVisibility(View.GONE);
         }
     }
-
-
-
-
 
 
 }

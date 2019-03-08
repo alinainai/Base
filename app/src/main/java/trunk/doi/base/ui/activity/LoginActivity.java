@@ -156,12 +156,9 @@ public class LoginActivity extends BaseActivity {
     private void playVideo(File videoFile) {
         mVideoView.setVideoPath(videoFile.getPath());
         mVideoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
-                mediaPlayer.start();
-            }
+        mVideoView.setOnPreparedListener(mediaPlayer -> {
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
         });
 
     }
@@ -198,7 +195,7 @@ public class LoginActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.back_to_login:
-                finishAnim();
+                finish();
                 break;
             case R.id.logup_phone:
 
@@ -214,7 +211,7 @@ public class LoginActivity extends BaseActivity {
                 user.setUsername(accountNum.getEditableText().toString());
                 SPUtils.saveString(mContext, Const.USER_INFO, new Gson().toJson(user), toString());
                 SPUtils.saveBoolean(mContext, Const.LOGIN_STATE, true);
-                finishAnim();
+                finish();
                 break;
             case R.id.qq://起吊qq
                 break;
@@ -225,7 +222,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        finishAnim();
+        finish();
     }
 
     @Override

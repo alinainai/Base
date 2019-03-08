@@ -103,7 +103,7 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
             loadData();
         };
         //条目点击
-        mGankItemAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> startActivityAnim(new Intent(mContext, WebViewActivity.class)
+        mGankItemAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> getActivity().startActivity(new Intent(mContext, WebViewActivity.class)
                 .putExtra("title", gankItemData.getDesc())
                 .putExtra("url", gankItemData.getUrl())));
         //加载更多
