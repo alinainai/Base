@@ -107,7 +107,6 @@ public class ImageZoomActivity extends BaseActivity {
     public void onBackPressed() {
         finish();
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-        super.onBackPressed();
     }
 
     @OnClick({R.id.ll_back,R.id.tv_share,R.id.tv_save})

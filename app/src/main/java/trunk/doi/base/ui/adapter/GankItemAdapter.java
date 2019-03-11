@@ -14,8 +14,8 @@ import trunk.doi.base.bean.GankItemData;
 
 
 /**
- * Author: Othershe
- * Time: 2016/8/18 16:53
+ *
+ *
  */
 public class GankItemAdapter extends CommonBaseAdapter<GankItemData> {
 
