@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,8 +27,6 @@ import trunk.doi.base.R;
 import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.base.BaseApplication;
 import trunk.doi.base.bean.User;
-import trunk.doi.base.dialog.ActionSheetDialog;
-import trunk.doi.base.dialog.ApkDownDialog;
 import trunk.doi.base.ui.activity.utils.ImageZoomActivity;
 import trunk.doi.base.view.CircleImageView;
 
@@ -167,39 +164,39 @@ public class MineDetailActivity extends BaseActivity {
      */
     private void showImgSelectDialog() {
 
-        new ActionSheetDialog(MineDetailActivity.this)
-                .builder()
-                .setCancelable(true)
-                .setCanceledOnTouchOutside(true)
-                .addSheetItem("从手机相册中选择", ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which) {
-                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
-                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-                                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
-
-                            }
-                        })
-                .addSheetItem("通过相机选择", ActionSheetDialog.SheetItemColor.Blue,
-                        new ActionSheetDialog.OnSheetItemClickListener() {
-                            @Override
-                            public void onClick(int which) {
-                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
-                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
-                                Uri imageUri;
-                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                    String authority = mContext.getPackageName() + ".provider";
-                                    imageUri = FileProvider.getUriForFile(mContext, authority, tempFile);
-                                } else {
-                                    imageUri = Uri.fromFile(tempFile);
-                                }
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                                startActivityForResult(intent, RESULT_CAPTURE);
-                            }
-                        }).show();
+//        new ActionSheetDialog(MineDetailActivity.this)
+//                .builder()
+//                .setCancelable(true)
+//                .setCanceledOnTouchOutside(true)
+//                .addSheetItem("从手机相册中选择", ActionSheetDialog.SheetItemColor.Blue,
+//                        new ActionSheetDialog.OnSheetItemClickListener() {
+//                            @Override
+//                            public void onClick(int which) {
+//                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+//                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+//                                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                                startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
+//
+//                            }
+//                        })
+//                .addSheetItem("通过相机选择", ActionSheetDialog.SheetItemColor.Blue,
+//                        new ActionSheetDialog.OnSheetItemClickListener() {
+//                            @Override
+//                            public void onClick(int which) {
+//                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+//                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
+//                                Uri imageUri;
+//                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                                    String authority = mContext.getPackageName() + ".provider";
+//                                    imageUri = FileProvider.getUriForFile(mContext, authority, tempFile);
+//                                } else {
+//                                    imageUri = Uri.fromFile(tempFile);
+//                                }
+//                                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+//                                startActivityForResult(intent, RESULT_CAPTURE);
+//                            }
+//                        }).show();
 
 
     }

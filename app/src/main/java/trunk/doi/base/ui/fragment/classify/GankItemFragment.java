@@ -88,11 +88,6 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
         mGankItemAdapter.setLoadFailedView(R.layout.view_error);
         mGankItemAdapter.setLoadEndView(R.layout.view_nom);
 
-    }
-
-    @Override
-    public void setListener() {
-
         //加载失败布局
         View.OnClickListener retryListener = view -> {
             mPage = 1;
@@ -116,25 +111,17 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
         view_net_error.findViewById(R.id.tv_retry).setOnClickListener(retryListener);
         mLoadEmpty.findViewById(R.id.tv_click).setOnClickListener(retryListener);
 
-    }
-
-    @Override
-    public void initData() {
         mSwipeRefreshLayout.setEnabled(false);
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
         mRecyclerView.setAdapter(mGankItemAdapter);
         //RecyclerView  首次Loading布局
         mGankItemAdapter.setEmptyView(mLoadingView);
+
     }
 
-
-
-
    private void loadData(){
-
        mPresenter.getGankItemData(String.format(Locale.CHINA,"data/%s/10/%d",mSubtype,mPage));
-
    }
 
     @Override

@@ -37,9 +37,7 @@
     </declare-styleable>
     <attr name="QMUILoadingStyle" format="reference"/>
 
-    <declare-styleable name="EmptyLayout">
-        <attr name="background_color" format="color"/>
-    </declare-styleable>
+
 
     <declare-styleable name="ShootRefreshView">
         <attr name="strokeColor" format="color|reference" />

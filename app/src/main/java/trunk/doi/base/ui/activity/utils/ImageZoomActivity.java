@@ -121,7 +121,7 @@ public class ImageZoomActivity extends BaseActivity {
 
                 break;
             case R.id.tv_save:
-                ((ImageZoomFragment) mFragments.get(current)).saveDrawble();
+
                 break;
         }
     }

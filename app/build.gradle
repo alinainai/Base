@@ -1,45 +1,44 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 
-
-
 def static releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
 
 android {
-    compileSdkVersion parent.ext.compileSdkVersion
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "trunk.doi.base"
-        minSdkVersion parent.ext.minSdkVersion
-        targetSdkVersion parent.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         multiDexEnabled true
         ndk { abiFilters "armeabi","x86" }
 
+        //声明需要使用注解功能
         javaCompileOptions {
             annotationProcessorOptions {
-                includeCompileClasspath false
+                includeCompileClasspath true
             }
         }
+    }
 
-        dexOptions {
-            javaMaxHeapSize "4g"
-        }
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_8
-            targetCompatibility JavaVersion.VERSION_1_8
-        }
-
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     //解决kotlin添加过程中出现的Error: Program type already present: org.intellij.lang.annotations.Identifier问题
     configurations {
         cleanedAnnotations
         compile.exclude group: 'org.jetbrains', module: 'annotations'
     }
-
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
@@ -70,63 +69,54 @@ android {
             keyAlias "bopai.keysotre"
             keyPassword "bp5963373"
         }
-
-        buildTypes {
-
-            debug {
-                //启用multiDex的支持
-                multiDexEnabled true
-                //开启混淆
-                minifyEnabled false
-            }
-
-            release {
-                //移除无用的资源文件
-                shrinkResources true
-                //启用multiDex的支持
-                multiDexEnabled true
-                //关闭混淆
-                minifyEnabled true
-                //压缩对齐生成的apk包
-                zipAlignEnabled true
-                signingConfig signingConfigs.release
-                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-
-//                applicationVariants.all { variant ->
-//                    variant.outputs.all { output ->
-//                        def outputFile = output.outputFile
-//                        if (outputFile != null && outputFile.name.endsWith(".apk")) {
-//                            //这里修改apk文件名
-//                            def fileName = "credit_${defaultConfig.versionName}_${buildType.name}_${releaseTime()}.apk"
-//                            outputFileName = fileName
-//                        }
-//                    }
-//                }
-            }
-        }
-        repositories {
-            mavenCentral()
-            flatDir {
-                dirs 'libs'
-            }
-        }
-//        File propFile = file('signing.properties')
-//        if (propFile.exists()) {
-//            Properties props = new Properties()
-//            props.load(new FileInputStream(propFile))
-//            if (props.containsKey('STORE_FILE') && props.containsKey('STORE_PASSWORD') && props.containsKey('KEY_ALIAS') && props.containsKey('KEY_PASSWORD')) {
-//                android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
-//                android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
-//                android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
-//                android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
-//            } else {
-//                android.buildTypes.release.signingConfig = null
-//            }
-//        } else {
-//            android.buildTypes.release.signingConfig = null
-//        }
     }
 
+    buildTypes {
+
+        debug {
+            //启用multiDex的支持
+            multiDexEnabled true
+            //开启混淆
+            minifyEnabled false
+        }
+
+        release {
+            //移除无用的资源文件
+            shrinkResources true
+            //启用multiDex的支持
+            multiDexEnabled true
+            //关闭混淆
+            minifyEnabled true
+            //压缩对齐生成的apk包
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith(".apk")) {
+                        //这里修改apk文件名
+                        def fileName = "credit_${defaultConfig.versionName}_${buildType.name}_${releaseTime()}.apk"
+                        outputFileName = fileName
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "ResourceType"
+        abortOnError false
+    }
 
 }
 
@@ -143,6 +133,7 @@ dependencies {
     implementation "com.android.support:cardview-v7:28.0.0"
     implementation "com.android.support:palette-v7:28.0.0"
     implementation "com.android.support:design:28.0.0"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     // 用于Java编写执行Java测试用例。
     //https://github.com/ZeroBrain/AndroidPermissions
     implementation files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
@@ -150,7 +141,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
     implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
 
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
@@ -170,8 +161,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.4.0'
 
 
-    //ali热修复
-    //    compile 'com.aliyun.ams:alicloud-android-hotfix:3.0.8'
+
     testImplementation 'junit:junit:4.12'
     //butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
@@ -191,11 +181,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
 
 
-    implementation 'com.github.ybq:AndroidSpinKit:v1.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    api rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
 
 }
-repositories {
-    mavenCentral()
-    google()
-}
+
