@@ -10,6 +10,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
 import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.bean.BeautyResult;
@@ -17,7 +19,7 @@ import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.https.api.GankItemService;
 import trunk.doi.base.https.net.NetManager;
 import trunk.doi.base.https.rx.RxManager;
-import trunk.doi.base.https.rx.RxSubscriber;
+import trunk.doi.base.https.rx.RxObserver;
 
 
 /**
@@ -30,6 +32,7 @@ public class MainFragment extends BaseFragment {
     public static final String TAG = "MainFragment";
     @BindView(R.id.tv_show)
     TextView tvShow;
+    private Disposable mDisposable;
 
 
     public MainFragment() {
@@ -55,14 +58,25 @@ public class MainFragment extends BaseFragment {
     private void laodData() {
 
         RxManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getBeautyData("data/" + "福利" + "/18/" + 1),
-                new RxSubscriber<BeautyResult<List<GankItemData>>>() {
+                new Observer<BeautyResult<List<GankItemData>>>() {
+
                     @Override
-                    protected void _onNext(BeautyResult<List<GankItemData>> listBeautyResult) {
+                    public void onSubscribe(Disposable d) {
+                        mDisposable=d;
+                    }
+
+                    @Override
+                    public void onNext(BeautyResult<List<GankItemData>> listBeautyResult) {
 
                     }
 
                     @Override
-                    protected void _onError(int code) {
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
                 });
@@ -83,5 +97,13 @@ public class MainFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        if(mDisposable!=null&&mDisposable.isDisposed()){
+            mDisposable.dispose();
+        }
+        mDisposable=null;
+        super.onDestroy();
 
+    }
 }

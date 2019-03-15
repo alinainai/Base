@@ -1,13 +1,11 @@
 package trunk.doi.base.ui.fragment.classify;
 
-import android.util.Log;
-
 import java.util.List;
 import trunk.doi.base.base.mvp.BasePresenter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.rx.RxManager;
-import trunk.doi.base.https.rx.RxSubscriber;
+import trunk.doi.base.https.rx.RxObserver;
 
 public class GankItemPresenter extends BasePresenter<IGankItem.GankItemView> {
 
@@ -18,7 +16,7 @@ public class GankItemPresenter extends BasePresenter<IGankItem.GankItemView> {
     }
 
     public void getGankItemData(String suburl) {
-       RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxSubscriber<HttpResult<List<GankItemData>>>(){
+       RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxObserver<HttpResult<List<GankItemData>>>(){
 
 
            @Override

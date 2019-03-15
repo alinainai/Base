@@ -1,29 +1,37 @@
 package trunk.doi.base.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import trunk.doi.base.R;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
+import trunk.doi.base.base.lifecycle.FragmentLifecycleable;
 
 /**
  * Created by
  * fragment基类
  */
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseFragment extends Fragment implements FragmentLifecycleable {
     protected Context mContext;
     public View rootView;
     private Unbinder mBinder;
-    protected  final String TAG = this.getClass().getSimpleName();
+    protected final String TAG = this.getClass().getSimpleName();
+    private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
+    @NonNull
+    @Override
+    public final Subject<FragmentEvent> provideLifecycleSubject() {
+        return lifecycleSubject;
+    }
 
     protected abstract int initLayoutId();
 
@@ -33,7 +41,8 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext=context;
+        mContext = context;
+        lifecycleSubject.onNext(FragmentEvent.ATTACH);
     }
 
     @Override
@@ -47,15 +56,63 @@ public abstract class BaseFragment extends RxFragment {
 
     @Override
     public void onDestroy() {
-        mBinder.unbind();
+        if (mBinder != null && mBinder != Unbinder.EMPTY)
+            mBinder.unbind();
+        this.mBinder = null;
+        lifecycleSubject.onNext(FragmentEvent.DESTROY);
         super.onDestroy();
     }
 
 
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        lifecycleSubject.onNext(FragmentEvent.CREATE);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        lifecycleSubject.onNext(FragmentEvent.START);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        lifecycleSubject.onNext(FragmentEvent.RESUME);
+    }
+
+    @Override
+    public void onPause() {
+        lifecycleSubject.onNext(FragmentEvent.PAUSE);
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        lifecycleSubject.onNext(FragmentEvent.STOP);
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
+        lifecycleSubject.onNext(FragmentEvent.DESTROY_VIEW);
+        super.onDestroyView();
+    }
 
 
-
+    @Override
+    public void onDetach() {
+        lifecycleSubject.onNext(FragmentEvent.DETACH);
+        super.onDetach();
+    }
 
 
 }

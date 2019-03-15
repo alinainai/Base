@@ -1,12 +1,19 @@
 package trunk.doi.base.https.rx;
 
 
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.RxLifecycle;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import io.reactivex.disposables.Disposable;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.schedulers.Schedulers;
+import trunk.doi.base.base.lifecycle.ActivityLifecycleable;
+import trunk.doi.base.base.lifecycle.FragmentLifecycleable;
+import trunk.doi.base.base.lifecycle.Lifecycleable;
 import trunk.doi.base.base.mvp.IBaseView;
 
 /**
@@ -15,7 +22,8 @@ import trunk.doi.base.base.mvp.IBaseView;
 public class RxManager {
 
 
-    private RxManager() { }
+    private RxManager() {
+    }
 
     public static RxManager getInstance() {
         return SingletonHolder.INSTANCE;
@@ -26,27 +34,57 @@ public class RxManager {
     }
 
     /**
-     * @param observable
-     * @param observer
-     * @param <T>
+     * MVP模式使用
+     *
+     * @param observable Retrofit 返回的observable
+     * @param observer   接口处理
+     * @param <T>        数据泛型
      */
-    public <T> void doSubscribe(Observable<T> observable, Observer<T> observer, IBaseView iView)  {
+    public <T> void doSubscribe(Observable<T> observable, Observer<T> observer, IBaseView iView) {
         observable
                 .subscribeOn(Schedulers.io())
-//                .compose(iView.bindLifecycle())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(observer);
+                .compose(bindUntilDestroy(iView))
+                .subscribe(observer);
     }
+
     /**
-     * @param observable
-     * @param observer
-     * @param <T>
+     * 一般模式使用 普通的Activity或者Fragment
+     *
+     * @param observable Retrofit 返回的observable
+     * @param observer   接口处理
+     * @param <T>        数据泛型
+     *                   获取 Observer提供的Disposable帮助Activity/Fragment取消订阅
      */
-    public <T> void doSubscribe(Observable<T> observable, Observer<T> observer)  {
+    public <T> void doSubscribe(Observable<T> observable, Observer<T> observer) {
         observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(observer);
+                .subscribe(observer);
+    }
+
+    /**
+     * 在View结束时
+     *
+     * @param view View层
+     * @param <T>  数据泛型
+     * @return LifecycleTransformer返回给RxLifecycle使用
+     */
+    private <T> LifecycleTransformer<T> bindUntilDestroy(@NonNull final IBaseView view) {
+
+        if (view instanceof ActivityLifecycleable) {
+            return bindUntilEvent((ActivityLifecycleable) view, ActivityEvent.DESTROY);
+        } else if (view instanceof FragmentLifecycleable) {
+            return bindUntilEvent((FragmentLifecycleable) view, FragmentEvent.DESTROY);
+        } else {
+            throw new IllegalArgumentException("view isn't Lifecycleable");
+        }
+    }
+
+
+    private <T, R> LifecycleTransformer<T> bindUntilEvent(@NonNull final Lifecycleable<R> lifecycleable,
+                                                          final R event) {
+        return RxLifecycle.bindUntilEvent(lifecycleable.provideLifecycleSubject(), event);
     }
 
 

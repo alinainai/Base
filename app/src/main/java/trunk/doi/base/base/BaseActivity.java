@@ -1,40 +1,46 @@
 package trunk.doi.base.base;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.MotionEvent;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
-
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 import trunk.doi.base.R;
-import trunk.doi.base.util.ActivityController;
+import trunk.doi.base.base.lifecycle.ActivityLifecycleable;
 import trunk.doi.base.util.ScreenUtils;
 
 /**
  * Created by  on 2016/5/27 11:08.
  * Activity的基类
  */
-public abstract class BaseActivity extends RxAppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements ActivityLifecycleable {
 
-    protected RxAppCompatActivity mContext;
+    protected AppCompatActivity mContext;
     protected Unbinder mBinder;
-    public InputMethodManager manager;
     protected View mStatusBar;
     FrameLayout viewContent;
 
-    private int mLayoutId;//viewPageLayoutId
+    private int mLayoutId;
 
+    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
+
+    @NonNull
+    @Override
+    public final Subject<ActivityEvent> provideLifecycleSubject() {
+        return lifecycleSubject;
+    }
 
 
     @Override
@@ -47,6 +53,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         // 不需要toolbar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        lifecycleSubject.onNext(ActivityEvent.CREATE);
 
         //状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
@@ -96,20 +103,22 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 设置布局ID
-     * @return
+     *
+     * @return layoutId
      */
     protected abstract int initLayoutId();
 
     /**
      * 初始化布局
-     * @param savedInstanceState
+     *
+     * @param savedInstanceState 保存的数据Bundle
      */
-    protected abstract void initView( @Nullable Bundle savedInstanceState);
+    protected abstract void initView(@Nullable Bundle savedInstanceState);
 
     /**
      * 设置监听器
      */
-    protected  void setListener(){
+    protected void setListener() {
 
     }
 
@@ -120,27 +129,42 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        mBinder.unbind();
+
+        if (mBinder != null && mBinder != Unbinder.EMPTY)
+            mBinder.unbind();
+        this.mBinder = null;
+        lifecycleSubject.onNext(ActivityEvent.DESTROY);
         super.onDestroy();
     }
 
+
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        //点击空白处隐藏软键盘
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
-                if (manager == null) {
-                    manager = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                }
-                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-        }
-        return super.onTouchEvent(event);
+    @CallSuper
+    protected void onStart() {
+        super.onStart();
+        lifecycleSubject.onNext(ActivityEvent.START);
     }
 
+    @Override
+    @CallSuper
+    protected void onResume() {
+        super.onResume();
+        lifecycleSubject.onNext(ActivityEvent.RESUME);
+    }
 
+    @Override
+    @CallSuper
+    protected void onPause() {
+        lifecycleSubject.onNext(ActivityEvent.PAUSE);
+        super.onPause();
+    }
 
-
+    @Override
+    @CallSuper
+    protected void onStop() {
+        lifecycleSubject.onNext(ActivityEvent.STOP);
+        super.onStop();
+    }
 
 
 }

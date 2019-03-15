@@ -9,7 +9,6 @@ import trunk.doi.base.base.BaseFragment;
  * Time: 2016/8/12 12:19
  */
 public abstract class BaseMvpFragment<V, P extends BasePresenter<V>> extends BaseFragment {
-    protected static final String SUB_TYPE = "subtype";
 
     protected P mPresenter;
 

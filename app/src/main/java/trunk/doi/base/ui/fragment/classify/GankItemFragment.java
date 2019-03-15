@@ -2,7 +2,6 @@ package trunk.doi.base.ui.fragment.classify;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,30 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.trello.rxlifecycle2.LifecycleTransformer;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseFragment;
-import trunk.doi.base.base.mvp.BaseMvpActivity;
 import trunk.doi.base.base.mvp.BaseMvpFragment;
-import trunk.doi.base.bean.BeautyResult;
-import trunk.doi.base.bean.HttpResult;
-import trunk.doi.base.https.api.GankItemService;
-import trunk.doi.base.https.net.NetManager;
-import trunk.doi.base.https.rx.RxManager;
-import trunk.doi.base.https.rx.RxSubscriber;
 import trunk.doi.base.ui.adapter.GankItemAdapter;
-import trunk.doi.base.base.adapter.rvadapter.ViewHolder;
-import trunk.doi.base.base.adapter.rvadapter.interfaces.OnItemClickListener;
-import trunk.doi.base.base.adapter.rvadapter.interfaces.OnLoadMoreListener;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
-import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
 
 /**
@@ -206,11 +191,5 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
         }
     }
 
-    @Override
-    public LifecycleTransformer bindLifecycle() {
-        //RxAppCompatActivity中的方法bindToLifecycle()
-         LifecycleTransformer objectLifecycleTransformer = bindToLifecycle();
-         return bindToLifecycle();
 
-    }
 }

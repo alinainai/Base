@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.tencent.smtt.sdk.QbSdk;
 import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.io.File;
@@ -103,10 +102,6 @@ public class BaseApplication extends MultiDexApplication {
         LeakCanary.install(this);
         mInstance = this;//初始化appliacation
 
-
-        //初始化腾讯x5内核
-        // QbSdk 的预加载接口 initX5Environment ，可参考接入示例，第一个参数传入 context，第二个参数传入 callback，不需要 callback 的可以传入 null
-        QbSdk.initX5Environment(mInstance, null);
 
 
         //crash日志收集

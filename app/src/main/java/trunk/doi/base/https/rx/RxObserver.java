@@ -9,10 +9,10 @@ import trunk.doi.base.BuildConfig;
  * Author: Othershe
  * Time:  2016/8/11 17:45
  */
-public abstract class RxSubscriber<T> implements Observer<T> {
+public abstract class RxObserver<T> implements Observer<T> {
 
 
-    public RxSubscriber() {
+    public RxObserver() {
 
     }
 

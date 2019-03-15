@@ -78,6 +78,8 @@
         <activity
             android:name=".ui.activity.utils.ImageZoomActivity"
             android:screenOrientation="portrait" />
+
+        <!-- WebView独立进程解决方案 -->
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />

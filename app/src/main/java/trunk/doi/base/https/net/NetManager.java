@@ -32,7 +32,6 @@ import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 
 /**
@@ -72,22 +71,6 @@ public class NetManager {
         return retrofit.create(service);
     }
 
-    /**
-     * Scalars解析
-     *
-     * @param service
-     * @param <S>
-     * @return
-     */
-    public <S> S create1(Class<S> service) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(getOkHttpClient())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(getBaseUrl(service))
-                .build();
-        return retrofit.create(service);
-    }
 
     /**
      * 解析接口中的BASE_URL，解决BASE_URL不一致的问题
@@ -176,15 +159,7 @@ public class NetManager {
      * @return
      */
     private HostnameVerifier notVerifyHostName() {
-
-
-        return new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        };
-
+        return (hostname, session) -> true;
     }
     /**
      *  取消验证ssl

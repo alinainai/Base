@@ -134,9 +134,8 @@ dependencies {
     implementation "com.android.support:palette-v7:28.0.0"
     implementation "com.android.support:design:28.0.0"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    // 用于Java编写执行Java测试用例。
-    //https://github.com/ZeroBrain/AndroidPermissions
-    implementation files('libs/tbs_sdk_thirdapp_v3.3.0.1045_43300_sharewithdownload_withoutGame_obfs_20170605_170212.jar')
+
+
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
