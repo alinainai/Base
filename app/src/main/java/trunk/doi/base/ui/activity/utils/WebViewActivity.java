@@ -3,14 +3,12 @@ package trunk.doi.base.ui.activity.utils;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,6 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.view.StatusBarHeight;
+import com.base.lib.view.TitleView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,7 +38,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseActivity;
 import trunk.doi.base.bean.CollectionBean;
 import trunk.doi.base.dialog.MorePopupWindow;
 import trunk.doi.base.gen.DatabaseService;
@@ -63,18 +63,19 @@ public class WebViewActivity extends BaseActivity {
 
 
     @Override
-    protected int initLayoutId() {
+    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+        if (StatusBarUtils.setStatusBarLightMode(mContext)) {
+            statusBar.setBackgroundColor(getResources().getColor(R.color.white));
+        } else {
+            statusBar.setBackgroundColor(getResources().getColor(R.color.black));
+        }
         return R.layout.activity_webview;
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        if (StatusBarUtils.setStatusBarLightMode(mContext)) {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.white));
-        } else {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.black));
-        }
+
 
         url = getIntent().getStringExtra("url");//地址
         mTitle = getIntent().getStringExtra("title");//标题

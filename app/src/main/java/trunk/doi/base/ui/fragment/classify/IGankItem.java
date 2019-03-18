@@ -1,9 +1,10 @@
 package trunk.doi.base.ui.fragment.classify;
 
+import com.base.lib.base.mvp.IBaseView;
+
 import java.util.List;
 
 import io.reactivex.Observable;
-import trunk.doi.base.base.mvp.IBaseView;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
 

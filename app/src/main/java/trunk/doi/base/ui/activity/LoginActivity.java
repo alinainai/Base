@@ -2,20 +2,20 @@ package trunk.doi.base.ui.activity;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.view.StatusBarHeight;
+import com.base.lib.view.TitleView;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -27,8 +27,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.util.Const;
+import trunk.doi.base.constant.Constant;
 import trunk.doi.base.bean.User;
 import trunk.doi.base.util.AppUtils;
 import trunk.doi.base.util.SPUtils;
@@ -69,14 +68,16 @@ public class LoginActivity extends BaseActivity {
     public static final String VIDEO_NAME = "welcome_video.mp4";
 
     @Override
-    protected int initLayoutId() {
+    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+
+        statusBar.setVisibility(View.GONE);
+        titleView.setVisibility(View.GONE);
         return R.layout.activity_login;
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
 
-       mStatusBar.setVisibility(View.GONE);
 
     }
 
@@ -209,8 +210,8 @@ public class LoginActivity extends BaseActivity {
                 user.setPhone(accountNum.getEditableText().toString());
                 user.setPassword(password.getEditableText().toString());
                 user.setUsername(accountNum.getEditableText().toString());
-                SPUtils.saveString(mContext, Const.USER_INFO, new Gson().toJson(user), toString());
-                SPUtils.saveBoolean(mContext, Const.LOGIN_STATE, true);
+                SPUtils.saveString(mContext, Constant.USER_INFO, new Gson().toJson(user), toString());
+                SPUtils.saveBoolean(mContext, Constant.LOGIN_STATE, true);
                 finish();
                 break;
             case R.id.qq://起吊qq

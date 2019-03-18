@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.base.lib.base.BaseFragment;
+import com.base.lib.https.net.NetManager;
+import com.base.lib.https.rx.RxManager;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -13,13 +17,9 @@ import butterknife.OnClick;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.bean.BeautyResult;
 import trunk.doi.base.bean.GankItemData;
-import trunk.doi.base.https.api.GankItemService;
-import trunk.doi.base.https.net.NetManager;
-import trunk.doi.base.https.rx.RxManager;
-import trunk.doi.base.https.rx.RxObserver;
+import trunk.doi.base.https.GankItemService;
 
 
 /**

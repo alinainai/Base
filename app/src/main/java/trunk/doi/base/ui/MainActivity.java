@@ -12,6 +12,12 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.base.BaseFragment;
+import com.base.lib.util.RxBus;
+import com.base.lib.view.StatusBarHeight;
+import com.base.lib.view.TitleView;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -22,9 +28,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import trunk.doi.base.R;
 import trunk.doi.base.util.ActivityController;
-import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.base.BaseFragment;
-import trunk.doi.base.base.RxBus;
+
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.ui.fragment.InfoFragment;
 import trunk.doi.base.ui.fragment.MainFragment;
@@ -69,35 +73,31 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        mStatusBar.setVisibility(View.GONE);
         mFragManager = getSupportFragmentManager();
     }
 
     @Override
     public void setListener() {
 
-        rg_radio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        rg_radio.setOnCheckedChangeListener((radioGroup, i) -> {
 
-                switch (i) {
-                    case R.id.home_btn:
-                        index = 0;
-                        break;
-                    case R.id.classify_btn:
-                        index = 1;
-                        break;
-                    case R.id.account_btn:
-                        index = 2;
-                        break;
-                    case R.id.shopping_btn:
-                        index = 3;
-                        break;
-                }
-                changeFragment(currentTabIndex, index);
-                // 把当前tab设为选中状态
-                currentTabIndex = index;
+            switch (i) {
+                case R.id.home_btn:
+                    index = 0;
+                    break;
+                case R.id.classify_btn:
+                    index = 1;
+                    break;
+                case R.id.account_btn:
+                    index = 2;
+                    break;
+                case R.id.shopping_btn:
+                    index = 3;
+                    break;
             }
+            changeFragment(currentTabIndex, index);
+            // 把当前tab设为选中状态
+            currentTabIndex = index;
         });
 
         rxSbscription= RxBus.getDefault().toObservable(MainEvent.class)
@@ -127,7 +127,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected int initLayoutId() {
+    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
         return R.layout.activity_main;
     }
 

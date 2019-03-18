@@ -6,9 +6,6 @@
     android:background="@color/base_background"
     android:orientation="vertical">
 
-    <!-- 标题 -->
-    <include layout="@layout/default_main_cart_title" />
-
     <!-- 头像 -->
     <RelativeLayout
         android:id="@+id/detail_headIcon_rl"

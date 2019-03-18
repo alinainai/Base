@@ -5,11 +5,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.base.lib.base.BaseFragment;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseFragment;
 import uk.co.senab.photoview.PhotoView;
 
 /**

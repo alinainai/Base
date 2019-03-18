@@ -1,11 +1,12 @@
 package trunk.doi.base.ui.fragment.classify;
 
+import com.base.lib.base.mvp.BasePresenter;
+import com.base.lib.https.rx.RxManager;
+
 import java.util.List;
-import trunk.doi.base.base.mvp.BasePresenter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
-import trunk.doi.base.https.rx.RxManager;
-import trunk.doi.base.https.rx.RxObserver;
+import trunk.doi.base.https.RxObserver;
 
 public class GankItemPresenter extends BasePresenter<IGankItem.GankItemView> {
 

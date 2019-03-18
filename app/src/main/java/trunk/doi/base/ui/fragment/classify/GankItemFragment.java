@@ -9,14 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.base.lib.base.mvp.BaseMvpFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.base.mvp.BaseMvpFragment;
-import trunk.doi.base.ui.adapter.GankItemAdapter;
+import trunk.doi.base.adapter.GankItemAdapter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;

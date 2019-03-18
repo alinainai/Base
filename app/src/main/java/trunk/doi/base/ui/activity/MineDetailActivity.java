@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.view.StatusBarHeight;
+import com.base.lib.view.TitleView;
 import com.bumptech.glide.Glide;
 
 import java.io.File;
@@ -24,8 +27,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.base.BaseApplication;
 import trunk.doi.base.bean.User;
 import trunk.doi.base.ui.activity.utils.ImageZoomActivity;
 import trunk.doi.base.view.CircleImageView;
@@ -36,14 +37,12 @@ import trunk.doi.base.view.CircleImageView;
  */
 public class MineDetailActivity extends BaseActivity {
 
-    private static final String TAG = MineDetailActivity.class.getName();
+
     private static final int RESULT_CAPTURE = 100;
     private static final int RESULT_PICK = 101;
     private static final int CROP_PHOTO = 102;
-    @BindView(R.id.ll_back)
-    LinearLayout llBack;//返回键
-    @BindView(R.id.main_cart_title)
-    TextView mainCartTitle;// 标题
+
+
     @BindView(R.id.mine_user_icon_img)
     CircleImageView mineUserIconImg;//用户头像
     @BindView(R.id.detail_headIcon_rl)
@@ -93,13 +92,13 @@ public class MineDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected int initLayoutId() {
+    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+        titleView.setTitleText("个人信息");
         return R.layout.activity_detail;
     }
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        mainCartTitle.setText("个人信息");
         if (savedInstanceState != null && savedInstanceState.containsKey("tempFile")) {
             tempFile = (File) savedInstanceState.getSerializable("tempFile");
         }

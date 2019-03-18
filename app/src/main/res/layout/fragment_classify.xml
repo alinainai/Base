@@ -4,13 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <View
-        android:id="@+id/status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:background="@color/cff3e19" />
-
-
 
     <trunk.doi.base.view.PagerSlidingTabStrip
         android:id="@+id/tabs"
@@ -26,10 +19,6 @@
         app:pstsIndicatorHeight="2dp"
         app:pstsTabTextColor="@color/white"
         app:pstsTabTextSize="16sp" />
-
-    <View style="@style/divider" />
-
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

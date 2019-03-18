@@ -1,23 +1,21 @@
 package trunk.doi.base.ui.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+
+import com.base.lib.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseFragment;
-import trunk.doi.base.ui.adapter.SimpleFragmentPagerAdapter;
+import trunk.doi.base.adapter.SimpleFragmentPagerAdapter;
 import trunk.doi.base.ui.fragment.classify.GankItemFragment;
 import trunk.doi.base.util.AppUtils;
-import trunk.doi.base.util.ScreenUtils;
 import trunk.doi.base.view.PagerSlidingTabStrip;
 
 /**
@@ -32,8 +30,6 @@ public class ClassifyFragment extends BaseFragment {
     PagerSlidingTabStrip tabs;
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
-    @BindView(R.id.status_bar)
-    View mStatusBar;
 
 
     public static ClassifyFragment newInstance() {
@@ -49,14 +45,7 @@ public class ClassifyFragment extends BaseFragment {
     @Override
     public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        //添加状态栏
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mStatusBar.setVisibility(View.VISIBLE);
-            mStatusBar.getLayoutParams().height = ScreenUtils.getStatusHeight(mContext);
-            mStatusBar.setLayoutParams(mStatusBar.getLayoutParams());
-        } else {
-            mStatusBar.setVisibility(View.GONE);
-        }
+
         List<String> mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
         List<Fragment> mFragments = new ArrayList<>();
         for (String subtype : mTitles) {

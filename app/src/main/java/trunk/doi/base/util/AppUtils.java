@@ -16,6 +16,8 @@ import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -65,10 +67,7 @@ public class AppUtils {
         return df.format(number);
     }
 
-    /**
-     * 手机验证码
-     */
-    public static final String ISCODE = "^\\d{6}$";
+
 
     /**
      * 手机号校验
@@ -79,11 +78,7 @@ public class AppUtils {
      * 密码校验
      */
     public static final String ISPWD = "([0-9](?=[0-9]*?[a-zA-Z])\\w{5,19})|([a-zA-Z](?=[a-zA-Z]*?[0-9])\\w{5,19})";
-    /**
-     * 校验密码强度
-     * 密码的强度必须是包含大小写字母和数字的组合，不能使用特殊字符，长度在8-10之间。
-     */
-    public static final String ISPASSWORD = "^(?=.*\\\\d)(?=.*[a-z])(?=.*[A-Z]).{8,10}$";
+
     /**
      * 校验中文
      * 字符串仅能是中文
@@ -100,7 +95,6 @@ public class AppUtils {
      * 同密码一样，下面是E-mail地址合规性的正则检查语句。
      */
     public static final String ISEMAIL = "[\\\\w!#$%&'*+/=?^_`{|}~-]+(?:\\\\.[\\\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\\\w](?:[\\\\w-]*[\\\\w])?\\\\.)+[\\\\w](?:[\\\\w-]*[\\\\w])?";
-
 
     /**
      * 获取应用程序名称
@@ -161,28 +155,6 @@ public class AppUtils {
     }
 
     /**
-     * base64加密
-     */
-    public static String base64Encode(String number) {
-
-        if (TextUtils.isEmpty(number)) {
-            return "";
-        }
-        return Base64.encodeToString(number.getBytes(), Base64.DEFAULT);
-    }
-
-    /**
-     * base64解密
-     */
-    public static String base64Decode(String number) {
-
-        if (TextUtils.isEmpty(number)) {
-            return "";
-        }
-        return new String(Base64.decode(number.getBytes(), Base64.DEFAULT));
-    }
-
-    /**
      * double类型的price变 ￥0.00
      *
      * @param price
@@ -190,8 +162,7 @@ public class AppUtils {
      */
     public static String formatPrice(double price) {
         DecimalFormat df = new DecimalFormat("0.00");
-        String format = "￥" + df.format(price);
-        return format;
+        return String.format("￥%s",df.format(price));
     }
 
     /**
@@ -224,23 +195,12 @@ public class AppUtils {
         return data;
     }
 
-    /**
-     * byte(字节)根据长度转成kb(千字节)和mb(兆字节)
-     *
-     * @param bytes
-     * @return
-     */
-    public static String bytes2kb(long bytes) {
-        BigDecimal filesize = new BigDecimal(bytes);
-        BigDecimal megabyte = new BigDecimal(1024 * 1024);
-        float returnValue = filesize.divide(megabyte, 2, BigDecimal.ROUND_UP).floatValue();
-        if (returnValue > 1)
-            return (returnValue + "M");
-        BigDecimal kilobyte = new BigDecimal(1024);
-        returnValue = filesize.divide(kilobyte, 2, BigDecimal.ROUND_UP).floatValue();
-        return (returnValue + "K");
-    }
 
+    /**
+     *  drawable转化为 bitmap
+     * @param drawable drawable
+     * @return bitmap
+     */
     public static Bitmap drawableToBitmap(Drawable drawable) {
         if (drawable instanceof BitmapDrawable) {
             return ((BitmapDrawable) drawable).getBitmap();
@@ -251,6 +211,28 @@ public class AppUtils {
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
         return bitmap;
+    }
+
+    /**
+     * 获得屏幕高度
+     */
+    public static int getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.widthPixels;
+    }
+
+    /**
+     * 获得屏幕宽度
+     */
+    public static int getScreenHeight(Context context) {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 
 

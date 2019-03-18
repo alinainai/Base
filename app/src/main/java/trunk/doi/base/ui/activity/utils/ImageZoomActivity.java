@@ -11,14 +11,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.base.BaseFragment;
+import com.base.lib.view.StatusBarHeight;
+import com.base.lib.view.TitleView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.base.BaseFragment;
 import trunk.doi.base.view.ZoomViewPager;
 
 /**
@@ -50,7 +53,7 @@ public class ImageZoomActivity extends BaseActivity {
 
 
     @Override
-    protected int initLayoutId() {
+    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
         return R.layout.activity_zoomimage;
     }
 

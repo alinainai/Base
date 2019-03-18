@@ -9,20 +9,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.base.lib.base.BaseActivity;
+import com.base.lib.view.StatusBarHeight;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseActivity;
-import trunk.doi.base.base.adapter.rvadapter.ViewHolder;
-import trunk.doi.base.base.adapter.rvadapter.interfaces.OnItemClickListener;
 import trunk.doi.base.bean.CollectionBean;
 import trunk.doi.base.gen.DatabaseService;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
-import trunk.doi.base.ui.adapter.CollectionAdapter;
+import trunk.doi.base.adapter.CollectionAdapter;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
-import trunk.doi.base.view.TitleView;
 
 
 /**
@@ -31,8 +30,6 @@ import trunk.doi.base.view.TitleView;
 public class CollectionActivity extends BaseActivity {
 
 
-    @BindView(R.id.tv_title)
-    TitleView tvTitle;
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
@@ -45,8 +42,8 @@ public class CollectionActivity extends BaseActivity {
     private View mLoadEmpty;
 
     @Override
-    protected int initLayoutId() {
-        return R.layout.activity_collection;
+    protected int initLayoutId(StatusBarHeight statusBar, com.base.lib.view.TitleView titleView) {
+        return R.layout.layout_base_refresh_recycler;
     }
 
     @Override
@@ -73,22 +70,10 @@ public class CollectionActivity extends BaseActivity {
 
     @Override
     public void setListener() {
-        tvTitle.setOnBackListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        mAdapter.setOnItemClickListener(new OnItemClickListener<CollectionBean>() {
-            @Override
-            public void onItemClick(ViewHolder viewHolder, CollectionBean gankItemData, int position) {
 
-                startActivity(new Intent(mContext, WebViewActivity.class)
-                        .putExtra("title", gankItemData.getDesc())
-                        .putExtra("url", gankItemData.getUrl()));
-
-            }
-        });
+        mAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> startActivity(new Intent(mContext, WebViewActivity.class)
+                .putExtra("title", gankItemData.getDesc())
+                .putExtra("url", gankItemData.getUrl())));
 
         mAdapter.setOnLoadMoreListener(isReload -> loadData());
         mAdapter.setOnDeleteClickListener((viewHolder, data, position) -> {
@@ -96,7 +81,7 @@ public class CollectionActivity extends BaseActivity {
 
         });
 
-        mSwipeRefreshLayout.setOnRefreshListener(() -> loadData());
+        mSwipeRefreshLayout.setOnRefreshListener(this::loadData);
 
     }
 
