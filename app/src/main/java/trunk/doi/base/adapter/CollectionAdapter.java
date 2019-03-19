@@ -3,8 +3,8 @@ package trunk.doi.base.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.base.lib.base.adapter.rvadapter.ViewHolder;
-import com.base.lib.base.adapter.rvadapter.base.CommonBaseAdapter;
+import com.base.lib.adapter.rvadapter.ViewHolder;
+import com.base.lib.adapter.rvadapter.base.CommonBaseAdapter;
 
 import java.util.List;
 

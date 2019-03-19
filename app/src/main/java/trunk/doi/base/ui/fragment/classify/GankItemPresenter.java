@@ -1,6 +1,6 @@
 package trunk.doi.base.ui.fragment.classify;
 
-import com.base.lib.base.mvp.BasePresenter;
+import com.base.lib.mvp.BasePresenter;
 import com.base.lib.https.rx.RxManager;
 
 import java.util.List;

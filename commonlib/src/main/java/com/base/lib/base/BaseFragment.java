@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.base.lifecycle.FragmentLifecycleable;
+import com.base.lib.lifecycle.FragmentLifecycleable;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import butterknife.ButterKnife;
@@ -72,7 +72,7 @@ public abstract class BaseFragment extends Fragment implements FragmentLifecycle
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lifecycleSubject.onNext(FragmentEvent.CREATE_VIEW);
     }

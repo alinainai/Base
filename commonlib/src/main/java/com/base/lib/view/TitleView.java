@@ -3,19 +3,23 @@ package com.base.lib.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.lib.R;
 
-public class TitleView extends FrameLayout {
-    private TextView v1TvLeft, v1TvRight,viewTxtName;
-    private RelativeLayout ry_title_content;
+public class TitleView extends ConstraintLayout {
+    private TextView tvBack;
+    private TextView tvRight;
+    private TextView tvTitle;
+    private TextView tvClose;
+    //背景颜色
+    private View v_bg;
+    //分割栏
     private View barLine;
 
     private String titleText;
@@ -29,6 +33,7 @@ public class TitleView extends FrameLayout {
     private int backColor;
     private boolean dividerHide;
     private boolean backHide;
+    private boolean closeHide;
 
 
     public TitleView(Context context) {
@@ -44,20 +49,21 @@ public class TitleView extends FrameLayout {
         initView(attrs);
     }
 
-    private void initAttrs(AttributeSet attrs){
+    private void initAttrs(AttributeSet attrs) {
 
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TitleView);
         titleText = typedArray.getString(R.styleable.TitleView_titleText);
-        titleTextColor = typedArray.getColor(R.styleable.TitleView_titleColor, ContextCompat.getColor(getContext(),R.color.black) );
+        titleTextColor = typedArray.getColor(R.styleable.TitleView_titleColor, ContextCompat.getColor(getContext(), R.color.black));
 
-        backColor = typedArray.getColor(R.styleable.TitleView_backColor, ContextCompat.getColor(getContext(),R.color.white) );
+        backColor = typedArray.getColor(R.styleable.TitleView_backColor, ContextCompat.getColor(getContext(), R.color.white));
 
         rightText = typedArray.getString(R.styleable.TitleView_rightText);
-        rightTextColor = typedArray.getColor(R.styleable.TitleView_rightTextColor, ContextCompat.getColor(getContext(),R.color.black) );
+        rightTextColor = typedArray.getColor(R.styleable.TitleView_rightTextColor, ContextCompat.getColor(getContext(), R.color.black));
 
         backIcon = typedArray.getDrawable(R.styleable.TitleView_backIcon);
-        dividerHide = typedArray.getBoolean(R.styleable.TitleView_dividerHide,false);
-        backHide = typedArray.getBoolean(R.styleable.TitleView_backHide,false);
+        dividerHide = typedArray.getBoolean(R.styleable.TitleView_dividerHide, false);
+        backHide = typedArray.getBoolean(R.styleable.TitleView_backHide, false);
+        closeHide = typedArray.getBoolean(R.styleable.TitleView_closeHide, false);
 
         typedArray.recycle();
 
@@ -71,54 +77,63 @@ public class TitleView extends FrameLayout {
 
         initAttrs(attrs);
         View view = View.inflate(getContext(), R.layout.layout_title, this);
-        ry_title_content = view.findViewById(R.id.ry_title_content);
-        viewTxtName = view. findViewById(R.id.title_bar_name);
-        v1TvLeft = view.findViewById(R.id.title_bar_back);
-        v1TvRight = view.findViewById(R.id.title_bar_edt);
+
+        v_bg = view.findViewById(R.id.v_bg);
+
+        tvTitle = view.findViewById(R.id.title_bar_name);
+        tvBack = view.findViewById(R.id.title_bar_back);
+        tvRight = view.findViewById(R.id.title_bar_right);
+        tvClose = view.findViewById(R.id.title_bar_close);
+
         barLine = view.findViewById(R.id.v_divider_line);
+
         setTitleColor(titleTextColor);
         setTitleText(titleText);
         setBackgroundColor(backColor);
         setBarLineHide(dividerHide);
         setRightColor(rightTextColor);
-        if(null==backIcon){
-            backIcon=ContextCompat.getDrawable(getContext(),R.mipmap.titlebar_back_icon);
+        if (null == backIcon) {
+            backIcon = ContextCompat.getDrawable(getContext(), R.mipmap.title_bar_back);
             setBackDrawable(backIcon);
-        }else{
+        } else {
             setBackDrawable(backIcon);
         }
         setBackHide(backHide);
-        if(!TextUtils.isEmpty(rightText)){
+        setCloseHide(closeHide);
+
+        if (!TextUtils.isEmpty(rightText)) {
             setRightText(rightText);
         }
 
     }
 
 
-
-
     /**
-     *  设置背景颜色
+     * 设置背景颜色
+     *
      * @param color
      */
     public void setBackgroundColor(int color) {
-        this.backColor=color;
-        if(null!=ry_title_content){
-            ry_title_content.setBackgroundColor(color);
+        this.backColor = color;
+        if (null != v_bg) {
+            v_bg.setBackgroundColor(color);
         }
     }
 
 
     /**
      * 设置标题
+     *
      * @param title
      */
     public void setTitleText(String title) {
-        this.titleText=title;
-        if(null!=viewTxtName){
-            viewTxtName.setText(title);
-        };
+        this.titleText = title;
+        if (null != tvTitle) {
+            tvTitle.setText(title);
+        }
+        ;
     }
+
     /**
      * 设置标题
      */
@@ -128,49 +143,70 @@ public class TitleView extends FrameLayout {
 
     /**
      * 设置标题字体颜色
+     *
      * @param color
      */
     public void setTitleColor(int color) {
-        this.titleTextColor=color;
-        if(null!=viewTxtName){
-            viewTxtName.setTextColor(color);
-        };
+        this.titleTextColor = color;
+        tvTitle.setTextColor(color);
     }
 
 
     /**
      * 分割线隐藏
+     *
      * @param isHide
      */
     public void setBarLineHide(boolean isHide) {
-        this.dividerHide=isHide;
-        if(null!=barLine){
-            if(isHide){
-                if(barLine.getVisibility()==View.VISIBLE){
-                    barLine.setVisibility(View.GONE);
+        this.dividerHide = isHide;
+
+        if (isHide) {
+            if (barLine.getVisibility() == View.VISIBLE) {
+                barLine.setVisibility(View.GONE);
+            }
+        } else {
+            if (barLine.getVisibility() == View.GONE) {
+                barLine.setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    /**
+     * 返回键隐藏
+     *
+     * @param isHide
+     */
+    public void setBackHide(boolean isHide) {
+        this.backHide = isHide;
+        if (null != tvBack) {
+            if (isHide) {
+                if (tvBack.getVisibility() == View.VISIBLE) {
+                    tvBack.setVisibility(View.GONE);
                 }
-            }else{
-                if(barLine.getVisibility()==View.GONE){
-                    barLine.setVisibility(View.VISIBLE);
+            } else {
+                if (tvBack.getVisibility() == View.GONE) {
+                    tvBack.setVisibility(View.VISIBLE);
                 }
             }
         }
     }
 
     /**
-     * 分割线隐藏
+     * 关闭键隐藏
+     *
      * @param isHide
      */
-    public void setBackHide(boolean isHide) {
-        this.backHide=isHide;
-        if(null!=v1TvLeft){
-            if(isHide){
-                if(v1TvLeft.getVisibility()==View.VISIBLE){
-                    v1TvLeft.setVisibility(View.GONE);
+    public void setCloseHide(boolean isHide) {
+        this.closeHide = isHide;
+        if (null != tvClose) {
+            if (isHide) {
+                if (tvClose.getVisibility() == View.VISIBLE) {
+                    tvClose.setVisibility(View.GONE);
                 }
-            }else{
-                if(v1TvLeft.getVisibility()==View.GONE){
-                    v1TvLeft.setVisibility(View.VISIBLE);
+            } else {
+                if (tvClose.getVisibility() == View.GONE) {
+                    tvClose.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -178,12 +214,13 @@ public class TitleView extends FrameLayout {
 
     /**
      * 设置返回键图标
+     *
      * @param drawable
      */
     public void setBackDrawable(Drawable drawable) {
-        this.backIcon=drawable;
-        if(v1TvLeft!=null){
-            v1TvLeft.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+        this.backIcon = drawable;
+        if (tvBack != null) {
+            tvBack.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
         }
     }
 
@@ -192,9 +229,9 @@ public class TitleView extends FrameLayout {
      */
     public void setOnBackListener(View.OnClickListener clickListener) {
 
-        if(null!=v1TvLeft){
-            if(clickListener!=null){
-                v1TvLeft.setOnClickListener(clickListener);
+        if (null != tvBack) {
+            if (clickListener != null) {
+                tvBack.setOnClickListener(clickListener);
             }
         }
     }
@@ -203,18 +240,19 @@ public class TitleView extends FrameLayout {
      * 设置右边功能颜色
      */
     public void setRightColor(int color) {
-        this.rightTextColor=color;
-        if(null!=v1TvRight){
-            v1TvRight.setTextColor(color);
+        this.rightTextColor = color;
+        if (null != tvRight) {
+            tvRight.setTextColor(color);
         }
     }
+
     /**
      * 设置右边标题文字
      */
     public void setRightText(String title) {
-        this.rightText=title;
-        if(null!=v1TvRight){
-            v1TvRight.setText(title);
+        this.rightText = title;
+        if (null != tvRight) {
+            tvRight.setText(title);
         }
     }
 
@@ -222,9 +260,9 @@ public class TitleView extends FrameLayout {
      * 设置右边功能监听事件
      */
     public void setOnRightListener(View.OnClickListener clickListener) {
-        if(null!=v1TvRight){
-            if(clickListener!=null){
-                v1TvRight.setOnClickListener(clickListener);
+        if (null != tvRight) {
+            if (clickListener != null) {
+                tvRight.setOnClickListener(clickListener);
             }
         }
 

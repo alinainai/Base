@@ -7,12 +7,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.base.lib.R;
-import com.base.lib.base.lifecycle.ActivityLifecycleable;
+import com.base.lib.lifecycle.ActivityLifecycleable;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -24,15 +25,15 @@ import io.reactivex.subjects.Subject;
 
 
 /**
- * Created by  on 2016/5/27 11:08.
  * Activity的基类
+ * 依赖activity_base布局
+ * activity_base 初始化 @TitleView title和status_bar
+ *
  */
 public abstract class BaseActivity extends AppCompatActivity implements ActivityLifecycleable {
 
     protected AppCompatActivity mContext;
     protected Unbinder mBinder;
-
-
 
 
     private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
@@ -47,7 +48,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //允许使用转换动画
+        //允许使用 Ver_5.0 转换动画
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
@@ -67,19 +68,19 @@ public abstract class BaseActivity extends AppCompatActivity implements Activity
             WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
             localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
         }
+
         mContext = this;
         setContentView(R.layout.activity_base);
 
         //初始化界面内容layout
-        FrameLayout viewContent = findViewById(R.id.base_fragment_content);
+        ViewStub viewContent = findViewById(R.id.base_fragment_content);
         StatusBarHeight statusBar = findViewById(R.id.v_status_bar);
         TitleView titleView = findViewById(R.id.v_title);
 
-        View viewPage = View.inflate(this, initLayoutId(statusBar,titleView), null);
-        viewContent.addView(viewPage);
+        viewContent.setLayoutResource(initLayoutId(statusBar,titleView));
 
         //添加ButterKnife绑定
-        mBinder = ButterKnife.bind(this, viewContent);
+        mBinder = ButterKnife.bind(this, viewContent.inflate());
 
         initView(savedInstanceState);
         setListener();

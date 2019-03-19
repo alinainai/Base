@@ -1,13 +1,13 @@
-package com.base.lib.base.adapter.rvadapter.base;
+package com.base.lib.adapter.rvadapter.base;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.base.adapter.rvadapter.ViewHolder;
-import com.base.lib.base.adapter.rvadapter.interfaces.OnItemChildClickListener;
-import com.base.lib.base.adapter.rvadapter.interfaces.OnMultiItemClickListeners;
+import com.base.lib.adapter.rvadapter.ViewHolder;
+import com.base.lib.adapter.rvadapter.interfaces.OnItemChildClickListener;
+import com.base.lib.adapter.rvadapter.interfaces.OnMultiItemClickListeners;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.base.mvp.BaseMvpFragment;
+import com.base.lib.mvp.BaseMvpFragment;
 
 import java.util.ArrayList;
 import java.util.List;

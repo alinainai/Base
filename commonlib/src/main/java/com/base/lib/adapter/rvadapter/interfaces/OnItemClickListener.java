@@ -1,7 +1,7 @@
-package com.base.lib.base.adapter.rvadapter.interfaces;
+package com.base.lib.adapter.rvadapter.interfaces;
 
 
-import com.base.lib.base.adapter.rvadapter.ViewHolder;
+import com.base.lib.adapter.rvadapter.ViewHolder;
 
 /**
  * Author: Othershe

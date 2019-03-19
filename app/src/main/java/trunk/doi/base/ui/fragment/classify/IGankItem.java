@@ -1,6 +1,6 @@
 package trunk.doi.base.ui.fragment.classify;
 
-import com.base.lib.base.mvp.IBaseView;
+import com.base.lib.mvp.IBaseView;
 
 import java.util.List;
 

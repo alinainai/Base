@@ -58,14 +58,14 @@ public class MainActivity extends BaseActivity {
     private int index;
     // 当前fragment的index
     public int currentTabIndex;
-    private Disposable rxSbscription;
+    private Disposable disposable;
 
 
 
-    private static final Map<Integer, String> FRAGMENS = new HashMap<Integer, String>() {
+    private static final Map<Integer, String> FRAGMENTS = new HashMap<Integer, String>() {
         {
-            put(0, MainFragment.TAG);
-            put(1, ClassifyFragment.TAG);
+            put(1, MainFragment.TAG);
+            put(0, ClassifyFragment.TAG);
             put(2, InfoFragment.TAG);
             put(3, MineFragment.TAG);
         }
@@ -100,27 +100,24 @@ public class MainActivity extends BaseActivity {
             currentTabIndex = index;
         });
 
-        rxSbscription= RxBus.getDefault().toObservable(MainEvent.class)
-                .subscribe(new Consumer<MainEvent>() {
-                    @Override
-                    public void accept(MainEvent event) throws Exception {
+        disposable = RxBus.getDefault().toObservable(MainEvent.class)
+                .subscribe(event -> {
 
-                        switch (event.getId()){
-                            case 0:
-                                changeFragment(currentTabIndex, 0);
-                                break;
-                            case 1:
-                                changeFragment(currentTabIndex, 1);
-                                break;
-                            case 2:
-                                changeFragment(currentTabIndex, 2);
-                                break;
-                            case 3:
-                                changeFragment(currentTabIndex, 3);
-                                break;
-                        }
-                        ((RadioButton) rg_radio.getChildAt(event.getId())).setChecked(true);
+                    switch (event.getId()){
+                        case 0:
+                            changeFragment(currentTabIndex, 0);
+                            break;
+                        case 1:
+                            changeFragment(currentTabIndex, 1);
+                            break;
+                        case 2:
+                            changeFragment(currentTabIndex, 2);
+                            break;
+                        case 3:
+                            changeFragment(currentTabIndex, 3);
+                            break;
                     }
+                    ((RadioButton) rg_radio.getChildAt(event.getId())).setChecked(true);
                 });
 
 
@@ -128,6 +125,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+        statusBar.setBackgroundResource(R.color.cff3e19);
+        titleView.setVisibility(View.GONE);
         return R.layout.activity_main;
     }
 
@@ -140,17 +139,17 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction transaction = mFragManager.beginTransaction();
         //Fragment切换时的动画
         transaction.setTransition(FragmentTransaction.TRANSIT_NONE);
-        Fragment tofragment = mFragManager.findFragmentByTag(FRAGMENS.get(to));
+        Fragment tofragment = mFragManager.findFragmentByTag(FRAGMENTS.get(to));
 
         if (tofragment == null) {
-            tofragment = getFragmentFromFactory(FRAGMENS.get(to));
+            tofragment = getFragmentFromFactory(FRAGMENTS.get(to));
         }
-        Fragment fromfragment = mFragManager.findFragmentByTag(FRAGMENS.get(from));
+        Fragment fromfragment = mFragManager.findFragmentByTag(FRAGMENTS.get(from));
         if (fromfragment != null) {
             transaction.hide(fromfragment);
         }
         if (!tofragment.isAdded()) {
-            transaction.add(R.id.container, tofragment, FRAGMENS.get(to));
+            transaction.add(R.id.container, tofragment, FRAGMENTS.get(to));
         }
         transaction.show(tofragment).commitAllowingStateLoss();
     }
@@ -194,8 +193,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (!rxSbscription.isDisposed()) {
-            rxSbscription.dispose();
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
         }
     }
 

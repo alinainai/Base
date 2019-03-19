@@ -1,4 +1,4 @@
-package com.base.lib.base.adapter.rvadapter.base;
+package com.base.lib.adapter.rvadapter.base;
 
 import android.content.Context;
 import android.support.v4.util.SparseArrayCompat;
@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.base.lib.base.adapter.rvadapter.Util;
-import com.base.lib.base.adapter.rvadapter.ViewHolder;
-import com.base.lib.base.adapter.rvadapter.interfaces.OnLoadMoreListener;
+import com.base.lib.adapter.rvadapter.Util;
+import com.base.lib.adapter.rvadapter.ViewHolder;
+import com.base.lib.adapter.rvadapter.interfaces.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;

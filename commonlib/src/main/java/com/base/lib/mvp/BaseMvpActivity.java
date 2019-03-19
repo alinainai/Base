@@ -1,4 +1,4 @@
-package com.base.lib.base.mvp;
+package com.base.lib.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

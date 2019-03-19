@@ -17,8 +17,7 @@ import trunk.doi.base.R;
 public class InfoFragment extends BaseFragment {
 
 
-    @BindView(R.id.status_bar)
-    View mStatusBar;
+
 
 
     public static final String TAG = "InfoFragment";

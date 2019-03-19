@@ -1,4 +1,4 @@
-package com.base.lib.base.mvp;
+package com.base.lib.mvp;
 
 
 

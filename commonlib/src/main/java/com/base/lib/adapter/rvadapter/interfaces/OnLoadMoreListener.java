@@ -1,4 +1,4 @@
-package com.base.lib.base.adapter.rvadapter.interfaces;
+package com.base.lib.adapter.rvadapter.interfaces;
 
 /**
  * Author: Othershe

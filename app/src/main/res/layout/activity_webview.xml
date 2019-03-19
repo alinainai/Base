@@ -18,7 +18,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@mipmap/titlebar_back_icon" />
+            android:src="@mipmap/title_bar_back" />
 
         <ImageView
             android:layout_toEndOf="@+id/img_back"
@@ -26,7 +26,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@mipmap/titlebar_cancel_icon" />
+            android:src="@mipmap/title_bar_close" />
 
         <TextView
             android:id="@+id/main_cart_title"

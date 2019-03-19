@@ -1,4 +1,4 @@
-package com.base.lib.base.adapter.rvadapter;
+package com.base.lib.adapter.rvadapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

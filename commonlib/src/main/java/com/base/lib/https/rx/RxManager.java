@@ -1,10 +1,10 @@
 package com.base.lib.https.rx;
 
 
-import com.base.lib.base.lifecycle.ActivityLifecycleable;
-import com.base.lib.base.lifecycle.FragmentLifecycleable;
-import com.base.lib.base.lifecycle.Lifecycleable;
-import com.base.lib.base.mvp.IBaseView;
+import com.base.lib.lifecycle.ActivityLifecycleable;
+import com.base.lib.lifecycle.FragmentLifecycleable;
+import com.base.lib.lifecycle.Lifecycleable;
+import com.base.lib.mvp.IBaseView;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
