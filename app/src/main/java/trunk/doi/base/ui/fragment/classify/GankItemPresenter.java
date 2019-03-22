@@ -1,7 +1,7 @@
 package trunk.doi.base.ui.fragment.classify;
 
 import com.base.lib.mvp.BasePresenter;
-import com.base.lib.https.rx.RxManager;
+import com.base.lib.rx.RxRetrofitManager;
 
 import java.util.List;
 import trunk.doi.base.bean.GankItemData;
@@ -17,7 +17,7 @@ public class GankItemPresenter extends BasePresenter<IGankItem.GankItemView> {
     }
 
     public void getGankItemData(String suburl) {
-       RxManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxObserver<HttpResult<List<GankItemData>>>(){
+       RxRetrofitManager.getInstance().doSubscribe(mModel.getGankItemData(suburl), new RxObserver<HttpResult<List<GankItemData>>>(){
 
 
            @Override

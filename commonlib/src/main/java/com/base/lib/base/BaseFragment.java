@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.lifecycle.FragmentLifecycleable;
+import com.base.lib.lifecycle.FragmentIRxLifecycle;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import butterknife.ButterKnife;
@@ -21,7 +21,7 @@ import io.reactivex.subjects.Subject;
  * Created by
  * fragment基类
  */
-public abstract class BaseFragment extends Fragment implements FragmentLifecycleable {
+public abstract class BaseFragment extends Fragment implements FragmentIRxLifecycle {
     protected Context mContext;
     public View rootView;
     private Unbinder mBinder;

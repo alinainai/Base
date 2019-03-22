@@ -1,4 +1,4 @@
-package com.base.lib.https.net;
+package com.base.lib.https;
 
 import com.google.gson.GsonBuilder;
 
@@ -29,7 +29,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 
 
 public class NetManager {
@@ -114,7 +113,7 @@ public class NetManager {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor).retryOnConnectionFailure(false).addNetworkInterceptor(loggingInterceptor);
         //无证书
-       builder.hostnameVerifier(notVerifyHostName());
+        builder.hostnameVerifier(notVerifyHostName());
         return builder.sslSocketFactory(notVerifySSL(), getX509TrustManager()).build();
 
         //封装https证书
@@ -150,14 +149,17 @@ public class NetManager {
     }
 
     /**
-     *  取消验证HostName
+     * 取消验证HostName
+     *
      * @return
      */
     private HostnameVerifier notVerifyHostName() {
         return (hostname, session) -> true;
     }
+
     /**
-     *  取消验证ssl
+     * 取消验证ssl
+     *
      * @return
      */
     private SSLSocketFactory notVerifySSL() {
@@ -174,28 +176,29 @@ public class NetManager {
 
     /**
      * 获取证书X509TrustManager对象
+     *
      * @return
      */
     private X509TrustManager getX509TrustManager() {
 
 
-           return new X509TrustManager() {
+        return new X509TrustManager() {
 
-                @Override
-                public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            @Override
+            public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
 
-                }
+            }
 
-                @Override
-                public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
+            @Override
+            public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
 
-                }
+            }
 
-                @Override
-                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-                    return new java.security.cert.X509Certificate[0];
-                }
-            };
+            @Override
+            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                return new java.security.cert.X509Certificate[0];
+            }
+        };
 
 
     }

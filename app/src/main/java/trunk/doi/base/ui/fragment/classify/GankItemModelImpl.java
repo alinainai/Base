@@ -1,6 +1,6 @@
 package trunk.doi.base.ui.fragment.classify;
 
-import com.base.lib.https.net.NetManager;
+import com.base.lib.https.NetManager;
 
 import java.util.List;
 

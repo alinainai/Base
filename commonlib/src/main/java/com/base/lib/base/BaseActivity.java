@@ -10,10 +10,9 @@ import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.base.lib.R;
-import com.base.lib.lifecycle.ActivityLifecycleable;
+import com.base.lib.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -30,7 +29,7 @@ import io.reactivex.subjects.Subject;
  * activity_base 初始化 @TitleView title和status_bar
  *
  */
-public abstract class BaseActivity extends AppCompatActivity implements ActivityLifecycleable {
+public abstract class BaseActivity extends AppCompatActivity implements ActivityIRxLifecycle {
 
     protected AppCompatActivity mContext;
     protected Unbinder mBinder;

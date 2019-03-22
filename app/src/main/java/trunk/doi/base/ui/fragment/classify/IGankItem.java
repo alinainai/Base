@@ -1,6 +1,6 @@
 package trunk.doi.base.ui.fragment.classify;
 
-import com.base.lib.mvp.IBaseView;
+import com.base.lib.mvp.IView;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface IGankItem {
         Observable<HttpResult<List<GankItemData>>> getGankItemData(String suburl);
     }
 
-    interface GankItemView extends IBaseView {
+    interface GankItemView extends IView {
         void onSuccess(List<GankItemData> data);
     }
 

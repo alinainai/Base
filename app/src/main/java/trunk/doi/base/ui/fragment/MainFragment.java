@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.lib.base.BaseFragment;
-import com.base.lib.https.net.NetManager;
-import com.base.lib.https.rx.RxManager;
+import com.base.lib.https.NetManager;
+import com.base.lib.rx.RxRetrofitManager;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class MainFragment extends BaseFragment {
 
     private void laodData() {
 
-        RxManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getBeautyData("data/" + "福利" + "/18/" + 1),
+        RxRetrofitManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getBeautyData("data/" + "福利" + "/18/" + 1),
                 new Observer<BeautyResult<List<GankItemData>>>() {
 
                     @Override

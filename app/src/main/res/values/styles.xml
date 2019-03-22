@@ -176,7 +176,7 @@
         <item name="android:background">@drawable/layout_selector_bg</item>
     </style>
 
-    <style name="style_bar_text">
+    <style name="style_bar_text" parent="android:Widget">
         <item name="android:clickable">false</item>
         <item name="android:focusable">false</item>
         <item name="android:textSize">8sp</item>
@@ -197,6 +197,5 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar"></style>
 
 </resources>

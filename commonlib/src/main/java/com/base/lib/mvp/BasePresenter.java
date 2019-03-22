@@ -1,10 +1,11 @@
 package com.base.lib.mvp;
 
 
-
 /**
- * 作者：李佳星
- *
+ * BasePresenter
+ * 绑定View层和解绑View层
+ * 在 {@link BaseMvpFragment} 和 {@link BaseMvpActivity}中实现
+ * 对 {@link IView} 的 绑定 attach 和 解绑 detach 操作
  */
 public class BasePresenter<V> {
     public V mView;

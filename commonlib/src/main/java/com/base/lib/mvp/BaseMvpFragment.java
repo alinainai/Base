@@ -1,13 +1,20 @@
 package com.base.lib.mvp;
+
 import android.os.Bundle;
 
 import com.base.lib.base.BaseFragment;
 
 
-
 /**
- * Author: Othershe
- * Time: 2016/8/12 12:19
+ * 继承于 {@link BaseFragment} 并实现MVP架构
+ * <p>
+ * 通过方法判定
+ * setUserVisibleHint
+ * onActivityCreated
+ * 并实现懒加载功能
+ *
+ * @param <V> {@link IView}
+ * @param <P> {@link BasePresenter}
  */
 public abstract class BaseMvpFragment<V, P extends BasePresenter<V>> extends BaseFragment {
 
@@ -37,13 +44,17 @@ public abstract class BaseMvpFragment<V, P extends BasePresenter<V>> extends Bas
         mIsViewInitiated = true;
         initFetchData();
     }
-    //实现懒加载
+
+    /**
+     * 懒加载请求数据的接口
+     */
     protected void initFetchData() {
         if (mIsVisibleToUser && mIsViewInitiated && !mIsDataInitiated) {
             fetchData();
             mIsDataInitiated = true;
         }
     }
+
     @Override
     public void onDestroy() {
         mPresenter.detach();

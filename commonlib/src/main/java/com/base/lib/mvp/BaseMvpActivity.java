@@ -5,7 +5,12 @@ import android.support.annotation.Nullable;
 
 import com.base.lib.base.BaseActivity;
 
-
+/**
+ * 继承于 {@link BaseActivity} 并实现MVP架构
+ *
+ * @param <V> {@link IView}
+ * @param <P> {@link BasePresenter}
+ */
 public abstract class BaseMvpActivity<V, P extends BasePresenter<V>> extends BaseActivity {
     protected P mPresenter;
 

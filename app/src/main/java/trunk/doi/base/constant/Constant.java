@@ -18,7 +18,7 @@ public class Constant {
     public static final String USER_PHONE = "USER_PHONE";  //用户手机号
     public static final String USER_PWD = "USER_PWD"; //用户密码
     public static final String APP_VERSION = "APP_VERSION"; // 版本号
-    public static final String BASE_URL = "http://www.baidu.com"; // 版本号
+    public static final int CODE_REQUEST_PERMISSION = 1001; // 版本号
 
 
 
