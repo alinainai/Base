@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.lib.base.BaseActivity;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 import com.google.gson.Gson;
@@ -68,10 +69,12 @@ public class LoginActivity extends BaseActivity {
     public static final String VIDEO_NAME = "welcome_video.mp4";
 
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
-        statusBar.setVisibility(View.GONE);
-        titleView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.activity_login;
     }
 

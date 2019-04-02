@@ -195,7 +195,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 关闭键隐藏
      *
-     * @param isHide
+     * @param isHide boolean
      */
     public void setCloseHide(boolean isHide) {
         this.closeHide = isHide;
@@ -215,7 +215,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 设置返回键图标
      *
-     * @param drawable
+     * @param drawable Drawable
      */
     public void setBackDrawable(Drawable drawable) {
         this.backIcon = drawable;
@@ -267,4 +267,13 @@ public class TitleView extends ConstraintLayout {
         }
 
     }
+
+    public View getRightView(){
+        if (null != tvRight) {
+            return tvRight;
+        }
+        return null;
+    }
+
+
 }

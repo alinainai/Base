@@ -8,13 +8,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
-import com.base.lib.util.RxBus;
+import com.base.lib.di.component.AppComponent;
+import com.base.lib.rx.RxBus;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 
@@ -25,14 +25,13 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import trunk.doi.base.R;
+import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.util.ActivityController;
 
 import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.ui.fragment.InfoFragment;
 import trunk.doi.base.ui.fragment.MainFragment;
-import trunk.doi.base.ui.fragment.ClassifyFragment;
 import trunk.doi.base.ui.fragment.MineFragment;
 import trunk.doi.base.util.ToastUtil;
 
@@ -64,12 +63,39 @@ public class MainActivity extends BaseActivity {
 
     private static final Map<Integer, String> FRAGMENTS = new HashMap<Integer, String>() {
         {
+            put(0, NewsFragment.TAG);
             put(1, MainFragment.TAG);
-            put(0, ClassifyFragment.TAG);
             put(2, InfoFragment.TAG);
             put(3, MineFragment.TAG);
         }
     };
+
+    @Override
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    public void getStatusBarHeight(StatusBarHeight statusBar) {
+        super.getStatusBarHeight(statusBar);
+        statusBar.setBackgroundResource(R.color.cff3e19);
+    }
+
+    @Override
+    public void getTitleView(TitleView titleView) {
+        super.getTitleView(titleView);
+
+    }
+
+    @Override
+    public boolean needTitle() {
+        return false;
+    }
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -123,12 +149,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
-        statusBar.setBackgroundResource(R.color.cff3e19);
-        titleView.setVisibility(View.GONE);
-        return R.layout.activity_main;
-    }
+
 
     @Override
     public void initData() {
@@ -162,9 +183,9 @@ public class MainActivity extends BaseActivity {
             }
             return mHomeFragment;
         }
-        if (ClassifyFragment.TAG.equals(tag)) {
+        if (NewsFragment.TAG.equals(tag)) {
             if (mClassifyFragment == null) {
-                mClassifyFragment = ClassifyFragment.newInstance();
+                mClassifyFragment = NewsFragment.newInstance();
             }
             return mClassifyFragment;
         }

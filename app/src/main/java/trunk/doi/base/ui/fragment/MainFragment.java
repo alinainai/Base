@@ -1,14 +1,16 @@
 package trunk.doi.base.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.base.lib.base.BaseFragment;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.https.NetManager;
-import com.base.lib.rx.RxRetrofitManager;
+import com.base.lib.rx.RxBindManager;
 
 import java.util.List;
 
@@ -43,7 +45,12 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    protected int initLayoutId() {
+    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.activity_blank;
     }
 
@@ -54,10 +61,17 @@ public class MainFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void initData() {
 
-    private void laodData() {
+    }
 
-        RxRetrofitManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class).getBeautyData("data/" + "福利" + "/18/" + 1),
+
+
+
+    private void loadData() {
+
+        RxBindManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class,mContext).getBeautyData("data/" + "福利" + "/18/" + 1),
                 new Observer<BeautyResult<List<GankItemData>>>() {
 
                     @Override
@@ -92,7 +106,7 @@ public class MainFragment extends BaseFragment {
 
                 break;
             case R.id.btn_etr:
-                laodData();
+                loadData();
                 break;
         }
     }

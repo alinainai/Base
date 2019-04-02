@@ -1,18 +1,14 @@
 package trunk.doi.base.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.view.View;
 import android.widget.TextView;
 
 import com.base.lib.base.BaseActivity;
-import com.base.lib.view.StatusBarHeight;
-import com.base.lib.view.TitleView;
+import com.base.lib.di.component.AppComponent;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -23,7 +19,7 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
-import trunk.doi.base.base.BaseApplication;
+import trunk.doi.base.base.GankApp;
 import trunk.doi.base.constant.Constant;
 import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.util.AppUtils;
@@ -41,16 +37,19 @@ public class SplashActivity extends BaseActivity {
 
 
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar, TitleView titleView) {
-        statusBar.setVisibility(View.GONE);
-        titleView.setVisibility(View.GONE);
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.activity_splash;
     }
 
     @Override
-    protected void initView(@Nullable Bundle savedInstanceState) {
+    public void initView(@Nullable Bundle savedInstanceState) {
 
-        tv_version.setText(String.format("当前版本 v%s", AppUtils.getVersionName(BaseApplication.getInstance())));
+        tv_version.setText(String.format("当前版本 v%s", AppUtils.getVersionName(GankApp.getInstance())));
 //        String[] pers = {android.Manifest.permission.READ_PHONE_STATE,
 //                android.Manifest.permission.CAMERA,
 //                android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -61,7 +60,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData() {
+    public void initData() {
 
         mDisposable = Flowable.intervalRange(0, 4, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -81,9 +80,9 @@ public class SplashActivity extends BaseActivity {
      */
     private void turnToMain() {
 
-        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        startActivity(new Intent(mContext, MainActivity.class));
         finish();
-        overridePendingTransition(0, android.R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, 0);
 
     }
 
@@ -92,7 +91,7 @@ public class SplashActivity extends BaseActivity {
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
-        mDisposable=null;
+        mDisposable = null;
         super.onDestroy();
     }
 
@@ -120,7 +119,9 @@ public class SplashActivity extends BaseActivity {
         if (mDisposable != null && !mDisposable.isDisposed()) {
             mDisposable.dispose();
         }
-        mDisposable=null;
+        mDisposable = null;
         turnToMain();
     }
+
+
 }

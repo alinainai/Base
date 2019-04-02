@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebHistoryItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 
 
 import com.base.lib.base.BaseActivity;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 
@@ -36,6 +40,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import timber.log.Timber;
 import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
 import trunk.doi.base.bean.CollectionBean;
@@ -47,29 +52,96 @@ import trunk.doi.base.util.ToastUtil;
 public class WebViewActivity extends BaseActivity {
 
 
-    @BindView(R.id.main_cart_title)
-    TextView mainCartTitle;
+
     @BindView(R.id.progressbar)
     ProgressBar bar;
-    @BindView(R.id.img_menu)
-    ImageView img_menu;
+
     @BindView(R.id.rl_webview)
     RelativeLayout rl_webview;
+
     private WebView webView;
     private String url;
     private String mTitle;
     private DatabaseService service;
-    private boolean loadFinish=false;
+    private TitleView mainCartTitle;
+
+    @Override
+    public void getTitleView(TitleView titleView) {
+        mainCartTitle=titleView;
+        titleView.setRightText("更多");
+        titleView.setCloseHide(true);
+        titleView.setOnBackListener(v -> {
+            if (webView != null) {
+                if (webView.canGoBack()) {
+                    webView.goBack();// 返回前一个页面
+                    return;
+                }
+            }
+            finish();
+        });
+
+        titleView.setOnRightListener(v -> {
+
+            new MorePopupWindow(mContext){
+
+                @Override
+                public void share() {
+
+                }
+
+                @Override
+                public void collection() {
+
+                    if(null!=service.query(url)) {
+                        ToastUtil.showCustomToast(mContext,"已添加过收藏",ToastUtil.TOAST_OF_WARING);
+                    }else{
+                        CollectionBean bean =new CollectionBean();
+                        bean.setUrl(url);
+                        bean.setDesc(mTitle);
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
+                        bean.setDataTime(sdf.format(new Date()));
+                        service.addInfo(bean);
+                        ToastUtil.showCustomToast(mContext,"收藏成功",ToastUtil.TOAST_OF_SUCCESS);
+                    }
+                }
+
+                @Override
+                public void copyLink() {
+
+                    //获取剪贴板管理器：
+                    ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    // 创建普通字符型ClipData
+                    ClipData mClipData = ClipData.newPlainText("Label", url);
+                    // 将ClipData内容放到系统剪贴板里。
+                    cm.setPrimaryClip(mClipData);
+                    ToastUtil.showCustomToast(mContext,"地址复制成功",ToastUtil.TOAST_OF_SUCCESS);
+
+                }
+            }.showAsDropDown(mainCartTitle.getRightView(),2,0);
+
+
+        });
+    }
 
 
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
+        return R.layout.activity_webview;
+    }
+
+    @Override
+    public void getStatusBarHeight(StatusBarHeight statusBar) {
+        super.getStatusBarHeight(statusBar);
         if (StatusBarUtils.setStatusBarLightMode(mContext)) {
             statusBar.setBackgroundColor(getResources().getColor(R.color.white));
         } else {
             statusBar.setBackgroundColor(getResources().getColor(R.color.black));
         }
-        return R.layout.activity_webview;
     }
 
     @Override
@@ -86,7 +158,7 @@ public class WebViewActivity extends BaseActivity {
             }else{
                 title=mTitle;
             }
-            mainCartTitle.setText(title);
+            mainCartTitle.setTitleText(title);
         }
         webView=new WebView(mContext);
         webView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
@@ -120,7 +192,7 @@ public class WebViewActivity extends BaseActivity {
                     if (TextUtils.isEmpty(mTitle)) {
                         if (!TextUtils.isEmpty(title)) {
                             if (null != mainCartTitle) {
-                                mainCartTitle.setText(title);
+                                mainCartTitle.setTitleText(title);
                                 mTitle=title;
                             }
                         }
@@ -134,7 +206,7 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
-                loadFinish=false;
+
                 super.onPageStarted(view, url, favicon);
             }
 
@@ -152,12 +224,17 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
+                WebBackForwardList webBackForwardList = webView.copyBackForwardList();
+                Timber.tag(TAG).e(webBackForwardList.getSize()+"");
+//                WebHistoryItem currentItem = webBackForwardList.getCurrentItem();
+//                if(webBackForwardList.getSize()>0){
+//
+//                }
                 return true;
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
-                loadFinish=true;
             }
 
             @SuppressWarnings("deprecation")
@@ -245,70 +322,7 @@ public class WebViewActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.img_back, R.id.img_refresh, R.id.img_menu})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_back:
 
-                if (webView != null) {
-                    if (webView.canGoBack()) {
-                        webView.goBack();// 返回前一个页面
-                        return;
-                    }
-                }
-                finish();
-
-                break;
-            case R.id.img_refresh:
-                finish();
-                break;
-            case R.id.img_menu:
-
-                if(!loadFinish){
-                    ToastUtil.show(mContext,"页面正在加载中");
-                    return;
-                }
-
-                new MorePopupWindow(mContext){
-
-                    @Override
-                    public void share() {
-
-                    }
-
-                    @Override
-                    public void collection() {
-
-                       if(null!=service.query(url)) {
-                           ToastUtil.showCustomToast(mContext,"已添加过收藏",ToastUtil.TOAST_OF_WARING);
-                        }else{
-                           CollectionBean bean =new CollectionBean();
-                           bean.setUrl(url);
-                           bean.setDesc(mTitle);
-                           SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
-                           bean.setDataTime(sdf.format(new Date()));
-                           service.addInfo(bean);
-                           ToastUtil.showCustomToast(mContext,"收藏成功",ToastUtil.TOAST_OF_SUCCESS);
-                       }
-                    }
-
-                    @Override
-                    public void copyLink() {
-
-                        //获取剪贴板管理器：
-                        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        // 创建普通字符型ClipData
-                        ClipData mClipData = ClipData.newPlainText("Label", url);
-                        // 将ClipData内容放到系统剪贴板里。
-                        cm.setPrimaryClip(mClipData);
-                        ToastUtil.showCustomToast(mContext,"地址复制成功",ToastUtil.TOAST_OF_SUCCESS);
-
-                    }
-                }.showAsDropDown(img_menu,2,0);
-
-                break;
-        }
-    }
 
 
     public class GQDownloadListener implements DownloadListener {

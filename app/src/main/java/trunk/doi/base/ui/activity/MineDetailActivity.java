@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.base.lib.base.BaseActivity;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 import com.bumptech.glide.Glide;
@@ -92,8 +94,12 @@ public class MineDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
-        titleView.setTitleText("个人信息");
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.activity_detail;
     }
 
@@ -171,7 +177,7 @@ public class MineDetailActivity extends BaseActivity {
 //                        new ActionSheetDialog.OnSheetItemClickListener() {
 //                            @Override
 //                            public void onClick(int which) {
-//                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+//                                tempFile = new File(checkDirPath(GankApp.AJYFILE_IMG),
 //                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 //                                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                                startActivityForResult(Intent.createChooser(intent, "请选择图片"), RESULT_PICK);
@@ -182,7 +188,7 @@ public class MineDetailActivity extends BaseActivity {
 //                        new ActionSheetDialog.OnSheetItemClickListener() {
 //                            @Override
 //                            public void onClick(int which) {
-//                                tempFile = new File(checkDirPath(BaseApplication.AJYFILE_IMG),
+//                                tempFile = new File(checkDirPath(GankApp.AJYFILE_IMG),
 //                                        "icon" + String.valueOf(System.currentTimeMillis()) + ".jpg");
 //                                Uri imageUri;
 //                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -285,4 +291,6 @@ public class MineDetailActivity extends BaseActivity {
             }
         }
     }
+
+
 }

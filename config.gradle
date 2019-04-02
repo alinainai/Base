@@ -58,8 +58,9 @@ ext {
             "rxlifecycle2-android"      : "com.trello.rxlifecycle2:rxlifecycle-android:${version["rxlifecycle2SdkVersion"]}",
             "rxlifecycle2-components"   : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
             "rxcache2"                  : "com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x",
+            "rxcache-jolyglot-gson"    : "com.github.VictorAlbertos.Jolyglot:gson:0.0.4",
             "rxpermissions2"            : "com.github.tbruyelle:rxpermissions:0.10.2",
-            "rxerrorhandler2"           : "me.jessyan:rxerrorhandler:2.1.1",
+
 
             //tools
             "dagger2"                   : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
@@ -81,7 +82,6 @@ ext {
             "espresso-intents"          : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
             "mockito-core"              : "org.mockito:mockito-core:1.+",
             "timber"                    : "com.jakewharton.timber:timber:4.7.1",
-            "logger"                    : "com.orhanobut:logger:2.2.0",
             "canary-debug"              : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
     ]

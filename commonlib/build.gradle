@@ -46,6 +46,8 @@ dependencies {
 
     api rootProject.ext.dependencies["annotations"]
 
+    implementation rootProject.ext.dependencies["multidex"]
+
 
     //network
     api(rootProject.ext.dependencies["retrofit"]) {
@@ -84,10 +86,28 @@ dependencies {
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
     }
+
+    api(rootProject.ext.dependencies["rxcache2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'dagger'
+        exclude module: 'api'
+    }
+
+    implementation(rootProject.ext.dependencies["rxcache-jolyglot-gson"]) {
+        exclude module: 'gson'
+    }
+
     //tool
+
+    //dagger
     api rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["gson"]
+
+    //glide图片加载
+    api rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    api rootProject.ext.dependencies["glide-loader-okhttp3"]
 
     //test
     api rootProject.ext.dependencies["timber"]

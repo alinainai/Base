@@ -2,6 +2,7 @@ package trunk.doi.base.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.lib.base.BaseActivity;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.view.StatusBarHeight;
 
 import java.util.ArrayList;
@@ -17,10 +19,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
+import trunk.doi.base.adapter.CollectionAdapter;
 import trunk.doi.base.bean.CollectionBean;
 import trunk.doi.base.gen.DatabaseService;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
-import trunk.doi.base.adapter.CollectionAdapter;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
 
 
@@ -41,8 +43,15 @@ public class CollectionActivity extends BaseActivity {
     private View mLoadingView;
     private View mLoadEmpty;
 
+
+
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar, com.base.lib.view.TitleView titleView) {
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.layout_base_refresh_recycler;
     }
 
@@ -82,6 +91,7 @@ public class CollectionActivity extends BaseActivity {
         });
 
         mSwipeRefreshLayout.setOnRefreshListener(this::loadData);
+        startActivity(new Intent(mContext, SplashActivity.class));
 
     }
 
@@ -121,5 +131,6 @@ public class CollectionActivity extends BaseActivity {
     public void onBackPressed() {
         finish();
     }
+
 
 }

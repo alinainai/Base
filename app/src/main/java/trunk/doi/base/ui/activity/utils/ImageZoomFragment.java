@@ -1,11 +1,13 @@
 package trunk.doi.base.ui.activity.utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.base.lib.base.BaseFragment;
+import com.base.lib.di.component.AppComponent;
 import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
@@ -41,7 +43,12 @@ public class ImageZoomFragment extends BaseFragment {
     }
 
     @Override
-    protected int initLayoutId() {
+    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.fragment_image_zoom;
     }
 
@@ -60,7 +67,10 @@ public class ImageZoomFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void initData() {
 
+    }
 
 
 }

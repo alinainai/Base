@@ -1,6 +1,7 @@
 package trunk.doi.base.ui.activity.utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.view.StatusBarHeight;
 import com.base.lib.view.TitleView;
 
@@ -53,7 +55,12 @@ public class ImageZoomActivity extends BaseActivity {
 
 
     @Override
-    protected int initLayoutId(StatusBarHeight statusBar , TitleView titleView) {
+    public void setupActivityComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.activity_zoomimage;
     }
 

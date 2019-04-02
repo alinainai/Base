@@ -1,11 +1,13 @@
 package trunk.doi.base.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.lib.base.BaseFragment;
+import com.base.lib.di.component.AppComponent;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
@@ -29,7 +31,12 @@ public class InfoFragment extends BaseFragment {
 
 
     @Override
-    protected int initLayoutId() {
+    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.fragment_info;
     }
 
@@ -38,6 +45,13 @@ public class InfoFragment extends BaseFragment {
 
 
     }
+
+    @Override
+    public void initData() {
+
+    }
+
+
 
 
 }

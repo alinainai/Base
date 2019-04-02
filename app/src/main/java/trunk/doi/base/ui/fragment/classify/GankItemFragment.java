@@ -2,14 +2,15 @@ package trunk.doi.base.ui.fragment.classify;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.mvp.BaseMvpFragment;
+import com.base.lib.base.BaseFragment;
+import com.base.lib.di.component.AppComponent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,38 +21,55 @@ import trunk.doi.base.R;
 import trunk.doi.base.adapter.GankItemAdapter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
+import trunk.doi.base.ui.fragment.classify.contract.ClassifyContract;
+import trunk.doi.base.ui.fragment.classify.contract.ClassifyModle;
+import trunk.doi.base.ui.fragment.classify.contract.ClassifyPresenter;
+import trunk.doi.base.ui.fragment.classify.di.DaggerClassifyComponent;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
 
 /**
  * Author:
  * Time: 2016/8/12 14:28
  */
-public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,GankItemPresenter> implements IGankItem.GankItemView {
+public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements ClassifyContract.View {
 
-    private static final String SUB_TYPE="SUB_TYPE";
+    private static final String SUB_TYPE = "SUB_TYPE";
     private int mPage = 1;//页数
     private final static int PAGE_COUNT = 10;//每页条数
     private String mSubtype;//分类
     private GankItemAdapter mGankItemAdapter;//适配器
+
 
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
     @BindView(R.id.view_net_error)
-    View view_net_error;
+    android.view.View view_net_error;
     @BindView(R.id.view_load)
-    View view_load;
+    android.view.View view_load;
 
 
-    private View  mLoadingView;
-    private View  mLoadEmpty;
+    private android.view.View mLoadingView;
+    private android.view.View mLoadEmpty;
 
     private boolean isFirdtLoad;
 
 
     @Override
-    protected int initLayoutId() {
+    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+
+        DaggerClassifyComponent
+                .builder()
+                .appComponent(appComponent)
+                .view(this)
+                .build()
+                .inject(this);
+
+    }
+
+    @Override
+    public int initLayoutId() {
         return R.layout.layout_base_reload;
     }
 
@@ -67,24 +85,24 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
         mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<>(), true);
         //RecyclerView 基础布局
-        mLoadingView=LayoutInflater.from(mContext).inflate(R.layout.layout_loading,(ViewGroup)mRecyclerView.getParent(),false);
-        mLoadEmpty=LayoutInflater.from(mContext).inflate(R.layout.layout_empty_data,(ViewGroup)mRecyclerView.getParent(),false);
+        mLoadingView = LayoutInflater.from(mContext).inflate(R.layout.layout_loading, (ViewGroup) mRecyclerView.getParent(), false);
+        mLoadEmpty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_data, (ViewGroup) mRecyclerView.getParent(), false);
         //RecyclerView  footerView  布局
         mGankItemAdapter.setLoadingView(R.layout.view_loading);
         mGankItemAdapter.setLoadFailedView(R.layout.view_error);
         mGankItemAdapter.setLoadEndView(R.layout.view_nom);
 
         //加载失败布局
-        View.OnClickListener retryListener = view -> {
+        android.view.View.OnClickListener retryListener = view -> {
             mPage = 1;
-            if (view_net_error.getVisibility() == View.VISIBLE) {
-                view_net_error.setVisibility(View.GONE);
+            if (view_net_error.getVisibility() == android.view.View.VISIBLE) {
+                view_net_error.setVisibility(android.view.View.GONE);
             }
-            view_load.setVisibility(View.VISIBLE);
+            view_load.setVisibility(android.view.View.VISIBLE);
             loadData();
         };
         //条目点击
-        mGankItemAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> getActivity().startActivity(new Intent(mContext, WebViewActivity.class)
+        mGankItemAdapter.setOnItemClickListener((viewHolder, gankItemData, position) -> mContext.startActivity(new Intent(mContext, WebViewActivity.class)
                 .putExtra("title", gankItemData.getDesc())
                 .putExtra("url", gankItemData.getUrl())));
         //加载更多
@@ -106,20 +124,14 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
 
     }
 
-   private void loadData(){
-       mPresenter.getGankItemData(String.format(Locale.CHINA,"data/%s/10/%d",mSubtype,mPage));
-   }
-
     @Override
-    protected GankItemPresenter initPresenter() {
-        return  new GankItemPresenter();
-    }
-
-    @Override
-    protected void fetchData() {
+    public void initData() {
         loadData();
     }
 
+    private void loadData() {
+        mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/10/%d", mSubtype, mPage));
+    }
 
 
     public static GankItemFragment newInstance(String subtype) {
@@ -134,21 +146,21 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
     @Override
     public void onSuccess(List<GankItemData> data) {
 
-        if(mSwipeRefreshLayout.isRefreshing()){
+        if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        if(view_load.getVisibility()==View.VISIBLE){
-            view_load.setVisibility(View.GONE);
+        if (view_load.getVisibility() == android.view.View.VISIBLE) {
+            view_load.setVisibility(android.view.View.GONE);
         }
-        if(isFirdtLoad){
+        if (isFirdtLoad) {
             mGankItemAdapter.removeEmptyView();
-            isFirdtLoad=false;
+            isFirdtLoad = false;
         }
         mSwipeRefreshLayout.setEnabled(true);
 
-        if(data.size()>0){
+        if (data.size() > 0) {
 
-            if (mPage==1) {
+            if (mPage == 1) {
                 mGankItemAdapter.reset();
                 mGankItemAdapter.setNewData(data);
             } else {
@@ -158,10 +170,10 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
                 mGankItemAdapter.loadEnd();
             }
             mPage++;
-        }else{
-            if(mPage>1){
+        } else {
+            if (mPage > 1) {
                 mGankItemAdapter.loadFailed();
-            }else{
+            } else {
                 mGankItemAdapter.reset();
                 mGankItemAdapter.setReloadView(mLoadEmpty);
                 mSwipeRefreshLayout.setEnabled(false);
@@ -173,21 +185,21 @@ public class GankItemFragment extends BaseMvpFragment<IGankItem.GankItemView,Gan
     @Override
     public void onError() {
         mSwipeRefreshLayout.setEnabled(true);
-        if(mSwipeRefreshLayout.isRefreshing()){
+        if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        if(view_load.getVisibility()==View.VISIBLE){
-            view_load.setVisibility(View.GONE);
+        if (view_load.getVisibility() == android.view.View.VISIBLE) {
+            view_load.setVisibility(android.view.View.GONE);
         }
-        if(isFirdtLoad){
+        if (isFirdtLoad) {
             mGankItemAdapter.removeEmptyView();
-            isFirdtLoad=false;
+            isFirdtLoad = false;
         }
-        if(mPage>1){
+        if (mPage > 1) {
             mGankItemAdapter.loadFailed();
-        }else{
+        } else {
             mGankItemAdapter.reset();
-            view_net_error.setVisibility(View.VISIBLE);
+            view_net_error.setVisibility(android.view.View.VISIBLE);
             mSwipeRefreshLayout.setEnabled(false);
         }
     }
