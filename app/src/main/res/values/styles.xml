@@ -53,11 +53,9 @@
         <item name="android:layout_height">@dimen/px_1</item>
     </style>
 
-    <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/text_size_24_px</item>
-    </style>
 
-    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">
+
+    <style name="StarRatingBar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/rating_bar_full</item>
         <item name="android:minHeight">@dimen/px_24</item>
         <!-- - - 评分条最小高度和最大高度调整 -->
@@ -144,18 +142,11 @@
     </style>
 
 
-    <!-- 我的页面条目的格式 -->
-    <style name="mine_line_bg">
-        <item name="android:layout_height">@dimen/px_96</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:background">@drawable/layout_selector_bg</item>
-        <item name="android:paddingLeft">@dimen/px_30</item>
-    </style>
+
 
 
     <!-- 首页radio_button的格式 -->
-    <style name="style_main_radio">
+    <style name="style_main_radio" parent="Widget.AppCompat.CompoundButton.RadioButton">
         <item name="android:textSize">8sp</item>
         <item name="android:textColor">@color/bottom_text_color</item>
         <item name="android:layout_weight">1</item>
@@ -166,36 +157,27 @@
         <item name="android:scaleType">matrix</item>
         <item name="android:gravity">center</item>
     </style>
-    <!-- 首页radio_button的格式 -->
-    <style name="style_bar_ll">
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">@drawable/layout_selector_bg</item>
-    </style>
 
-    <style name="style_bar_text" parent="android:Widget">
-        <item name="android:clickable">false</item>
-        <item name="android:focusable">false</item>
-        <item name="android:textSize">8sp</item>
-        <item name="android:textColor">@color/bottom_tab_text_color_nor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
 
-    <style name="style_bar_img">
-        <item name="android:clickable">false</item>
-        <item name="android:focusable">false</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="style_news_TabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/white</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">0dp</item>
+        <item name="tabPaddingEnd">0dp</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">scrollable</item>
+        <item name="tabIndicatorFullWidth">true</item>
+
+    </style>
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="textAllCaps">true</item>
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

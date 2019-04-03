@@ -9,19 +9,11 @@ import android.widget.TextView;
 
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.https.NetManager;
-import com.base.lib.rx.RxBindManager;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
-import trunk.doi.base.bean.BeautyResult;
-import trunk.doi.base.bean.GankItemData;
-import trunk.doi.base.https.GankItemService;
 
 
 /**
@@ -71,29 +63,29 @@ public class MainFragment extends BaseFragment {
 
     private void loadData() {
 
-        RxBindManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class,mContext).getBeautyData("data/" + "福利" + "/18/" + 1),
-                new Observer<BeautyResult<List<GankItemData>>>() {
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mDisposable=d;
-                    }
-
-                    @Override
-                    public void onNext(BeautyResult<List<GankItemData>> listBeautyResult) {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        RxBindManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class,mContext).getBeautyData("data/" + "福利" + "/18/" + 1),
+//                new Observer<BeautyResult<List<GankItemData>>>() {
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        mDisposable=d;
+//                    }
+//
+//                    @Override
+//                    public void onNext(BeautyResult<List<GankItemData>> listBeautyResult) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
 
 
     }

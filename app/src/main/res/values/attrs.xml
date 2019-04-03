@@ -1,25 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
-
-
     <declare-styleable name="CircleImageView">
         <attr name="civ_border_width" format="dimension" />
         <attr name="civ_border_color" format="color" />
         <attr name="civ_border_overlay" format="boolean" />
         <attr name="civ_fill_color" format="color" />
     </declare-styleable>
-
-    <!--上下滚动消息属性-->
-    <declare-styleable name="JDAdverView">
-        <attr name="gap" format="integer" />
-        <attr name="animDuration" format="integer" />
-    </declare-styleable>
-
-
-
 
 
 
@@ -29,40 +16,6 @@
         <attr name="gradientStartColor" format="color|reference" />
         <attr name="gradientEndColor" format="color|reference" />
     </declare-styleable>
-
-
-
-
-
-
-
-
-    <declare-styleable name="PagerSlidingTabStrip">
-        <attr name="pstsIndicatorColor" format="color" />
-        <attr name="pstsIndicatorHeight" format="dimension" />
-        <attr name="pstsUnderlineColor" format="color" />
-        <attr name="pstsUnderlineHeight" format="dimension" />
-        <attr name="pstsDividerColor" format="color" />
-        <attr name="pstsDividerWidth" format="dimension" />
-        <attr name="pstsDividerPadding" format="dimension" />
-        <attr name="pstsScrollOffset" format="dimension" />
-        <attr name="pstsShouldExpand" format="boolean" />
-        <attr name="pstsPaddingMiddle" format="boolean" />
-        <attr name="pstsTabPaddingLeftRight" format="dimension" />
-        <attr name="pstsTabBackground" format="reference" />
-        <attr name="pstsTabTextSize" format="dimension" />
-        <attr name="pstsTabTextColor" format="reference" />
-        <attr name="pstsTabTextStyle" format="reference">
-            <flag name="normal" value="0x0" />
-            <flag name="bold" value="0x1" />
-            <flag name="italic" value="0x2" />
-        </attr>
-        <attr name="pstsTabTextAllCaps" format="boolean" />
-        <attr name="pstsTabTextAlpha" format="integer" />
-        <attr name="pstsTabTextFontFamily" format="string" />
-    </declare-styleable>
-
-
 
 
 

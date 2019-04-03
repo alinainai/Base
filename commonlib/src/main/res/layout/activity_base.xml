@@ -6,11 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.lib.view.StatusBarHeight
+    <com.base.baseui.view.StatusBarHeight
         android:id="@+id/v_status_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout="@layout/view_status_bar"
         android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/v_title"
         app:layout_goneMarginTop="0dp" />
 
-    <com.base.lib.view.TitleView
+    <com.base.baseui.view.TitleView
         android:id="@+id/v_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

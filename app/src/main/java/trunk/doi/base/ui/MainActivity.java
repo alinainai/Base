@@ -11,12 +11,12 @@ import android.view.KeyEvent;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.base.baseui.view.StatusBarHeight;
+import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.rx.RxBus;
-import com.base.lib.view.StatusBarHeight;
-import com.base.lib.view.TitleView;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -126,31 +126,21 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     //noinspection GradleCompatible
-    implementation "com.android.support:cardview-v7:28.0.0"
-    implementation "com.android.support:palette-v7:28.0.0"
-    implementation "com.android.support:design:28.0.0"
-
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:palette-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-
-
-
     //butterknife
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
-
     implementation 'com.zhy:okhttputils:2.6.2'
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-
-
     //test
     testImplementation rootProject.ext.dependencies["junit"]
-
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
-
     implementation project(':commonlib')
-
 }
 

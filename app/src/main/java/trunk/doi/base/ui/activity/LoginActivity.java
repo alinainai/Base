@@ -15,8 +15,7 @@ import android.widget.TextView;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.view.StatusBarHeight;
-import com.base.lib.view.TitleView;
+
 import com.google.gson.Gson;
 
 import java.io.File;

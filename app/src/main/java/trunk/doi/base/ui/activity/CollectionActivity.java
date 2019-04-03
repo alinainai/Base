@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.view.StatusBarHeight;
 
 import java.util.ArrayList;
 import java.util.List;

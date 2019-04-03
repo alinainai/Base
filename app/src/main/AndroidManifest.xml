@@ -70,10 +70,8 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"/>
 
-        </activity>
         <!-- 图展示界面 -->
         <activity
             android:name=".ui.activity.utils.ImageZoomActivity"

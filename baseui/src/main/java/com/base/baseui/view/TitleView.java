@@ -1,4 +1,4 @@
-package com.base.lib.view;
+package com.base.baseui.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -10,7 +10,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import com.base.lib.R;
+import com.base.baseui.R;
+
 
 public class TitleView extends ConstraintLayout {
     private TextView tvBack;
@@ -124,7 +125,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 设置标题
      *
-     * @param title
+     * @param title String
      */
     public void setTitleText(String title) {
         this.titleText = title;
@@ -144,7 +145,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 设置标题字体颜色
      *
-     * @param color
+     * @param color int
      */
     public void setTitleColor(int color) {
         this.titleTextColor = color;
@@ -155,7 +156,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 分割线隐藏
      *
-     * @param isHide
+     * @param isHide boolean true 隐藏
      */
     public void setBarLineHide(boolean isHide) {
         this.dividerHide = isHide;
@@ -175,7 +176,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 返回键隐藏
      *
-     * @param isHide
+     * @param isHide true 隐藏
      */
     public void setBackHide(boolean isHide) {
         this.backHide = isHide;
@@ -195,7 +196,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 关闭键隐藏
      *
-     * @param isHide boolean
+     * @param isHide true 隐藏
      */
     public void setCloseHide(boolean isHide) {
         this.closeHide = isHide;
@@ -268,6 +269,10 @@ public class TitleView extends ConstraintLayout {
 
     }
 
+    /**
+     *  获取 标题右按钮布局
+     * @return View
+     */
     public View getRightView(){
         if (null != tvRight) {
             return tvRight;

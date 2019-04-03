@@ -21,11 +21,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.base.baseui.view.StatusBarHeight;
+import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.cache.Cache;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.view.StatusBarHeight;
-import com.base.lib.view.TitleView;
 
 
 /**
