@@ -3,13 +3,15 @@ package trunk.doi.base.ui.fragment.classify;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.base.BaseFragment;
+import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
 
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ import trunk.doi.base.adapter.GankItemAdapter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.ui.fragment.classify.contract.ClassifyContract;
-import trunk.doi.base.ui.fragment.classify.contract.ClassifyModle;
 import trunk.doi.base.ui.fragment.classify.contract.ClassifyPresenter;
 import trunk.doi.base.ui.fragment.classify.di.DaggerClassifyComponent;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
@@ -31,7 +32,7 @@ import trunk.doi.base.util.WrapContentLinearLayoutManager;
  * Author:
  * Time: 2016/8/12 14:28
  */
-public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements ClassifyContract.View {
+public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View {
 
     private static final String SUB_TYPE = "SUB_TYPE";
     private int mPage = 1;//页数
@@ -69,14 +70,8 @@ public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements
     }
 
     @Override
-    public int initLayoutId() {
-        return R.layout.layout_base_reload;
-    }
+    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-    @Override
-    public void initView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        //mRecyclerView
         LinearLayoutManager layoutManager = new WrapContentLinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -93,7 +88,7 @@ public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements
         mGankItemAdapter.setLoadEndView(R.layout.view_nom);
 
         //加载失败布局
-        android.view.View.OnClickListener retryListener = view -> {
+        android.view.View.OnClickListener retryListener = v -> {
             mPage = 1;
             if (view_net_error.getVisibility() == android.view.View.VISIBLE) {
                 view_net_error.setVisibility(android.view.View.GONE);
@@ -124,18 +119,25 @@ public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements
 
     }
 
+
     @Override
-    public void initData() {
-        loadData();
+    public void initData(@Nullable Bundle savedInstanceState) {
+
     }
+
+    @Override
+    public int initLayoutId() {
+        return R.layout.layout_base_reload;
+    }
+
 
     private void loadData() {
         mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/10/%d", mSubtype, mPage));
     }
 
 
-    public static GankItemFragment newInstance(String subtype) {
-        GankItemFragment fragment = new GankItemFragment();
+    public static ClassifyFragment newInstance(String subtype) {
+        ClassifyFragment fragment = new ClassifyFragment();
         Bundle arguments = new Bundle();
         arguments.putString(SUB_TYPE, subtype);
         fragment.setArguments(arguments);
@@ -205,4 +207,8 @@ public class GankItemFragment extends BaseFragment<ClassifyPresenter> implements
     }
 
 
+    @Override
+    protected void lazyLoadData() {
+        loadData();
+    }
 }

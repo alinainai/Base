@@ -45,9 +45,15 @@ public class AppDelegate implements App, AppLifecyclers {
     private Application mApplication;
     private AppComponent mAppComponent;
 
+    /**
+     * {@link com.base.lib.base.delegate.activity.ActivityLifecycle}
+     */
     @Inject
     @Named("ActivityLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
+    /**
+     * {@link com.base.lib.lifecycle.ActivityLifecycleForRxLifecycle}
+     */
     @Inject
     @Named("ActivityLifecycleForRxLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycleForRxLifecycle;
@@ -84,6 +90,7 @@ public class AppDelegate implements App, AppLifecyclers {
                 .configModule(configModule)
                 .build();
         mAppComponent.inject(this);
+
         //注册框架内部已实现的 RxLifecycle 生命周期逻辑
         mApplication.registerActivityLifecycleCallbacks(mActivityLifecycleForRxLifecycle);
         //注册框架内部已实现的 Activity 生命周期逻辑

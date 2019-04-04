@@ -33,14 +33,11 @@ import io.reactivex.subjects.Subject;
  * fragment基类
  */
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentIRxLifecycle {
-    protected Context mContext;
-    public View rootView;
-    private Unbinder mBinder;
+
     protected final String TAG = this.getClass().getSimpleName();
+    protected Context mContext;
     private final BehaviorSubject<FragmentEvent> lifecycleSubject = BehaviorSubject.create();
-    protected boolean mIsViewInitiated;
-    protected boolean mIsVisibleToUser;
-    protected boolean mIsDataInitiated;
+    private Cache<String, Object> mCache;
 
 
     @Inject
@@ -53,7 +50,7 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         return lifecycleSubject;
     }
 
-    private Cache<String, Object> mCache;
+
 
     @NonNull
     @Override
@@ -72,42 +69,17 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(initLayoutId(), container, false);
-        mBinder = ButterKnife.bind(this, rootView);
-        initView(inflater, container, savedInstanceState);
-        return rootView;
+        return inflater.inflate(initLayoutId(), container, false);
     }
+
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        mIsVisibleToUser = isVisibleToUser;
-        initFetchData();
+    public boolean useEventBus() {
+        return true;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mIsViewInitiated = true;
-        initFetchData();
-    }
-
-    /**
-     * 懒加载请求数据的接口
-     */
-    protected void initFetchData() {
-        if (mIsVisibleToUser && mIsViewInitiated && !mIsDataInitiated) {
-            initData();
-            mIsDataInitiated = true;
-        }
-    }
-
 
     @Override
     public void onDestroy() {
-        if (mBinder != null && mBinder != Unbinder.EMPTY)
-            mBinder.unbind();
-        this.mBinder = null;
         if (mPresenter != null) mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
         super.onDestroy();

@@ -23,6 +23,7 @@ import android.view.View;
 
 
 import com.base.lib.util.ArmsUtils;
+import com.base.lib.util.EventBusManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +46,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;
     private IFragment iFragment;
+    private Unbinder mBinder;
 
     public FragmentDelegateImpl(@NonNull android.support.v4.app.FragmentManager fragmentManager, @NonNull android.support.v4.app.Fragment fragment) {
         this.mFragmentManager = fragmentManager;
@@ -60,17 +62,19 @@ public class FragmentDelegateImpl implements FragmentDelegate {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         iFragment.setupFragmentComponent(ArmsUtils.getAppComponent((Objects.requireNonNull(mFragment.getActivity()))));
+        if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBusManager.getInstance().register(mFragment);//注册到事件主线
     }
 
     @Override
-    public void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState) {
-
-
+    public void onCreateView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        mBinder = ButterKnife.bind(mFragment, view);
+        iFragment.initView(view,savedInstanceState);
     }
 
     @Override
     public void onActivityCreate(@Nullable Bundle savedInstanceState) {
-
+        iFragment.initData(savedInstanceState);
     }
 
     @Override
@@ -100,11 +104,22 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-
+        if (mBinder != null && mBinder != Unbinder.EMPTY) {
+            try {
+                mBinder.unbind();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                //fix Bindings already cleared
+                Timber.w("onDestroyView: " + e.getMessage());
+            }
+        }
     }
 
     @Override
     public void onDestroy() {
+        if (iFragment != null && iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
+            EventBusManager.getInstance().unregister(mFragment);//注册到事件主线
+        this.mBinder = null;
         this.mFragmentManager = null;
         this.mFragment = null;
         this.iFragment = null;

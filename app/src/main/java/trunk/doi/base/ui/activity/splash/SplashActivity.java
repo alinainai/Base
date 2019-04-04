@@ -1,4 +1,4 @@
-package trunk.doi.base.ui.activity;
+package trunk.doi.base.ui.activity.splash;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -123,5 +123,13 @@ public class SplashActivity extends BaseActivity {
         turnToMain();
     }
 
+    @Override
+    public boolean needTitle() {
+        return false;
+    }
 
+    @Override
+    public boolean needStatusBar() {
+        return false;
+    }
 }

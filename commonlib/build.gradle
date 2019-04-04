@@ -101,5 +101,7 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-compat'
     }
+    compileOnly rootProject.ext.dependencies["androideventbus"]
+    compileOnly rootProject.ext.dependencies["eventbus"]
     api project(':baseui')
 }

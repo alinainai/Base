@@ -5,12 +5,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,13 +21,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.bean.User;
-import trunk.doi.base.ui.activity.utils.ImageZoomActivity;
 import trunk.doi.base.view.CircleImageView;
 
 /**
@@ -137,10 +133,10 @@ public class MineDetailActivity extends BaseActivity {
                     showImgSelectDialog();
                     return;
                 }
-                Intent intent = new Intent(mContext, ImageZoomActivity.class);
-                ArrayList<String> urls = new ArrayList<>();
-                intent.putStringArrayListExtra("imgpath", urls);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, ImageZoomActivity.class);
+//                ArrayList<String> urls = new ArrayList<>();
+//                intent.putStringArrayListExtra("imgpath", urls);
+//                startActivity(intent);
                 break;
             case R.id.detail_headIcon_rl:
                 showImgSelectDialog();

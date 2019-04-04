@@ -1,6 +1,5 @@
 package trunk.doi.base.ui.fragment.classify.contract;
 
-import com.base.lib.mvp.BaseModel;
 import com.base.lib.mvp.IView;
 
 import java.util.List;
@@ -16,7 +15,7 @@ public interface ClassifyContract {
         void onSuccess(List<GankItemData> data);
     }
 
-    interface Model  {
+    interface Model {
         Observable<HttpResult<List<GankItemData>>> getGankItemData(String suburl);
     }
 

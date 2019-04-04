@@ -41,7 +41,7 @@ public interface FragmentDelegate {
 
     void onCreate(@Nullable Bundle savedInstanceState);
 
-    void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState);
+    void onCreateView(@NonNull View view, @Nullable Bundle savedInstanceState);
 
     void onActivityCreate(@Nullable Bundle savedInstanceState);
 

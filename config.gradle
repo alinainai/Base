@@ -69,6 +69,7 @@ ext {
             "dagger2-compiler"          : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
             "dagger2-android-processor" : "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "eventbus"                  : "org.greenrobot:eventbus:3.1.1",
+            "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
             "gson"                      : "com.google.code.gson:gson:2.8.5",
             "multidex"                  : "com.android.support:multidex:1.0.3",
             "javax.annotation"          : "javax.annotation:jsr250-api:1.0",

@@ -26,13 +26,10 @@ import java.util.TimerTask;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
+import trunk.doi.base.bean.rxmsg.MainEvent;
+import trunk.doi.base.ui.fragment.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.util.ActivityController;
-
-import trunk.doi.base.bean.rxmsg.MainEvent;
-import trunk.doi.base.ui.fragment.InfoFragment;
-import trunk.doi.base.ui.fragment.MainFragment;
-import trunk.doi.base.ui.fragment.MineFragment;
 import trunk.doi.base.util.ToastUtil;
 
 
@@ -47,7 +44,7 @@ public class MainActivity extends BaseActivity {
     RadioGroup rg_radio;
     @BindView(R.id.classify_btn)
     RadioButton classify_btn;
-     //container
+    //container
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
     private BaseFragment mClassifyFragment;//分类的fragment
@@ -60,13 +57,12 @@ public class MainActivity extends BaseActivity {
     private Disposable disposable;
 
 
-
     private static final Map<Integer, String> FRAGMENTS = new HashMap<Integer, String>() {
         {
             put(0, NewsFragment.TAG);
             put(1, MainFragment.TAG);
-            put(2, InfoFragment.TAG);
-            put(3, MineFragment.TAG);
+            put(2, MainFragment.TAG);
+            put(3, MainFragment.TAG);
         }
     };
 
@@ -129,7 +125,7 @@ public class MainActivity extends BaseActivity {
         disposable = RxBus.getDefault().toObservable(MainEvent.class)
                 .subscribe(event -> {
 
-                    switch (event.getId()){
+                    switch (event.getId()) {
                         case 0:
                             changeFragment(currentTabIndex, 0);
                             break;
@@ -148,7 +144,6 @@ public class MainActivity extends BaseActivity {
 
 
     }
-
 
 
     @Override
@@ -189,18 +184,7 @@ public class MainActivity extends BaseActivity {
             }
             return mClassifyFragment;
         }
-        if (InfoFragment.TAG.equals(tag)) {
-            if (mInfoFragment == null) {
-                mInfoFragment = InfoFragment.newInstance();
-            }
-            return mInfoFragment;
-        }
-        if (MineFragment.TAG.equals(tag)) {
-            if (mMineFragment == null) {
-                mMineFragment = MineFragment.newInstance();
-            }
-            return mMineFragment;
-        }
+
         return null;
     }
 

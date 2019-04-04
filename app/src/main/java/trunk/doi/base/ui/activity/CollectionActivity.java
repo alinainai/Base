@@ -21,6 +21,7 @@ import trunk.doi.base.R;
 import trunk.doi.base.adapter.CollectionAdapter;
 import trunk.doi.base.bean.CollectionBean;
 import trunk.doi.base.gen.DatabaseService;
+import trunk.doi.base.ui.activity.splash.SplashActivity;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.util.WrapContentLinearLayoutManager;
 

@@ -19,6 +19,7 @@ import com.base.lib.cache.CacheType;
 import com.base.lib.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.mvp.IPresenter;
 import com.base.lib.util.ArmsUtils;
+import com.base.lib.util.StatusBarManager;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -79,21 +80,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         super.onCreate(savedInstanceState);
 
 
-        //状态栏透明
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
-
-            View decorView = getWindow().getDecorView();
-            //拓展布局到状态栏后面 | 稳定的布局，不会随系统栏的隐藏、显示而变化
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.trans));
-
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
-
-            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-
-        }
+        StatusBarManager.fullTransStatusBar(this);
 
         mContext = this;
         setContentView(R.layout.activity_base);

@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by ly on 2016/5/30 12:15.
  */
-public class User implements Serializable{
+public class User implements Serializable {
 
     private String uid;  //用户id
     private String username;  //用户名
@@ -16,6 +16,9 @@ public class User implements Serializable{
     private String sex;//0男 1女
     private String nickname; //昵称
     private String birthday; //生日
+    private String phone;  //绑定手机号
+    private String createTime;
+    private String weight;
 
     public String getCreateTime() {
         return createTime;
@@ -33,9 +36,7 @@ public class User implements Serializable{
         this.weight = weight;
     }
 
-    private String phone;  //绑定手机号
-    private String createTime;
-    private String weight;
+
 
     public String getUid() {
         return uid;

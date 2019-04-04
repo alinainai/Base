@@ -20,7 +20,7 @@ import com.base.lib.di.scope.FragmentScope;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import trunk.doi.base.ui.fragment.classify.GankItemFragment;
+import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 import trunk.doi.base.ui.fragment.classify.contract.ClassifyContract;
 
 /**
@@ -37,7 +37,7 @@ import trunk.doi.base.ui.fragment.classify.contract.ClassifyContract;
 @Component(modules = ClassifyModule.class, dependencies = AppComponent.class)
 public interface ClassifyComponent {
 
-    void inject(GankItemFragment fragment);
+    void inject(ClassifyFragment fragment);
 
     @Component.Builder
     interface Builder {

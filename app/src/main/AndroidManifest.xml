@@ -59,7 +59,7 @@
 
 
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".ui.activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoStatus">
             <intent-filter>
@@ -71,11 +71,6 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait"/>
-
-        <!-- 图展示界面 -->
-        <activity
-            android:name=".ui.activity.utils.ImageZoomActivity"
-            android:screenOrientation="portrait" />
 
         <!-- WebView独立进程解决方案 -->
         <activity
