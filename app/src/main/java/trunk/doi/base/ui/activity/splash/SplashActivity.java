@@ -49,7 +49,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
-        tv_version.setText(String.format("当前版本 v%s", AppUtils.getVersionName(GankApp.getInstance())));
+        tv_version.setText(String.format("当前版本 v%s", AppUtils.getVersionName(mContext)));
 //        String[] pers = {android.Manifest.permission.READ_PHONE_STATE,
 //                android.Manifest.permission.CAMERA,
 //                android.Manifest.permission.READ_EXTERNAL_STORAGE,

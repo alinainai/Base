@@ -92,7 +92,9 @@
             android:name=".ui.activity.CollectionActivity"
             android:screenOrientation="portrait" />
 
-
+        <meta-data
+            android:name="trunk.doi.base.config.GlobalConfiguration"
+            android:value="ClientConfigModule"/>
 
     </application>
 

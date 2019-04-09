@@ -2,6 +2,8 @@ package trunk.doi.base.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 
 import com.base.lib.base.delegate.App;
@@ -38,19 +40,7 @@ public class GankApp extends Application implements App {
         super.onCreate();
         if (mAppDelegate != null)
             this.mAppDelegate.onCreate(this);
-        if (BuildConfig.LOG_DEBUG) {//初始化
 
-            Timber.plant(new Timber.DebugTree());
-            ButterKnife.setDebug(true);
-            //内存泄露检测框架
-            if (LeakCanary.isInAnalyzerProcess(this)) {
-                // This process is dedicated to LeakCanary for heap analysis.
-                // You should not init your app in this process.
-                return;
-            }
-            LeakCanary.install(this);
-
-        }
         mInstance = this;//初始化appliacation
     }
 
@@ -72,6 +62,25 @@ public class GankApp extends Application implements App {
 
     public static Application getInstance() {
         return mInstance;
+    }
+
+    //设置应用字体不随系统调节，在检测到fontScale属性不为默认值1的情况下，强行进行改变
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (newConfig.fontScale != 1)//非默认值
+            getResources();
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        if (res.getConfiguration().fontScale != 1) {//非默认值
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 
 }

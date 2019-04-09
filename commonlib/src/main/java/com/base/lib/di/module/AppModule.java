@@ -10,6 +10,10 @@ import com.base.lib.cache.CacheType;
 import com.base.lib.https.IRepositoryManager;
 import com.base.lib.https.RepositoryManager;
 import com.base.lib.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.base.lib.util.AppManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -49,6 +53,18 @@ public abstract class AppModule {
 
     @Binds
     abstract FragmentManager.FragmentLifecycleCallbacks bindFragmentLifecycle(FragmentLifecycle fragmentLifecycle);
+
+    @Singleton
+    @Provides
+    static List<FragmentManager.FragmentLifecycleCallbacks> provideFragmentLifecycles() {
+        return new ArrayList<>();
+    }
+
+    @Singleton
+    @Provides
+    static AppManager provideAppManager(Application application) {
+        return AppManager.getAppManager().init(application);
+    }
 
 
 }

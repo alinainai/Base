@@ -118,16 +118,14 @@ public class MineDetailActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.ll_back, R.id.mine_user_icon_img,
+    @OnClick({ R.id.mine_user_icon_img,
             R.id.detail_headIcon_rl, R.id.detail_nickName_rl,
             R.id.detail_userName_rl, R.id.detail_sex_tv, R.id.detail_sex_rl,
             R.id.detail_birthday_rl, R.id.detail_band_phone_rl,
             R.id.detail_service_address_rl})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_back:
-                finish();
-                break;
+
             case R.id.mine_user_icon_img:
                 if(TextUtils.isEmpty(user.getIconImg())){
                     showImgSelectDialog();

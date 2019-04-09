@@ -156,6 +156,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/px_80"
         android:background="@drawable/layout_selector_bg"
+        android:focusable="true"
         android:clickable="true" >
 
         <TextView
@@ -163,7 +164,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_birsty"
+            android:text="@string/mine_birth"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -173,7 +174,7 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img3"
             android:gravity="center_vertical"
-            android:text="@string/mine_birsty"
+            android:text="@string/mine_birth"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 

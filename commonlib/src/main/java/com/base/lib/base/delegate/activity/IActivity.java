@@ -56,7 +56,7 @@ public interface IActivity {
     /**
      * 是否使用Fragment
      *
-     * @return 默认true
+     * @return 默认false
      */
     boolean useFragment();
 

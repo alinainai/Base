@@ -8,10 +8,14 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.base.lib.base.BaseFragment;
+import com.base.lib.base.config.ClientConfigModule;
 import com.base.lib.base.delegate.fragment.FragmentDelegate;
 import com.base.lib.cache.Cache;
 import com.base.lib.cache.IntelligentCache;
+import com.base.lib.di.module.ConfigModule;
 import com.base.lib.util.AppManager;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,12 +37,16 @@ import dagger.Lazy;
 @Singleton
 public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks {
 
-
+    @Inject
     AppManager mAppManager;
     @Inject
     Application mApplication;
     @Inject
     Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
+    @Inject
+    Cache<String, Object> mExtras;
+    @Inject
+    Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
 
 
     @Inject
@@ -47,9 +55,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        //如果 intent 包含了此字段,并且为 true 说明不加入到 list 进行统一管理
 
-//            mAppManager.addActivity(activity);
+        mAppManager.addActivity(activity);
 
         //配置ActivityDelegate
         if (activity instanceof IActivity) {
@@ -77,7 +84,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityResumed(Activity activity) {
-//        mAppManager.setCurrentActivity(activity);
+        mAppManager.setCurrentActivity(activity);
 
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
@@ -95,10 +102,9 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityStopped(Activity activity) {
-//        if (mAppManager.getCurrentActivity() == activity) {
-//            mAppManager.setCurrentActivity(null);
-//        }
-
+        if (mAppManager.getCurrentActivity() == activity) {
+            mAppManager.setCurrentActivity(null);
+        }
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onStop();
@@ -115,8 +121,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityDestroyed(Activity activity) {
-//        mAppManager.removeActivity(activity);
-
+        mAppManager.removeActivity(activity);
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onDestroy();
@@ -129,15 +134,29 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
      * 设置是否使用监听,如果这个 Activity 返回 false 的话,这个 Activity 下面的所有 Fragment 将不能使用 {@link FragmentDelegate}
      * 意味着 {@link BaseFragment} 也不能使用
      *
-     * @param activity
+     * @param activity Activity
      */
     private void registerFragmentCallbacks(Activity activity) {
 
-        boolean useFragment = (activity instanceof IActivity) && ((IActivity) activity).useFragment();
+        boolean useFragment = activity instanceof IActivity ? ((IActivity) activity).useFragment() : true;
         if (activity instanceof FragmentActivity && useFragment) {
+
             //mFragmentLifecycle 为 Fragment 生命周期实现类, 用于框架内部对每个 Fragment 的必要操作, 如给每个 Fragment 配置 FragmentDelegate
             //注册框架内部已实现的 Fragment 生命周期逻辑
             ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(mFragmentLifecycle.get(), true);
+
+            if (mExtras.containsKey(IntelligentCache.getKeyOfKeep(ClientConfigModule.class.getName()))) {
+                List<ClientConfigModule> modules = (List<ClientConfigModule>) mExtras.get(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
+                for (ClientConfigModule module : modules) {
+                    module.injectFragmentLifecycle(mApplication, mFragmentLifecycles.get());
+                }
+                mExtras.remove(IntelligentCache.getKeyOfKeep(ConfigModule.class.getName()));
+            }
+
+            //注册框架外部, 开发者扩展的 Fragment 生命周期逻辑
+            for (FragmentManager.FragmentLifecycleCallbacks fragmentLifecycle : mFragmentLifecycles.get()) {
+                ((FragmentActivity) activity).getSupportFragmentManager().registerFragmentLifecycleCallbacks(fragmentLifecycle, true);
+            }
         }
     }
 

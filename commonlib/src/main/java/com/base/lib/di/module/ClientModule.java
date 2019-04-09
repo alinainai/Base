@@ -2,26 +2,30 @@ package com.base.lib.di.module;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.base.lib.https.GlobalHttpHandler;
+import com.base.lib.https.log.RequestInterceptor;
 import com.base.lib.util.DataHelper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
 import io.rx_cache2.internal.RxCache;
 import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.Dispatcher;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -51,6 +55,15 @@ public abstract class ClientModule {
     }
 
 
+    /**
+     * @param application   Application
+     * @param configuration RetrofitConfiguration
+     * @param builder       Retrofit.Builder
+     * @param client        OkHttpClient
+     * @param baseUrl       baseUrl
+     * @param gson          gson
+     * @return Retrofit
+     */
     @Singleton
     @Provides
     static Retrofit provideRetrofit(Application application,
@@ -72,18 +85,39 @@ public abstract class ClientModule {
 
     @Singleton
     @Provides
-    static OkHttpClient provideClient(Application application,
-                                      @Nullable OkhttpConfiguration configuration,
-                                      OkHttpClient.Builder builder,
+    static OkHttpClient provideClient(Application application, @Nullable OkhttpConfiguration configuration,
+                                      OkHttpClient.Builder builder, Interceptor intercept,
+                                      @Nullable List<Interceptor> interceptors, @Nullable GlobalHttpHandler handler,
                                       ExecutorService executorService) {
         builder.connectTimeout(TIME_OUT, TimeUnit.SECONDS)
-                .readTimeout(TIME_OUT, TimeUnit.SECONDS);
+                .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+                .addNetworkInterceptor(intercept);
+
+        if (handler != null)
+            builder.addInterceptor(chain -> chain.proceed(handler.onHttpRequestBefore(chain, chain.request())));
+
+        //如果外部提供了 Interceptor 的集合则遍历添加
+        if (interceptors != null) {
+            for (Interceptor interceptor : interceptors) {
+                builder.addInterceptor(interceptor);
+            }
+        }
+
         //为 OkHttp 设置默认的线程池
         builder.dispatcher(new Dispatcher(executorService));
         if (configuration != null)
             configuration.configOkhttp(application, builder);
         return builder.build();
     }
+
+    /**
+     * 为okhttp设置打印日志的Interceptor
+     *
+     * @param interceptor {@link RequestInterceptor}
+     * @return Interceptor
+     */
+    @Binds
+    abstract Interceptor bindInterceptor(RequestInterceptor interceptor);
 
     @Singleton
     @Provides
@@ -142,7 +176,6 @@ public abstract class ClientModule {
     public interface GsonConfiguration {
         void configGson(@NonNull Context context, @NonNull GsonBuilder builder);
     }
-
 
 
 }

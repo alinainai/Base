@@ -50,7 +50,7 @@
     <string name="mine_nickname">昵称</string>
     <string name="mine_username">用户名</string>
     <string name="mine_sex">性别</string>
-    <string name="mine_birsty">出生日期</string>
+    <string name="mine_birth">出生日期</string>
     <string name="band_phone">绑定手机</string>
     <string name="mine_service_address">服务地址管理</string>
     <string name="mine_city">所在城市</string>
@@ -98,6 +98,9 @@
     <string name="str_net_error">网络异常，点击重试</string>
     <string name="str_no_data">暂无数据</string>
     <string name="str_loading">疯狂加载中</string>
+    <string name="str_content">content</string>
+    <string name="str_author">author</string>
+    <string name="str_platform">platform</string>
 
 </resources>
 

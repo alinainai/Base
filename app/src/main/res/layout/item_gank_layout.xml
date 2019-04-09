@@ -4,17 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
-    android:layout_marginTop="16dp"
+    android:layout_marginTop="6dp"
     android:layout_marginEnd="16dp"
     android:background="@color/white"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="10dp"
-    app:contentPadding="16dp"
-    app:contentPaddingBottom="16dp"
-    app:contentPaddingLeft="16dp"
-    app:contentPaddingRight="16dp"
-    app:contentPaddingTop="16dp">
+    app:cardCornerRadius="6dp"
+    app:cardElevation="5dp"
+    app:contentPaddingBottom="6dp"
+    app:contentPaddingLeft="6dp"
+    app:contentPaddingRight="6dp"
+    app:contentPaddingTop="6dp">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout"
@@ -28,9 +27,9 @@
             android:ellipsize="end"
             android:lines="2"
             android:maxLines="2"
-            android:text="content"
+            android:text="@string/str_content"
             android:textColor="@color/c333333"
-            android:textSize="15sp"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -39,10 +38,10 @@
             android:id="@+id/gank_item_who"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="platform"
+            android:layout_marginTop="5dp"
+            android:text="@string/str_platform"
             android:textColor="@color/c999999"
-            android:textSize="13sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gank_item_desc" />
@@ -51,9 +50,9 @@
             android:id="@+id/gank_item_publishedat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="author"
+            android:text="@string/str_author"
             android:textColor="@color/c999999"
-            android:textSize="13sp"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/gank_item_who" />
 

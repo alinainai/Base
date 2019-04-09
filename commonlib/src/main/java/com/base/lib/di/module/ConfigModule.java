@@ -8,6 +8,10 @@ import com.base.lib.cache.Cache;
 import com.base.lib.cache.CacheType;
 import com.base.lib.cache.IntelligentCache;
 import com.base.lib.cache.LruCache;
+import com.base.lib.https.GlobalHttpHandler;
+import com.base.lib.https.log.DefaultFormatPrinter;
+import com.base.lib.https.log.FormatPrinter;
+import com.base.lib.https.log.RequestInterceptor;
 import com.base.lib.util.DataHelper;
 
 import java.io.File;
@@ -36,6 +40,10 @@ public class ConfigModule {
     private ClientModule.RxCacheConfiguration mRxCacheConfiguration;
     private ClientModule.GsonConfiguration mGsonConfiguration;
     private ExecutorService mExecutorService;
+    private GlobalHttpHandler mHandler;
+    private RequestInterceptor.Level mPrintHttpLogLevel;
+    private FormatPrinter mFormatPrinter;
+    private List<Interceptor> mInterceptors;
 
     private ConfigModule(Builder builder) {
         this.mBaseUrl = builder.baseUrl;
@@ -46,11 +54,25 @@ public class ConfigModule {
         this.mGsonConfiguration = builder.gsonConfiguration;
         this.mExecutorService = builder.executorService;
         this.mCacheFactory = builder.cacheFactory;
+        this.mHandler = builder.handler;
+        this.mPrintHttpLogLevel = builder.printHttpLogLevel;
+        this.mFormatPrinter = builder.formatPrinter;
+        this.mInterceptors = builder.interceptors;
     }
 
 
 
+    @Singleton
+    @Provides
+    RequestInterceptor.Level providePrintHttpLogLevel() {
+        return mPrintHttpLogLevel == null ? RequestInterceptor.Level.ALL : mPrintHttpLogLevel;
+    }
 
+    @Singleton
+    @Provides
+    FormatPrinter provideFormatPrinter() {
+        return mFormatPrinter == null ? new DefaultFormatPrinter() : mFormatPrinter;
+    }
 
     @Singleton
     @Provides
@@ -63,6 +85,7 @@ public class ConfigModule {
     File provideCacheFile(Application application) {
         return mCacheFile == null ? DataHelper.getCacheFile(application) : mCacheFile;
     }
+
 
 
     @Singleton
@@ -119,6 +142,25 @@ public class ConfigModule {
                 new SynchronousQueue<>(), Util.threadFactory("Arms Executor", false)) : mExecutorService;
     }
 
+    /**
+     * 提供处理 Http 请求和响应结果的处理类
+     *
+     * @return
+     */
+    @Singleton
+    @Provides
+    @Nullable
+    GlobalHttpHandler provideGlobalHttpHandler() {
+        return mHandler;
+    }
+
+    @Singleton
+    @Provides
+    @Nullable
+    List<Interceptor> provideInterceptors() {
+        return mInterceptors;
+    }
+
     public static final class Builder {
         private String baseUrl;
         private List<Interceptor> interceptors;
@@ -129,7 +171,9 @@ public class ConfigModule {
         private ClientModule.RxCacheConfiguration rxCacheConfiguration;
         private ClientModule.GsonConfiguration gsonConfiguration;
         private ExecutorService executorService;
-
+        private GlobalHttpHandler handler;
+        private RequestInterceptor.Level printHttpLogLevel;
+        private FormatPrinter formatPrinter;
         public Builder() {
         }
 
@@ -183,6 +227,22 @@ public class ConfigModule {
             this.executorService = executorService;
             return this;
         }
+
+        public Builder globalHttpHandler(GlobalHttpHandler handler) {//用来处理http响应结果
+            this.handler = handler;
+            return this;
+        }
+
+        public Builder printHttpLogLevel(RequestInterceptor.Level printHttpLogLevel) {//是否让框架打印 Http 的请求和响应信息
+            this.printHttpLogLevel = printHttpLogLevel;
+            return this;
+        }
+
+        public Builder formatPrinter(FormatPrinter formatPrinter) {
+            this.formatPrinter =formatPrinter;
+            return this;
+        }
+
         public ConfigModule build() {
             return new ConfigModule(this);
         }

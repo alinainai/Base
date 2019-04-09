@@ -56,8 +56,7 @@ public class LoginActivity extends BaseActivity {
     TextView qq;
     @BindView(R.id.sina)
     TextView sina;
-    @BindView(R.id.status_bar)
-    View statusBar;
+
     @BindView(R.id.videoView)
     MyVideoView mVideoView;
     @BindView(R.id.re_login)
@@ -147,7 +146,7 @@ public class LoginActivity extends BaseActivity {
 
         }catch (Exception e){
             //如果有异常背景变为黑
-            re_login.setBackgroundResource(R.mipmap.bg_color);
+
         }
 
     }
