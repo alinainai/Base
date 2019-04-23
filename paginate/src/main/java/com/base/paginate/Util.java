@@ -1,12 +1,12 @@
-package com.base.lib.adapter.rvadapter;
+package com.base.paginate;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Author: Othershe
@@ -38,7 +38,7 @@ public class Util {
     /**
      * 返回传入的{@link RecyclerView.LayoutManager}对象最后一个可见的 position
      *
-     * @param layoutManager
+     * @param layoutManager RecyclerView.LayoutManager
      * @return 最后一个可见条目的position
      */
     public static int findLastVisibleItemPosition(RecyclerView.LayoutManager layoutManager) {
@@ -52,7 +52,10 @@ public class Util {
     }
 
 
-
+    public static void removeChildView(ViewGroup vp) {
+        if (null != vp && vp.getChildCount() > 0)
+            vp.removeAllViews();
+    }
 
 
 }

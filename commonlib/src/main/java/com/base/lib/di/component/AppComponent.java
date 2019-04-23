@@ -8,6 +8,7 @@ import com.base.lib.di.module.AppModule;
 import com.base.lib.di.module.ClientModule;
 import com.base.lib.di.module.ConfigModule;
 import com.base.lib.https.IRepositoryManager;
+import com.base.lib.util.AppManager;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -26,9 +27,9 @@ import retrofit2.Retrofit;
 public interface AppComponent {
 
     Application application();
+
     OkHttpClient okHttpClient();
     File cacheFile();
-    Retrofit retrofitProvide();
 
     Cache<String, Object> extras();
     Cache.Factory cacheFactory();

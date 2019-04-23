@@ -1,4 +1,4 @@
-package com.base.lib.adapter.rvadapter;
+package com.base.paginate;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,37 +9,38 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Author: Othershe
- * Time: 2016/8/29 09:49
+ *
  */
-public class ViewHolder extends RecyclerView.ViewHolder {
+
+@SuppressWarnings("WeakerAccess")
+public class PageViewHolder extends RecyclerView.ViewHolder {
     private SparseArray<View> mViews;
     private View mConvertView;
 
     /**
      * 私有构造方法
      *
-     * @param itemView
+     * @param itemView View
      */
-    private ViewHolder(View itemView) {
+    private PageViewHolder(View itemView) {
         super(itemView);
         mConvertView = itemView;
         mViews = new SparseArray<>();
     }
 
-    public static ViewHolder create(Context context, int layoutId, ViewGroup parent) {
+    public static PageViewHolder create(Context context, int layoutId, ViewGroup parent) {
         View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-        return new ViewHolder(itemView);
+        return new PageViewHolder(itemView);
     }
 
-    public static ViewHolder create(View itemView) {
-        return new ViewHolder(itemView);
+    public static PageViewHolder create(View itemView) {
+        return new PageViewHolder(itemView);
     }
 
     /**
      * 通过id获得控件
      *
-     * @param viewId
+     * @param viewId LayID
      * @param <T>
      * @return
      */

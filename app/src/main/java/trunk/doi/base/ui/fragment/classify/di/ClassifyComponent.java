@@ -21,7 +21,7 @@ import com.base.lib.di.scope.FragmentScope;
 import dagger.BindsInstance;
 import dagger.Component;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.ui.fragment.classify.contract.ClassifyContract;
+import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
 
 /**
  * ================================================

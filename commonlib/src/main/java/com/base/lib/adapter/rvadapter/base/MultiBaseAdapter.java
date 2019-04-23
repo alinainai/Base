@@ -1,12 +1,12 @@
 package com.base.lib.adapter.rvadapter.base;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.lib.adapter.rvadapter.ViewHolder;
-import com.base.lib.adapter.rvadapter.interfaces.OnItemChildClickListener;
 import com.base.lib.adapter.rvadapter.interfaces.OnMultiItemClickListeners;
 
 import java.util.ArrayList;
@@ -21,8 +21,7 @@ import java.util.List;
 public abstract class MultiBaseAdapter<T> extends BaseAdapter<T> {
     private OnMultiItemClickListeners<T> mItemClickListener;
 
-    private ArrayList<Integer> mItemChildIds = new ArrayList<>();
-    private ArrayList<OnItemChildClickListener<T>> mItemChildListeners = new ArrayList<>();
+
 
     public MultiBaseAdapter(Context context, List<T> datas, boolean isOpenLoadMore) {
         super(context, datas, isOpenLoadMore);
@@ -32,6 +31,7 @@ public abstract class MultiBaseAdapter<T> extends BaseAdapter<T> {
 
     protected abstract int getItemLayoutId(int viewType);
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (isCommonItemView(viewType)) {
@@ -41,10 +41,10 @@ public abstract class MultiBaseAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = holder.getItemViewType();
         if (isCommonItemView(viewType)) {
-            bindCommonItem(holder, position - getHeaderCount(), viewType);
+            bindCommonItem(holder, position , viewType);
         }
     }
 
@@ -52,34 +52,16 @@ public abstract class MultiBaseAdapter<T> extends BaseAdapter<T> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         convert(viewHolder, getAllData().get(position), position, viewType);
 
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(viewHolder, getAllData().get(position), position, viewType);
-                }
+        viewHolder.getConvertView().setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(viewHolder, getAllData().get(position), position, viewType);
             }
         });
 
-        for (int i = 0; i < mItemChildIds.size(); i++) {
-            final int tempI = i;
-            if (viewHolder.getConvertView().findViewById(mItemChildIds.get(i)) != null) {
-                viewHolder.getConvertView().findViewById(mItemChildIds.get(i)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mItemChildListeners.get(tempI).onItemChildClick(viewHolder, getAllData().get(position), position);
-                    }
-                });
-            }
-        }
     }
 
     public void setOnMultiItemClickListener(OnMultiItemClickListeners<T> itemClickListener) {
         mItemClickListener = itemClickListener;
     }
 
-    public void setOnItemChildClickListener(int viewId, OnItemChildClickListener<T> itemChildClickListener) {
-        mItemChildIds.add(viewId);
-        mItemChildListeners.add(itemChildClickListener);
-    }
 }

@@ -85,12 +85,8 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-        <activity
-            android:name=".ui.activity.MineDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.CollectionActivity"
-            android:screenOrientation="portrait" />
+
+
 
         <meta-data
             android:name="trunk.doi.base.config.GlobalConfiguration"

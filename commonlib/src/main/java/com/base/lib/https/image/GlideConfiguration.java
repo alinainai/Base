@@ -41,10 +41,10 @@ public class GlideConfiguration extends AppGlideModule {
 
     @Override
     public void applyOptions(@NonNull Context context, @NonNull GlideBuilder builder) {
-
+        final AppComponent appComponent = ArmsUtils.getAppComponent(context);
         builder.setDiskCache(() -> {
             // Careful: the external cache directory doesn't enforce permissions
-            return DiskLruCacheWrapper.create(DataHelper.makeDirs(new File(DataHelper.getCacheFile(context), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
+            return DiskLruCacheWrapper.create(DataHelper.makeDirs(new File(appComponent.cacheFile(), "Glide")), IMAGE_DISK_CACHE_MAX_SIZE);
         });
 
         MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context).build();

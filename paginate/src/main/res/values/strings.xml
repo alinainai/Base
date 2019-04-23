@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">paginate</string>
+    <string name="str_load_end">数据加载完成</string>
+    <string name="str_net_wrong">上拉/点击加载更多</string>
+    <string name="str_loading">数据加载中&#8230;</string>
+</resources>

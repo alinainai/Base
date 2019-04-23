@@ -13,27 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package trunk.doi.base.ui.fragment.classify.di;
+package trunk.doi.base.https;
 
-import dagger.Binds;
-import dagger.Module;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyModle;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.rx_cache2.DynamicKey;
+import io.rx_cache2.Encrypt;
+import io.rx_cache2.EncryptKey;
+import io.rx_cache2.EvictProvider;
+import io.rx_cache2.LifeCache;
+import io.rx_cache2.Reply;
+import io.rx_cache2.internal.RxCache;
+import trunk.doi.base.bean.GankItemData;
+import trunk.doi.base.bean.HttpResult;
 
 /**
  * ================================================
- * 展示 Module 的用法
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 11:10
+ * 展示 {@link RxCache#using(Class)} 中需要传入的 Providers 的使用方式
+ * <p>
+ * Created by JessYan on 08/30/2016 13:53
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@Module
-public abstract class ClassifyModule {
-
-    @Binds
-    abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
-
+@EncryptKey("big")
+public interface CommonCache {
+    @LifeCache(duration = 2, timeUnit = TimeUnit.DAYS)
+    @Encrypt()
+    Observable<Reply<List<GankItemData>>> getGankItemData(Observable<List<GankItemData>> items, DynamicKey key, EvictProvider evictProvider);
 }

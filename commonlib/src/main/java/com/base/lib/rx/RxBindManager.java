@@ -5,6 +5,7 @@ import com.base.lib.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.lifecycle.FragmentIRxLifecycle;
 import com.base.lib.lifecycle.IRxLifecycle;
 import com.base.lib.mvp.IView;
+import com.base.lib.util.RxLifecycleUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -67,76 +68,6 @@ public class RxBindManager {
     }
 
 
-    /**
-     * 绑定 Activity 的指定生命周期
-     *
-     * @param view Activity
-     * @param event ActivityEvent
-     * @param <T> T
-     * @return LifecycleTransformer
-     */
-    public  <T> LifecycleTransformer<T> bindUntilEvent(@NonNull final IView view,
-                                                             final ActivityEvent event) {
-
-        if (view instanceof ActivityIRxLifecycle) {
-            return bindUntilEvent((ActivityIRxLifecycle) view, event);
-        } else {
-            throw new IllegalArgumentException("view isn't ActivityIRxLifecycle");
-        }
-    }
-
-    /**
-     * 绑定 Fragment 的指定生命周期
-     *
-     * @param view IView
-     * @param event event
-     * @param <T>  T
-     * @return LifecycleTransformer
-     */
-    public  <T> LifecycleTransformer<T> bindUntilEvent(@NonNull final IView view,
-                                                             final FragmentEvent event) {
-        if (view instanceof FragmentIRxLifecycle) {
-            return bindUntilEvent((FragmentIRxLifecycle) view, event);
-        } else {
-            throw new IllegalArgumentException("view isn't FragmentIRxLifecycle");
-        }
-    }
-
-    public  <T, R> LifecycleTransformer<T> bindUntilEvent(@NonNull final IRxLifecycle<R> lifecycle,
-                                                                final R event) {
-        return RxLifecycle.bindUntilEvent(lifecycle.provideLifecycleSubject(), event);
-    }
-
-    /**
-     * 绑定 Activity/Fragment 的生命周期
-     *
-     * @param view IView
-     * @param <T> T
-     * @return LifecycleTransformer
-     */
-    public  <T> LifecycleTransformer<T> bindToLifecycle(@NonNull IView view) {
-        if (view instanceof IRxLifecycle) {
-            return bindToLifecycle((IRxLifecycle) view);
-        } else {
-            throw new IllegalArgumentException("view isn't IRxLifecycle");
-        }
-    }
-
-    /**
-     *
-     * @param lifecycle IRxLifecycle
-     * @param <T> T
-     * @return LifecycleTransformer
-     */
-    public  <T> LifecycleTransformer<T> bindToLifecycle(@NonNull IRxLifecycle lifecycle) {
-        if (lifecycle instanceof ActivityIRxLifecycle) {
-            return RxLifecycleAndroid.bindActivity(((ActivityIRxLifecycle) lifecycle).provideLifecycleSubject());
-        } else if (lifecycle instanceof FragmentIRxLifecycle) {
-            return RxLifecycleAndroid.bindFragment(((FragmentIRxLifecycle) lifecycle).provideLifecycleSubject());
-        } else {
-            throw new IllegalArgumentException("IRxLifecycle not match");
-        }
-    }
 
     /**
      * 在View结束时
@@ -148,9 +79,9 @@ public class RxBindManager {
     public  <T> LifecycleTransformer<T> bindUntilDestroy(@NonNull final IView view) {
 
         if (view instanceof ActivityIRxLifecycle) {
-            return bindUntilEvent((ActivityIRxLifecycle) view, ActivityEvent.DESTROY);
+            return RxLifecycleUtils.bindUntilEvent((ActivityIRxLifecycle) view, ActivityEvent.DESTROY);
         } else if (view instanceof FragmentIRxLifecycle) {
-            return bindUntilEvent((FragmentIRxLifecycle) view, FragmentEvent.DESTROY);
+            return RxLifecycleUtils.bindUntilEvent((FragmentIRxLifecycle) view, FragmentEvent.DESTROY);
         } else {
             throw new IllegalArgumentException("view isn't IRxLifecycle");
         }

@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':componentservice', ':baseui'
+include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate'

@@ -10,22 +10,24 @@ import com.base.lib.base.delegate.App;
 import com.base.lib.base.delegate.AppDelegate;
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.base.lib.di.component.AppComponent;
-import com.squareup.leakcanary.LeakCanary;
 
-import butterknife.ButterKnife;
-import timber.log.Timber;
-import trunk.doi.base.BuildConfig;
+import trunk.doi.base.config.AppLifecyclesImpl;
 
 
 /**
- * Created by ly on 2016/5/27 11:39.
- * Application基类(没写完)
+ * 基于commonlib实现的 {@link Application}
+ * <p>
+ * 此类中必须进行{@link AppDelegate}的一些操作，如{@link AppDelegate#attachBaseContext(Context)}、
+ * {@link AppDelegate#onCreate(Application)}和{@link AppDelegate#onTerminate(Application)}方法。
+ * <p>
+ * 实现{@link App#getAppComponent()}方法，把{@link AppComponent}暴露出去以供其他类或者对象获取
+ * <p>
+ * 其他的一些第三方配置参考{@link AppLifecyclesImpl}
  */
 public class GankApp extends Application implements App {
 
 
     private AppLifecyclers mAppDelegate;
-    private static GankApp mInstance;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -40,8 +42,6 @@ public class GankApp extends Application implements App {
         super.onCreate();
         if (mAppDelegate != null)
             this.mAppDelegate.onCreate(this);
-
-        mInstance = this;//初始化appliacation
     }
 
     /**
@@ -60,11 +60,10 @@ public class GankApp extends Application implements App {
         return ((App) mAppDelegate).getAppComponent();
     }
 
-    public static Application getInstance() {
-        return mInstance;
-    }
 
-    //设置应用字体不随系统调节，在检测到fontScale属性不为默认值1的情况下，强行进行改变
+    /**
+     * 设置应用字体不随系统调节，在检测到fontScale属性不为默认值1的情况下，强行进行改变
+     */
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         if (newConfig.fontScale != 1)//非默认值

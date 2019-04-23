@@ -1,4 +1,4 @@
-package trunk.doi.base.ui.fragment.classify.contract;
+package trunk.doi.base.ui.fragment.classify.mvp;
 
 import com.base.lib.mvp.IView;
 
@@ -16,7 +16,7 @@ public interface ClassifyContract {
     }
 
     interface Model {
-        Observable<HttpResult<List<GankItemData>>> getGankItemData(String suburl);
+        Observable<List<GankItemData>> getGankItemData(String suburl);
     }
 
 

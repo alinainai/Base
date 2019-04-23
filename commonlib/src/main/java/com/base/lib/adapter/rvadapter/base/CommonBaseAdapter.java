@@ -1,18 +1,14 @@
 package com.base.lib.adapter.rvadapter.base;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.base.lib.adapter.rvadapter.ViewHolder;
-import com.base.lib.adapter.rvadapter.interfaces.OnItemChildClickListener;
 import com.base.lib.adapter.rvadapter.interfaces.OnItemClickListener;
-import com.base.lib.adapter.rvadapter.interfaces.OnSwipeMenuClickListener;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 
 /**
@@ -22,13 +18,6 @@ import java.util.List;
 public abstract class CommonBaseAdapter<T> extends BaseAdapter<T> {
     private OnItemClickListener<T> mItemClickListener;
 
-
-    private ArrayList<Integer> mViewId = new ArrayList<>();
-    private ArrayList<OnSwipeMenuClickListener<T>> mListener = new ArrayList<>();
-
-    private ArrayList<Integer> mItemChildIds = new ArrayList<>();
-    private ArrayList<OnItemChildClickListener<T>> mItemChildListeners = new ArrayList<>();
-
     public CommonBaseAdapter(Context context, List<T> datas, boolean isOpenLoadMore) {
         super(context, datas, isOpenLoadMore);
     }
@@ -37,6 +26,7 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter<T> {
 
     protected abstract int getItemLayoutId();
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (isCommonItemView(viewType)) {
@@ -46,10 +36,10 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter<T> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = holder.getItemViewType();
         if (isCommonItemView(viewType)) {
-            bindCommonItem(holder, position - getHeaderCount());
+            bindCommonItem(holder, position);
         }
     }
 
@@ -57,40 +47,11 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter<T> {
         final ViewHolder viewHolder = (ViewHolder) holder;
         convert(viewHolder, getAllData().get(position), position);
 
-        viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mItemClickListener != null) {
-                    mItemClickListener.onItemClick(viewHolder, getAllData().get(position), position);
-                }
+        viewHolder.getConvertView().setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(viewHolder, getAllData().get(position), position);
             }
         });
-
-        for (int i = 0; i < mItemChildIds.size(); i++) {
-            final int tempI = i;
-            if (viewHolder.getConvertView().findViewById(mItemChildIds.get(i)) != null) {
-                viewHolder.getConvertView().findViewById(mItemChildIds.get(i)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mItemChildListeners.get(tempI).onItemChildClick(viewHolder, getAllData().get(position), position);
-                    }
-                });
-            }
-        }
-
-        if (mViewId.size() > 0 && mListener.size() > 0 && viewHolder.getSwipeView() != null) {
-            ViewGroup swipeView = (ViewGroup) viewHolder.getSwipeView();
-
-            for (int i = 0; i < mViewId.size(); i++) {
-                final int tempI = i;
-                swipeView.findViewById(mViewId.get(i)).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mListener.get(tempI).onSwipMenuClick(viewHolder, getAllData().get(position), position);
-                    }
-                });
-            }
-        }
     }
 
     @Override
@@ -102,14 +63,5 @@ public abstract class CommonBaseAdapter<T> extends BaseAdapter<T> {
         mItemClickListener = itemClickListener;
     }
 
-    public void setOnSwipMenuClickListener(int viewId, OnSwipeMenuClickListener<T> swipeMenuClickListener) {
-        mViewId.add(viewId);
-        mListener.add(swipeMenuClickListener);
-    }
-
-    public void setOnItemChildClickListener(int viewId, OnItemChildClickListener<T> itemChildClickListener) {
-        mItemChildIds.add(viewId);
-        mItemChildListeners.add(itemChildClickListener);
-    }
 
 }

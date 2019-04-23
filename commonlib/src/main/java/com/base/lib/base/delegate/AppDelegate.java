@@ -72,7 +72,7 @@ public class AppDelegate implements App, AppLifecyclers {
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
-        MultiDex.install(base);
+
     }
 
     @Override

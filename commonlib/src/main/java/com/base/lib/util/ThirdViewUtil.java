@@ -13,27 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package trunk.doi.base.ui.fragment.classify.di;
+package com.base.lib.util;
 
-import dagger.Binds;
-import dagger.Module;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyModle;
+import android.app.Activity;
+import android.app.Dialog;
+import android.view.View;
+
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * ================================================
- * 展示 Module 的用法
- *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 11:10
+ * Created by JessYan on 17/03/2016 13:59
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@Module
-public abstract class ClassifyModule {
+public class ThirdViewUtil {
 
-    @Binds
-    abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
+    private ThirdViewUtil() {
+        throw new IllegalStateException("you can't instantiate me!");
+    }
+
+
+    public static Unbinder bindTarget(Object target, Object source) {
+        if (source instanceof Activity) {
+            return ButterKnife.bind(target, (Activity) source);
+        } else if (source instanceof View) {
+            return ButterKnife.bind(target, (View) source);
+        } else if (source instanceof Dialog) {
+            return ButterKnife.bind(target, (Dialog) source);
+        } else {
+            return Unbinder.EMPTY;
+        }
+    }
+
 
 }
