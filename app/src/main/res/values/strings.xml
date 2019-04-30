@@ -55,7 +55,7 @@
     <string name="mine_service_address">服务地址管理</string>
     <string name="mine_city">所在城市</string>
 
-    <string name="home">首页</string>
+    <string name="app_str_home_title">首页</string>
     <string name="title_activity_scan_qr_code">扫一扫</string>
     <string name="qc_code_close">关闭</string>
     <string name="qr_code_select_picture">照片</string>
@@ -101,6 +101,9 @@
     <string name="str_content">content</string>
     <string name="str_author">author</string>
     <string name="str_platform">platform</string>
+    <string name="app_str_product_title">产品</string>
+    <string name="app_str_info_title">信息</string>
+    <string name="app_str_account_title">我的</string>
 
 </resources>
 

@@ -10,7 +10,7 @@
     <View
         android:id="@+id/v_bg"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/title_bar_height"
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +19,7 @@
     <TextView
         android:id="@+id/title_bar_back"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/common_btn_height"
         android:drawableStart="@mipmap/title_bar_back"
         android:gravity="center_vertical"
         android:paddingStart="15dp"
@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/title_bar_close"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/common_btn_height"
         android:drawableStart="@mipmap/title_bar_close"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
@@ -47,7 +47,7 @@
         android:ellipsize="end"
         android:lines="1"
         android:textColor="@color/black"
-        android:textSize="@dimen/title_size"
+        android:textSize="@dimen/title_main_text_size"
         app:layout_constraintBottom_toBottomOf="@id/v_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="15dp"
         android:textColor="@color/black"
-        android:textSize="@dimen/title_right_size"
+        android:textSize="@dimen/title_right_text_size"
         app:layout_constraintBottom_toBottomOf="@id/v_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/v_bg" />

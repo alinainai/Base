@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 
 import com.base.lib.mvp.IPresenter;
+import com.base.lib.util.LogUtils;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public abstract class LazyLoadFragment<P extends IPresenter> extends BaseFragmen
         super.setUserVisibleHint(isVisibleToUser);
         mIsVisibleToUser = isVisibleToUser;
         tryLoadData();
+
+
     }
 
 
@@ -43,6 +46,7 @@ public abstract class LazyLoadFragment<P extends IPresenter> extends BaseFragmen
             mIsDataInitiated = true;
         }
     }
+
 
 
 }

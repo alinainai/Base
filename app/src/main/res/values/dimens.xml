@@ -3,9 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="title_size">@dimen/text_size_32_px</dimen>
-    <dimen name="title_right_size">@dimen/text_size_28_px</dimen>
-    <dimen name="title_bar_size">@dimen/px_100</dimen>
 
 
 

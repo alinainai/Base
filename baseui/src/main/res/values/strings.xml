@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">baseui</string>
+    <string name="str_status_view_empty">暂无数据, 点击重新加载</string>
+    <string name="str_status_view_failed">加载失败, 点击重新加载</string>
+    <string name="str_status_view_loading">玩命加载中&#8230;</string>
+    <string name="str_empty">""</string>
 </resources>

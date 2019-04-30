@@ -143,5 +143,6 @@ dependencies {
     testImplementation rootProject.ext.dependencies["canary-release"]
     implementation project(':commonlib')
     implementation project(path: ':paginate')
+    implementation project(path: ':magicindicator')
 }
 

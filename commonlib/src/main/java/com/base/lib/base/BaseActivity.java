@@ -76,12 +76,9 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
         // 不需要toolbar
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-
         super.onCreate(savedInstanceState);
-
-
+        //透明状态栏
         StatusBarManager.fullTransStatusBar(this);
-
         mContext = this;
         setContentView(R.layout.activity_base);
 

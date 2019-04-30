@@ -34,6 +34,8 @@ public interface AppComponent {
     Cache<String, Object> extras();
     Cache.Factory cacheFactory();
 
+
+
     /**
      * 用于管理网络请求层, 以及数据缓存层
      *

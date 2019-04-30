@@ -1,26 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--app:tabIndicatorColor ：指示线的颜色-->
-    <!--app:tabIndicatorHeight ：指示线的高度-->
-    <!--app:tabSelectedTextColor ： tab选中时的字体颜色-->
-    <!--app:tabMode="scrollable" ： 默认是fixed，固定的；scrollable：可滚动的-->
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
-        style="@style/style_news_TabLayout"
+    <com.base.baseui.view.StatusBarHeight
+        android:background="@color/cff3e19"
+        android:id="@+id/v_status"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/px_100"
-        android:background="@color/cff3e19" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_bar_height"
+        android:background="@color/cff3e19"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_status"  />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-</LinearLayout>
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />
+
+    <View
+        android:id="@+id/v_divider_line"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@drawable/shape_title_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />
+
+
+</android.support.constraint.ConstraintLayout>
 
 

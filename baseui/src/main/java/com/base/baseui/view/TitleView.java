@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.base.baseui.R;
 
 
+@SuppressWarnings("unused")
 public class TitleView extends ConstraintLayout {
     private TextView tvBack;
     private TextView tvRight;
@@ -112,7 +113,7 @@ public class TitleView extends ConstraintLayout {
     /**
      * 设置背景颜色
      *
-     * @param color
+     * @param color {@link android.graphics.Color}
      */
     public void setBackgroundColor(int color) {
         this.backColor = color;
@@ -132,11 +133,10 @@ public class TitleView extends ConstraintLayout {
         if (null != tvTitle) {
             tvTitle.setText(title);
         }
-        ;
     }
 
     /**
-     * 设置标题
+     * 获取标题
      */
     public String getTitleText() {
         return titleText;

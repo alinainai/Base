@@ -4,30 +4,28 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityManagerCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.SparseArray;
 import android.view.KeyEvent;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.View;
+import android.widget.Button;
 
 import com.base.baseui.view.StatusBarHeight;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.rx.RxBus;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import io.reactivex.disposables.Disposable;
+import butterknife.OnClick;
+import timber.log.Timber;
 import trunk.doi.base.R;
-import trunk.doi.base.bean.rxmsg.MainEvent;
 import trunk.doi.base.ui.fragment.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.util.ActivityController;
@@ -41,24 +39,26 @@ import trunk.doi.base.util.ToastUtil;
 @SuppressLint("UseSparseArrays")
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.rg_radio)
-    RadioGroup rg_radio;
+
+    @BindView(R.id.home_btn)
+    Button homeBtn;
     @BindView(R.id.classify_btn)
-    RadioButton classify_btn;
+    Button classifyBtn;
+    @BindView(R.id.account_btn)
+    Button accountBtn;
+    @BindView(R.id.shopping_btn)
+    Button shoppingBtn;
     //container
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
     private BaseFragment mClassifyFragment;//分类的fragment
-    private BaseFragment mInfoFragment;//购物车的fragment
-    private BaseFragment mMineFragment;//我的fragment
 
-    private int index;
     // 当前fragment的index
-    public int currentTabIndex;
-    private Disposable disposable;
+    public int mCurrentTabIndex=0;
+    private static final String CURRENTTABINDEX="CURRENTTABINDEX";
 
 
-    private static final Map<Integer, String> FRAGMENTS = new HashMap<Integer, String>() {
+    private static final SparseArray<String> FRAGMENTS = new SparseArray<String>() {
         {
             put(0, NewsFragment.TAG);
             put(1, MainFragment.TAG);
@@ -77,17 +77,6 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-    @Override
-    public void getStatusBarHeight(StatusBarHeight statusBar) {
-        super.getStatusBarHeight(statusBar);
-        statusBar.setBackgroundResource(R.color.cff3e19);
-    }
-
-    @Override
-    public void getTitleView(TitleView titleView) {
-        super.getTitleView(titleView);
-
-    }
 
     @Override
     public boolean needTitle() {
@@ -95,61 +84,73 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        mFragManager = getSupportFragmentManager();
+    public boolean needStatusBar() {
+        return false;
     }
 
     @Override
-    public void setListener() {
+    public void initView(Bundle savedInstanceState) {
 
-        rg_radio.setOnCheckedChangeListener((radioGroup, i) -> {
+        mFragManager = getSupportFragmentManager();
+        if (null != savedInstanceState) {
+            mCurrentTabIndex = savedInstanceState.getInt(CURRENTTABINDEX,0);
+        }
+        resetButton(mCurrentTabIndex);
+    }
 
-            switch (i) {
-                case R.id.home_btn:
-                    index = 0;
-                    break;
-                case R.id.classify_btn:
-                    index = 1;
-                    break;
-                case R.id.account_btn:
-                    index = 2;
-                    break;
-                case R.id.shopping_btn:
-                    index = 3;
-                    break;
-            }
-            changeFragment(currentTabIndex, index);
-            // 把当前tab设为选中状态
-            currentTabIndex = index;
-        });
 
-        disposable = RxBus.getDefault().toObservable(MainEvent.class)
-                .subscribe(event -> {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(CURRENTTABINDEX, mCurrentTabIndex);
+        super.onSaveInstanceState(outState);
+    }
 
-                    switch (event.getId()) {
-                        case 0:
-                            changeFragment(currentTabIndex, 0);
-                            break;
-                        case 1:
-                            changeFragment(currentTabIndex, 1);
-                            break;
-                        case 2:
-                            changeFragment(currentTabIndex, 2);
-                            break;
-                        case 3:
-                            changeFragment(currentTabIndex, 3);
-                            break;
+    @OnClick({R.id.home_btn, R.id.classify_btn, R.id.account_btn, R.id.shopping_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.home_btn:
+
+                if(mCurrentTabIndex==0){
+                    if (null != mFragManager) {
+                        List<Fragment> fragments = mFragManager.getFragments();
+                        if (fragments.size() > 0) {
+                            for (Fragment fragment : fragments) {
+                                if (fragment.isVisible() && NewsFragment.TAG.equals(fragment.getTag())) {
+                                    ((NewsFragment) fragment).scrollToTop();
+                                }
+                            }
+                        }
                     }
-                    ((RadioButton) rg_radio.getChildAt(event.getId())).setChecked(true);
-                });
+                    return;
+                }
+                resetButton(0);
 
-
+                break;
+            case R.id.classify_btn:
+                if(mCurrentTabIndex==1){
+                    return;
+                }
+                resetButton(1);
+                break;
+            case R.id.account_btn:
+                if(mCurrentTabIndex==3){
+                    return;
+                }
+                resetButton(3);
+                break;
+            case R.id.shopping_btn:
+                if(mCurrentTabIndex==2){
+                    return;
+                }
+                resetButton(2);
+                break;
+        }
     }
 
 
     @Override
     public void initData() {
-        resetButton();
+
     }
 
     public void changeFragment(int from, int to) {
@@ -189,20 +190,41 @@ public class MainActivity extends BaseActivity {
         return null;
     }
 
-    public void resetButton() {
-        index = 0;
-        changeFragment(currentTabIndex, index);
-        // 把第一个tab设为选中状态
-        currentTabIndex = 0;
+    public void resetButton(int index) {
+
+        switch (index){
+            case 0:
+                homeBtn.setSelected(true);
+                classifyBtn.setSelected(false);
+                accountBtn.setSelected(false);
+                shoppingBtn.setSelected(false);
+                break;
+            case 1:
+                homeBtn.setSelected(false);
+                classifyBtn.setSelected(true);
+                accountBtn.setSelected(false);
+                shoppingBtn.setSelected(false);
+                break;
+            case 2:
+                homeBtn.setSelected(false);
+                classifyBtn.setSelected(false);
+                accountBtn.setSelected(false);
+                shoppingBtn.setSelected(true);
+                break;
+            case 3:
+                homeBtn.setSelected(false);
+                classifyBtn.setSelected(false);
+                accountBtn.setSelected(true);
+                shoppingBtn.setSelected(false);
+                break;
+        }
+
+        changeFragment(mCurrentTabIndex, index);
+        // 把当前tab设为选中状态
+        mCurrentTabIndex = index;
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (!disposable.isDisposed()) {
-            disposable.dispose();
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

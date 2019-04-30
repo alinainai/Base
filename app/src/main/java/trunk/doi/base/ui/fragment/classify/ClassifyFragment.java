@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.base.baseui.view.status.Gloading;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.paginate.PageViewHolder;
-import com.base.paginate.interfaces.OnMultiItemClickListeners;
+import com.base.paginate.interfaces.OnLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,30 +32,26 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyPresenter;
  * Author:
  * Time: 2016/8/12 14:28
  */
-public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View {
+public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String SUB_TYPE = "SUB_TYPE";
     private int mPage = 1;//页数
-    private final static int PAGE_COUNT = 1;//每页条数
+    private final static int PAGE_COUNT = 10;//每页条数
     private String mSubtype;//分类
     private GankItemAdapter mGankItemAdapter;//适配器
-
 
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
-    @BindView(R.id.view_net_error)
-    android.view.View view_net_error;
-    @BindView(R.id.view_load)
-    android.view.View view_load;
+
+    protected Gloading.Holder mHolder;
 
 
-    private android.view.View mLoadingView;
-    private android.view.View mLoadEmpty;
-
-    private boolean isFirdtLoad;
-
+    @Override
+    public int initLayoutId() {
+        return R.layout.layout_base_refresh_recycler;
+    }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
@@ -70,8 +65,15 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
     }
 
+
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+
+        mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(() -> {
+            mHolder.showLoading();
+            loadData();
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -80,56 +82,35 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
         mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<>());
-        //RecyclerView 基础布局
-        mLoadingView = LayoutInflater.from(mContext).inflate(R.layout.layout_loading, (ViewGroup) mRecyclerView.getParent(), false);
-        mLoadEmpty = LayoutInflater.from(mContext).inflate(R.layout.layout_empty_data, (ViewGroup) mRecyclerView.getParent(), false);
 
 
-        //加载失败布局
-        android.view.View.OnClickListener retryListener = v -> {
-            mPage = 1;
-            if (view_net_error.getVisibility() == android.view.View.VISIBLE) {
-                view_net_error.setVisibility(android.view.View.GONE);
-            }
-            view_load.setVisibility(android.view.View.VISIBLE);
-            loadData();
-        };
         //条目点击
         mGankItemAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> mContext.startActivity(new Intent(mContext, WebViewActivity.class)
                 .putExtra("title", data.getDesc())
                 .putExtra("url", data.getUrl())));
-        //加载更多
-        mGankItemAdapter.setOnLoadMoreListener(isReload -> loadData());
-        //刷新
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            mPage = 1;
-            loadData();
-        });
-        view_net_error.findViewById(R.id.tv_retry).setOnClickListener(retryListener);
-        mLoadEmpty.findViewById(R.id.tv_click).setOnClickListener(retryListener);
 
-        mSwipeRefreshLayout.setEnabled(false);
+        mGankItemAdapter.setOnLoadMoreListener(isReload -> loadData());
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mHolder.showLoading();
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+
         mRecyclerView.setAdapter(mGankItemAdapter);
-
-
     }
 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-    }
 
-    @Override
-    public int initLayoutId() {
-        return R.layout.layout_base_reload;
     }
 
 
     private void loadData() {
-        mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/3/%d", mSubtype, mPage));
+        if (null != mPresenter)
+            mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/" + PAGE_COUNT + "/%d", mSubtype, mPage));
     }
 
 
@@ -145,18 +126,11 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @Override
     public void onSuccess(List<GankItemData> data) {
 
+        mHolder.showLoadSuccess();
+
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }
-        if (view_load.getVisibility() == android.view.View.VISIBLE) {
-            view_load.setVisibility(android.view.View.GONE);
-        }
-        if (isFirdtLoad) {
-
-            isFirdtLoad = false;
-        }
-        mSwipeRefreshLayout.setEnabled(true);
-
         if (data.size() > 0) {
 
             if (mPage == 1) {
@@ -172,7 +146,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             if (mPage > 1) {
                 mGankItemAdapter.showNormal();
             } else {
-                mSwipeRefreshLayout.setEnabled(false);
+                mHolder.showLoadFailed();
             }
         }
 
@@ -180,27 +154,33 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
     @Override
     public void onError() {
-        mSwipeRefreshLayout.setEnabled(true);
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
-        }
-        if (view_load.getVisibility() == android.view.View.VISIBLE) {
-            view_load.setVisibility(android.view.View.GONE);
-        }
-        if (isFirdtLoad) {
-            isFirdtLoad = false;
         }
         if (mPage > 1) {
             mGankItemAdapter.showNormal();
         } else {
-            view_net_error.setVisibility(android.view.View.VISIBLE);
-            mSwipeRefreshLayout.setEnabled(false);
+            mHolder.showLoadFailed();
         }
     }
 
 
     @Override
     protected void lazyLoadData() {
+
         loadData();
     }
+
+    @Override
+    public void onRefresh() {
+        mPage = 1;
+        loadData();
+    }
+
+    public void scrollToTop() {
+
+        mRecyclerView.smoothScrollToPosition(0);
+    }
+
+
 }

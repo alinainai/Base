@@ -2,12 +2,12 @@ package com.base.paginate.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.util.SparseArrayCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 
@@ -20,6 +20,9 @@ import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 
 /**
  * 带有加载更多的adapter
@@ -27,10 +30,12 @@ import java.util.List;
 @SuppressWarnings("unused")
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
+    private final String TAG = this.getClass().getSimpleName();
+
     private static final int TYPE_FOOTER_VIEW = 100002;//footer类型 Item
     private static final int TYPE_BASE_HEADER_VIEW = 200000;
 
-    private SparseArrayCompat<View> mHeaderViews;
 
     private OnLoadMoreListener mLoadMoreListener;
     private OnMultiItemClickListeners<T> mItemClickListener;
@@ -45,6 +50,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private View mLoadEndView; //分页加载结束view
 
     private RelativeLayout mFooterLayout;//footer view
+    private LinearLayout mHeaderLayout;
     private boolean isLoading;//是否正在加载更多
 
     protected abstract int getViewType(int position, T data);
@@ -81,14 +87,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    @SuppressWarnings("SwitchStatementWithTooFewBranches")
     @NonNull
     @Override
     public PageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        if (mHeaderViews != null && mHeaderViews.containsKey(viewType)) {
-            return PageViewHolder.create(mHeaderViews.get(viewType));
-        }
         PageViewHolder viewHolder;
         switch (viewType) {
             case TYPE_FOOTER_VIEW:
@@ -96,6 +97,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                     mFooterLayout = new RelativeLayout(mContext);
                 }
                 viewHolder = PageViewHolder.create(mFooterLayout);
+                break;
+            case TYPE_BASE_HEADER_VIEW:
+                viewHolder = PageViewHolder.create(mHeaderLayout);
                 break;
             default:
                 viewHolder = getViewHolder(parent, viewType);
@@ -113,12 +117,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
 
         if (isHeaderView(position)) {
-            return mHeaderViews.keyAt(position);
+            return TYPE_BASE_HEADER_VIEW;
         } else if (isFooterView(position)) {
             return TYPE_FOOTER_VIEW;
         }
         int dataPosition = position - getHeaderCount();
-
         return getViewType(dataPosition, mData.get(dataPosition));
     }
 
@@ -135,57 +138,27 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         convert(viewHolder, mData.get(position), position, viewType);
 
         viewHolder.getConvertView().setOnClickListener(view -> {
-            if (mItemClickListener != null&&position<mData.size()) {
+            if (mItemClickListener != null && position < mData.size()) {
                 mItemClickListener.onItemClick(viewHolder, mData.get(position), position, viewType);
             }
         });
 
     }
 
-    private boolean isHeaderView(int position) {
-        return position < getHeaderCount();
-    }
-
-    private int getHeaderCount() {
-        if (null == mHeaderViews)
-            return 0;
-        return mHeaderViews.size();
-    }
-
     /**
-     * 添加HeaderView
+     * 获得列表数据个数
      *
-     * @param view View
+     * @return 列表数据个数
      */
-    public void addHeaderView(View view) {
-        if (view == null) {
-            return;
-        }
-        if (null == mHeaderViews)
-            mHeaderViews = new SparseArrayCompat<>();
-        mHeaderViews.put(TYPE_BASE_HEADER_VIEW + getHeaderCount(), view);
-        notifyItemRangeInserted(getHeaderCount(), 1);
-    }
 
-    /**
-     * 根据position得到data
-     *
-     * @param position 位置
-     * @return datum
-     */
-    @SuppressWarnings("unused")
-    public T getItem(int position) {
-        if (mData.isEmpty() || position >= mData.size()) {
-            return null;
-        }
-        return mData.get(position);
+    public int getDataCount() {
+        return mData.size();
     }
-
 
     /**
      * StaggeredGridLayoutManager模式时，HeaderView、FooterView可占据一行
      *
-     * @param holder [@link RecyclerView.PageViewHolder]
+     * @param holder [@link RecyclerView.ViewHolder]
      */
     @Override
     public void onViewAttachedToWindow(@NonNull RecyclerView.ViewHolder holder) {
@@ -241,8 +214,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    if (!isAutoLoadMore && Util.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
-                        scrollLoadMore();
+
+                    //开启加载更过 && 最后一个条目可见 && recyclerView没有在顶端（解决SwipeRefresh下拉刷新后先进行加载更多的bug）
+                    if (!isAutoLoadMore && Util.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount() &&
+                            recyclerView.canScrollVertically(-1)) {
+                        loadMore(false);
                     }
                 }
             }
@@ -252,7 +228,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 super.onScrolled(recyclerView, dx, dy);
                 if (isAutoLoadMore && Util.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount()) {
                     if (!mData.isEmpty()) {
-                        scrollLoadMore();
+                        loadMore(false);
                     }
                 } else if (isAutoLoadMore) {
                     isAutoLoadMore = false;
@@ -264,7 +240,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * 到达底部开始刷新
      */
-    private void scrollLoadMore() {
+    private void loadMore(boolean isReload) {
 
         if (mFooterLayout.getChildAt(0) != mLoadEndView && !isLoading) {
 
@@ -275,13 +251,111 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 isLoading = true;
-                mLoadMoreListener.onLoadMore(false);
+                mLoadMoreListener.onLoadMore(isReload);
             }
         }
     }
 
-    public void reFresh() {
+    public void setRefreshState() {
         isLoading = true;
+    }
+
+
+    /**
+     * 根据position得到data
+     *
+     * @param position 位置
+     * @return datum
+     */
+    @SuppressWarnings("unused")
+    public T getItem(int position) {
+        if (mData.isEmpty() || position >= mData.size()) {
+            return null;
+        }
+        return mData.get(position);
+    }
+
+    private boolean isHeaderView(int position) {
+        return position < getHeaderCount();
+    }
+
+    private int getHeaderViewPosition() {
+        return 0;
+    }
+
+    private int getHeaderCount() {
+        if (mHeaderLayout == null || mHeaderLayout.getChildCount() == 0) {
+            return 0;
+        }
+        return 1;
+    }
+
+    /**
+     * 添加HeaderView
+     *
+     * @param view View
+     */
+    public int addHeaderView(View view) {
+        return addHeaderView(view, -1);
+    }
+
+    /**
+     * @param header
+     * @param index
+     */
+    public int addHeaderView(View header, final int index) {
+        if (mHeaderLayout == null) {
+            mHeaderLayout = new LinearLayout(header.getContext());
+            mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
+            mHeaderLayout.setLayoutParams(new RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+        }
+        final int childCount = mHeaderLayout.getChildCount();
+        int mIndex = index;
+        if (index < 0 || index > childCount) {
+            mIndex = childCount;
+        }
+        mHeaderLayout.addView(header, mIndex);
+        if (mHeaderLayout.getChildCount() == 1) {
+            int position = getHeaderViewPosition();
+            if (position != -1) {
+                notifyItemInserted(position);
+            }
+        }
+        return mIndex;
+    }
+
+
+    public int setHeaderView(View header) {
+        return setHeaderView(header, 0);
+    }
+
+    public int setHeaderView(View header, int index) {
+        if (mHeaderLayout == null || mHeaderLayout.getChildCount() <= index) {
+            return addHeaderView(header, index);
+        } else {
+            mHeaderLayout.removeViewAt(index);
+            mHeaderLayout.addView(header, index);
+            return index;
+        }
+    }
+
+
+    /**
+     * remove header view from mHeaderLayout.
+     * When the child count of mHeaderLayout is 0, mHeaderLayout will be set to null.
+     *
+     * @param header
+     */
+    public void removeHeaderView(View header) {
+        if (getHeaderCount() == 0) return;
+
+        mHeaderLayout.removeView(header);
+        if (mHeaderLayout.getChildCount() == 0) {
+            int position = getHeaderViewPosition();
+            if (position != -1) {
+                notifyItemRemoved(position);
+            }
+        }
     }
 
     /**
@@ -301,19 +375,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * @return true 是数据条目
      */
     private boolean isCommonItemView(int viewType) {
-        return viewType != TYPE_FOOTER_VIEW && !(viewType >= TYPE_BASE_HEADER_VIEW);
+        return viewType != TYPE_FOOTER_VIEW && viewType != TYPE_BASE_HEADER_VIEW;
     }
-
 
     /**
-     * 获得列表数据个数
+     * 返回 footer view数量
      *
-     * @return 列表数据个数
+     * @return FooterViewCount
      */
-
-    public int getDataCount() {
-        return mData.size();
+    private int getFooterViewCount() {
+        return mOpenLoadMore && !mData.isEmpty() ? 1 : 0;
     }
+
 
     /**
      * 刷新加载更多的数据
@@ -381,13 +454,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         }
         mData.remove(position);
         notifyItemRemoved(position + getHeaderCount());
-        if (mData.isEmpty()){
+        if (mData.isEmpty()) {
             notifyDataSetChanged();
             if (mOpenLoadMore)
                 resetLoading();
             isAutoLoadMore = true;
-        }
-        else
+        } else
             notifyItemRangeChanged(position + getHeaderCount(), mData.size() - position);
     }
 
@@ -463,15 +535,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     public void showNormal() {
         addFooterView(mLoadNormalView);
         isLoading = false;
-        mLoadNormalView.setOnClickListener(view -> {
-            if (!isLoading) {
-                addFooterView(mLoadingView);
-                if (mLoadMoreListener != null) {
-                    isLoading = true;
-                    mLoadMoreListener.onLoadMore(true);
-                }
-            }
-        });
     }
 
     private void addFooterView(View view) {
@@ -511,6 +574,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     @SuppressWarnings("WeakerAccess")
     public void setNormalView(View loadFailedView) {
         mLoadNormalView = loadFailedView;
+        mLoadNormalView.setOnClickListener(view -> {
+            loadMore(true);
+        });
         addFooterView(mLoadNormalView);
     }
 
@@ -535,14 +601,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    /**
-     * 返回 footer view数量
-     *
-     * @return FooterViewCount
-     */
-    private int getFooterViewCount() {
-        return mOpenLoadMore && !mData.isEmpty() ? 1 : 0;
-    }
+
 
     public void setOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
         mLoadMoreListener = loadMoreListener;

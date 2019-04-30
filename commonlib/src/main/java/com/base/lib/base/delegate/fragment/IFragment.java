@@ -23,6 +23,8 @@ public interface IFragment {
     @NonNull
     Cache<String, Object> provideCache();
 
+    int initLayoutId();
+
     void setupFragmentComponent(@NonNull AppComponent appComponent);
 
     boolean useEventBus();
@@ -31,7 +33,7 @@ public interface IFragment {
 
     void initData(@Nullable Bundle savedInstanceState);
 
-    int initLayoutId();
+
 
 
 }
