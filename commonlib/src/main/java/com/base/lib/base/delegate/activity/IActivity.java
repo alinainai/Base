@@ -21,7 +21,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.base.baseui.view.StatusBarHeight;
+import com.base.baseui.view.StatusLine;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.cache.Cache;
@@ -84,5 +84,5 @@ public interface IActivity {
     /**
      * @param statusBar StatusBarHeight
      */
-    void getStatusBarHeight(StatusBarHeight statusBar);
+    void getStatusBarHeight(StatusLine statusBar);
 }

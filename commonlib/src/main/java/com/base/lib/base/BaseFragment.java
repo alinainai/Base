@@ -91,4 +91,8 @@ public abstract class BaseFragment<P extends IPresenter> extends Fragment implem
         mContext = null;
     }
 
+    @Override
+    public void initData(@Nullable Bundle savedInstanceState) {
+
+    }
 }

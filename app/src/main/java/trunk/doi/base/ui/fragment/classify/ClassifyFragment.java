@@ -10,10 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.base.baseui.view.status.Gloading;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.paginate.interfaces.OnLoadMoreListener;
+import com.base.paginate.base.status.IStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,8 +44,6 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
 
-    protected Gloading.Holder mHolder;
-
 
     @Override
     public int initLayoutId() {
@@ -70,11 +67,6 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        mHolder = Gloading.getDefault().wrap(mRecyclerView).withRetry(() -> {
-            mHolder.showLoading();
-            loadData();
-        });
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -85,19 +77,25 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
 
         //条目点击
-        mGankItemAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> mContext.startActivity(new Intent(mContext, WebViewActivity.class)
-                .putExtra("title", data.getDesc())
-                .putExtra("url", data.getUrl())));
+        mGankItemAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->
+                mContext.startActivity(new Intent(mContext, WebViewActivity.class)
+                        .putExtra("title", data.getDesc())
+                        .putExtra("url", data.getUrl()))
+        );
 
+        mGankItemAdapter.setOnReloadListener(() -> {
+            mGankItemAdapter.setEmptyView(IStatus.STATUS_LOADING);
+            loadData();
+        });
         mGankItemAdapter.setOnLoadMoreListener(isReload -> loadData());
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mHolder.showLoading();
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         mRecyclerView.setAdapter(mGankItemAdapter);
+        mGankItemAdapter.setEmptyView(IStatus.STATUS_LOADING);
     }
 
 
@@ -126,7 +124,6 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @Override
     public void onSuccess(List<GankItemData> data) {
 
-        mHolder.showLoadSuccess();
 
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
@@ -144,9 +141,9 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             mPage++;
         } else {
             if (mPage > 1) {
-                mGankItemAdapter.showNormal();
+                mGankItemAdapter.showFooterFail();
             } else {
-                mHolder.showLoadFailed();
+                mGankItemAdapter.setEmptyView(IStatus.STATUS_FAIL);
             }
         }
 
@@ -158,16 +155,15 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             mSwipeRefreshLayout.setRefreshing(false);
         }
         if (mPage > 1) {
-            mGankItemAdapter.showNormal();
+            mGankItemAdapter.showFooterFail();
         } else {
-            mHolder.showLoadFailed();
+            mGankItemAdapter.setEmptyView(IStatus.STATUS_FAIL);
         }
     }
 
 
     @Override
     protected void lazyLoadData() {
-
         loadData();
     }
 
@@ -178,7 +174,6 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     }
 
     public void scrollToTop() {
-
         mRecyclerView.smoothScrollToPosition(0);
     }
 

@@ -20,7 +20,9 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -41,10 +43,10 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
@@ -62,8 +64,7 @@
 
         <activity
             android:name=".ui.activity.splash.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppThemeNoStatus">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -71,8 +72,10 @@
 
         </activity>
         <activity
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"/>
+             />
 
         <!-- WebView独立进程解决方案 -->
         <activity
@@ -87,10 +90,9 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
 
-
         <meta-data
             android:name="trunk.doi.base.config.GlobalConfiguration"
-            android:value="ClientConfigModule"/>
+            android:value="ClientConfigModule" />
 
     </application>
 

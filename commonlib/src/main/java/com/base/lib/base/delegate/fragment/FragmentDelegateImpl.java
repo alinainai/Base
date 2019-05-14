@@ -44,7 +44,7 @@ import timber.log.Timber;
  * ================================================
  */
 public class FragmentDelegateImpl implements FragmentDelegate {
-    private final String TAG="FragmentLife";
+    private final String TAG="FragmentDelegateImpl";
 
     private android.support.v4.app.FragmentManager mFragmentManager;
     private android.support.v4.app.Fragment mFragment;

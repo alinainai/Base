@@ -17,13 +17,9 @@ package trunk.doi.base.config;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
 
-
-import com.base.baseui.view.status.DefaultAdapter;
-import com.base.baseui.view.status.Gloading;
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.base.lib.cache.IntelligentCache;
 import com.base.lib.util.ArmsUtils;
@@ -31,7 +27,6 @@ import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
-
 import timber.log.Timber;
 import trunk.doi.base.BuildConfig;
 
@@ -40,7 +35,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
     @Override
     public void attachBaseContext(@NonNull Context base) {
-          MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
+        MultiDex.install(base);  //这里比 onCreate 先执行,常用于 MultiDex 初始化,插件化框架的初始化
     }
 
     @Override
@@ -52,15 +47,12 @@ public class AppLifecyclesImpl implements AppLifecyclers {
             return;
         }
 
-        Gloading.initDefault(new DefaultAdapter());
-
         if (BuildConfig.LOG_DEBUG) {//Timber初始化
             Timber.plant(new Timber.DebugTree());
             ButterKnife.setDebug(true);
-            Gloading.debug(true);
         }
         ArmsUtils.getAppComponent(application).extras().put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
-                        , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+                , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
     }
 
     @Override

@@ -3,7 +3,6 @@ package trunk.doi.base.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -12,20 +11,17 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.base.baseui.view.StatusBarHeight;
-import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import timber.log.Timber;
 import trunk.doi.base.R;
+import trunk.doi.base.ui.fragment.AdapterFragment;
 import trunk.doi.base.ui.fragment.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.util.ActivityController;
@@ -52,10 +48,11 @@ public class MainActivity extends BaseActivity {
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
     private BaseFragment mClassifyFragment;//分类的fragment
+    private BaseFragment mAdapterFragment;//分类的fragment
 
     // 当前fragment的index
-    public int mCurrentTabIndex=0;
-    private static final String CURRENTTABINDEX="CURRENTTABINDEX";
+    public int mCurrentTabIndex = 0;
+    private static final String CURRENTTABINDEX = "CURRENTTABINDEX";
 
 
     private static final SparseArray<String> FRAGMENTS = new SparseArray<String>() {
@@ -63,7 +60,7 @@ public class MainActivity extends BaseActivity {
             put(0, NewsFragment.TAG);
             put(1, MainFragment.TAG);
             put(2, MainFragment.TAG);
-            put(3, MainFragment.TAG);
+            put(3, AdapterFragment.TAG);
         }
     };
 
@@ -93,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
         mFragManager = getSupportFragmentManager();
         if (null != savedInstanceState) {
-            mCurrentTabIndex = savedInstanceState.getInt(CURRENTTABINDEX,0);
+            mCurrentTabIndex = savedInstanceState.getInt(CURRENTTABINDEX, 0);
         }
         resetButton(mCurrentTabIndex);
     }
@@ -109,48 +106,30 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.home_btn:
-
-                if(mCurrentTabIndex==0){
-                    if (null != mFragManager) {
-                        List<Fragment> fragments = mFragManager.getFragments();
-                        if (fragments.size() > 0) {
-                            for (Fragment fragment : fragments) {
-                                if (fragment.isVisible() && NewsFragment.TAG.equals(fragment.getTag())) {
-                                    ((NewsFragment) fragment).scrollToTop();
-                                }
-                            }
-                        }
-                    }
+                if (mCurrentTabIndex == 0) {
                     return;
                 }
                 resetButton(0);
-
                 break;
             case R.id.classify_btn:
-                if(mCurrentTabIndex==1){
+                if (mCurrentTabIndex == 1) {
                     return;
                 }
                 resetButton(1);
                 break;
             case R.id.account_btn:
-                if(mCurrentTabIndex==3){
+                if (mCurrentTabIndex == 3) {
                     return;
                 }
                 resetButton(3);
                 break;
             case R.id.shopping_btn:
-                if(mCurrentTabIndex==2){
+                if (mCurrentTabIndex == 2) {
                     return;
                 }
                 resetButton(2);
                 break;
         }
-    }
-
-
-    @Override
-    public void initData() {
-
     }
 
     public void changeFragment(int from, int to) {
@@ -169,30 +148,41 @@ public class MainActivity extends BaseActivity {
         if (!tofragment.isAdded()) {
             transaction.add(R.id.container, tofragment, FRAGMENTS.get(to));
         }
-        transaction.show(tofragment).commitAllowingStateLoss();
+        transaction.show(tofragment).commitNow();
     }
 
-    @Nullable
+    @NonNull
     private Fragment getFragmentFromFactory(String tag) {
-        if (MainFragment.TAG.equals(tag)) {
-            if (mHomeFragment == null) {
-                mHomeFragment = MainFragment.newInstance();
-            }
-            return mHomeFragment;
-        }
-        if (NewsFragment.TAG.equals(tag)) {
-            if (mClassifyFragment == null) {
-                mClassifyFragment = NewsFragment.newInstance();
-            }
-            return mClassifyFragment;
-        }
 
-        return null;
+        Fragment fragment;
+        switch (tag) {
+            case MainFragment.TAG:
+                if (mHomeFragment == null) {
+                    mHomeFragment = MainFragment.newInstance();
+                }
+                fragment = mHomeFragment;
+                break;
+            case NewsFragment.TAG:
+                if (mClassifyFragment == null) {
+                    mClassifyFragment = NewsFragment.newInstance();
+                }
+                fragment = mClassifyFragment;
+                break;
+            case AdapterFragment.TAG:
+                if (mAdapterFragment == null) {
+                    mAdapterFragment = AdapterFragment.newInstance();
+                }
+                fragment = mAdapterFragment;
+                break;
+            default:
+                throw new NullPointerException("the tag of Fragment is invalid!!!");
+        }
+        return fragment;
     }
 
     public void resetButton(int index) {
 
-        switch (index){
+        switch (index) {
             case 0:
                 homeBtn.setSelected(true);
                 classifyBtn.setSelected(false);
@@ -264,5 +254,16 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+
+//    if (null != mFragManager) {
+//                        List<Fragment> fragments = mFragManager.getFragments();
+//                        if (fragments.size() > 0) {
+//                            for (Fragment fragment : fragments) {
+//                                if (fragment.isVisible() && NewsFragment.TAG.equals(fragment.getTag())) {
+//                                    ((NewsFragment) fragment).scrollToTop();
+//                                }
+//                            }
+//                        }
+//                    }
 
 }

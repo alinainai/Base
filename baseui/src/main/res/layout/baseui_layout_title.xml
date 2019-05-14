@@ -73,7 +73,7 @@
         android:id="@+id/v_divider_line"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:background="@drawable/shape_title_shadow"
+        android:background="@drawable/title_shape_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_bg" />

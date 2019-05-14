@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.baseui.view.StatusBarHeight
+    <com.base.baseui.view.StatusLine
         android:background="@color/cff3e19"
         android:id="@+id/v_status"
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
         android:id="@+id/v_divider_line"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:background="@drawable/shape_title_shadow"
+        android:background="@drawable/title_shape_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />

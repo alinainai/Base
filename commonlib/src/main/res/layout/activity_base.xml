@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.baseui.view.StatusBarHeight
+    <com.base.baseui.view.StatusLine
         android:id="@+id/v_status_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

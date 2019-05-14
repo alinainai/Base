@@ -89,5 +89,11 @@ public class Util {
             vp.removeAllViews();
     }
 
+    public static int dpToPx(Context context,float dp) {
+        float density = context.getApplicationContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * density + 0.5f * (dp >= 0 ? 1 : -1));
+    }
+
+
 
 }

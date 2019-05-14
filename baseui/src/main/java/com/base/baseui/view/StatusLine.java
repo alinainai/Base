@@ -6,18 +6,18 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-public class StatusBarHeight extends LinearLayout {
+public class StatusLine extends LinearLayout {
 
     private int mStatusBarHeight;
-    public StatusBarHeight(Context context) {
+    public StatusLine(Context context) {
         this(context, null);
     }
 
-    public StatusBarHeight(Context context, @Nullable AttributeSet attrs) {
+    public StatusLine(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public StatusBarHeight(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public StatusLine(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

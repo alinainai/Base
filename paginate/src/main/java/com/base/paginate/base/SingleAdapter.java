@@ -2,7 +2,6 @@ package com.base.paginate.base;
 
 import android.content.Context;
 
-
 import com.base.paginate.PageViewHolder;
 
 import java.util.List;
@@ -21,8 +20,12 @@ public abstract class SingleAdapter<T> extends MultiAdapter<T> {
         this(context, data, true);
     }
 
-    public SingleAdapter(Context context, List<T> data, boolean isOpenLoadMore) {
-        super(context, data, isOpenLoadMore);
+    public SingleAdapter(Context context, List<T> data, boolean openLoadMore) {
+        this(context, data, openLoadMore, true);
+    }
+
+    public SingleAdapter(Context context, List<T> data, boolean openLoadMore, boolean openEmpty) {
+        super(context, data, openLoadMore, openEmpty);
     }
 
     @Override

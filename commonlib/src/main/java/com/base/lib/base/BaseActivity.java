@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewStub;
 import android.view.Window;
-import android.view.WindowManager;
 
-import com.base.baseui.view.StatusBarHeight;
+import com.base.baseui.view.StatusLine;
 import com.base.baseui.view.TitleView;
 import com.base.lib.R;
 import com.base.lib.base.delegate.activity.IActivity;
@@ -83,7 +82,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         setContentView(R.layout.activity_base);
 
         //初始化界面内容layout
-        StatusBarHeight statusBar = findViewById(R.id.v_status_bar);
+        StatusLine statusBar = findViewById(R.id.v_status_bar);
         TitleView titleView = findViewById(R.id.v_title);
         ViewStub viewContent = findViewById(R.id.base_fragment_content);
         if (needTitle()) {
@@ -119,6 +118,14 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * 比喻添加EditText的focus获取事件
      */
     public void setListener() {
+    }
+
+    /**
+     * 初始化数据
+     * 默认实现，需要的时候子类重写
+     */
+    public void initData() {
+
     }
 
     @Override
@@ -159,7 +166,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
 
     @Override
-    public void getStatusBarHeight(StatusBarHeight statusBar) {
+    public void getStatusBarHeight(StatusLine statusBar) {
 
     }
 

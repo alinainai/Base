@@ -78,7 +78,7 @@ public class TitleView extends ConstraintLayout {
     private void initView(AttributeSet attrs) {
 
         initAttrs(attrs);
-        View view = View.inflate(getContext(), R.layout.layout_title, this);
+        View view = View.inflate(getContext(), R.layout.baseui_layout_title, this);
 
         v_bg = view.findViewById(R.id.v_bg);
 

@@ -19,17 +19,14 @@ import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
-import android.webkit.WebHistoryItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 
-import com.base.baseui.view.StatusBarHeight;
+import com.base.baseui.view.StatusLine;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
@@ -40,7 +37,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import timber.log.Timber;
 import trunk.doi.base.BuildConfig;
 import trunk.doi.base.R;
@@ -136,7 +132,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     @Override
-    public void getStatusBarHeight(StatusBarHeight statusBar) {
+    public void getStatusBarHeight(StatusLine statusBar) {
         super.getStatusBarHeight(statusBar);
         if (StatusBarUtils.setStatusBarLightMode(mContext)) {
             statusBar.setBackgroundColor(getResources().getColor(R.color.white));

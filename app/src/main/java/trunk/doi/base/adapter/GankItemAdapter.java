@@ -36,7 +36,7 @@ public class GankItemAdapter extends SingleAdapter<GankItemData> {
         holder.setText(R.id.gank_item_desc, data.getDesc());
         String who = TextUtils.isEmpty(data.getWho()) ? "佚名" : data.getWho();
         holder.setText(R.id.gank_item_who, who);
-        holder.setText(R.id.gank_item_publishedat, data.getPublishedAt().substring(0, 10));
+        holder.setText(R.id.gank_item_publishedat,TextUtils.isEmpty(data.getPublishedAt())?"":data.getPublishedAt().substring(0, 10));
     }
 
 
