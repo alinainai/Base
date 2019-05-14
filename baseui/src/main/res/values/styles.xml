@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="gas_dialog" parent="Theme.AppCompat.Light.Dialog">
         <!-- 边框 -->
         <item name="android:windowFrame">@null</item>
@@ -17,8 +18,14 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
 
+    </style>
+    <!--<item name="android:windowAnimationStyle">@style/gas_dialog_anim</item>-->
+
+    <style name="gas_dialog_anim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/gas_anim_show</item>
+        <item name="android:windowExitAnimation">@anim/gas_anim_dismiss</item>
+    </style>
 
     <style name="gas_dialog_divder_line">
         <item name="android:layout_width">match_parent</item>
@@ -31,7 +38,6 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/cdedede</item>
     </style>
-
 
 
 </resources>

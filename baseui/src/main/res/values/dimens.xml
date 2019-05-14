@@ -13,4 +13,5 @@
     <!--GasDialog相关-->
     <dimen name="corner_dimens">6dp</dimen>
 
+
 </resources>
