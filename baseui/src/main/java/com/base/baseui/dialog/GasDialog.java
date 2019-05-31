@@ -58,7 +58,7 @@ public abstract class GasDialog extends DialogFragment {
     public abstract void bindView(View v);
 
     public void show(FragmentManager fragmentManager) {
-        showNow(fragmentManager, TAG);
+            showNow(fragmentManager, TAG);
     }
 
     public float getDimAmount() {

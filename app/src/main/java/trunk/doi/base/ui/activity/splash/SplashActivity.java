@@ -19,10 +19,9 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
-import trunk.doi.base.base.GankApp;
 import trunk.doi.base.constant.Constant;
 import trunk.doi.base.ui.MainActivity;
-import trunk.doi.base.util.AppUtils;
+import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.util.ToastUtil;
 
 public class SplashActivity extends BaseActivity {
@@ -49,7 +48,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
-        tv_version.setText(String.format("当前版本 v%s", AppUtils.getVersionName(mContext)));
+        tv_version.setText(String.format("当前版本 v%s", GasUtils.getVersionName(mContext)));
 //        String[] pers = {android.Manifest.permission.READ_PHONE_STATE,
 //                android.Manifest.permission.CAMERA,
 //                android.Manifest.permission.READ_EXTERNAL_STORAGE,

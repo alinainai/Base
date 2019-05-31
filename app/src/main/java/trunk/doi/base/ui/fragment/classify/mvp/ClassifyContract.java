@@ -1,5 +1,7 @@
 package trunk.doi.base.ui.fragment.classify.mvp;
 
+import android.content.Context;
+
 import com.base.lib.mvp.IView;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public interface ClassifyContract {
 
     interface View extends IView {
         void onSuccess(List<GankItemData> data);
+        Context getWrapContext();
     }
 
     interface Model {

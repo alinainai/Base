@@ -140,13 +140,9 @@ public class AdapterFragment extends BaseFragment {
         mGankItemAdapter.setOnLoadMoreListener(isReload -> mHandler.sendEmptyMessageDelayed(1, DELAYTIME));
         mGankItemAdapter.setDefaultEmptyView(new CustomEmptyView(mContext));
         mGankItemAdapter.setDefaultFooterLoadMore(new CustomFooterLoadMore(mContext));
-
         //下拉刷新
         mSwipeRefreshLayout.setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(2, DELAYTIME));
-
-
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-
         mRecyclerView.setAdapter(mGankItemAdapter);
         View header = LayoutInflater.from(mContext).inflate(R.layout.dialog_more, null);
         mGankItemAdapter.addHeaderView(header);

@@ -30,7 +30,7 @@ import butterknife.BindView;
 import trunk.doi.base.R;
 import trunk.doi.base.adapter.SimpleFragmentPagerAdapter;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.util.AppUtils;
+import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.view.ColorFlipPagerTitleView;
 
 /**
@@ -68,7 +68,7 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        List<String> mTitles = AppUtils.stringArrayToList(mContext, R.array.gank);
+        List<String> mTitles = GasUtils.stringArrayToList(mContext, R.array.gank);
         mFragments = new ArrayList<>();
 
         for (String subtype : mTitles) {

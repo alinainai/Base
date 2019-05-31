@@ -1,6 +1,7 @@
 package trunk.doi.base.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -11,25 +12,25 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.RecyclerView;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by ly on 2016/5/26 17:37.
  * 跟App相关的辅助类
  */
-public class AppUtils {
-    private AppUtils() {
+public class GasUtils {
+    private GasUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
@@ -68,7 +69,6 @@ public class AppUtils {
     }
 
 
-
     /**
      * 手机号校验
      */
@@ -79,11 +79,6 @@ public class AppUtils {
      */
     public static final String ISPWD = "([0-9](?=[0-9]*?[a-zA-Z])\\w{5,19})|([a-zA-Z](?=[a-zA-Z]*?[0-9])\\w{5,19})";
 
-    /**
-     * 校验中文
-     * 字符串仅能是中文
-     */
-    public static final String ONLYCHINESE = "^[\\\\u4e00-\\\\u9fa5]{0,}$";
 
     /**
      * 由数字、26个英文字母或下划线组成的字符串
@@ -143,27 +138,30 @@ public class AppUtils {
     /**
      * 获取设备ID
      */
+    @SuppressLint("HardwareIds")
     public static String getDeviceId(Context context) {
 
-        if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context.getApplicationContext(), Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED) {
+
             TelephonyManager tm = (TelephonyManager) context.getApplicationContext()
                     .getSystemService(Context.TELEPHONY_SERVICE);
+            String deviceId = tm.getDeviceId();
+            if (!TextUtils.isEmpty(deviceId))
+                return deviceId;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                String imei = tm.getImei();
+                if (!TextUtils.isEmpty(imei))
+                    return imei;
+                String meid = tm.getMeid();
+                return TextUtils.isEmpty(meid) ? "" : meid;
+            }
             return tm.getDeviceId();
         }
         return "";
 
     }
 
-    /**
-     * double类型的price变 ￥0.00
-     *
-     * @param price
-     * @return
-     */
-    public static String formatPrice(double price) {
-        DecimalFormat df = new DecimalFormat("0.00");
-        return String.format("￥%s",df.format(price));
-    }
 
     /**
      * Try to return the absolute file path from the given Uri  兼容了file:///开头的 和 content://开头的情况
@@ -197,7 +195,8 @@ public class AppUtils {
 
 
     /**
-     *  drawable转化为 bitmap
+     * drawable转化为 bitmap
+     *
      * @param drawable drawable
      * @return bitmap
      */
@@ -214,7 +213,10 @@ public class AppUtils {
     }
 
     /**
-     * 获得屏幕高度
+     * 获取屏幕宽度 px
+     *
+     * @param context Context
+     * @return 获取屏幕宽度
      */
     public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context
@@ -225,14 +227,53 @@ public class AppUtils {
     }
 
     /**
-     * 获得屏幕宽度
+     * 获取屏幕高度 px
+     *
+     * @param context Context
+     * @return px值
      */
     public static int getScreenHeight(Context context) {
-        WindowManager wm = (WindowManager) context
+        WindowManager wm = (WindowManager) context.getApplicationContext()
                 .getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         return outMetrics.heightPixels;
+    }
+
+    /**
+     * 将px转换为dp
+     *
+     * @param px
+     * @return
+     */
+    public static int pxTodp(Context context, float px) {
+        final float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
+        return (int) (px / scale + 0.5);
+    }
+
+    /**
+     * 将dp转换为px
+     *
+     * @param context
+     * @param dp
+     * @return
+     */
+    public static int dpTopx(Context context, float dp) {
+        final float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * scale + 0.5);
+    }
+
+    /**
+     * 初始化recyclerView
+     *
+     * @param recyclerView  RecyclerView
+     * @param layoutManager LayoutManager
+     */
+    public static void initRecycler(RecyclerView recyclerView, RecyclerView.LayoutManager layoutManager) {
+        recyclerView.setLayoutManager(layoutManager);
+        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 

@@ -23,13 +23,8 @@ public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyCont
 
 
 
-//    @Inject
-//    AppManager mAppManager;
     @Inject
     Application mApplication;
-
-
-
 
 
     @Inject

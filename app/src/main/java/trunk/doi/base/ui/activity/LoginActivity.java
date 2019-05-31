@@ -16,8 +16,6 @@ import android.widget.TextView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -27,10 +25,8 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.constant.Constant;
 import trunk.doi.base.bean.User;
-import trunk.doi.base.util.AppUtils;
-import trunk.doi.base.util.SPUtils;
+import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.view.MyVideoView;
 
 
@@ -93,9 +89,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().matches(AppUtils.ISPHONENUM)){
+                if(s.toString().matches(GasUtils.ISPHONENUM)){
 
-                    if(password.getEditableText().toString().matches(AppUtils.ISPWD))
+                    if(password.getEditableText().toString().matches(GasUtils.ISPWD))
                         login.setEnabled(true);
 
                 }else{
@@ -116,9 +112,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().matches(AppUtils.ISPWD)){
+                if(s.toString().matches(GasUtils.ISPWD)){
 
-                    if(accountNum.getEditableText().toString().matches(AppUtils.ISPHONENUM))
+                    if(accountNum.getEditableText().toString().matches(GasUtils.ISPHONENUM))
                         login.setEnabled(true);
                 }else{
                     login.setEnabled(false);
@@ -211,8 +207,8 @@ public class LoginActivity extends BaseActivity {
                 user.setPhone(accountNum.getEditableText().toString());
                 user.setPassword(password.getEditableText().toString());
                 user.setUsername(accountNum.getEditableText().toString());
-                SPUtils.saveString(mContext, Constant.USER_INFO, new Gson().toJson(user), toString());
-                SPUtils.saveBoolean(mContext, Constant.LOGIN_STATE, true);
+//                SPUtils.saveString(mContext, Constant.USER_INFO, new Gson().toJson(user), toString());
+//                SPUtils.saveBoolean(mContext, Constant.LOGIN_STATE, true);
                 finish();
                 break;
             case R.id.qq://起吊qq

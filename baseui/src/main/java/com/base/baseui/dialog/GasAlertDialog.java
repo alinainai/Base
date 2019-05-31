@@ -19,7 +19,6 @@ public class GasAlertDialog extends GasDialog {
     private static final String CANCELABLE = "CANCELABLE";
     private GasDialog.OnGasBtnClickListener mOnNegBtnClickListener;
     private GasDialog.OnGasBtnClickListener mOnPosBtnClickListener;
-    private boolean mCancelable = true;
 
 
     public GasAlertDialog() {

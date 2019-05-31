@@ -1,5 +1,6 @@
 package trunk.doi.base.ui.fragment.classify;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -67,7 +68,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         //刷新控件
@@ -147,6 +148,11 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             }
         }
 
+    }
+
+    @Override
+    public Context getWrapContext() {
+        return mContext;
     }
 
     @Override

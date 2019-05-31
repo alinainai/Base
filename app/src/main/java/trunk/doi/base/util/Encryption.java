@@ -57,6 +57,7 @@ public class Encryption {
     public static String Decrypt(String sSrc, String sKey) throws Exception {
         byte[] raw = sKey.getBytes("ASCII");
         SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
+        //AES_CBC_
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         IvParameterSpec iv = new IvParameterSpec("0102030405060708".getBytes());
         cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
@@ -142,6 +143,6 @@ public class Encryption {
                 }
             }
         }
-        return sb.append("&").append("secretKey").append("=").append(secretKey + "").toString();
+        return sb.append("&").append("secretKey").append("=").append(secretKey).toString();
     }
 }
