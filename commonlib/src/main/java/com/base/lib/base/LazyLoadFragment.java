@@ -1,14 +1,7 @@
 package com.base.lib.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-
-
 import com.base.lib.mvp.IPresenter;
-import com.base.lib.util.LogUtils;
-
-import java.util.List;
 
 /**
  * 子类覆写{@link LazyLoadFragment}lazyLoadData可快速实现Fragment懒加载
@@ -29,7 +22,6 @@ public abstract class LazyLoadFragment<P extends IPresenter> extends BaseFragmen
     }
 
 
-
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -46,7 +38,6 @@ public abstract class LazyLoadFragment<P extends IPresenter> extends BaseFragmen
             mIsDataInitiated = true;
         }
     }
-
 
 
 }

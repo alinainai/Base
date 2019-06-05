@@ -17,7 +17,8 @@ package com.base.lib.base.delegate;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * ================================================

@@ -1,6 +1,6 @@
 package com.base.lib.base.delegate;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.base.lib.di.component.AppComponent;
 

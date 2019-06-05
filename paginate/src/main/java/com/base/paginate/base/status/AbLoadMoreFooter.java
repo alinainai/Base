@@ -3,10 +3,11 @@ package com.base.paginate.base.status;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.LayoutRes;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
+
+import androidx.annotation.LayoutRes;
 
 import com.base.paginate.Util;
 

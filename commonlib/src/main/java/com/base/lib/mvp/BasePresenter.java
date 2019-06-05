@@ -1,11 +1,12 @@
 package com.base.lib.mvp;
 
 import android.app.Activity;
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.base.lib.util.EventBusManager;
 
@@ -32,10 +33,10 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     /**
      * 如果当前页面同时需要 Model 层和 View 层,则使用此构造函数(默认)
      *
-     * @param model  IModel
-     * @param view IView
+     * @param model IModel
+     * @param view  IView
      */
-    public BasePresenter(@NonNull M model,@NonNull V view) {
+    public BasePresenter(@NonNull M model, @NonNull V view) {
         this.mModel = model;
         this.mView = view;
         onStart();

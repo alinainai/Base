@@ -17,8 +17,9 @@ package trunk.doi.base.config;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.base.config.ClientConfigModule;
 import com.base.lib.base.delegate.AppLifecyclers;

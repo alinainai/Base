@@ -1,12 +1,10 @@
 package trunk.doi.base.ui.fragment.classify.mvp;
 
 import android.app.Application;
-import android.support.v7.widget.RecyclerView;
 
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.mvp.BasePresenter;
 import com.base.lib.rx.RxBindManager;
-import com.base.lib.util.AppManager;
 
 import java.util.List;
 
@@ -15,12 +13,9 @@ import javax.inject.Inject;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.bean.GankItemData;
-import trunk.doi.base.bean.HttpResult;
-import trunk.doi.base.bean.User;
 
 @FragmentScope
 public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyContract.View> {
-
 
 
     @Inject
@@ -44,7 +39,7 @@ public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyCont
                     @Override
                     public void onNext(List<GankItemData> result) {
 
-                        if (null == result || result.size()==0) {
+                        if (null == result || result.size() == 0) {
                             mView.onError();
                             return;
                         }

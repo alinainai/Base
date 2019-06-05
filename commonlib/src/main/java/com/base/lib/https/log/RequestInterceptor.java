@@ -15,10 +15,7 @@
  */
 package com.base.lib.https.log;
 
-import android.support.annotation.IntDef;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
-
+import androidx.annotation.Nullable;
 
 import com.base.lib.di.module.ConfigModule;
 import com.base.lib.https.GlobalHttpHandler;
@@ -27,8 +24,6 @@ import com.base.lib.util.ZipHelper;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.List;

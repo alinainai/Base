@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright 2013 Tomasz Zawada
- * 
+ *
  * Based on the excellent PhotoView by Chris Banes:
  * https://github.com/chrisbanes/PhotoView
  *
@@ -19,18 +19,19 @@
 package trunk.doi.base.view;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * Hacky fix for Issue #4 and
  * http://code.google.com/p/android/issues/detail?id=18990
- * 
+ * <p>
  * ScaleGestureDetector seems to mess up the touch events, which means that
  * ViewGroups which make use of onInterceptTouchEvent throw a lot of
  * IllegalArgumentException: pointerIndex out of range.
- * 
+ * <p>
  * Also the android.support.v4.view.MotionEventCompatEclair.getX() throws some
  * java.lang.ArrayIndexOutOfBoundsException exceptions which seems like a bug.
  */

@@ -15,13 +15,10 @@
  */
 package trunk.doi.base.ui.fragment.classify.di;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.FragmentScope;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.Binds;
 import dagger.Module;
@@ -50,11 +47,6 @@ public abstract class ClassifyModule {
     static RecyclerView.LayoutManager provideLayoutManager(ClassifyContract.View view) {
         return new GridLayoutManager(view.getWrapContext(), 2);
     }
-
-
-
-
-
 
 
 }

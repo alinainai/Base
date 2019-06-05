@@ -2,18 +2,17 @@ package com.base.lib.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.base.lib.base.delegate.App;
 import com.base.lib.base.delegate.fragment.IFragment;
 import com.base.lib.cache.Cache;
 import com.base.lib.cache.CacheType;
-import com.base.lib.di.component.AppComponent;
 import com.base.lib.lifecycle.FragmentIRxLifecycle;
 import com.base.lib.mvp.IPresenter;
 import com.base.lib.util.ArmsUtils;
@@ -23,8 +22,6 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 

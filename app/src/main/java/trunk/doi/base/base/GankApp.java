@@ -4,7 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.App;
 import com.base.lib.base.delegate.AppDelegate;

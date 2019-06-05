@@ -1,8 +1,8 @@
 package com.base.lib.di.module;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import com.base.lib.cache.Cache;
 import com.base.lib.cache.CacheType;

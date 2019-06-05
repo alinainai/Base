@@ -15,7 +15,8 @@
  */
 package com.base.lib.lifecycle;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 import com.base.lib.rx.RxBindManager;
 import com.trello.rxlifecycle2.RxLifecycle;

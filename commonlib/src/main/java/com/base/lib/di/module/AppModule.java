@@ -1,7 +1,8 @@
 package com.base.lib.di.module;
 
 import android.app.Application;
-import android.support.v4.app.FragmentManager;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.base.delegate.activity.ActivityLifecycle;
 import com.base.lib.base.delegate.fragment.FragmentLifecycle;

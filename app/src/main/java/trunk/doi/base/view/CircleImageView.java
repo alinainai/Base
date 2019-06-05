@@ -34,18 +34,22 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
-import android.support.v7.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
+import android.widget.ImageView;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.widget.AppCompatImageView;
 
 import trunk.doi.base.R;
 
 
+@SuppressWarnings("unused")
 public class CircleImageView extends AppCompatImageView {
 
-    private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;
+    private static final ImageView.ScaleType SCALE_TYPE = ImageView.ScaleType.CENTER_CROP;
 
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 2;
@@ -278,9 +282,7 @@ public class CircleImageView extends AppCompatImageView {
     }
 
     private void applyColorFilter() {
-        if (mBitmapPaint != null) {
             mBitmapPaint.setColorFilter(mColorFilter);
-        }
     }
 
     private Bitmap getBitmapFromDrawable(Drawable drawable) {

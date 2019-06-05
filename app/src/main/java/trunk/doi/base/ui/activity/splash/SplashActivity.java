@@ -3,9 +3,10 @@ package trunk.doi.base.ui.activity.splash;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
@@ -19,6 +20,7 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
+import trunk.doi.base.R2;
 import trunk.doi.base.constant.Constant;
 import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.util.GasUtils;
@@ -27,7 +29,7 @@ import trunk.doi.base.util.ToastUtil;
 public class SplashActivity extends BaseActivity {
 
 
-    @BindView(R.id.tv_version)
+    @BindView(R2.id.tv_version)
     TextView tv_version;
     @BindView(R.id.tv_skip)
     TextView tv_skip;

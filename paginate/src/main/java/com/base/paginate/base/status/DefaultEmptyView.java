@@ -1,6 +1,5 @@
 package com.base.paginate.base.status;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 

@@ -1,6 +1,6 @@
 package com.base.lib.lifecycle;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.base.lib.rx.RxBindManager;
 

@@ -17,16 +17,16 @@ package com.base.lib.base.delegate.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.util.ArmsUtils;
 import com.base.lib.util.EventBusManager;
 import com.base.lib.util.LogUtils;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -46,12 +46,12 @@ import timber.log.Timber;
 public class FragmentDelegateImpl implements FragmentDelegate {
     private final String TAG="FragmentDelegateImpl";
 
-    private android.support.v4.app.FragmentManager mFragmentManager;
-    private android.support.v4.app.Fragment mFragment;
+    private FragmentManager mFragmentManager;
+    private Fragment mFragment;
     private IFragment iFragment;
     private Unbinder mBinder;
 
-    public FragmentDelegateImpl(@NonNull android.support.v4.app.FragmentManager fragmentManager, @NonNull android.support.v4.app.Fragment fragment) {
+    public FragmentDelegateImpl(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
         this.mFragmentManager = fragmentManager;
         this.mFragment = fragment;
         this.iFragment = (IFragment) fragment;

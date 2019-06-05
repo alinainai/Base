@@ -6,7 +6,8 @@ import android.app.Service;
 import android.content.ComponentCallbacks2;
 import android.content.ContentProvider;
 import android.content.res.Configuration;
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 import com.base.lib.di.component.AppComponent;
 

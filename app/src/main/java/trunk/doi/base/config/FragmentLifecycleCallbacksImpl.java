@@ -17,10 +17,11 @@ package trunk.doi.base.config;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.cache.IntelligentCache;
 import com.base.lib.util.ArmsUtils;
@@ -40,6 +41,7 @@ import timber.log.Timber;
  * ================================================
  */
 public class FragmentLifecycleCallbacksImpl extends FragmentManager.FragmentLifecycleCallbacks {
+
 
     @Override
     public void onFragmentAttached(FragmentManager fm, Fragment f, Context context) {

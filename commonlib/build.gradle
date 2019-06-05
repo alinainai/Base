@@ -32,17 +32,17 @@ dependencies {
     api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    api(rootProject.ext.dependencies["appcompat-v7"]) {
+    api('androidx.appcompat:appcompat:1.1.0-alpha05') {
         exclude module: 'support-annotations'
     }
-    api(rootProject.ext.dependencies["recyclerview-v7"]) {
+    api('androidx.recyclerview:recyclerview:1.1.0-alpha05') {
         exclude module: 'support-annotations'
     }
-    api(rootProject.ext.dependencies["constraint-layout"]) {
+    api('androidx.constraintlayout:constraintlayout:2.0.0-beta1') {
         exclude module: 'support-annotations'
     }
-    api rootProject.ext.dependencies["annotations"]
-    implementation rootProject.ext.dependencies["multidex"]
+    api 'androidx.annotation:annotation:1.1.0-rc01'
+    implementation 'androidx.multidex:multidex:2.0.1'
     //network
     api(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
@@ -60,11 +60,11 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
-    api rootProject.ext.dependencies["okhttp3"]
-    api rootProject.ext.dependencies["okhttp-logging-interceptor"]
+    api 'com.squareup.okhttp3:okhttp:4.0.0-alpha02'
+    api 'com.squareup.okhttp3:logging-interceptor:4.0.0-alpha02'
     //rx
-    api rootProject.ext.dependencies["rxjava2"]
-    api(rootProject.ext.dependencies["rxandroid2"]) {
+    api 'io.reactivex.rxjava2:rxjava:2.2.9'
+    api('io.reactivex.rxjava2:rxandroid:2.1.1') {
         exclude module: 'rxjava'
     }
     api(rootProject.ext.dependencies["rxlifecycle2"]) {
@@ -91,7 +91,10 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     api rootProject.ext.dependencies["gson"]
     //glide图片加载
-    api rootProject.ext.dependencies["glide"]
+    api (rootProject.ext.dependencies["glide"]){
+        exclude module: 'support-annotations'
+    }
+//    annotationProcessor 'androidx.annotation:annotation:1.0.2'
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
     api rootProject.ext.dependencies["glide-loader-okhttp3"]
     //test
@@ -103,5 +106,10 @@ dependencies {
     }
     compileOnly rootProject.ext.dependencies["androideventbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
+
+    implementation rootProject.ext.dependencies["support-annotations"]
+    annotationProcessor rootProject.ext.dependencies["support-annotations"]
+
+
     api project(':baseui')
 }

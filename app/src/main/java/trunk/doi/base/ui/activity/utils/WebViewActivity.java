@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -25,12 +24,12 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
 
 import com.base.baseui.view.StatusLine;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
-
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +48,6 @@ import trunk.doi.base.util.ToastUtil;
 public class WebViewActivity extends BaseActivity {
 
 
-
     @BindView(R.id.progressbar)
     ProgressBar bar;
 
@@ -64,7 +62,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void getTitleView(TitleView titleView) {
-        mainCartTitle=titleView;
+        mainCartTitle = titleView;
         titleView.setRightText("更多");
         titleView.setCloseHide(true);
         titleView.setOnBackListener(v -> {
@@ -79,7 +77,7 @@ public class WebViewActivity extends BaseActivity {
 
         titleView.setOnRightListener(v -> {
 
-            new MorePopupWindow(mContext){
+            new MorePopupWindow(mContext) {
 
                 @Override
                 public void share() {
@@ -89,16 +87,16 @@ public class WebViewActivity extends BaseActivity {
                 @Override
                 public void collection() {
 
-                    if(null!=service.query(url)) {
-                        ToastUtil.showCustomToast(mContext,"已添加过收藏",ToastUtil.TOAST_OF_WARING);
-                    }else{
-                        CollectionBean bean =new CollectionBean();
+                    if (null != service.query(url)) {
+                        ToastUtil.showCustomToast(mContext, "已添加过收藏", ToastUtil.TOAST_OF_WARING);
+                    } else {
+                        CollectionBean bean = new CollectionBean();
                         bean.setUrl(url);
                         bean.setDesc(mTitle);
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
                         bean.setDataTime(sdf.format(new Date()));
                         service.addInfo(bean);
-                        ToastUtil.showCustomToast(mContext,"收藏成功",ToastUtil.TOAST_OF_SUCCESS);
+                        ToastUtil.showCustomToast(mContext, "收藏成功", ToastUtil.TOAST_OF_SUCCESS);
                     }
                 }
 
@@ -111,10 +109,10 @@ public class WebViewActivity extends BaseActivity {
                     ClipData mClipData = ClipData.newPlainText("Label", url);
                     // 将ClipData内容放到系统剪贴板里。
                     cm.setPrimaryClip(mClipData);
-                    ToastUtil.showCustomToast(mContext,"地址复制成功",ToastUtil.TOAST_OF_SUCCESS);
+                    ToastUtil.showCustomToast(mContext, "地址复制成功", ToastUtil.TOAST_OF_SUCCESS);
 
                 }
-            }.showAsDropDown(mainCartTitle.getRightView(),2,0);
+            }.showAsDropDown(mainCartTitle.getRightView(), 2, 0);
 
 
         });
@@ -145,19 +143,18 @@ public class WebViewActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
 
 
-
         url = getIntent().getStringExtra("url");//地址
         mTitle = getIntent().getStringExtra("title");//标题
         if (!TextUtils.isEmpty(mTitle)) {
-            String title=null;
-            if(mTitle.length()>=7){
-                title=mTitle.substring(0,7)+"...";
-            }else{
-                title=mTitle;
+            String title = null;
+            if (mTitle.length() >= 7) {
+                title = mTitle.substring(0, 7) + "...";
+            } else {
+                title = mTitle;
             }
             mainCartTitle.setTitleText(title);
         }
-        webView=new WebView(mContext);
+        webView = new WebView(mContext);
         webView.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         rl_webview.addView(webView);
     }
@@ -171,7 +168,7 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView view, int progress) {
 
-                if(!mContext.isDestroyed()){
+                if (!mContext.isDestroyed()) {
                     if (progress == 100) {
                         bar.setVisibility(View.GONE);
                     } else {
@@ -185,12 +182,12 @@ public class WebViewActivity extends BaseActivity {
             //设置标题
             @Override
             public void onReceivedTitle(WebView view, String title) {
-                if(!mContext.isDestroyed()){
+                if (!mContext.isDestroyed()) {
                     if (TextUtils.isEmpty(mTitle)) {
                         if (!TextUtils.isEmpty(title)) {
                             if (null != mainCartTitle) {
                                 mainCartTitle.setTitleText(title);
-                                mTitle=title;
+                                mTitle = title;
                             }
                         }
                     }
@@ -222,7 +219,7 @@ public class WebViewActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 WebBackForwardList webBackForwardList = webView.copyBackForwardList();
-                Timber.tag(TAG).e(webBackForwardList.getSize()+"");
+                Timber.tag(TAG).e(webBackForwardList.getSize() + "");
 //                WebHistoryItem currentItem = webBackForwardList.getCurrentItem();
 //                if(webBackForwardList.getSize()>0){
 //
@@ -274,7 +271,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        service=new DatabaseService(mContext);
+        service = new DatabaseService(mContext);
         webView.loadUrl(url);
     }
 
@@ -307,7 +304,7 @@ public class WebViewActivity extends BaseActivity {
                 webView.getSettings().setJavaScriptEnabled(false);
                 webView.removeAllViews();
                 webView.destroy();
-                webView=null;
+                webView = null;
             } catch (Exception ex) {
 
             }
@@ -316,10 +313,6 @@ public class WebViewActivity extends BaseActivity {
         service.closeDatabase();
         super.onDestroy();
     }
-
-
-
-
 
 
     public class GQDownloadListener implements DownloadListener {

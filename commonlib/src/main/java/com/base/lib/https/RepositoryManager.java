@@ -2,9 +2,9 @@ package com.base.lib.https;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.base.lib.cache.Cache;
 import com.base.lib.cache.CacheType;
@@ -54,7 +54,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 Retrofit service
      *
      * @param serviceClass ApiService class
-     * @param <T> ApiService class
+     * @param <T>          ApiService class
      * @return ApiService
      */
     @NonNull
@@ -67,7 +67,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据 https://zhuanlan.zhihu.com/p/40097338 对 Retrofit 进行的优化
      *
      * @param serviceClass ApiService class
-     * @param <T> ApiService class
+     * @param <T>          ApiService class
      * @return ApiService
      */
     @SuppressWarnings("unchecked")
@@ -112,7 +112,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 Retrofit service
      *
      * @param serviceClass ApiService class
-     * @param <T> ApiService class
+     * @param <T>          ApiService class
      * @return ApiService
      */
     private <T> T getRetrofitService(Class<T> serviceClass) {
@@ -136,7 +136,7 @@ public class RepositoryManager implements IRepositoryManager {
      * 根据传入的 Class 获取对应的 RxCache service
      *
      * @param cacheClass Cache class
-     * @param <T> Cache class
+     * @param <T>        Cache class
      * @return Cache
      */
     @NonNull

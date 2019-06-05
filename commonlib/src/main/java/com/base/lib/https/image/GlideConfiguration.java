@@ -2,9 +2,9 @@
 package com.base.lib.https.image;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.base.lib.base.delegate.App;
+import androidx.annotation.NonNull;
+
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.base.lib.util.DataHelper;
@@ -14,13 +14,11 @@ import com.bumptech.glide.Registry;
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
-import com.bumptech.glide.load.engine.cache.DiskCache;
 import com.bumptech.glide.load.engine.cache.DiskLruCacheWrapper;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
-
 
 import java.io.File;
 import java.io.InputStream;

@@ -3,12 +3,13 @@ package com.base.baseui.view;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.base.baseui.R;
 
@@ -270,10 +271,11 @@ public class TitleView extends ConstraintLayout {
     }
 
     /**
-     *  获取 标题右按钮布局
+     * 获取 标题右按钮布局
+     *
      * @return View
      */
-    public View getRightView(){
+    public View getRightView() {
         if (null != tvRight) {
             return tvRight;
         }

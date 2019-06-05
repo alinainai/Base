@@ -4,9 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
 import android.app.Service;
-import android.content.Intent;
-import android.os.Message;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -67,7 +66,7 @@ public final class AppManager {
     }
 
     /**
-     * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
+     * 将在前台的 {@link Activity} 赋值给 {@code currentActivity}, 注意此方法是在 {@link Activity#onResume()} 方法执行时将栈顶的 {@link Activity} 赋值给 {@code currentActivity}
      * 所以在栈顶的 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 获取的就不是当前栈顶的 {@link Activity}, 可能是上一个 {@link Activity}
      * 如果在 App 启动第一个 {@link Activity} 执行 {@link Activity#onCreate} 方法时使用 {@link #getCurrentActivity()} 则会出现返回为 {@code null} 的情况
      * 想避免这种情况请使用 {@link #getTopActivity()}

@@ -15,9 +15,9 @@
  */
 package com.base.lib.https.log;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.base.lib.di.module.ConfigModule;
 

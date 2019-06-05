@@ -1,12 +1,14 @@
 package com.base.lib.https;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 
 /**
  * ================================================
  * 用来管理网络请求层,以及数据缓存层,以后可能添加数据库请求层*
+ *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.3">RepositoryManager wiki 官方文档</a>
  * Created by JessYan on 17/03/2017 11:15
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>

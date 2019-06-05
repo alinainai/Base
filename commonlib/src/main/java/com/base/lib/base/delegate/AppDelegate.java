@@ -3,8 +3,8 @@ package com.base.lib.base.delegate;
 import android.app.Application;
 import android.content.ComponentCallbacks2;
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.multidex.MultiDex;
+
+import androidx.annotation.NonNull;
 
 import com.base.lib.base.callback.AppComponentCallbacks;
 import com.base.lib.base.config.ClientConfigModule;

@@ -1,7 +1,7 @@
 package trunk.doi.base.ui.fragment.classify.mvp;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.https.IRepositoryManager;
@@ -16,7 +16,6 @@ import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictDynamicKey;
-import io.rx_cache2.EvictProvider;
 import io.rx_cache2.Reply;
 import timber.log.Timber;
 import trunk.doi.base.bean.GankItemData;

@@ -3,7 +3,6 @@ package trunk.doi.base.ui.activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
