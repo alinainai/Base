@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_selector_bg"
+    android:background="@drawable/mine_shadow_t"
     android:paddingStart="16dp"
-    android:paddingTop="10dp"
-    android:paddingEnd="10dp"
+    android:paddingTop="15dp"
+    android:paddingEnd="15dp"
     android:paddingBottom="16dp">
 
 
@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:lines="1"
-        android:maxLines="2"
+        android:maxLines="3"
+        android:lines="3"
         android:text="@string/str_content"
         android:textColor="@color/c333333"
         android:textSize="14sp"

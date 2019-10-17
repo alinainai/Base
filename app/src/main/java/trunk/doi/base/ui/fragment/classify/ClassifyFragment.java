@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import trunk.doi.base.R;
 import trunk.doi.base.bean.GankItemData;
@@ -39,13 +41,17 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     private int mPage = 1;//页数
     private final static int PAGE_COUNT = 10;//每页条数
     private String mSubtype;//分类
-    private ClassifyAdapter mClassifyAdapter;//适配器
+
 
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
     @BindView(R.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
 
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    ClassifyAdapter mClassifyAdapter;
 
     @Override
     public int initLayoutId() {
@@ -69,14 +75,11 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
+
+        mRecyclerView.setLayoutManager(mLayoutManager);
         //刷新控件
         mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
-        mClassifyAdapter = new ClassifyAdapter(mContext, new ArrayList<>());
-
 
         //条目点击
         mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->
@@ -89,12 +92,13 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
             loadData();
         });
+
         mClassifyAdapter.setOnLoadMoreListener(isReload -> loadData());
+
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
         mRecyclerView.setAdapter(mClassifyAdapter);
         mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
@@ -178,10 +182,6 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     public void onRefresh() {
         mPage = 1;
         loadData();
-    }
-
-    public void scrollToTop() {
-        mRecyclerView.smoothScrollToPosition(0);
     }
 
 

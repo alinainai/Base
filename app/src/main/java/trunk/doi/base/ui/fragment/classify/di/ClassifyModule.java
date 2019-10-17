@@ -16,13 +16,18 @@
 package trunk.doi.base.ui.fragment.classify.di;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.FragmentScope;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dagger.Binds;
 import dagger.Module;
 import dagger.Provides;
+import trunk.doi.base.ui.fragment.classify.ClassifyAdapter;
 import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
 import trunk.doi.base.ui.fragment.classify.mvp.ClassifyModle;
 
@@ -38,15 +43,23 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyModle;
  */
 @Module
 public abstract class ClassifyModule {
-
     @Binds
     abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
+
 
     @FragmentScope
     @Provides
     static RecyclerView.LayoutManager provideLayoutManager(ClassifyContract.View view) {
         return new GridLayoutManager(view.getWrapContext(), 2);
     }
+
+    @FragmentScope
+    @Provides
+    static ClassifyAdapter provideClasseAdapter(ClassifyContract.View view){
+        return new ClassifyAdapter(view.getWrapContext(),new ArrayList<>());
+    }
+
+
 
 
 }

@@ -123,14 +123,5 @@ public class NewsFragment extends BaseFragment {
 
     }
 
-    public void scrollToTop() {
-
-        Fragment fragment= mFragments.get(mViewPager.getCurrentItem());
-        if(fragment instanceof ClassifyFragment){
-            ( (ClassifyFragment)fragment).scrollToTop();
-        }
-
-    }
-
 
 }
