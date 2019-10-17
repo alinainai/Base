@@ -104,6 +104,15 @@
     <string name="app_str_product_title">产品</string>
     <string name="app_str_info_title">信息</string>
     <string name="app_str_account_title">我的</string>
+    <string name="icon">str_en_icon</string>
+    <string name="str_default_account">0.00</string>
+    <string name="str_turn_open">立即开通</string>
+    <string name="msg">str_msg</string>
+    <string name="str_open_bank_account">开通存管</string>
+    <string name="str_accout_money">账户总额(元)</string>
+    <string name="str_total_profit">累计回报(元)</string>
+    <string name="str_coupon">优惠券</string>
+    <string name="_0">0笔</string>
 
 </resources>
 

@@ -59,35 +59,6 @@ public class MainFragment extends BaseFragment {
     }
 
 
-    private void loadData() {
-
-//        RxBindManager.getInstance().doSubscribe(NetManager.getInstance().create(GankItemService.class,mContext).getBeautyData("data/" + "福利" + "/18/" + 1),
-//                new Observer<BeautyResult<List<GankItemData>>>() {
-//
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
-//                        mDisposable=d;
-//                    }
-//
-//                    @Override
-//                    public void onNext(BeautyResult<List<GankItemData>> listBeautyResult) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//
-//                    }
-//                });
-
-
-    }
-
     @OnClick({R.id.btn_load, R.id.btn_etr})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -95,6 +66,8 @@ public class MainFragment extends BaseFragment {
                 tvShow.setText(String.valueOf(GasUtils.dpTopx(mContext, 16)));
                 break;
             case R.id.btn_etr:
+
+
                 break;
         }
     }

@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:contentDescription="@string/str_background"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:scaleType="center"
+        android:src="@drawable/mine_harf_circle_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/v_bar"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="6dp"
+        android:src="@mipmap/user_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name"
+        android:contentDescription="@string/icon" />
+
+    <com.base.baseui.view.DinOtfTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px_100"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="8dp"
+        android:drawableEnd="@mipmap/common_next_icon_white"
+        android:drawablePadding="@dimen/px_10"
+        android:gravity="center_vertical"
+        android:text="name"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/img_icon"
+        app:layout_constraintTop_toBottomOf="@+id/v_bar" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/px_100"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_name">
+
+        <ImageView
+            android:id="@+id/news_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="6dp"
+            android:src="@mipmap/titlebar_news_icon_white"
+            android:contentDescription="@string/msg" />
+
+        <View
+            android:id="@+id/v_msg_dot"
+            android:layout_width="3.5dp"
+            android:layout_height="3.5dp"
+            android:layout_alignTop="@+id/news_icon"
+            android:layout_alignEnd="@+id/news_icon"
+            android:layout_marginTop="6.5dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/shape_red_dot"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="30dp">
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/trade_record_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/ll_total_money" />
+
+                <!-- 头部 -->
+                <LinearLayout
+                    android:id="@+id/open_acount_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/mine_top_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_tip_show"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/str_open_bank_account"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/open_acount_btn"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:background="@drawable/shape_white_stroke_2"
+                        android:gravity="center"
+                        android:paddingStart="5dp"
+                        android:paddingTop="2dp"
+                        android:paddingEnd="5dp"
+                        android:paddingBottom="2dp"
+                        android:text="@string/str_turn_open"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_normal" />
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ll_total_money"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/mine_shadow_t"
+                    android:orientation="vertical"
+                    android:paddingStart="20dp"
+                    android:paddingTop="15dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/open_acount_ll">
+
+                    <TextView
+                        android:id="@+id/tv_hide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/str_accout_money"
+                        android:textColor="@color/c999999"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.base.baseui.view.DinOtfTextView
+                        android:id="@+id/total_money_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_default_account"
+                        android:textColor="@color/c333333"
+                        android:textSize="30sp"
+                        app:layout_constraintStart_toStartOf="@+id/tv_hide"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_hide" />
+
+
+                    <TextView
+                        android:id="@+id/tv_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/px_20"
+                        android:gravity="start"
+                        android:text="@string/str_total_profit"
+                        android:textColor="@color/c999999"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toStartOf="@+id/tv_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/total_money_tv" />
+
+                    <TextView
+                        android:id="@+id/tv_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="账户余额(元)"
+                        android:textColor="@color/c999999"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_1"
+                        app:layout_constraintTop_toTopOf="@+id/tv_1" />
+
+                    <com.base.baseui.view.DinOtfTextView
+                        android:id="@+id/cumulative_profit_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_default_account"
+                        android:textColor="@color/c333333"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_1"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_1" />
+
+                    <com.base.baseui.view.DinOtfTextView
+                        android:id="@+id/useable_money_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/str_default_account"
+                        android:textColor="@color/c333333"
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toStartOf="@id/tv_2"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_2" />
+
+                    <View
+                        android:id="@+id/divider_5"
+                        style="@style/divider"
+                        android:layout_marginTop="15dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/useable_money_tv" />
+
+                    <TextView
+                        android:id="@+id/withdrawals_btn"
+                        android:layout_width="140dp"
+                        android:layout_height="33dp"
+                        android:layout_marginTop="12.5dp"
+                        android:background="@drawable/shape_blue_stroke_30"
+                        android:gravity="center"
+                        android:text="提现"
+                        android:textColor="#6293f9"
+                        android:textSize="@dimen/txt_large"
+                        app:layout_constraintEnd_toStartOf="@+id/recharge_btn"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider_5"
+                        tools:layout_editor_absoluteY="15dp" />
+
+                    <TextView
+                        android:id="@+id/recharge_btn"
+                        android:layout_width="140dp"
+                        android:layout_height="33dp"
+                        android:background="@drawable/shape_blue_circle_30"
+                        android:gravity="center"
+                        android:text="充值"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/txt_large"
+                        app:layout_constraintBottom_toBottomOf="@+id/withdrawals_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/withdrawals_btn"
+                        app:layout_constraintTop_toTopOf="@+id/withdrawals_btn" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/hl_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/mine_shadow_t"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintEnd_toStartOf="@+id/sanbiao_ll"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_total_money">
+
+                    <ImageView
+                        android:id="@+id/img_1"
+                        style="@style/mine_block_img"
+                        android:src="@mipmap/user_honglibao_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_hlb_name"
+                        style="@style/mine_block_text_large"
+                        android:text="鸿利宝"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_1"
+                        app:layout_constraintStart_toEndOf="@+id/img_1"
+                        app:layout_constraintTop_toTopOf="@+id/img_1" />
+
+                    <TextView
+                        android:id="@+id/hl_tv"
+                        style="@style/mine_block_text_small"
+                        android:text="0笔"
+                        app:layout_constraintStart_toStartOf="@+id/tv_hlb_name"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_hlb_name" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sanbiao_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/mine_shadow_t"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/trade_record_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/hl_ll"
+                    app:layout_constraintTop_toTopOf="@+id/hl_ll">
+
+                    <ImageView
+                        android:id="@+id/img_2"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="18dp"
+                        android:src="@mipmap/user_sanbiao_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_name_sb"
+                        style="@style/mine_block_text_large"
+                        android:text="我的散标"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_2"
+                        app:layout_constraintStart_toEndOf="@+id/img_2"
+                        app:layout_constraintTop_toTopOf="@+id/img_2" />
+
+                    <TextView
+                        android:id="@+id/sanbiao_tv"
+                        style="@style/mine_block_text_small"
+                        android:text="0笔"
+                        app:layout_constraintStart_toStartOf="@+id/tv_name_sb"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_name_sb" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/trade_record_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/mine_shadow_t"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintEnd_toStartOf="@+id/coupon_ll"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hl_ll">
+
+                    <ImageView
+                        android:id="@+id/img_3"
+                        style="@style/mine_block_img"
+                        android:src="@mipmap/user_order_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_record_name"
+                        style="@style/mine_block_text_large"
+                        android:text="交易记录"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_3"
+                        app:layout_constraintStart_toEndOf="@+id/img_3"
+                        app:layout_constraintTop_toTopOf="@+id/img_3" />
+
+                    <TextView
+                        android:id="@+id/re_tv"
+                        style="@style/mine_block_text_small"
+                        android:text="查看明细"
+                        app:layout_constraintStart_toStartOf="@+id/tv_record_name"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_record_name" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/coupon_ll"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/mine_shadow_t"
+                    android:paddingBottom="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/trade_record_ll"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/trade_record_ll"
+                    app:layout_constraintTop_toTopOf="@+id/trade_record_ll">
+
+                    <ImageView
+                        android:id="@+id/img_4"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="21dp"
+                        android:layout_marginTop="18dp"
+                        android:src="@mipmap/user_coupon_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_coupon_sb"
+                        style="@style/mine_block_text_large"
+                        android:text="@string/str_coupon"
+                        app:layout_constraintBottom_toBottomOf="@+id/img_4"
+                        app:layout_constraintStart_toEndOf="@+id/img_4"
+                        app:layout_constraintTop_toTopOf="@+id/img_4" />
+
+                    <TextView
+                        android:id="@+id/coupon_tv"
+                        style="@style/mine_block_text_small"
+                        android:text="@string/_0"
+                        app:layout_constraintStart_toStartOf="@+id/tv_coupon_sb"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_coupon_sb" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <TextView
+                    android:id="@+id/financial_planner_ll"
+                    style="@style/style_mine_item"
+                    android:text="个人账单"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/trade_record_ll" />
+
+                <View
+                    android:id="@+id/divider_1"
+                    style="@style/divider"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/financial_planner_ll" />
+
+                <LinearLayout
+                    android:id="@+id/risk_test_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_1">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingStart="15dp"
+                        android:text="风险测评"
+                        android:textColor="@color/c000000"
+                        android:textSize="@dimen/txt_large" />
+
+                    <TextView
+                        android:id="@+id/risk_type_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@mipmap/right_arrow"
+                        android:gravity="center_vertical"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="合规"
+                        android:textColor="@color/c999999"
+                        android:textSize="@dimen/txt_normal" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/divider_2"
+                    style="@style/divider"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/risk_test_ll" />
+
+                <TextView
+                    android:id="@+id/ll_share_info"
+                    style="@style/style_mine_item"
+                    android:layout_width="0dp"
+                    android:text="邀请好友"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_2" />
+
+                <View
+                    android:id="@+id/divider_3"
+                    style="@style/divider"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_share_info" />
+
+                <TextView
+                    android:id="@+id/help_ll"
+                    style="@style/style_mine_item"
+                    android:text="帮助与反馈"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_3" />
+
+                <View
+                    android:id="@+id/divider_4"
+                    style="@style/divider"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/help_ll" />
+
+                <TextView
+                    android:id="@+id/about_ll"
+                    style="@style/style_mine_item"
+                    android:text="关于"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_4" />
+
+                <View
+                    style="@style/divider"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/about_ll" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

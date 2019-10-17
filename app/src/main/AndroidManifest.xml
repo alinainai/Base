@@ -51,6 +51,7 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
 
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="trunk.doi.base.provider"
@@ -61,39 +62,31 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
         <activity
             android:name=".ui.activity.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:name=".ui.MainActivity"
-             />
-
-        <!-- WebView独立进程解决方案 -->
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" /> <!-- WebView独立进程解决方案 -->
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 登陆界面 -->
+            android:screenOrientation="portrait" /> <!-- 登陆界面 -->
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
-
         <meta-data
             android:name="trunk.doi.base.config.GlobalConfiguration"
             android:value="ClientConfigModule" />
-
     </application>
 
 </manifest>

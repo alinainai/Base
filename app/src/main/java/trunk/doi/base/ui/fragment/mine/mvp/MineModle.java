@@ -1,4 +1,4 @@
-package trunk.doi.base.ui.fragment.classify.mvp;
+package trunk.doi.base.ui.fragment.mine.mvp;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -18,28 +18,18 @@ import io.rx_cache2.DynamicKey;
 import io.rx_cache2.EvictDynamicKey;
 import io.rx_cache2.Reply;
 import timber.log.Timber;
+import trunk.doi.base.bean.Beauty;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.bean.HttpResult;
 import trunk.doi.base.https.CommonCache;
 import trunk.doi.base.https.GankItemService;
 
 @FragmentScope
-public class ClassifyModle extends BaseModel implements ClassifyContract.Model {
+public class MineModle extends BaseModel implements MineContract.Model {
 
     @Inject
-    public ClassifyModle(IRepositoryManager repositoryManager) {
+    public MineModle(IRepositoryManager repositoryManager) {
         super(repositoryManager);
-    }
-
-
-    @Override
-    public Observable<List<GankItemData>> getGankItemData(String suburl) {
-
-        return Observable.just(mRepositoryManager.obtainRetrofitService(GankItemService.class).getGankItemData(suburl).map(HttpResult::getResults))
-                .flatMap((Function<Observable<List<GankItemData>>, ObservableSource<List<GankItemData>>>) httpResultObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
-                        .getGankItemData(httpResultObservable
-                                , new DynamicKey(suburl)
-                                , new EvictDynamicKey(true)).map(Reply::getData));
     }
 
 
@@ -49,4 +39,10 @@ public class ClassifyModle extends BaseModel implements ClassifyContract.Model {
     }
 
 
+    @Override
+    public Beauty getBody() {
+        Beauty beauty=new Beauty();
+        beauty.setDesc("18519702340");
+        return beauty;
+    }
 }

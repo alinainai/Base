@@ -25,6 +25,7 @@ import trunk.doi.base.R;
 import trunk.doi.base.ui.fragment.AdapterFragment;
 import trunk.doi.base.ui.fragment.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
+import trunk.doi.base.ui.fragment.mine.MineFragment;
 import trunk.doi.base.util.ActivityController;
 import trunk.doi.base.util.ToastUtil;
 
@@ -38,18 +39,19 @@ public class MainActivity extends BaseActivity {
 
 
     @BindView(R.id.home_btn)
-    Button homeBtn;
+    Button rBtn1;
     @BindView(R.id.classify_btn)
-    Button classifyBtn;
+    Button rBtn2;
     @BindView(R.id.account_btn)
-    Button accountBtn;
+    Button rBtn3;
     @BindView(R.id.shopping_btn)
-    Button shoppingBtn;
+    Button rBtn4;
     //container
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
-    private BaseFragment mClassifyFragment;//分类的fragment
-    private BaseFragment mAdapterFragment;//分类的fragment
+    private BaseFragment mAdapterFragment;
+    private BaseFragment mNewsFragment;
+    private BaseFragment mMineFragment;
 
     // 当前fragment的index
     public int mCurrentTabIndex = 0;
@@ -58,10 +60,10 @@ public class MainActivity extends BaseActivity {
 
     private static final SparseArray<String> FRAGMENTS = new SparseArray<String>() {
         {
-            put(0, NewsFragment.TAG);
+            put(0, AdapterFragment.TAG);
             put(1, MainFragment.TAG);
-            put(2, MainFragment.TAG);
-            put(3, AdapterFragment.TAG);
+            put(2, NewsFragment.TAG);
+            put(3, MineFragment.TAG);
         }
     };
 
@@ -75,12 +77,12 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
-
+    //如果不需要tutleBar这个一定要返回false
     @Override
     public boolean needTitle() {
         return false;
     }
-
+    //如果不需要StatusBar这个一定要返回false
     @Override
     public boolean needStatusBar() {
         return false;
@@ -119,16 +121,16 @@ public class MainActivity extends BaseActivity {
                 resetButton(1);
                 break;
             case R.id.account_btn:
-                if (mCurrentTabIndex == 3) {
-                    return;
-                }
-                resetButton(3);
-                break;
-            case R.id.shopping_btn:
                 if (mCurrentTabIndex == 2) {
                     return;
                 }
                 resetButton(2);
+                break;
+            case R.id.shopping_btn:
+                if (mCurrentTabIndex == 3) {
+                    return;
+                }
+                resetButton(3);
                 break;
         }
     }
@@ -164,16 +166,22 @@ public class MainActivity extends BaseActivity {
                 fragment = mHomeFragment;
                 break;
             case NewsFragment.TAG:
-                if (mClassifyFragment == null) {
-                    mClassifyFragment = NewsFragment.newInstance();
+                if (mNewsFragment == null) {
+                    mNewsFragment = NewsFragment.newInstance();
                 }
-                fragment = mClassifyFragment;
+                fragment = mNewsFragment;
                 break;
             case AdapterFragment.TAG:
                 if (mAdapterFragment == null) {
                     mAdapterFragment = AdapterFragment.newInstance();
                 }
                 fragment = mAdapterFragment;
+                break;
+            case MineFragment.TAG:
+                if (mMineFragment == null) {
+                    mMineFragment = MineFragment.newInstance();
+                }
+                fragment = mMineFragment;
                 break;
             default:
                 throw new NullPointerException("the tag of Fragment is invalid!!!");
@@ -185,28 +193,28 @@ public class MainActivity extends BaseActivity {
 
         switch (index) {
             case 0:
-                homeBtn.setSelected(true);
-                classifyBtn.setSelected(false);
-                accountBtn.setSelected(false);
-                shoppingBtn.setSelected(false);
+                rBtn1.setSelected(true);
+                rBtn2.setSelected(false);
+                rBtn3.setSelected(false);
+                rBtn4.setSelected(false);
                 break;
             case 1:
-                homeBtn.setSelected(false);
-                classifyBtn.setSelected(true);
-                accountBtn.setSelected(false);
-                shoppingBtn.setSelected(false);
+                rBtn1.setSelected(false);
+                rBtn2.setSelected(true);
+                rBtn3.setSelected(false);
+                rBtn4.setSelected(false);
                 break;
             case 2:
-                homeBtn.setSelected(false);
-                classifyBtn.setSelected(false);
-                accountBtn.setSelected(false);
-                shoppingBtn.setSelected(true);
+                rBtn1.setSelected(false);
+                rBtn2.setSelected(false);
+                rBtn3.setSelected(true);
+                rBtn4.setSelected(false);
                 break;
             case 3:
-                homeBtn.setSelected(false);
-                classifyBtn.setSelected(false);
-                accountBtn.setSelected(true);
-                shoppingBtn.setSelected(false);
+                rBtn1.setSelected(false);
+                rBtn2.setSelected(false);
+                rBtn3.setSelected(false);
+                rBtn4.setSelected(true);
                 break;
         }
 
@@ -254,17 +262,5 @@ public class MainActivity extends BaseActivity {
             finish();
         }
     }
-
-
-//    if (null != mFragManager) {
-//                        List<Fragment> fragments = mFragManager.getFragments();
-//                        if (fragments.size() > 0) {
-//                            for (Fragment fragment : fragments) {
-//                                if (fragment.isVisible() && NewsFragment.TAG.equals(fragment.getTag())) {
-//                                    ((NewsFragment) fragment).scrollToTop();
-//                                }
-//                            }
-//                        }
-//                    }
 
 }

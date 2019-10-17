@@ -66,6 +66,7 @@ public class GasAlertDialog extends GasDialog {
             String negBtnTxt = getArguments().getString(GASBTNNEGATIVE, "");
             boolean cancel = getArguments().getBoolean(CANCELABLE, true);
             setCancelable(cancel);
+            //noinspection ConstantConditions
             getDialog().setCanceledOnTouchOutside(cancel);
             //title 和 msg 必须显示一个
             if (TextUtils.isEmpty(title)) {

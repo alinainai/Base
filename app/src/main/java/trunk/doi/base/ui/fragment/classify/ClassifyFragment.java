@@ -23,7 +23,6 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.adapter.GankItemAdapter;
 import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.ui.fragment.classify.di.DaggerClassifyComponent;
@@ -40,7 +39,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     private int mPage = 1;//页数
     private final static int PAGE_COUNT = 10;//每页条数
     private String mSubtype;//分类
-    private GankItemAdapter mGankItemAdapter;//适配器
+    private ClassifyAdapter mClassifyAdapter;//适配器
 
     @BindView(R.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
@@ -76,29 +75,29 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         //刷新控件
         mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
-        mGankItemAdapter = new GankItemAdapter(mContext, new ArrayList<>());
+        mClassifyAdapter = new ClassifyAdapter(mContext, new ArrayList<>());
 
 
         //条目点击
-        mGankItemAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->
+        mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->
                 mContext.startActivity(new Intent(mContext, WebViewActivity.class)
                         .putExtra("title", data.getDesc())
                         .putExtra("url", data.getUrl()))
         );
 
-        mGankItemAdapter.setOnReloadListener(() -> {
-            mGankItemAdapter.setEmptyView(IStatus.STATUS_LOADING);
+        mClassifyAdapter.setOnReloadListener(() -> {
+            mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
             loadData();
         });
-        mGankItemAdapter.setOnLoadMoreListener(isReload -> loadData());
+        mClassifyAdapter.setOnLoadMoreListener(isReload -> loadData());
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
 
-        mRecyclerView.setAdapter(mGankItemAdapter);
-        mGankItemAdapter.setEmptyView(IStatus.STATUS_LOADING);
+        mRecyclerView.setAdapter(mClassifyAdapter);
+        mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
     }
 
 
@@ -134,19 +133,19 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         if (data.size() > 0) {
 
             if (mPage == 1) {
-                mGankItemAdapter.setNewData(data);
+                mClassifyAdapter.setNewData(data);
             } else {
-                mGankItemAdapter.setLoadMoreData(data);
+                mClassifyAdapter.setLoadMoreData(data);
             }
             if (data.size() < PAGE_COUNT) {//如果小于10个
-                mGankItemAdapter.loadEnd();
+                mClassifyAdapter.loadEnd();
             }
             mPage++;
         } else {
             if (mPage > 1) {
-                mGankItemAdapter.showFooterFail();
+                mClassifyAdapter.showFooterFail();
             } else {
-                mGankItemAdapter.setEmptyView(IStatus.STATUS_FAIL);
+                mClassifyAdapter.setEmptyView(IStatus.STATUS_FAIL);
             }
         }
 
@@ -163,9 +162,9 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             mSwipeRefreshLayout.setRefreshing(false);
         }
         if (mPage > 1) {
-            mGankItemAdapter.showFooterFail();
+            mClassifyAdapter.showFooterFail();
         } else {
-            mGankItemAdapter.setEmptyView(IStatus.STATUS_FAIL);
+            mClassifyAdapter.setEmptyView(IStatus.STATUS_FAIL);
         }
     }
 

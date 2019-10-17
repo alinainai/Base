@@ -8,4 +8,5 @@
     <string name="str_positive">确认</string>
     <string name="str_title">title</string>
     <string name="str_message">message</string>
+    <string name="str_background">background</string>
 </resources>

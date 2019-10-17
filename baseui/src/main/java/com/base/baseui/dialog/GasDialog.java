@@ -34,6 +34,7 @@ public abstract class GasDialog extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
+        @SuppressWarnings("ConstantConditions")
         final Window window = getDialog().getWindow();
         if (window != null) {
             window.getDecorView().setPadding(0, 0, 0, 0);
@@ -47,6 +48,7 @@ public abstract class GasDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //noinspection ConstantConditions
         Objects.requireNonNull(getDialog().getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
         View v = inflater.inflate(getLayoutRes(), container, false);
         bindView(v);

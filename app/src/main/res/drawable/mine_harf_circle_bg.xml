@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:top="-100dp"
+        >
+        <shape android:shape="rectangle">
+            <size
+                android:width="626dp"
+                android:height="313dp" />
+            <!--实现应用背景颜色渐变-->
+            <gradient
+                android:angle="315"
+                android:endColor="#185CFF"
+                android:startColor="#61A3FD"
+                android:type="linear" />
+            <corners
+                android:bottomLeftRadius="313dp"
+                android:bottomRightRadius="313dp" />
+
+        </shape>
+
+    </item>
+
+
+</layer-list>
