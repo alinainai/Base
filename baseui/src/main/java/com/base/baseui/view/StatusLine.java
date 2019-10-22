@@ -7,6 +7,9 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
+/**
+ * 自动获取系统状态栏高度的 StatusLine
+ */
 public class StatusLine extends LinearLayout {
 
     private int mStatusBarHeight;

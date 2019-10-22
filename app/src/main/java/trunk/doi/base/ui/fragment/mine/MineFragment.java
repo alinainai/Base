@@ -6,14 +6,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
 
-import java.util.List;
-
+import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.bean.GankItemData;
 import trunk.doi.base.ui.fragment.mine.di.DaggerMineComponent;
 import trunk.doi.base.ui.fragment.mine.mvp.MineContract;
 import trunk.doi.base.ui.fragment.mine.mvp.MinePresenter;
@@ -25,6 +24,8 @@ import trunk.doi.base.ui.fragment.mine.mvp.MinePresenter;
 public class MineFragment extends LazyLoadFragment<MinePresenter> implements MineContract.View {
 
     public static final String TAG = "MineFragment";
+    @BindView(R.id.refresh)
+    SwipeRefreshLayout refresh;
 
 
     @Override
@@ -34,17 +35,14 @@ public class MineFragment extends LazyLoadFragment<MinePresenter> implements Min
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-
         DaggerMineComponent.builder().appComponent(appComponent).view(this).build().inject(this);
-
-
     }
 
 
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-
+        refresh.setEnabled(false);
     }
 
 

@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,8 +62,8 @@ public class ToastUtil {
     private static void showMessage(final Context context, final CharSequence text,
                                     final int duration) {
 
-        FrameLayout layout = (FrameLayout) ((LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_toast_text, null, false);
-        TextView textView = (TextView) layout.findViewById(R.id.tv_item);
+        LinearLayout layout = (LinearLayout) ((LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_toast_text, null, false);
+        TextView textView =  layout.findViewById(R.id.tv_item);
         textView.setText(text);
 
         if (toast == null) {
@@ -80,9 +81,9 @@ public class ToastUtil {
                                        final int flag) {
 
         FrameLayout layout = (FrameLayout) ((LayoutInflater) context.getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_toast, null, false);
-        TextView textView = (TextView) layout.findViewById(R.id.tv_item);
+        TextView textView =  layout.findViewById(R.id.tv_item);
         textView.setText(text);
-        ImageView image = (ImageView) layout.findViewById(R.id.iv_item);
+        ImageView image =  layout.findViewById(R.id.iv_item);
         // 对号
         if (flag == TOAST_OF_SUCCESS) {
             image.setImageResource(R.drawable.qmui_icon_notify_done);

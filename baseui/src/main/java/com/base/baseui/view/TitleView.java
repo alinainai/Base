@@ -13,7 +13,9 @@ import androidx.core.content.ContextCompat;
 
 import com.base.baseui.R;
 
-
+/**
+ * 自定义TitleView
+ */
 @SuppressWarnings("unused")
 public class TitleView extends ConstraintLayout {
     private TextView tvBack;

@@ -6,15 +6,20 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
+/**
+ * 特殊字体的TextView
+ */
 public class DinOtfTextView extends AppCompatTextView {
 
 
     public DinOtfTextView(Context context) {
-        this(context,null);
+        super(context);
+        init(context);
     }
 
     public DinOtfTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 16842884);
+        super(context, attrs);
+        init(context);
     }
 
     public DinOtfTextView(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -23,12 +28,8 @@ public class DinOtfTextView extends AppCompatTextView {
     }
 
     public void init(Context context) {
-        try {
-            Typeface newFont = Typeface.createFromAsset(context.getAssets(), "fonts/din_alternate_bold.ttf");
-            setTypeface(newFont);
-        }catch (Exception e){
-
-        }
+        Typeface newFont = Typeface.createFromAsset(context.getAssets(), "fonts/din_alternate_bold.ttf");
+        setTypeface(newFont);
     }
 
 
