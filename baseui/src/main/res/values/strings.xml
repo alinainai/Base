@@ -9,4 +9,9 @@
     <string name="str_title">title</string>
     <string name="str_message">message</string>
     <string name="str_background">background</string>
+    <string name="refresh_header_reset">&#8194;&#8194;下拉刷新&#8194;&#8194;</string>
+    <string name="refresh_header_pull_over">&#8194;&#8194;释放刷新&#8194;&#8194;</string>
+    <string name="refresh_header_refreshing">&#8194;&#8194;加载中&#8194;&#8194;</string>
+    <string name="refresh_header_load_success">&#8194;&#8194;加载完成&#8194;&#8194;</string>
+    <string name="refresh_header_load_fail">&#8194;&#8194;加载失败&#8194;&#8194;</string>
 </resources>
