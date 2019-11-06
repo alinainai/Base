@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_text_light">#999999</color>
-    <color name="color_text_normal">#666666</color>
-    <color name="color_text_deep">#333333</color>
-    <color name="color_pure_deep">#000000</color>
-    <color name="color_pure">#ffffff</color>
+    <color name="public_color_text_light">#999999</color>
+    <color name="public_color_text_normal">#666666</color>
+    <color name="public_color_text_deep">#333333</color>
+    <color name="public_color_pure_deep">#000000</color>
+    <color name="public_color_pure">#ffffff</color>
 
 </resources>

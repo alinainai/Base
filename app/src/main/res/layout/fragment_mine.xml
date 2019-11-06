@@ -7,7 +7,7 @@
     android:background="@color/white">
 
     <ImageView
-        android:contentDescription="@string/str_background"
+        android:contentDescription="@string/public_str_background"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:scaleType="center"
@@ -46,7 +46,7 @@
         android:drawableEnd="@mipmap/common_next_icon_white"
         android:drawablePadding="@dimen/px_10"
         android:gravity="center_vertical"
-        android:text="name"
+        android:text="快乐小王子"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/img_icon"
@@ -311,7 +311,7 @@
                     <TextView
                         android:id="@+id/tv_hlb_name"
                         style="@style/mine_block_text_large"
-                        android:text="鸿利宝"
+                        android:text="看美女"
                         app:layout_constraintBottom_toBottomOf="@+id/img_1"
                         app:layout_constraintStart_toEndOf="@+id/img_1"
                         app:layout_constraintTop_toTopOf="@+id/img_1" />
@@ -351,7 +351,7 @@
                     <TextView
                         android:id="@+id/tv_name_sb"
                         style="@style/mine_block_text_large"
-                        android:text="我的散标"
+                        android:text="看视频"
                         app:layout_constraintBottom_toBottomOf="@+id/img_2"
                         app:layout_constraintStart_toEndOf="@+id/img_2"
                         app:layout_constraintTop_toTopOf="@+id/img_2" />
@@ -386,7 +386,7 @@
                     <TextView
                         android:id="@+id/tv_record_name"
                         style="@style/mine_block_text_large"
-                        android:text="交易记录"
+                        android:text="啥也不看"
                         app:layout_constraintBottom_toBottomOf="@+id/img_3"
                         app:layout_constraintStart_toEndOf="@+id/img_3"
                         app:layout_constraintTop_toTopOf="@+id/img_3" />
@@ -394,7 +394,7 @@
                     <TextView
                         android:id="@+id/re_tv"
                         style="@style/mine_block_text_small"
-                        android:text="查看明细"
+                        android:text="啥也不看"
                         app:layout_constraintStart_toStartOf="@+id/tv_record_name"
                         app:layout_constraintTop_toBottomOf="@+id/tv_record_name" />
 
@@ -426,7 +426,7 @@
                     <TextView
                         android:id="@+id/tv_coupon_sb"
                         style="@style/mine_block_text_large"
-                        android:text="@string/str_coupon"
+                        android:text="啥也不看"
                         app:layout_constraintBottom_toBottomOf="@+id/img_4"
                         app:layout_constraintStart_toEndOf="@+id/img_4"
                         app:layout_constraintTop_toTopOf="@+id/img_4" />
@@ -434,7 +434,7 @@
                     <TextView
                         android:id="@+id/coupon_tv"
                         style="@style/mine_block_text_small"
-                        android:text="@string/_0"
+                        android:text="啥也不看"
                         app:layout_constraintStart_toStartOf="@+id/tv_coupon_sb"
                         app:layout_constraintTop_toBottomOf="@+id/tv_coupon_sb" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -443,7 +443,7 @@
                 <TextView
                     android:id="@+id/financial_planner_ll"
                     style="@style/style_mine_item"
-                    android:text="个人账单"
+                    android:text="个人记录"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/trade_record_ll" />
@@ -469,7 +469,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:paddingStart="15dp"
-                        android:text="风险测评"
+                        android:text="个人等级"
                         android:textColor="@color/c000000"
                         android:textSize="@dimen/txt_large" />
 

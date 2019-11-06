@@ -56,19 +56,19 @@ public class TitleView extends ConstraintLayout {
 
     private void initAttrs(AttributeSet attrs) {
 
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.TitleView);
-        titleText = typedArray.getString(R.styleable.TitleView_titleText);
-        titleTextColor = typedArray.getColor(R.styleable.TitleView_titleColor, ContextCompat.getColor(getContext(), R.color.black));
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.public_TitleView);
+        titleText = typedArray.getString(R.styleable.public_TitleView_public_titleText);
+        titleTextColor = typedArray.getColor(R.styleable.public_TitleView_public_titleColor, ContextCompat.getColor(getContext(), R.color.public_black));
 
-        backColor = typedArray.getColor(R.styleable.TitleView_backColor, ContextCompat.getColor(getContext(), R.color.white));
+        backColor = typedArray.getColor(R.styleable.public_TitleView_public_backColor, ContextCompat.getColor(getContext(), R.color.public_white));
 
-        rightText = typedArray.getString(R.styleable.TitleView_rightText);
-        rightTextColor = typedArray.getColor(R.styleable.TitleView_rightTextColor, ContextCompat.getColor(getContext(), R.color.black));
+        rightText = typedArray.getString(R.styleable.public_TitleView_public_rightText);
+        rightTextColor = typedArray.getColor(R.styleable.public_TitleView_public_rightTextColor, ContextCompat.getColor(getContext(), R.color.public_black));
 
-        backIcon = typedArray.getDrawable(R.styleable.TitleView_backIcon);
-        dividerHide = typedArray.getBoolean(R.styleable.TitleView_dividerHide, false);
-        backHide = typedArray.getBoolean(R.styleable.TitleView_backHide, false);
-        closeHide = typedArray.getBoolean(R.styleable.TitleView_closeHide, false);
+        backIcon = typedArray.getDrawable(R.styleable.public_TitleView_public_backIcon);
+        dividerHide = typedArray.getBoolean(R.styleable.public_TitleView_public_dividerHide, false);
+        backHide = typedArray.getBoolean(R.styleable.public_TitleView_public_backHide, false);
+        closeHide = typedArray.getBoolean(R.styleable.public_TitleView_public_closeHide, false);
 
         typedArray.recycle();
 
@@ -81,7 +81,7 @@ public class TitleView extends ConstraintLayout {
     private void initView(AttributeSet attrs) {
 
         initAttrs(attrs);
-        View view = View.inflate(getContext(), R.layout.baseui_layout_title, this);
+        View view = View.inflate(getContext(), R.layout.public_baseui_layout_title, this);
 
         v_bg = view.findViewById(R.id.v_bg);
 
@@ -98,7 +98,7 @@ public class TitleView extends ConstraintLayout {
         setBarLineHide(dividerHide);
         setRightColor(rightTextColor);
         if (null == backIcon) {
-            backIcon = ContextCompat.getDrawable(getContext(), R.mipmap.title_bar_back);
+            backIcon = ContextCompat.getDrawable(getContext(), R.mipmap.public_title_bar_back);
             setBackDrawable(backIcon);
         } else {
             setBackDrawable(backIcon);

@@ -9,7 +9,7 @@
         <!-- EditText 线-->
         <item name="colorAccent">#FFF</item>
         <!-- 窗口的背景颜色 -->
-        <item name="android:windowBackground">@color/base_background</item>
+        <item name="android:windowBackground">@color/public_base_background</item>
         <!-- colorControlNormal, colorControlActivated
     colorControlHighlight, 和 colorSwitchThumbNormal 控制控件的颜色. -->
         <item name="colorControlNormal">#86BA4E</item>
@@ -30,7 +30,7 @@
         <item name="colorAccent">@color/cff3e19</item>
         <item name="colorButtonNormal">@color/cff3e19</item>
         <item name="colorControlHighlight">@color/cff3e19</item>
-        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
+        <item name="alertDialogTheme">@style/public_Theme.AppCompat.Light.Dialog.Alert.Self</item>
     </style>
 
 
@@ -41,7 +41,7 @@
         <item name="colorAccent">@color/cff3e19</item>
     </style>
 
-    <style name="AppThemeNoStatus" parent="AppTheme">
+    <style name="AppThemeNoStatus" parent="public_AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>

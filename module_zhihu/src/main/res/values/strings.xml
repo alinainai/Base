@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">module_zhihu</string>
+    <string name="activity_main">activity_main</string>
+</resources>

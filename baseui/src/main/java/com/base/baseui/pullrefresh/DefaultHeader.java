@@ -27,7 +27,7 @@ public class DefaultHeader extends FrameLayout implements RefreshHeader{
 
     public DefaultHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
-        inflate(context, R.layout.header_custom, this);
+        inflate(context, R.layout.public_header_custom, this);
         textView =  findViewById(R.id.text);
         loading =  findViewById(R.id.loading);
 
@@ -41,7 +41,7 @@ public class DefaultHeader extends FrameLayout implements RefreshHeader{
 
     @Override
     public void reset() {
-        textView.setText(getResources().getText(R.string.refresh_header_reset));
+        textView.setText(getResources().getText(R.string.public_refresh_header_reset));
 
     }
 
@@ -53,7 +53,7 @@ public class DefaultHeader extends FrameLayout implements RefreshHeader{
     @Override
     public void refreshing() {
 
-        textView.setText(getResources().getText(R.string.refresh_header_refreshing));
+        textView.setText(getResources().getText(R.string.public_refresh_header_refreshing));
 
     }
 
@@ -63,19 +63,19 @@ public class DefaultHeader extends FrameLayout implements RefreshHeader{
 
         if (currentPos < refreshPos && lastPos >= refreshPos) {
             if (isTouch && state == State.PULL) {
-                textView.setText(getResources().getText(R.string.refresh_header_reset));
+                textView.setText(getResources().getText(R.string.public_refresh_header_reset));
             }
             // 往下拉
         } else if (currentPos > refreshPos && lastPos <= refreshPos) {
             if (isTouch && state == State.PULL) {
-                textView.setText(getResources().getText(R.string.refresh_header_pull_over));
+                textView.setText(getResources().getText(R.string.public_refresh_header_pull_over));
             }
         }
     }
 
     @Override
     public void complete() {
-        textView.setText(getResources().getText(R.string.refresh_header_load_success));
+        textView.setText(getResources().getText(R.string.public_refresh_header_load_success));
     }
 
 }

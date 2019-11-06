@@ -89,7 +89,7 @@ public class RefreshLayout extends ViewGroup {
 
         // 添加默认的头部，先简单的用一个ImageView代替头部
         ImageView imageView = new ImageView(context);
-        imageView.setImageResource(R.mipmap.indicator_arrow);
+        imageView.setImageResource(R.mipmap.public_indicator_arrow);
         imageView.setBackgroundColor(Color.WHITE);
         setRefreshHeader(imageView);
     }

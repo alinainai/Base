@@ -113,8 +113,8 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
 
     private void loadData() {
-        if (null != mPresenter)
-            mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/" + PAGE_COUNT + "/%d", mSubtype, mPage));
+        assert mPresenter != null;
+        mPresenter.getGankItemData(String.format(Locale.CHINA, "data/%s/" + PAGE_COUNT + "/%d", mSubtype, mPage));
     }
 
 

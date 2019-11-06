@@ -27,7 +27,7 @@ public class StatusBarManager {
             //拓展布局到状态栏后面 | 稳定的布局，不会随系统栏的隐藏、显示而变化
             decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(activity.getApplication().getResources().getColor(R.color.trans));
+            activity.getWindow().setStatusBarColor(activity.getApplication().getResources().getColor(R.color.public_trans));
 
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
 

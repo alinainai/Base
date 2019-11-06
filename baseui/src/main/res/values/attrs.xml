@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="TitleView">
-        <attr name="titleText" format="string|reference" />
-        <attr name="titleColor" format="color|reference" />
-        <attr name="backColor" format="color|reference" />
-        <attr name="rightText" format="string|reference" />
-        <attr name="rightTextColor" format="color|reference" />
-        <attr name="rightTextSize" format="dimension|reference" />
-        <attr name="backIcon" format="color|reference" />
-        <attr name="dividerHide" format="boolean" />
-        <attr name="backHide" format="boolean" />
-        <attr name="closeHide" format="boolean" />
+    <declare-styleable name="public_TitleView">
+        <attr name="public_titleText" format="string|reference" />
+        <attr name="public_titleColor" format="color|reference" />
+        <attr name="public_backColor" format="color|reference" />
+        <attr name="public_rightText" format="string|reference" />
+        <attr name="public_rightTextColor" format="color|reference" />
+        <attr name="public_rightTextSize" format="dimension|reference" />
+        <attr name="public_backIcon" format="color|reference" />
+        <attr name="public_dividerHide" format="boolean" />
+        <attr name="public_backHide" format="boolean" />
+        <attr name="public_closeHide" format="boolean" />
     </declare-styleable>
 
     <!--************ QMUILoading ***********-->
-    <declare-styleable name="QMUILoadingView">
-        <attr name="qmui_loading_view_size" format="dimension" />
+    <declare-styleable name="public_QMUILoadingView">
+        <attr name="public_qmui_loading_view_size" format="dimension" />
         <attr name="android:color" />
     </declare-styleable>
-    <attr name="QMUILoadingStyle" format="reference" />
+    <attr name="public_QMUILoadingStyle" format="reference" />
 
 
 

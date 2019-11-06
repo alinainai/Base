@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="white">#FFFFFF</color>
-    <color name="trans">#00000000</color>
-    <color name="alpha">#0F000000</color>
-    <color name="black">#000000</color>
-    <color name="c1affffff">#1AFFFFFF</color>
-    <color name="caaffffff">#AAFFFFFF</color>
 
-    <color name="c3c83e2">#3C83E2</color>
-    <color name="c333333">#333333</color>
-    <color name="cf9f9f9">#F9F9F9</color>
-    <color name="cdedede">#DEDEDE</color>
+    <color name="public_colorPrimary">#3F51B5</color>
+    <color name="public_colorAccent">#FF4081</color>
+    <color name="public_base_background">#f9f9f9</color>
+    <color name="public_base_bg">#f6f4f5</color>
+
+    <color name="public_black">#000000</color>
+    <color name="public_white">#ffffff</color>
+    <color name="public_trans">#00000000</color>
+    <color name="public_alpha">#66000000</color>
+
+
 
 </resources>

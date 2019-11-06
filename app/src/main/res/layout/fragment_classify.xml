@@ -17,7 +17,7 @@
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_bar_height"
+        android:layout_height="@dimen/public_title_bar_height"
         android:background="@color/cff3e19"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:id="@+id/v_divider_line"
         android:layout_width="0dp"
         android:layout_height="4dp"
-        android:background="@drawable/title_shape_shadow"
+        android:background="@drawable/public_title_shape_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />

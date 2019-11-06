@@ -61,8 +61,8 @@ public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyCont
 
     @Override
     public void onDestroy() {
+        mApplication=null;
         super.onDestroy();
-
     }
 
 }

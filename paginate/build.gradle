@@ -30,7 +30,7 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation(rootProject.ext.dependencies["support-v4"]) {
+    implementation(rootProject.ext.dependencies["androidx_support-v4"]) {
         exclude module: 'support-annotations'
     }
     implementation('androidx.appcompat:appcompat:1.1.0-alpha05') {

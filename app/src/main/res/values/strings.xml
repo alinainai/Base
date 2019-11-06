@@ -109,7 +109,7 @@
     <string name="str_turn_open">立即开通</string>
     <string name="msg">str_msg</string>
     <string name="str_open_bank_account">开通存管</string>
-    <string name="str_accout_money">账户总额(元)</string>
+    <string name="str_accout_money">个人财富(元)</string>
     <string name="str_total_profit">累计回报(元)</string>
     <string name="str_coupon">优惠券</string>
     <string name="_0">0笔</string>

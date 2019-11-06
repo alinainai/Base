@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ImageTranslucentTheme" parent="AppTheme">
+    <style name="ImageTranslucentTheme" parent="public_AppTheme">
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
     </style>
-    <style name="AppThemeNoStatus" parent="AppTheme">
+    <style name="AppThemeNoStatus" parent="public_AppTheme">
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowFullscreen">true</item>

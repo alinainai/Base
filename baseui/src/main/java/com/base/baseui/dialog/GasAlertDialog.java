@@ -47,7 +47,7 @@ public class GasAlertDialog extends GasDialog {
 
     @Override
     public int getLayoutRes() {
-        return R.layout.baseui_dialog_gas;
+        return R.layout.public_baseui_dialog_gas;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class GasAlertDialog extends GasDialog {
                     tvNegative.setVisibility(View.GONE);
                 if (imgline.getVisibility() != View.GONE)
                     imgline.setVisibility(View.GONE);
-                tvPositive.setBackgroundResource(R.drawable.gas_select_middle_btn);
+                tvPositive.setBackgroundResource(R.drawable.public_gas_select_middle_btn);
             } else {
                 tvNegative.setText(negBtnTxt);
                 tvNegative.setOnClickListener(v2 -> {
