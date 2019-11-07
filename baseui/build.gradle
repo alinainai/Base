@@ -35,10 +35,10 @@ dependencies {
     implementation(rootProject.ext.dependencies["androidx_support-v4"]) {
         exclude module: 'support-annotations'
     }
-    implementation('androidx.appcompat:appcompat:1.1.0-alpha05') {
+    implementation(rootProject.ext.dependencies["androidx_appcompat"]) {
         exclude module: 'support-annotations'
     }
-    implementation('androidx.constraintlayout:constraintlayout:2.0.0-beta1') {
+    implementation(rootProject.ext.dependencies["androidx_constraint_layout"]) {
         exclude module: 'support-annotations'
     }
 

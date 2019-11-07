@@ -4,9 +4,9 @@
 
     <application>
         <activity
-            android:name=".MainActivity"
+            android:name=".main.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/activity_main"
+            android:label="@string/zhihu_activity_main"
             android:screenOrientation="portrait" />
         <!--        <meta-data-->
         <!--            android:name="me.jessyan.armscomponent.zhihu.app.GlobalConfiguration"-->

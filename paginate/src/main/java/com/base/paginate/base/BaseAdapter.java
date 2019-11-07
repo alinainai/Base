@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.base.paginate.PageViewHolder;
 import com.base.paginate.Util;
-import com.base.paginate.base.status.AbEmptytView;
-import com.base.paginate.base.status.AbLoadMoreFooter;
-import com.base.paginate.base.status.DefaultEmptyView;
-import com.base.paginate.base.status.DefaultLoadMoreFooter;
+import com.base.paginate.base.status.empty.AbEmptytView;
+import com.base.paginate.base.status.footer.AbLoadMoreFooter;
+import com.base.paginate.base.status.empty.DefaultEmptyView;
+import com.base.paginate.base.status.footer.DefaultLoadMoreFooter;
 import com.base.paginate.base.status.IStatus;
 import com.base.paginate.interfaces.OnLoadMoreListener;
 import com.base.paginate.interfaces.OnMultiItemClickListeners;
@@ -38,26 +38,67 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
 
     private final String TAG = this.getClass().getSimpleName();
-
+    /**
+     *  TYPE_FOOTER_VIEW 底部根布局，上拉加载的显示框
+     */
     private static final int TYPE_FOOTER_VIEW = 0x00000333;//footer类型 Item
+    /**
+     *  TYPE_BASE_HEADER_VIEW 头部Header布局
+     */
     private static final int TYPE_BASE_HEADER_VIEW = 0x00000444;
+    /**
+     * 初始空布局
+     */
     private static final int TYPE_EMPTY_VIEW = 0x00000555;
 
-
+    /**
+     * 加载更多监听
+     */
     private OnLoadMoreListener mLoadMoreListener;
+    /**
+     * 条目点击监听
+     */
     private OnMultiItemClickListeners<T> mItemClickListener;
 
 
     private Context mContext;
+    /**
+     * 真正的数据集合
+     */
     private List<T> mData;
-    private boolean mOpenLoadMore;//是否开启加载更多
-    private boolean isAutoLoadMore = true;//是否自动加载，当数据不满一屏幕会自动加载
+    /**
+     * 是否开启加载更多
+     */
+    private boolean mOpenLoadMore;
+    /**
+     * 当数据不满一屏幕会自动加载，是否自动加载
+     */
+    private boolean isAutoLoadMore = true;
+    /**
+     * 是否显示初始布局
+     */
     private boolean mOpenEmpty;//是否显示EmptyView
-
+    /**
+     * LoadMoreFooter的抽象类，可以展示
+     *
+     */
     private AbLoadMoreFooter mFooterLayout;
+    /**
+     * HeaderLayout的容器
+     */
     private LinearLayout mHeaderLayout;
+    /**
+     * LoadMoreFooter的抽象类，可以展示
+     *
+     */
     private AbEmptytView mEmptyView;
-    private boolean isLoading;//是否正在加载更多
+    /**
+     * 是否正在加载更多
+     */
+    private boolean isLoading;
+    /**
+     * 失败后重新加载的监听
+     */
     private OnReloadListener mReloadListener;
 
     protected abstract int getViewType(int position, T data);
@@ -71,10 +112,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         mContext = context;
         mData = data == null ? new ArrayList<>() : data;
         mOpenLoadMore = isOpenLoadMore;
+        //打开加载更多功能，初始化DefaultLoadMoreFooter
         if (mOpenLoadMore) {
             mFooterLayout = new DefaultLoadMoreFooter(mContext);
         }
+
         mOpenEmpty = openEmptyView;
+        //打开加载更多功能，初始化 初始loading布局（占满整个RecyclerView的size）
         if (openEmptyView) {
             mEmptyView = new DefaultEmptyView(mContext);
         }
@@ -97,9 +141,29 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 break;
             default:
                 viewHolder = getViewHolder(parent, viewType);
+                viewHolder.getConvertView().setOnClickListener(view -> {
+                    //在onCreateViewHolder进行点击事件注入，不用放在onBindViewHolder中，会影响性能
+                    final int dataPos=viewHolder.getAdapterPosition()-getHeaderCount();
+                    if (mItemClickListener != null && dataPos < mData.size()) {
+                        mItemClickListener.onItemClick(viewHolder, mData.get(dataPos), dataPos, viewType);
+                    }
+                });
                 break;
         }
         return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        int viewType = holder.getItemViewType();
+        if (isCommonItemView(viewType)) {
+            bindCommonItem(holder, getDataPosition(position), viewType);
+        }
+    }
+
+    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, final int viewType) {
+        final PageViewHolder viewHolder = (PageViewHolder) holder;
+        convert(viewHolder, mData.get(position), position, viewType);
     }
 
     @Override
@@ -135,24 +199,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        int viewType = holder.getItemViewType();
-        if (isCommonItemView(viewType)) {
-            bindCommonItem(holder, getDataPosition(position), viewType);
-        }
-    }
 
-    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, final int viewType) {
-        final PageViewHolder viewHolder = (PageViewHolder) holder;
-        convert(viewHolder, mData.get(position), position, viewType);
-        viewHolder.getConvertView().setOnClickListener(view -> {
-            if (mItemClickListener != null && position < mData.size()) {
-                mItemClickListener.onItemClick(viewHolder, mData.get(position), position, viewType);
-            }
-        });
-
-    }
 
     /**
      * StaggeredGridLayoutManager模式时，HeaderView、FooterView可占据一行
@@ -413,6 +460,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     /**
      * 是否是普通数据条目
+     * 条目分为 ：
+     *  {@link BaseAdapter#TYPE_FOOTER_VIEW } 底部加载布局
+     *  {@link BaseAdapter#TYPE_BASE_HEADER_VIEW } 头布局
+     *  {@link BaseAdapter#TYPE_EMPTY_VIEW } 初始布局
      *
      * @param viewType viewType
      * @return true 是数据条目

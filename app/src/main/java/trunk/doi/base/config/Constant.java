@@ -1,4 +1,4 @@
-package trunk.doi.base.constant;
+package trunk.doi.base.config;
 
 /**
  * Created by ly on 2016/5/25 16:14.

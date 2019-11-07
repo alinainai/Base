@@ -1,9 +1,11 @@
-package com.base.paginate.base.status;
+package com.base.paginate.base.status.empty;
 
 import android.content.Context;
 import android.widget.TextView;
 
 import com.base.paginate.R;
+import com.base.paginate.base.status.IStatus;
+import com.base.paginate.base.status.empty.AbEmptytView;
 
 import static com.base.paginate.base.status.IStatus.STATUS_EMPTY;
 import static com.base.paginate.base.status.IStatus.STATUS_FAIL;

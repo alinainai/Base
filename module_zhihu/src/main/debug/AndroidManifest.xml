@@ -13,15 +13,15 @@
     <application
         android:supportsRtl="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/zhihu_ic_launcher"
+        android:label="@string/zhihu_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme">
+        android:theme="@style/zhihu_AppTheme">
 <!--        android:networkSecurityConfig="@xml/public_network_security_config"-->
 <!--        android:name="com.base.lib.base.BaseApplication"-->
-        <activity android:name=".MainActivity"
+        <activity android:name=".main.MainActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/activity_main"
+            android:label="@string/zhihu_activity_main"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

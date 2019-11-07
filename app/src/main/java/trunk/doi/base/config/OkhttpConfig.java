@@ -1,6 +1,5 @@
 package trunk.doi.base.config;
 
-import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
 
@@ -11,7 +10,6 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Interceptor;
 import okhttp3.Request;
-import okhttp3.Response;
 
 public class OkhttpConfig {
 

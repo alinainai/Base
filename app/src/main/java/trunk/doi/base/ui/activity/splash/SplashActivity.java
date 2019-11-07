@@ -16,12 +16,11 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.constant.Constant;
+import trunk.doi.base.config.Constant;
 import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.ui.activity.splash.di.DaggerSplashComponent;
 import trunk.doi.base.ui.activity.splash.mvp.SplashContract;
 import trunk.doi.base.ui.activity.splash.mvp.SplashPresenter;
-import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.util.ToastUtil;
 
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {

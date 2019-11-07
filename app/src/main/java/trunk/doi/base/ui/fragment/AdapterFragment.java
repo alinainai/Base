@@ -6,6 +6,7 @@ import android.os.Message;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +31,7 @@ import timber.log.Timber;
 import trunk.doi.base.R;
 import trunk.doi.base.ui.fragment.classify.ClassifyAdapter;
 import trunk.doi.base.bean.GankItemData;
+import trunk.doi.base.util.ToastUtil;
 import trunk.doi.base.view.CustomEmptyView;
 import trunk.doi.base.view.CustomFooterLoadMore;
 
@@ -120,14 +122,16 @@ public class AdapterFragment extends BaseFragment {
         mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> {
                     Timber.tag(TAG).e("initView: position=%d", position);
 //                    mClassifyAdapter.remove(position);
-                    FragmentManager fragmentManager = getFragmentManager();
-                    GasAlertDialog newFragment = new GasAlertDialog.Builder()
-                            .setTitle("提示")
-                            .setMsg("测试一下")
-                            .setPosBtnTxt("点击关闭", null)
-                            .setCancelable(false)
-                            .creat();
-                    newFragment.show(fragmentManager);
+                    Toast.makeText(mContext,String.format(Locale.CHINA,"position=%d",position),Toast.LENGTH_SHORT).show();
+//                    ToastUtil.show(mContext,String.format(Locale.CHINA,"position=%d",position));
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    GasAlertDialog newFragment = new GasAlertDialog.Builder()
+//                            .setTitle("提示")
+//                            .setMsg("测试一下")
+//                            .setPosBtnTxt("点击关闭", null)
+//                            .setCancelable(false)
+//                            .creat();
+//                    newFragment.show(fragmentManager);
                 }
         );
 

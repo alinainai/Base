@@ -36,10 +36,8 @@ public class ClassifyModle extends BaseModel implements ClassifyContract.Model {
     public Observable<List<GankItemData>> getGankItemData(String suburl) {
 
         return Observable.just(mRepositoryManager.obtainRetrofitService(GankItemService.class).getGankItemData(suburl).map(HttpResult::getResults))
-                .flatMap((Function<Observable<List<GankItemData>>, ObservableSource<List<GankItemData>>>) httpResultObservable -> mRepositoryManager.obtainCacheService(CommonCache.class)
-                        .getGankItemData(httpResultObservable
-                                , new DynamicKey(suburl)
-                                , new EvictDynamicKey(true)).map(Reply::getData));
+                .flatMap((Function<Observable<List<GankItemData>>, ObservableSource<List<GankItemData>>>) httpResultObservable ->
+                        mRepositoryManager.obtainCacheService(CommonCache.class).getGankItemData(httpResultObservable, new DynamicKey(suburl), new EvictDynamicKey(true)).map(Reply::getData));
     }
 
 

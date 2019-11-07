@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.base.paginate.base.status.AbLoadMoreFooter;
+import com.base.paginate.base.status.footer.AbLoadMoreFooter;
 import com.base.paginate.base.status.IStatus;
 
 import trunk.doi.base.R;

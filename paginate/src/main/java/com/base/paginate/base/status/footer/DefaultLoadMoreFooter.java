@@ -1,4 +1,4 @@
-package com.base.paginate.base.status;
+package com.base.paginate.base.status.footer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.base.paginate.R;
+import com.base.paginate.base.status.IStatus;
+import com.base.paginate.base.status.footer.AbLoadMoreFooter;
 
 import static com.base.paginate.base.status.IStatus.STATUS_LOADING;
 

@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.base.paginate.base.status.AbEmptytView;
+import com.base.paginate.base.status.empty.AbEmptytView;
 
 
 import trunk.doi.base.R;

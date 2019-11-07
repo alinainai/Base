@@ -1,4 +1,4 @@
-package com.base.paginate.base.status;
+package com.base.paginate.base.status.empty;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.base.paginate.base.status.IStatus;
 
 
 @SuppressLint("ViewConstructor")

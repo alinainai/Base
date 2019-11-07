@@ -27,21 +27,22 @@ android {
 }
 
 dependencies {
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     //support
     api(rootProject.ext.dependencies["androidx_support-v4"]) {
-        exclude module: 'support-annotations'
+        exclude module: 'annotations'
     }
-    api('androidx.appcompat:appcompat:1.1.0-alpha05') {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["androidx_appcompat"]) {
+        exclude module: 'annotations'
     }
-    api('androidx.recyclerview:recyclerview:1.1.0-alpha05') {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["androidx_recyclerview"]) {
+        exclude module: 'annotations'
     }
-    api('androidx.constraintlayout:constraintlayout:2.0.0-beta1') {
-        exclude module: 'support-annotations'
+    api(rootProject.ext.dependencies["androidx_constraint_layout"]) {
+        exclude module: 'annotations'
     }
-    api 'androidx.annotation:annotation:1.1.0'
+    api rootProject.ext.dependencies["annotations"]
     implementation 'androidx.multidex:multidex:2.0.1'
     //network
     api(rootProject.ext.dependencies["retrofit"]) {

@@ -39,6 +39,7 @@ ext {
             "androidx_recyclerview"           : "androidx.recyclerview:recyclerview:${version["recyclerviewVersion"]}",
             "androidx_constraint_layout"         : "androidx.constraintlayout:constraintlayout:${version["constraintLayoutVersion"]}",
             "support-annotations"       : "com.android.support:support-annotations:${version["supportSdkVersion"]}",
+            "palette"       : "androidx.palette:palette:${version["paletteVersion"]}",
 
 
             //network
