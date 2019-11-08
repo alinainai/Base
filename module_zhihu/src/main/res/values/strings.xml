@@ -1,5 +1,6 @@
 <resources>
     <string name="zhihu_app_name">module_zhihu</string>
     <string name="zhihu_activity_main">activity_main</string>
+    <string name="zhihu_activity_details">activity_details</string>
     <string name="zhihu_image">zhihu_image</string>
 </resources>

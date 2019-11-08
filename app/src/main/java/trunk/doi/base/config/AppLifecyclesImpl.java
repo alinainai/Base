@@ -47,11 +47,6 @@ public class AppLifecyclesImpl implements AppLifecyclers {
             // You should not init your app in this process.
             return;
         }
-
-        if (BuildConfig.LOG_DEBUG) {//Timber初始化
-            Timber.plant(new Timber.DebugTree());
-            ButterKnife.setDebug(true);
-        }
         ArmsUtils.getAppComponent(application).extras().put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
                 , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
     }

@@ -22,10 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.lib.di.scope.ActivityScope;
+import com.base.paginate.PageViewHolder;
+import com.base.paginate.interfaces.OnMultiItemClickListeners;
+import com.gas.zhihu.app.ZhihuConstants;
 import com.gas.zhihu.bean.DailyListBean;
 import com.gas.zhihu.main.MainAdapter;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainModel;
+import com.lib.commonsdk.core.RouterHub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,41 +48,42 @@ import dagger.Provides;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@ActivityScope
+
 @Module
 public abstract class MainModule {
 
     @Binds
     abstract MainContract.Model bindZhihuModel(MainModel model);
 
-
+    @ActivityScope
     @Provides
     static RecyclerView.LayoutManager provideLayoutManager(MainContract.View view) {
         return new LinearLayoutManager(view.getActivity());
     }
 
-
+    @ActivityScope
     @Provides
     static List<DailyListBean.StoriesBean> provideList() {
         return new ArrayList<>();
     }
 
-
+    @ActivityScope
     @Provides
     static RecyclerView.Adapter provideMainAdapter(MainContract.View view, List<DailyListBean.StoriesBean> list){
-//        MainAdapter adapter = new MainAdapter(view.getActivity(),list);
-//        adapter.setOnItemClickListener(new DefaultAdapter.OnRecyclerViewItemClickListener<DailyListBean.StoriesBean>() {
-//            @Override
-//            public void onItemClick(View view, int viewType, DailyListBean.StoriesBean data, int position) {
-//                ARouter.getInstance()
-//                        .build(RouterHub.ZHIHU_DETAILACTIVITY)
-//                        .withInt(ZhihuConstants.DETAIL_ID, data.getId())
-//                        .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
-//                        .navigation(zhihuHomeView.getActivity());
-//            }
-//        });
-//        return adapter;
-        return null;
+        MainAdapter adapter = new MainAdapter(view.getActivity(),list);
+        adapter.setOnMultiItemClickListener(new OnMultiItemClickListeners<DailyListBean.StoriesBean>() {
+            @Override
+            public void onItemClick(PageViewHolder viewHolder, DailyListBean.StoriesBean data, int position, int viewType) {
+                ARouter.getInstance()
+                        .build(RouterHub.ZHIHU_DETAILACTIVITY)
+                        .withInt(ZhihuConstants.DETAIL_ID, data.getId())
+                        .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
+                        .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
+                        .navigation(view.getActivity());
+            }
+        });
+
+        return adapter;
     }
 
 

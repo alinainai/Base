@@ -25,7 +25,5 @@ package com.lib.commonsdk.http;
  * ================================================
  */
 public interface Api {
-    String APP_DOMAIN = "https://api.github.com";
-
-
+    String APP_DOMAIN = "https://gank.io/api/";
 }

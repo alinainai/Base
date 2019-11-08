@@ -10,13 +10,13 @@ import androidx.annotation.Nullable;
 
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.lib.commonsdk.core.Constants;
 
 import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.config.Constant;
 import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.ui.activity.splash.di.DaggerSplashComponent;
 import trunk.doi.base.ui.activity.splash.mvp.SplashContract;
@@ -62,7 +62,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == Constant.CODE_REQUEST_PERMISSION && grantResults.length > 0) {
+        if (requestCode == Constants.CODE_REQUEST_PERMISSION && grantResults.length > 0) {
             if (permissions.length > 0 && permissions.length == grantResults.length) {
                 for (int grantResult : grantResults) {
                     //do something

@@ -35,22 +35,6 @@ public final class GlobalConfiguration implements ClientConfigModule {
 
     @Override
     public void applyOptions(@NonNull Context context, @NonNull ConfigModule.Builder builder) {
-        if (!BuildConfig.LOG_DEBUG) { //Release 时, 让框架不再打印 Http 请求和响应的信息
-            builder.printHttpLogLevel(RequestInterceptor.Level.NONE);
-        }
-
-        builder.gsonConfiguration((context1, gsonBuilder) -> {//这里可以自己自定义配置 Gson 的参数
-            gsonBuilder.serializeNulls()//支持序列化值为 null 的参数
-                    .enableComplexMapKeySerialization();//支持将序列化 key 为 Object 的 Map, 默认只能序列化 key 为 String 的 Map
-        }).okhttpConfiguration((context1, okhttpBuilder) ->
-                okhttpBuilder.addInterceptor(OkhttpConfig.getBaseHeader)
-                        .hostnameVerifier(OkhttpConfig.notVerifyHostName())
-                        .sslSocketFactory(OkhttpConfig.notVerifySSL(), OkhttpConfig.getX509TrustManager())
-        ).rxCacheConfiguration((context1, rxCacheBuilder) -> {
-            //设置成true,会在数据为空或者发生错误时,忽视EvictProvider为true或者缓存过期的情况,继续使用缓存(前提是之前请求过有缓存)
-            rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
-            return null;
-        });
 
     }
 

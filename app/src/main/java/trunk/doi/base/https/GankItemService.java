@@ -16,7 +16,6 @@ import trunk.doi.base.bean.HttpResult;
  */
 
 public interface GankItemService {
-    String BASE_URL = "https://gank.io/api/";
 
     @GET("{suburl}")
     Observable<HttpResult<List<GankItemData>>> getGankItemData(@Path("suburl") String suburl);

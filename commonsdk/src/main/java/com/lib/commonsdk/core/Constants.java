@@ -27,4 +27,5 @@ package com.lib.commonsdk.core;
 public interface Constants {
     //电话号码正则
     String PHONE_REGULAR = "^1[3-9]\\d{9}$";
+    public static final int CODE_REQUEST_PERMISSION = 1001; // 版本号
 }

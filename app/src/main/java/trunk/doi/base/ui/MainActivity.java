@@ -1,6 +1,5 @@
 package trunk.doi.base.ui;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.KeyEvent;
@@ -12,9 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
+import com.lib.commonsdk.core.RouterHub;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -23,7 +24,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.ui.fragment.AdapterFragment;
-import trunk.doi.base.ui.fragment.MainFragment;
+import trunk.doi.base.ui.fragment.main.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.ui.fragment.mine.MineFragment;
 import trunk.doi.base.util.ActivityController;
@@ -34,7 +35,10 @@ import trunk.doi.base.util.ToastUtil;
  * Created by ly on 2016/5/27 13:36.
  * 框架搭建
  */
-@SuppressLint("UseSparseArrays")
+// 在支持路由的页面上添加注解(必选)
+// 这里的路径需要注意的是至少需要有两级，/xx/xx
+
+@Route(path = RouterHub.APP_MAINACTIVITY)
 public class MainActivity extends BaseActivity {
 
 
@@ -70,6 +74,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
+
     }
 
     @Override
@@ -92,6 +97,7 @@ public class MainActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
 
         mFragManager = getSupportFragmentManager();
+        //防止屏幕切换等操作造成按钮错位
         if (null != savedInstanceState) {
             mCurrentTabIndex = savedInstanceState.getInt(CURRENTTABINDEX, 0);
         }
@@ -101,6 +107,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        //防止屏幕切换等操作造成按钮错位
         outState.putInt(CURRENTTABINDEX, mCurrentTabIndex);
         super.onSaveInstanceState(outState);
     }

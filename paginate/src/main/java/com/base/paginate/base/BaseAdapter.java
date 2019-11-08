@@ -1,7 +1,6 @@
 package com.base.paginate.base;
 
 import android.content.Context;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -13,11 +12,11 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.base.paginate.PageViewHolder;
 import com.base.paginate.Util;
-import com.base.paginate.base.status.empty.AbEmptytView;
-import com.base.paginate.base.status.footer.AbLoadMoreFooter;
-import com.base.paginate.base.status.empty.DefaultEmptyView;
-import com.base.paginate.base.status.footer.DefaultLoadMoreFooter;
 import com.base.paginate.base.status.IStatus;
+import com.base.paginate.base.status.empty.AbEmptytView;
+import com.base.paginate.base.status.empty.DefaultEmptyView;
+import com.base.paginate.base.status.footer.AbLoadMoreFooter;
+import com.base.paginate.base.status.footer.DefaultLoadMoreFooter;
 import com.base.paginate.interfaces.OnLoadMoreListener;
 import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.base.paginate.interfaces.OnReloadListener;
@@ -39,11 +38,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     private final String TAG = this.getClass().getSimpleName();
     /**
-     *  TYPE_FOOTER_VIEW 底部根布局，上拉加载的显示框
+     * TYPE_FOOTER_VIEW 底部根布局，上拉加载的显示框
      */
     private static final int TYPE_FOOTER_VIEW = 0x00000333;//footer类型 Item
     /**
-     *  TYPE_BASE_HEADER_VIEW 头部Header布局
+     * TYPE_BASE_HEADER_VIEW 头部Header布局
      */
     private static final int TYPE_BASE_HEADER_VIEW = 0x00000444;
     /**
@@ -80,7 +79,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private boolean mOpenEmpty;//是否显示EmptyView
     /**
      * LoadMoreFooter的抽象类，可以展示
-     *
      */
     private AbLoadMoreFooter mFooterLayout;
     /**
@@ -89,7 +87,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private LinearLayout mHeaderLayout;
     /**
      * LoadMoreFooter的抽象类，可以展示
-     *
      */
     private AbEmptytView mEmptyView;
     /**
@@ -141,9 +138,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 break;
             default:
                 viewHolder = getViewHolder(parent, viewType);
+
+                //在onCreateViewHolder进行点击事件注入，不用放在onBindViewHolder中，会影响性能
                 viewHolder.getConvertView().setOnClickListener(view -> {
-                    //在onCreateViewHolder进行点击事件注入，不用放在onBindViewHolder中，会影响性能
-                    final int dataPos=viewHolder.getAdapterPosition()-getHeaderCount();
+
+                    final int dataPos = viewHolder.getAdapterPosition() - getHeaderCount();
                     if (mItemClickListener != null && dataPos < mData.size()) {
                         mItemClickListener.onItemClick(viewHolder, mData.get(dataPos), dataPos, viewType);
                     }
@@ -198,7 +197,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             return getViewType(dataPosition, mData.get(dataPosition));
         }
     }
-
 
 
     /**
@@ -461,9 +459,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * 是否是普通数据条目
      * 条目分为 ：
-     *  {@link BaseAdapter#TYPE_FOOTER_VIEW } 底部加载布局
-     *  {@link BaseAdapter#TYPE_BASE_HEADER_VIEW } 头布局
-     *  {@link BaseAdapter#TYPE_EMPTY_VIEW } 初始布局
+     * {@link BaseAdapter#TYPE_FOOTER_VIEW } 底部加载布局
+     * {@link BaseAdapter#TYPE_BASE_HEADER_VIEW } 头布局
+     * {@link BaseAdapter#TYPE_EMPTY_VIEW } 初始布局
      *
      * @param viewType viewType
      * @return true 是数据条目
@@ -607,16 +605,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    public void setDefaultEmptyView(@NonNull AbEmptytView emptytView){
+    public void setDefaultEmptyView(@NonNull AbEmptytView emptytView) {
         if (!mOpenEmpty)
             return;
-        this.mEmptyView=emptytView;
+        this.mEmptyView = emptytView;
     }
 
-    public void setDefaultFooterLoadMore(@NonNull AbLoadMoreFooter loadMore){
+    public void setDefaultFooterLoadMore(@NonNull AbLoadMoreFooter loadMore) {
         if (!mOpenLoadMore)
             return;
-        this.mFooterLayout=loadMore;
+        this.mFooterLayout = loadMore;
     }
 
     /**

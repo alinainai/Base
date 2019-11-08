@@ -19,6 +19,13 @@ android {
         multiDexEnabled true
         ndk { abiFilters "armeabi", "x86" }
 
+        //ARouter配置
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
         //声明需要使用注解功能
         javaCompileOptions {
             annotationProcessorOptions {
@@ -125,25 +132,38 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    testImplementation 'junit:junit:4.13-beta-3'
+    testImplementation rootProject.ext.dependencies["junit"]
     //noinspection GradleCompatible
     implementation rootProject.ext.dependencies["canary-debug"]
     implementation rootProject.ext.dependencies["androidx_cardview"]
     implementation rootProject.ext.dependencies["palette"]
     implementation rootProject.ext.dependencies["material"]
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-    //butterknife
+    //tools
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
     annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'support-annotations'
     }
-    implementation 'com.zhy:okhttputils:2.6.2'
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    //test
+    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
 
+    implementation 'com.zhy:okhttputils:2.6.2'
+
+    //leakcanary
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
-    implementation project(path: ':paginate')
+
+    if (!isBuildModule.toBoolean()) {
+        //在宿主 App 中使用 implementation 依赖业务组件, 业务组件的代码就会完全暴露给宿主 App, 不利于代码的隔离
+        //使用 runtimeOnly 依赖业务组件, 可实现业务组件的代码在编译时对宿主 App 不可见, 仅在运行时对宿主 App 可见
+        runtimeOnly project(":module_zhihu")
+
+    }
+
+
+
+
     implementation project(path: ':magicindicator')
-    implementation project(path: ':commonlib')
+    implementation project(path: ':commonsdk')
+    implementation project(path: ':componentservice')
 }

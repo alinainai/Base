@@ -22,13 +22,12 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
 
 
     @Inject
-    public MainPresenter(MainContract.View rootView) {
-        super(rootView);
+    public MainPresenter(MainContract.Model model,MainContract.View rootView) {
+        super(model,rootView);
     }
 
     @Override
     public void onDestroy() {
-
 
     }
 

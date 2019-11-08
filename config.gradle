@@ -85,6 +85,8 @@ ext {
             "gson"                      : "com.google.code.gson:gson:2.8.5",
             "multidex"                  : 'androidx.multidex:multidex:2.0.0',
             "javax.annotation"          : "javax.annotation:jsr250-api:1.0",
+            "arouter"                  : "com.alibaba:arouter-api:1.4.1",
+            "arouter-compiler"         : "com.alibaba:arouter-compiler:1.2.2",
 
             //test
             "junit"                     : "junit:junit:4.12",
@@ -97,8 +99,7 @@ ext {
             "timber"                    : "com.jakewharton.timber:timber:4.7.1",
             "canary-debug"              : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
             "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
-            "arouter"                  : "com.alibaba:arouter-api:1.4.1",
-            "arouter-compiler"         : "com.alibaba:arouter-compiler:1.2.2",
+
 
     ]
 }

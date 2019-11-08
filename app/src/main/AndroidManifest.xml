@@ -42,7 +42,7 @@
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/public_app_name"
+        android:label="@string/app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -83,6 +83,10 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+
+        <meta-data
+            android:name="com.lib.commonsdk.core.GlobalConfiguration"
+            android:value="ConfigModule"/>
 
         <meta-data
             android:name="trunk.doi.base.config.GlobalConfiguration"

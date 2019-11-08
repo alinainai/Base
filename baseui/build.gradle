@@ -41,6 +41,7 @@ dependencies {
     implementation(rootProject.ext.dependencies["androidx_constraint_layout"]) {
         exclude module: 'support-annotations'
     }
+    api project(path: ':paginate')
 
 
 }
