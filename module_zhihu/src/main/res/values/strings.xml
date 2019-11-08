@@ -1,6 +1,9 @@
 <resources>
-    <string name="zhihu_app_name">module_zhihu</string>
+    <string name="zhihu_app_name">"知乎组件化"</string>
     <string name="zhihu_activity_main">activity_main</string>
     <string name="zhihu_activity_details">activity_details</string>
     <string name="zhihu_image">zhihu_image</string>
+    <string name="zhihu_url">url</string>
+    <string name="zhihu_title_format">"获取的标题是：%s"</string>
+    <string name="zhihu_url_format">"获取的url是：%s"</string>
 </resources>

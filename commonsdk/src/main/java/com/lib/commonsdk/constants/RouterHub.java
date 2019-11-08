@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lib.commonsdk.consants;
+package com.lib.commonsdk.constants;
 
 /**
  * ================================================
@@ -57,6 +57,7 @@ public interface RouterHub {
      */
     String APP_SPLASHACTIVITY = APP + "/SplashActivity";
     String APP_MAINACTIVITY = APP + "/MainActivity";
+    String APP_WEBVIEWACTIVITY = APP + "/WebViewActivity";
 
 
     /**

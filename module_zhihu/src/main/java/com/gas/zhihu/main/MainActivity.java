@@ -18,7 +18,7 @@ import com.gas.zhihu.R2;
 import com.gas.zhihu.main.di.DaggerMainComponent;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainPresenter;
-import com.lib.commonsdk.consants.RouterHub;
+import com.lib.commonsdk.constants.RouterHub;
 
 import javax.inject.Inject;
 

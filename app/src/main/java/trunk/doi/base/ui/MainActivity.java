@@ -15,7 +15,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.lib.commonsdk.consants.RouterHub;
+import com.lib.commonsdk.constants.RouterHub;
 
 import java.util.Timer;
 import java.util.TimerTask;

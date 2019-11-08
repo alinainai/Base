@@ -12,7 +12,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.lib.commonsdk.consants.RouterHub;
+import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.Utils;
 
 import butterknife.BindView;

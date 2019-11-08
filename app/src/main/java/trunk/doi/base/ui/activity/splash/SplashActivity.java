@@ -11,8 +11,8 @@ import androidx.annotation.Nullable;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
-import com.lib.commonsdk.consants.Constants;
-import com.lib.commonsdk.consants.RouterHub;
+import com.lib.commonsdk.constants.Constants;
+import com.lib.commonsdk.constants.RouterHub;
 
 import java.util.Locale;
 

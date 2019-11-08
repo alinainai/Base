@@ -27,7 +27,7 @@ import com.gas.zhihu.bean.DailyListBean;
 import com.gas.zhihu.main.MainAdapter;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainModel;
-import com.lib.commonsdk.consants.RouterHub;
+import com.lib.commonsdk.constants.RouterHub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +76,7 @@ public abstract class MainModule {
                         .build(RouterHub.ZHIHU_DETAILACTIVITY)
                         .withInt(ZhihuConstants.DETAIL_ID, data.getId())
                         .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
-                        .withString(ZhihuConstants.DETAIL_URL,data.getTitle())
+                        .withString(ZhihuConstants.DETAIL_URL,data.getUrl())
                         .navigation(view.getActivity());
             }
         });

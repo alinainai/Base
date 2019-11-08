@@ -26,10 +26,12 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.baseui.view.StatusLine;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.lib.commonsdk.constants.RouterHub;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,6 +47,10 @@ import trunk.doi.base.gen.DatabaseService;
 import trunk.doi.base.util.StatusBarUtils;
 import trunk.doi.base.util.ToastUtil;
 
+import static com.lib.commonsdk.constants.Constants.PUBLIC_TITLE;
+import static com.lib.commonsdk.constants.Constants.PUBLIC_URL;
+
+@Route(path = RouterHub.APP_WEBVIEWACTIVITY)
 public class WebViewActivity extends BaseActivity {
 
 
@@ -143,8 +149,8 @@ public class WebViewActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
 
 
-        url = getIntent().getStringExtra("url");//地址
-        mTitle = getIntent().getStringExtra("title");//标题
+        url = getIntent().getStringExtra(PUBLIC_URL);//地址
+        mTitle = getIntent().getStringExtra(PUBLIC_TITLE);//标题
         if (!TextUtils.isEmpty(mTitle)) {
             String title = null;
             if (mTitle.length() >= 7) {
