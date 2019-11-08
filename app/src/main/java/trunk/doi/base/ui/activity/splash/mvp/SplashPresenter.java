@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
+import com.base.lib.util.ArmsUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +13,6 @@ import javax.inject.Inject;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import trunk.doi.base.util.GasUtils;
 
 @ActivityScope
 public class SplashPresenter extends BasePresenter<SplashContract.SplashModle, SplashContract.View> {
@@ -72,7 +72,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.SplashModle, S
      * 显示版本号
      */
     public void showVersionCode() {
-        mView.showVersionCode(GasUtils.getVersionName(mApplication));
+        mView.showVersionCode(ArmsUtils.getVersionName(mApplication));
     }
 
 

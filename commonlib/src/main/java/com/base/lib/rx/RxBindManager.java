@@ -3,14 +3,10 @@ package com.base.lib.rx;
 
 import com.base.lib.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.lifecycle.FragmentIRxLifecycle;
-import com.base.lib.lifecycle.IRxLifecycle;
 import com.base.lib.mvp.IView;
-import com.base.lib.util.RxLifecycleUtils;
 import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.RxLifecycle;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

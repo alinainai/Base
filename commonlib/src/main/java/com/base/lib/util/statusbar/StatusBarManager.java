@@ -1,4 +1,4 @@
-package trunk.doi.base.util;
+package com.base.lib.util.statusbar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -9,35 +9,35 @@ import android.view.WindowManager;
 
 import androidx.annotation.IntDef;
 
+import com.base.lib.R;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-/**
- * USer  Administrator ljx
- * Date  2018/2/2
- * Email 569932357@qq.com
- * Description :
- */
+public class StatusBarManager {
 
-public class StatusBarUtils {
+
+    @IntDef({STATUSBAR_TYPE_DEFAULT, STATUSBAR_TYPE_MIUI, STATUSBAR_TYPE_FLYME, STATUSBAR_TYPE_ANDROID6})
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface StatusBarType {
+    }
 
 
     private final static int STATUSBAR_TYPE_DEFAULT = 0;
     private final static int STATUSBAR_TYPE_MIUI = 1;
     private final static int STATUSBAR_TYPE_FLYME = 2;
     private final static int STATUSBAR_TYPE_ANDROID6 = 3; // Android 6.0
-    private final static int STATUS_BAR_DEFAULT_HEIGHT_DP = 25; // 大部分状态栏都是25dp
     private final static String ZTEC2016 = "zte c2016";
 
     private static @StatusBarType int mStatuBarType = STATUSBAR_TYPE_DEFAULT;
 
 
-    private StatusBarUtils() {
-        /* cannot be instantiated */
-        throw new UnsupportedOperationException("cannot be instantiated");
+    private StatusBarManager() {
+        throw new IllegalStateException("you can't instantiate me!");
     }
+
 
     /**
      * 设置状态栏黑色字体图标，
@@ -221,9 +221,30 @@ public class StatusBarUtils {
         return board.toLowerCase().contains(ZTEC2016);
     }
 
-    @IntDef({STATUSBAR_TYPE_DEFAULT, STATUSBAR_TYPE_MIUI, STATUSBAR_TYPE_FLYME, STATUSBAR_TYPE_ANDROID6})
-    @Retention(RetentionPolicy.SOURCE)
-    private @interface StatusBarType {
-    }
 
+    /**
+     * 使传入 {@link Activity} 状态栏全透明状态栏
+     *
+     * @param activity Activity
+     */
+    public static void fullTransStatusBar(Activity activity) {
+
+        //状态栏透明
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
+
+            View decorView = activity.getWindow().getDecorView();
+            //拓展布局到状态栏后面 | 稳定的布局，不会随系统栏的隐藏、显示而变化
+            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            activity.getWindow().setStatusBarColor(activity.getApplication().getResources().getColor(R.color.lib_trans));
+
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
+
+            WindowManager.LayoutParams localLayoutParams = activity.getWindow().getAttributes();
+            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
+
+        }
+
+
+    }
 }

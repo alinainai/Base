@@ -1,4 +1,4 @@
-package com.base.lib.util;
+package com.base.lib.util.sharedpre;
 
 import android.content.Context;
 import android.content.SharedPreferences;

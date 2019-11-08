@@ -2,7 +2,6 @@ package trunk.doi.base.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -14,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.ArmsUtils;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -32,7 +32,6 @@ import butterknife.BindView;
 import trunk.doi.base.R;
 import trunk.doi.base.adapter.SimpleFragmentPagerAdapter;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.view.ColorFlipPagerTitleView;
 
 /**
@@ -70,7 +69,7 @@ public class NewsFragment extends BaseFragment {
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        List<String> mTitles = GasUtils.stringArrayToList(mContext, R.array.gank);
+        List<String> mTitles = ArmsUtils.stringArrayToList(mContext, R.array.gank);
         mFragments = new ArrayList<>();
 
         for (String subtype : mTitles) {

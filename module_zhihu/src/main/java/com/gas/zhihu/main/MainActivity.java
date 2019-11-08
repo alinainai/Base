@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
+import com.base.lib.view.TitleView;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.main.di.DaggerMainComponent;

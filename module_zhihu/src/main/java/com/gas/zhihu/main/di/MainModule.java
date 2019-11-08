@@ -27,6 +27,7 @@ import com.gas.zhihu.bean.DailyListBean;
 import com.gas.zhihu.main.MainAdapter;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainModel;
+import com.lib.commonsdk.constants.Constants;
 import com.lib.commonsdk.constants.RouterHub;
 
 import java.util.ArrayList;
@@ -69,17 +70,12 @@ public abstract class MainModule {
     @Provides
     static RecyclerView.Adapter provideMainAdapter(MainContract.View view){
         MainAdapter adapter = new MainAdapter(view.getActivity());
-        adapter.setOnMultiItemClickListener(new OnMultiItemClickListeners<DailyListBean.StoriesBean>() {
-            @Override
-            public void onItemClick(PageViewHolder viewHolder, DailyListBean.StoriesBean data, int position, int viewType) {
-                ARouter.getInstance()
-                        .build(RouterHub.ZHIHU_DETAILACTIVITY)
-                        .withInt(ZhihuConstants.DETAIL_ID, data.getId())
-                        .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
-                        .withString(ZhihuConstants.DETAIL_URL,data.getUrl())
-                        .navigation(view.getActivity());
-            }
-        });
+        adapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> ARouter.getInstance()
+                .build(RouterHub.APP_WEBVIEWACTIVITY)
+                .withInt(ZhihuConstants.DETAIL_ID, data.getId())
+                .withString(Constants.PUBLIC_TITLE, data.getTitle())
+                .withString(Constants.PUBLIC_URL,data.getUrl())
+                .navigation(view.getActivity()));
 
         return adapter;
     }

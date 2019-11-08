@@ -22,11 +22,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.base.baseui.view.StatusLine;
-import com.base.baseui.view.TitleView;
+
 import com.base.lib.base.BaseActivity;
 import com.base.lib.cache.Cache;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.view.StatusLine;
+import com.base.lib.view.TitleView;
 
 
 /**

@@ -26,10 +26,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.bean.User;
-import trunk.doi.base.util.GasUtils;
 import trunk.doi.base.view.MyVideoView;
-
 
 
 /**
@@ -60,7 +57,7 @@ public class LoginActivity extends BaseActivity {
     RelativeLayout re_login;
 
 
-    private  File videoFile;
+    private File videoFile;
     public static final String VIDEO_NAME = "welcome_video.mp4";
 
     @Override
@@ -87,18 +84,12 @@ public class LoginActivity extends BaseActivity {
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().matches(GasUtils.ISPHONENUM)){
-
-                    if(password.getEditableText().toString().matches(GasUtils.ISPWD))
-                        login.setEnabled(true);
-
-                }else{
-                    login.setEnabled(false);
-                }
             }
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -113,13 +104,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(s.toString().matches(GasUtils.ISPWD)){
-
-                    if(accountNum.getEditableText().toString().matches(GasUtils.ISPHONENUM))
-                        login.setEnabled(true);
-                }else{
-                    login.setEnabled(false);
-                }
             }
 
             @Override
@@ -134,14 +118,14 @@ public class LoginActivity extends BaseActivity {
     @Override
     public void initData() {
 
-        try{
-             videoFile = getFileStreamPath(VIDEO_NAME);
+        try {
+            videoFile = getFileStreamPath(VIDEO_NAME);
             if (!videoFile.exists()) {
                 videoFile = copyVideoFile();
             }
-               playVideo(videoFile);
+            playVideo(videoFile);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             //如果有异常背景变为黑
 
         }
@@ -150,6 +134,7 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 播放背景动画
+     *
      * @param videoFile
      */
     private void playVideo(File videoFile) {
@@ -164,11 +149,12 @@ public class LoginActivity extends BaseActivity {
 
     /**
      * 复制文件到/data/data/目录下
+     *
      * @return
      */
     @NonNull
     private File copyVideoFile() {
-        File videoFile=null;
+        File videoFile = null;
         try {
             FileOutputStream fos = openFileOutput(VIDEO_NAME, MODE_PRIVATE);
             InputStream in = getResources().openRawResource(R.raw.welcome_video);
@@ -177,7 +163,7 @@ public class LoginActivity extends BaseActivity {
             while ((len = in.read(buff)) != -1) {
                 fos.write(buff, 0, len);
             }
-        } catch (FileNotFoundException  e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,7 +175,7 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.back_to_login,  R.id.logup_phone, R.id.forget_pwd, R.id.btn_login, R.id.qq, R.id.sina})
+    @OnClick({R.id.back_to_login, R.id.logup_phone, R.id.forget_pwd, R.id.btn_login, R.id.qq, R.id.sina})
     public void onClick(View view) {
         switch (view.getId()) {
 
@@ -204,13 +190,7 @@ public class LoginActivity extends BaseActivity {
 
                 break;
             case R.id.btn_login:
-                User user = new User();
-                user.setPhone(accountNum.getEditableText().toString());
-                user.setPassword(password.getEditableText().toString());
-                user.setUsername(accountNum.getEditableText().toString());
-//                SPUtils.saveString(mContext, Constant.USER_INFO, new Gson().toJson(user), toString());
-//                SPUtils.saveBoolean(mContext, Constant.LOGIN_STATE, true);
-                finish();
+
                 break;
             case R.id.qq://起吊qq
                 break;
@@ -226,20 +206,17 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        if (null!=mVideoView){
+        if (null != mVideoView) {
             mVideoView.suspend();
         }
         super.onDestroy();
     }
 
     @Override
-    protected void attachBaseContext(Context newBase)
-    {
-        super.attachBaseContext(new ContextWrapper(newBase)
-        {
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(new ContextWrapper(newBase) {
             @Override
-            public Object getSystemService(String name)
-            {
+            public Object getSystemService(String name) {
                 if (Context.AUDIO_SERVICE.equals(name))
                     return getApplicationContext().getSystemService(name);
                 return super.getSystemService(name);

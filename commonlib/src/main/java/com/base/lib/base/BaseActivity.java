@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.base.baseui.view.StatusLine;
-import com.base.baseui.view.TitleView;
 import com.base.lib.R;
 import com.base.lib.base.delegate.activity.IActivity;
 import com.base.lib.cache.Cache;
@@ -20,7 +18,9 @@ import com.base.lib.cache.CacheType;
 import com.base.lib.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.mvp.IPresenter;
 import com.base.lib.util.ArmsUtils;
-import com.base.lib.util.StatusBarManager;
+import com.base.lib.util.statusbar.StatusBarManager;
+import com.base.lib.view.StatusLine;
+import com.base.lib.view.TitleView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;

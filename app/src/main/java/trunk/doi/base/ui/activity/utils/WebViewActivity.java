@@ -27,10 +27,11 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.base.baseui.view.StatusLine;
-import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.statusbar.StatusBarManager;
+import com.base.lib.view.StatusLine;
+import com.base.lib.view.TitleView;
 import com.lib.commonsdk.constants.RouterHub;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +45,6 @@ import trunk.doi.base.R;
 import trunk.doi.base.bean.CollectionBean;
 import trunk.doi.base.dialog.MorePopupWindow;
 import trunk.doi.base.gen.DatabaseService;
-import trunk.doi.base.util.StatusBarUtils;
 import trunk.doi.base.util.ToastUtil;
 
 import static com.lib.commonsdk.constants.Constants.PUBLIC_TITLE;
@@ -138,7 +138,7 @@ public class WebViewActivity extends BaseActivity {
     @Override
     public void getStatusBarHeight(StatusLine statusBar) {
         super.getStatusBarHeight(statusBar);
-        if (StatusBarUtils.setStatusBarLightMode(mContext)) {
+        if (StatusBarManager.setStatusBarLightMode(mContext)) {
             statusBar.setBackgroundColor(getResources().getColor(R.color.white));
         } else {
             statusBar.setBackgroundColor(getResources().getColor(R.color.black));
@@ -315,7 +315,7 @@ public class WebViewActivity extends BaseActivity {
 
             }
         }
-        StatusBarUtils.setStatusBarDarkMode(mContext);
+        StatusBarManager.setStatusBarDarkMode(mContext);
         service.closeDatabase();
         super.onDestroy();
     }

@@ -110,7 +110,7 @@ dependencies {
 
     implementation rootProject.ext.dependencies["support-annotations"]
     annotationProcessor rootProject.ext.dependencies["support-annotations"]
-    api project(path: ':baseui')
+
 
 
 }

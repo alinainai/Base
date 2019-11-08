@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.base.lib.util;
+package com.base.lib.rx;
 
 
 import com.base.lib.lifecycle.ActivityIRxLifecycle;

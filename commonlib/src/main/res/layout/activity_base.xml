@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.baseui.view.StatusLine
+    <com.base.lib.view.StatusLine
         android:id="@+id/v_status_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="@id/v_title"
         app:layout_goneMarginTop="0dp" />
 
-    <com.base.baseui.view.TitleView
+    <com.base.lib.view.TitleView
         android:id="@+id/v_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

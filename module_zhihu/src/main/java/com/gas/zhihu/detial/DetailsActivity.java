@@ -9,6 +9,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.app.ZhihuConstants;
+import com.lib.commonsdk.constants.Constants;
 import com.lib.commonsdk.constants.RouterHub;
 
 import butterknife.BindView;
@@ -28,8 +29,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_activity_details);
         ButterKnife.bind(this);
-        String title=getIntent().getStringExtra(ZhihuConstants.DETAIL_TITLE);
-        String url=getIntent().getStringExtra(ZhihuConstants.DETAIL_URL);
+        String title=getIntent().getStringExtra(Constants.PUBLIC_TITLE);
+        String url=getIntent().getStringExtra(Constants.PUBLIC_URL);
         tvTitle.setText(getResources().getString(R.string.zhihu_title_format,title));
         tvUrl.setText(getResources().getString(R.string.zhihu_url_format,url));
     }

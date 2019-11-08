@@ -1,4 +1,4 @@
-package com.base.baseui.view;
+package com.base.lib.view;
 
 import android.content.Context;
 import android.os.Build;

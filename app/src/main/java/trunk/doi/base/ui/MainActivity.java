@@ -27,7 +27,6 @@ import trunk.doi.base.ui.fragment.AdapterFragment;
 import trunk.doi.base.ui.fragment.main.MainFragment;
 import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.ui.fragment.mine.MineFragment;
-import trunk.doi.base.util.ActivityController;
 import trunk.doi.base.util.ToastUtil;
 
 
@@ -265,7 +264,6 @@ public class MainActivity extends BaseActivity {
             }, 2000); //如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            ActivityController.getActivityController().closeAllActivity(mContext);
             finish();
         }
     }
