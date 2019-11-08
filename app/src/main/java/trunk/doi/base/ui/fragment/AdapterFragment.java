@@ -115,7 +115,7 @@ public class AdapterFragment extends BaseFragment {
         //刷新控件
         mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
-        mClassifyAdapter = new ClassifyAdapter(mContext, new ArrayList<>());
+        mClassifyAdapter = new ClassifyAdapter(mContext);
 
 
         //条目点击

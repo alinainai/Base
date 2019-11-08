@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lib.commonsdk.core;
+package com.lib.commonsdk.consants;
 
 /**
  * ================================================
@@ -27,5 +27,5 @@ package com.lib.commonsdk.core;
 public interface Constants {
     //电话号码正则
     String PHONE_REGULAR = "^1[3-9]\\d{9}$";
-    public static final int CODE_REQUEST_PERMISSION = 1001; // 版本号
+    int CODE_REQUEST_PERMISSION = 1001;
 }

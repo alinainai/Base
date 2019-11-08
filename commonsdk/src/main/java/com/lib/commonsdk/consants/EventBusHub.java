@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lib.commonsdk.core;
+package com.lib.commonsdk.consants;
 
 /**
  * ================================================
@@ -38,7 +38,6 @@ public interface EventBusHub {
      * 组名
      */
     String APP = "app";//宿主 App 组件
-    String JUEJIN = "JUEJIN";//知乎组件
-    String GANK = "gank";//干货集中营组件
-    String GOLD = "gold";//稀土掘金组件
+    String ZHIHU = "zhihu";//知乎组件
+
 }

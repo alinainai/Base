@@ -16,16 +16,16 @@ public abstract class SingleAdapter<T> extends MultiAdapter<T> {
     private static final int TYPE_COMMON_VIEW = 100001;
 
 
-    public SingleAdapter(Context context, List<T> data) {
-        this(context, data, true);
+    public SingleAdapter(Context context) {
+        this(context, true);
     }
 
-    public SingleAdapter(Context context, List<T> data, boolean openLoadMore) {
-        this(context, data, openLoadMore, true);
+    public SingleAdapter(Context context, boolean openLoadMore) {
+        this(context, openLoadMore, true);
     }
 
-    public SingleAdapter(Context context, List<T> data, boolean openLoadMore, boolean openEmpty) {
-        super(context, data, openLoadMore, openEmpty);
+    public SingleAdapter(Context context,  boolean openLoadMore, boolean openEmpty) {
+        super(context, openLoadMore, openEmpty);
     }
 
     @Override

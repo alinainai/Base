@@ -12,15 +12,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.lib.commonsdk.core.RouterHub;
+import com.lib.commonsdk.consants.RouterHub;
 import com.lib.commonsdk.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
-import trunk.doi.base.ui.MainActivity;
-import trunk.doi.base.util.GasUtils;
 
 
 /**
@@ -91,7 +89,6 @@ public class MainFragment extends BaseFragment {
                 break;
             case R.id.btn_etr:
 
-                tvShow.setText("16dp的px值"+GasUtils.dpTopx(mContext, 16));
                 break;
         }
     }

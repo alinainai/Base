@@ -23,15 +23,13 @@ android {
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
-            }
-        }
-
-        //声明需要使用注解功能
-        javaCompileOptions {
-            annotationProcessorOptions {
+                //声明需要使用注解功能
                 includeCompileClasspath true
             }
         }
+
+
+
     }
 
     dexOptions {
@@ -83,6 +81,7 @@ android {
         debug {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             buildConfigField "boolean", "USE_CANARY", "true"
+            buildConfigField "boolean", "IS_BUILD_MODULE", "${isBuildModule}"
             multiDexEnabled true
             minifyEnabled false
             signingConfig signingConfigs.release
@@ -92,6 +91,7 @@ android {
         release {
             buildConfigField "boolean", "LOG_DEBUG", "false"
             buildConfigField "boolean", "USE_CANARY", "false"
+            buildConfigField "boolean", "IS_BUILD_MODULE", "${isBuildModule}"
             shrinkResources true
             multiDexEnabled true
             minifyEnabled true
@@ -134,7 +134,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     testImplementation rootProject.ext.dependencies["junit"]
     //noinspection GradleCompatible
-    implementation rootProject.ext.dependencies["canary-debug"]
+    implementation rootProject.ext.dependencies["androidx_appcompat"]
     implementation rootProject.ext.dependencies["androidx_cardview"]
     implementation rootProject.ext.dependencies["palette"]
     implementation rootProject.ext.dependencies["material"]

@@ -86,7 +86,7 @@
 
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
-            android:value="ConfigModule"/>
+            android:value="ClientConfigModule"/>
 
         <meta-data
             android:name="trunk.doi.base.config.GlobalConfiguration"

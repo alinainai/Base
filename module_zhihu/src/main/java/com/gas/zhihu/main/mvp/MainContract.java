@@ -16,6 +16,7 @@ public interface MainContract {
 
     interface View extends IView {
         Activity getActivity();
+        void success();
     }
 
 

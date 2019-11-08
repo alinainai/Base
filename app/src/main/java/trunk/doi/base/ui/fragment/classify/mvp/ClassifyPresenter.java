@@ -2,6 +2,8 @@ package trunk.doi.base.ui.fragment.classify.mvp;
 
 import android.app.Application;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.mvp.BasePresenter;
 import com.base.lib.rx.RxBindManager;
@@ -20,6 +22,7 @@ public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyCont
 
     @Inject
     Application mApplication;
+
 
 
     @Inject

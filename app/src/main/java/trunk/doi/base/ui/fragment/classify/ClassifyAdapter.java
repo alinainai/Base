@@ -27,8 +27,8 @@ public class ClassifyAdapter extends SingleAdapter<GankItemData> {
     @BindView(R.id.gank_item_publishedat)
     TextView gankItemPublishedat;
 
-    public ClassifyAdapter(Context context, List<GankItemData> data) {
-        super(context, data);
+    public ClassifyAdapter(Context context) {
+        super(context);
     }
 
     @Override

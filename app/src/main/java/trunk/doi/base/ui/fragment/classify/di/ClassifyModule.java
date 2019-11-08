@@ -56,7 +56,7 @@ public abstract class ClassifyModule {
     @FragmentScope
     @Provides
     static ClassifyAdapter provideClasseAdapter(ClassifyContract.View view){
-        return new ClassifyAdapter(view.getWrapContext(),new ArrayList<>());
+        return new ClassifyAdapter(view.getWrapContext());
     }
 
 

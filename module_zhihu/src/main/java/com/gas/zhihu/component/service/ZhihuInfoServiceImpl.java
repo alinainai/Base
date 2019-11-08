@@ -20,9 +20,7 @@ import android.content.Context;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.componentservice.zhihu.bean.ZhihuInfo;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
-import com.base.lib.util.ArmsUtils;
-import com.gas.zhihu.R;
-import com.lib.commonsdk.core.RouterHub;
+import com.lib.commonsdk.consants.RouterHub;
 
 
 /**

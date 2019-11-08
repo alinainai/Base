@@ -60,7 +60,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private OnMultiItemClickListeners<T> mItemClickListener;
 
 
-    private Context mContext;
+    protected Context mContext;
     /**
      * 真正的数据集合
      */
@@ -105,18 +105,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     protected abstract void convert(PageViewHolder holder, T data, int position, int viewType);
 
 
-    public BaseAdapter(Context context, List<T> data, boolean isOpenLoadMore, boolean openEmptyView) {
+    public BaseAdapter(Context context, boolean isOpenLoadMore, boolean openEmpty) {
+
         mContext = context;
-        mData = data == null ? new ArrayList<>() : data;
+        mData = new ArrayList<>();
+
         mOpenLoadMore = isOpenLoadMore;
         //打开加载更多功能，初始化DefaultLoadMoreFooter
         if (mOpenLoadMore) {
             mFooterLayout = new DefaultLoadMoreFooter(mContext);
         }
 
-        mOpenEmpty = openEmptyView;
+        mOpenEmpty = openEmpty;
         //打开加载更多功能，初始化 初始loading布局（占满整个RecyclerView的size）
-        if (openEmptyView) {
+        if (mOpenEmpty) {
             mEmptyView = new DefaultEmptyView(mContext);
         }
     }

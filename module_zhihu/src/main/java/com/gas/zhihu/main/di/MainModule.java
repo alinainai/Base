@@ -15,8 +15,6 @@
  */
 package com.gas.zhihu.main.di;
 
-import android.view.View;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +27,7 @@ import com.gas.zhihu.bean.DailyListBean;
 import com.gas.zhihu.main.MainAdapter;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainModel;
-import com.lib.commonsdk.core.RouterHub;
+import com.lib.commonsdk.consants.RouterHub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +67,8 @@ public abstract class MainModule {
 
     @ActivityScope
     @Provides
-    static RecyclerView.Adapter provideMainAdapter(MainContract.View view, List<DailyListBean.StoriesBean> list){
-        MainAdapter adapter = new MainAdapter(view.getActivity(),list);
+    static RecyclerView.Adapter provideMainAdapter(MainContract.View view){
+        MainAdapter adapter = new MainAdapter(view.getActivity());
         adapter.setOnMultiItemClickListener(new OnMultiItemClickListeners<DailyListBean.StoriesBean>() {
             @Override
             public void onItemClick(PageViewHolder viewHolder, DailyListBean.StoriesBean data, int position, int viewType) {
@@ -78,7 +76,7 @@ public abstract class MainModule {
                         .build(RouterHub.ZHIHU_DETAILACTIVITY)
                         .withInt(ZhihuConstants.DETAIL_ID, data.getId())
                         .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
-                        .withString(ZhihuConstants.DETAIL_TITLE, data.getTitle())
+                        .withString(ZhihuConstants.DETAIL_URL,data.getTitle())
                         .navigation(view.getActivity());
             }
         });

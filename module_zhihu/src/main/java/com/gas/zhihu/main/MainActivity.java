@@ -9,32 +9,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.main.di.DaggerMainComponent;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainPresenter;
-import com.lib.commonsdk.core.RouterHub;
+import com.lib.commonsdk.consants.RouterHub;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 @Route(path = RouterHub.ZHIHU_HOMEACTIVITY)
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.type_item_recyclerview)
-    RecyclerView typeItemRecyclerview;
+    RecyclerView mRecyclerView;
     @BindView(R2.id.type_item_swipfreshlayout)
-    SwipeRefreshLayout typeItemSwipfreshlayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
     RecyclerView.Adapter mAdapter;
+
+
 
 
     @Override
@@ -57,21 +60,44 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initView(@Nullable Bundle savedInstanceState) {
 
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void initData() {
+        mSwipeRefreshLayout.setRefreshing(true);
+        mPresenter.requestDailyList();
     }
 
     @Override
     public void onRefresh() {
+        mPresenter.requestDailyList();
+    }
 
+    @Override
+    public void getTitleView(TitleView titleView) {
+        titleView.setCloseHide(true);
+        titleView.setTitleText("知乎模块页面");
+        titleView.setOnBackListener(v -> finish());
     }
 
     @Override
     public Activity getActivity() {
-        return null;
+        return this;
+    }
+
+    @Override
+    public void success() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onError() {
-
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

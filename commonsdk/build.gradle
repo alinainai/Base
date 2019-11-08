@@ -44,4 +44,6 @@ dependencies {
         exclude module: 'support-annotations'
     }
     api project(path: ':commonlib')
+
+    api 'me.jessyan:retrofit-url-manager:1.4.0'
 }

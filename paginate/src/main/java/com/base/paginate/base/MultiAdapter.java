@@ -16,16 +16,16 @@ import java.util.List;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class MultiAdapter<T> extends BaseAdapter<T> {
 
-    public MultiAdapter(Context context, List<T> data) {
-        this(context, data, true);
+    public MultiAdapter(Context context) {
+        this(context,true);
     }
 
-    public MultiAdapter(Context context, List<T> data, boolean openLoadMore) {
-        this(context, data, openLoadMore, true);
+    public MultiAdapter(Context context,  boolean openLoadMore) {
+        this(context,  openLoadMore, true);
     }
 
-    public MultiAdapter(Context context, List<T> data, boolean openLoadMore, boolean openEmpty) {
-        super(context, data, openLoadMore, openEmpty);
+    public MultiAdapter(Context context,  boolean openLoadMore, boolean openEmpty) {
+        super(context,  openLoadMore, openEmpty);
     }
 
     protected abstract int getItemLayoutId(int viewType);

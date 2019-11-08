@@ -1,14 +1,18 @@
 package com.gas.zhihu.main.mvp;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
+
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.https.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
-import com.gas.zhihu.app.ZhihuService;
+import com.gas.zhihu.http.ZhihuService;
 import com.gas.zhihu.bean.DailyListBean;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
+import timber.log.Timber;
 
 @ActivityScope
 public class MainModel extends BaseModel implements MainContract.Model {
@@ -22,7 +26,13 @@ public class MainModel extends BaseModel implements MainContract.Model {
     @Override
     public Observable<DailyListBean> getDailyList() {
         return mRepositoryManager.obtainRetrofitService(ZhihuService.class)
-                .getDailyList(ZhihuService.ZHIHU_DOMAIN);
+                .getDailyList();
+    }
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    void onPause() {
+        Timber.d("Release Resource");
     }
 
 

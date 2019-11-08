@@ -37,10 +37,10 @@
         声明 CommonSDK 的 ConfigModule -->
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
-            android:value="ConfigModule"/>
+            android:value="ClientConfigModule"/>
         <meta-data
             android:name="com.gas.zhihu.app.GlobalConfiguration"
-            android:value="ConfigModule"/>
+            android:value="ClientConfigModule"/>
 
     </application>
 

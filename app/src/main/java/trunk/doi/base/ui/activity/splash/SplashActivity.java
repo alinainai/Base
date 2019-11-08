@@ -8,9 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
-import com.lib.commonsdk.core.Constants;
+import com.lib.commonsdk.consants.Constants;
+import com.lib.commonsdk.consants.RouterHub;
 
 import java.util.Locale;
 
@@ -23,6 +25,7 @@ import trunk.doi.base.ui.activity.splash.mvp.SplashContract;
 import trunk.doi.base.ui.activity.splash.mvp.SplashPresenter;
 import trunk.doi.base.util.ToastUtil;
 
+@Route(path = RouterHub.APP_SPLASHACTIVITY)
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
 
