@@ -230,7 +230,7 @@ public class ArmsUtils {
      * @param px
      * @return
      */
-    public static int pxTodp(Context context, float px) {
+    public static int px2dp(Context context, float px) {
         final float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5);
     }
@@ -241,7 +241,7 @@ public class ArmsUtils {
      * @param dp
      * @return
      */
-    public static float dpTopx(float dp) {
+    public static float dp2px(float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, Resources.getSystem().getDisplayMetrics());
     }
 

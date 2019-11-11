@@ -12,11 +12,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.base.paginate.PageViewHolder;
 import com.base.paginate.Util;
-import com.base.paginate.base.status.IStatus;
-import com.base.paginate.base.status.empty.AbEmptytView;
-import com.base.paginate.base.status.empty.DefaultEmptyView;
-import com.base.paginate.base.status.footer.AbLoadMoreFooter;
-import com.base.paginate.base.status.footer.DefaultLoadMoreFooter;
+import com.base.paginate.interfaces.EmptyInterface;
+import com.base.paginate.view.DefaultEmptyView;
+import com.base.paginate.interfaces.FooterInterface;
+import com.base.paginate.view.DefaultLoadMoreFooter;
 import com.base.paginate.interfaces.OnLoadMoreListener;
 import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.base.paginate.interfaces.OnReloadListener;
@@ -80,7 +79,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * LoadMoreFooter的抽象类，可以展示
      */
-    private AbLoadMoreFooter mFooterLayout;
+    private FooterInterface mFooterLayout;
     /**
      * HeaderLayout的容器
      */
@@ -88,7 +87,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * LoadMoreFooter的抽象类，可以展示
      */
-    private AbEmptytView mEmptyView;
+    private EmptyInterface mEmptyView;
     /**
      * 是否正在加载更多
      */
@@ -130,13 +129,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         PageViewHolder viewHolder;
         switch (viewType) {
             case TYPE_FOOTER_VIEW:
-                viewHolder = PageViewHolder.create(mFooterLayout);
+                viewHolder = PageViewHolder.create((View)mFooterLayout);
                 break;
             case TYPE_BASE_HEADER_VIEW:
                 viewHolder = PageViewHolder.create(mHeaderLayout);
                 break;
             case TYPE_EMPTY_VIEW:
-                viewHolder = PageViewHolder.create(mEmptyView);
+                viewHolder = PageViewHolder.create((View)mEmptyView);
                 break;
             default:
                 viewHolder = getViewHolder(parent, viewType);
@@ -288,10 +287,10 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     private void loadMore(boolean isReload) {
 
-        if (mFooterLayout.getLoadMoreStatus() != IStatus.STATUS_END && !isLoading) {
+        if (mFooterLayout.getLoadMoreStatus() != FooterInterface.STATUS_END && !isLoading) {
             if (mLoadMoreListener != null) {
-                if (mFooterLayout.getLoadMoreStatus() != IStatus.STATUS_LOADING) {
-                    mFooterLayout.setStatus(IStatus.STATUS_LOADING);
+                if (mFooterLayout.getLoadMoreStatus() != FooterInterface.STATUS_LOADING) {
+                    mFooterLayout.setStatus(FooterInterface.STATUS_LOADING);
                 }
                 isLoading = true;
                 mLoadMoreListener.onLoadMore(isReload);
@@ -341,7 +340,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
         if (!mOpenEmpty)
             return 0;
-        if (mEmptyView == null || mEmptyView.getChildCount() == 0) {
+        if (mEmptyView == null || (mEmptyView instanceof ViewGroup && ((ViewGroup)mEmptyView).getChildCount() == 0)) {
             return 0;
         }
         if (mData.size() != 0) {
@@ -528,7 +527,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             if (mOpenLoadMore)
                 resetLoading();
             if (mEmptyView != null) {
-                mEmptyView.setStatus(IStatus.STATUS_EMPTY);
+                mEmptyView.setStatus(EmptyInterface.STATUS_EMPTY);
             }
             notifyDataSetChanged();
         } else
@@ -587,17 +586,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    public void setEmptyView(@IStatus.StatusType int statusType) {
+    public void setEmptyView(@EmptyInterface.EmptyType int statusType) {
 
         if (!mOpenEmpty || mEmptyView == null)
             return;
         mEmptyView.setStatus(statusType);
-        if (statusType == IStatus.STATUS_FAIL) {
-            mEmptyView.setOnClickListener(v -> {
-                if (null != mReloadListener) {
-                    mReloadListener.onReload();
-                }
-            });
+        if (statusType == EmptyInterface.STATUS_FAIL) {
+
+            if(mEmptyView instanceof View){
+                ((View)mEmptyView).setOnClickListener(v -> {
+                    if (null != mReloadListener) {
+                        mReloadListener.onReload();
+                    }
+                });
+            }
+
+
         }
         if (mData.size() > 0) {
             int count = mData.size();
@@ -607,13 +611,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    public void setDefaultEmptyView(@NonNull AbEmptytView emptytView) {
+    public void setDefaultEmptyView(@NonNull EmptyInterface emptytView) {
         if (!mOpenEmpty)
             return;
         this.mEmptyView = emptytView;
     }
 
-    public void setDefaultFooterLoadMore(@NonNull AbLoadMoreFooter loadMore) {
+    public void setDefaultFooterLoadMore(@NonNull FooterInterface loadMore) {
         if (!mOpenLoadMore)
             return;
         this.mFooterLayout = loadMore;
@@ -623,8 +627,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * 重置foorterView为normal状态
      */
     private void resetLoading() {
-        mFooterLayout.setStatus(IStatus.STATUS_FAIL);
-        mFooterLayout.setOnClickListener(v -> loadMore(true));
+        mFooterLayout.setStatus(FooterInterface.STATUS_FAIL);
+        if(mFooterLayout instanceof View){
+            ((View)mFooterLayout).setOnClickListener(v -> loadMore(true));
+        }
+
     }
 
     /**
@@ -632,7 +639,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     public void loadEnd() {
         isLoading = false;
-        mFooterLayout.setStatus(IStatus.STATUS_END);
+        mFooterLayout.setStatus(FooterInterface.STATUS_END);
     }
 
     /**

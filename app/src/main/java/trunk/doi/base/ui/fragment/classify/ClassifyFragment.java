@@ -8,16 +8,13 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.paginate.base.status.IStatus;
+import com.base.paginate.interfaces.EmptyInterface;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -89,7 +86,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         );
 
         mClassifyAdapter.setOnReloadListener(() -> {
-            mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
+            mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
             loadData();
         });
 
@@ -101,7 +98,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mRecyclerView.setAdapter(mClassifyAdapter);
-        mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
+        mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
     }
 
 
@@ -149,7 +146,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
             if (mPage > 1) {
                 mClassifyAdapter.showFooterFail();
             } else {
-                mClassifyAdapter.setEmptyView(IStatus.STATUS_FAIL);
+                mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_FAIL);
             }
         }
 
@@ -168,7 +165,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         if (mPage > 1) {
             mClassifyAdapter.showFooterFail();
         } else {
-            mClassifyAdapter.setEmptyView(IStatus.STATUS_FAIL);
+            mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_FAIL);
         }
     }
 

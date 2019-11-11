@@ -10,16 +10,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.baseui.dialog.GasAlertDialog;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.paginate.base.status.IStatus;
+import com.base.paginate.interfaces.EmptyInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +29,6 @@ import timber.log.Timber;
 import trunk.doi.base.R;
 import trunk.doi.base.ui.fragment.classify.ClassifyAdapter;
 import trunk.doi.base.bean.GankItemData;
-import trunk.doi.base.util.ToastUtil;
-import trunk.doi.base.view.CustomEmptyView;
-import trunk.doi.base.view.CustomFooterLoadMore;
 
 
 /**
@@ -77,7 +72,7 @@ public class AdapterFragment extends BaseFragment {
                         mClassifyAdapter.setNewData(getData(mPage));
                         showNormal = false;
                     } else {
-                        mClassifyAdapter.setEmptyView(IStatus.STATUS_FAIL);
+                        mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_FAIL);
                         showNormal = true;
                     }
                     break;
@@ -137,21 +132,20 @@ public class AdapterFragment extends BaseFragment {
 
         //失败重新加载
         mClassifyAdapter.setOnReloadListener(() -> {
-            mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
+            mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
             mHandler.sendEmptyMessageDelayed(2, DELAYTIME);
         });
 
         //上拉加载更多
         mClassifyAdapter.setOnLoadMoreListener(isReload -> mHandler.sendEmptyMessageDelayed(1, DELAYTIME));
-        mClassifyAdapter.setDefaultEmptyView(new CustomEmptyView(mContext));
-        mClassifyAdapter.setDefaultFooterLoadMore(new CustomFooterLoadMore(mContext));
+
         //下拉刷新
         mSwipeRefreshLayout.setOnRefreshListener(() -> mHandler.sendEmptyMessageDelayed(2, DELAYTIME));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mClassifyAdapter);
         View header = LayoutInflater.from(mContext).inflate(R.layout.dialog_more, null);
         mClassifyAdapter.addHeaderView(header);
-        mClassifyAdapter.setEmptyView(IStatus.STATUS_LOADING);
+        mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
         mHandler.sendEmptyMessageDelayed(2, DELAYTIME);
     }
 
