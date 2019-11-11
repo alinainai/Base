@@ -24,8 +24,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Inject
     Application mApplication;
 
-    @Inject
-    List<DailyListBean.StoriesBean> mDatas;
+
     @Inject
     RecyclerView.Adapter mAdapter;
 
@@ -48,10 +47,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     public void onNext(DailyListBean result) {
                         Timber.e("请求成功success");
                         mView.success();
-                        if (null != result) {
-                            mDatas.clear();
-                            mDatas.addAll(result.getStories());
-                            ((BaseAdapter) mAdapter).setNewData(mDatas);
+                        if (null != result&& null!= result.getStories()) {
+                            ((BaseAdapter) mAdapter).setNewData(result.getStories());
                         }
 
                     }

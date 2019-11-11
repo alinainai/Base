@@ -18,20 +18,16 @@ package com.gas.zhihu.main.di;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.android.arouter.facade.Postcard;
+import com.alibaba.android.arouter.facade.callback.NavigationCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.lib.di.scope.ActivityScope;
-import com.base.paginate.PageViewHolder;
-import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.gas.zhihu.app.ZhihuConstants;
-import com.gas.zhihu.bean.DailyListBean;
 import com.gas.zhihu.main.MainAdapter;
 import com.gas.zhihu.main.mvp.MainContract;
 import com.gas.zhihu.main.mvp.MainModel;
 import com.lib.commonsdk.constants.Constants;
 import com.lib.commonsdk.constants.RouterHub;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import dagger.Binds;
 import dagger.Module;
@@ -62,20 +58,48 @@ public abstract class MainModule {
 
     @ActivityScope
     @Provides
-    static List<DailyListBean.StoriesBean> provideList() {
-        return new ArrayList<>();
+    static NavigationCallback provideNavigationCallback(MainContract.View view) {
+
+        return new NavigationCallback() {
+
+            @Override
+            public void onFound(Postcard postcard) {
+
+            }
+
+            @Override
+            public void onLost(Postcard postcard) {
+                if (RouterHub.APP_WEBVIEWACTIVITY.equals(postcard.getPath())) {
+                    ARouter.getInstance()
+                            .build(RouterHub.ZHIHU_DETAILACTIVITY)
+                            .with(postcard.getExtras())
+                            .greenChannel()
+                            .navigation(view.getActivity());
+                }
+            }
+
+            @Override
+            public void onArrival(Postcard postcard) {
+
+            }
+
+            @Override
+            public void onInterrupt(Postcard postcard) {
+
+            }
+        };
     }
 
     @ActivityScope
     @Provides
-    static RecyclerView.Adapter provideMainAdapter(MainContract.View view){
+    static RecyclerView.Adapter provideMainAdapter(MainContract.View view, NavigationCallback callback) {
         MainAdapter adapter = new MainAdapter(view.getActivity());
         adapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> ARouter.getInstance()
                 .build(RouterHub.APP_WEBVIEWACTIVITY)
                 .withInt(ZhihuConstants.DETAIL_ID, data.getId())
                 .withString(Constants.PUBLIC_TITLE, data.getTitle())
-                .withString(Constants.PUBLIC_URL,data.getUrl())
-                .navigation(view.getActivity()));
+                .withString(Constants.PUBLIC_URL, data.getUrl())
+                .navigation(view.getActivity(), callback));
 
         return adapter;
     }
