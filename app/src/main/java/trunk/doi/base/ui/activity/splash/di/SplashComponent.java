@@ -34,7 +34,7 @@ import trunk.doi.base.ui.activity.splash.mvp.SplashContract;
  * ================================================
  */
 @ActivityScope
-@Component(modules = SplashModule.class, dependencies = AppComponent.class)
+@Component(dependencies = AppComponent.class)
 public interface SplashComponent {
 
     void inject(SplashActivity activity);

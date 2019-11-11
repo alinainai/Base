@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
+import com.base.lib.mvp.IModel;
 import com.base.lib.util.ArmsUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -15,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 @ActivityScope
-public class SplashPresenter extends BasePresenter<SplashContract.SplashModle, SplashContract.View> {
+public class SplashPresenter extends BasePresenter<IModel, SplashContract.View> {
 
     @Inject
     Application mApplication;

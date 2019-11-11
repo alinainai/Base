@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +18,7 @@ import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.WindowManager;
 
 import androidx.core.app.ActivityCompat;
@@ -236,13 +238,11 @@ public class ArmsUtils {
     /**
      * 将dp转换为px
      *
-     * @param context
      * @param dp
      * @return
      */
-    public static int dpTopx(Context context, float dp) {
-        final float scale = context.getApplicationContext().getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5);
+    public static float dpTopx(float dp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, Resources.getSystem().getDisplayMetrics());
     }
 
 

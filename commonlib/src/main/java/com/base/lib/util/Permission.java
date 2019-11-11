@@ -1,4 +1,4 @@
-package trunk.doi.base.util;
+package com.base.lib.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -16,45 +16,7 @@ import java.util.ArrayList;
  * Created by user on 2017/4/20.
  */
 
-public class PermissionUtils {
-
-//  对应危险权限（即权限组）参考如下：
-
-//    权限组	权限
-//    CALENDAR
-//            READ_CALENDAR
-//            WRITE_CALENDAR
-//    CAMERA
-//            CAMERA
-//    CONTACTS
-//            READ_CONTACTS
-//            WRITE_CONTACTS
-//            GET_ACCOUNTS
-//    LOCATION
-//            ACCESS_FINE_LOCATION
-//            ACCESS_COARSE_LOCATION
-//    MICROPHONE
-//            RECORD_AUDIO
-//    PHONE
-//            READ_PHONE_STATE
-//            CALL_PHONE
-//            READ_CALL_LOG
-//            WRITE_CALL_LOG
-//            ADD_VOICEMAIL
-//            USE_SIP
-//            PROCESS_OUTGOING_CALLS
-//    SENSORS
-//            BODY_SENSORS
-//    SMS
-//            SEND_SMS
-//            RECEIVE_SMS
-//            READ_SMS
-//            RECEIVE_WAP_PUSH
-//            RECEIVE_MMS
-//    STORAGE
-//            READ_EXTERNAL_STORAGE
-//            WRITE_EXTERNAL_STORAGE
-
+public class Permission {
 
     /**
      * Check if the calling context has a set of permissions.
@@ -93,9 +55,9 @@ public class PermissionUtils {
      *  第一次进入App时请求权限的方法
      * @param context
      * @param requestCode 请求吗
-     * @param permissionNames 权限
+     * @param permissionNames 权限组
      */
-    public static void requestAppPermissions(Activity context, int requestCode,String... permissionNames) {
+    public static void requestPermissions(Activity context, int requestCode,String... permissionNames) {
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return ;
@@ -119,26 +81,5 @@ public class PermissionUtils {
                     requestCode);
         }
     }
-
-    /**
-     * 请求设备权限
-     * @param activity
-     * @param permissions
-     * @param requestCode
-     */
-    public static void requestPermissions(Activity activity, int requestCode ,String... permissions) {
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            // DANGER ZONE!!! Changing this will break the library.
-            return ;
-        }
-        if(activity!=null && permissions!=null && permissions.length>0){
-            ActivityCompat.requestPermissions(activity,
-                    permissions,
-                    requestCode);
-        }
-    }
-
-
 
 }
