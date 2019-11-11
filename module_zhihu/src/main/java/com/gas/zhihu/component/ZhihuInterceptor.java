@@ -1,4 +1,4 @@
-package trunk.doi.base.config;
+package com.gas.zhihu.component;
 
 import android.content.Context;
 
@@ -7,8 +7,8 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.alibaba.android.arouter.launcher.ARouter;
-
-import timber.log.Timber;
+import com.gas.zhihu.BuildConfig;
+import com.lib.commonsdk.constants.RouterHub;
 
 /**
  * ================================================
@@ -19,20 +19,24 @@ import timber.log.Timber;
  * Follow me on https://github.com/JessYanCoding
  * ================================================
  */
-@Interceptor(priority = 8, name = "RouterInterceptor")
-public class RouterInterceptor implements IInterceptor {
+@Interceptor(priority = 7, name = "ZhihuInterceptor")
+public class ZhihuInterceptor implements IInterceptor {
     private Context mContext;
 
     @Override
     public void process(Postcard postcard, InterceptorCallback callback) {
-        Timber.i("RouterInterceptor: %s",postcard.getPath());
-        callback.onContinue(postcard);
-        //这里示例的意思是, 如果用户没有登录就只能进入登录注册等划分到 ACCOUNT 分组的页面, 用户进入其他页面将全部被拦截
-//        if (postcard.getGroup().equals(RouterHub.ACCOUNT.split("/")[1])
-//            callback.onContinue(postcard);
+
+        //模拟登录拦截
+//        if (RouterHub.APP_WEBVIEWACTIVITY.equals(postcard.getPath())) {
+//            ARouter.getInstance()
+//                    .build(RouterHub.ZHIHU_DETAILACTIVITY)
+//                    .with(postcard.getExtras())
+//                    .greenChannel()
+//                    .navigation(mContext);
 //        } else {
-//            callback.onInterrupt(new Exception("用户没有登陆"));
+//            callback.onContinue(postcard);
 //        }
+        callback.onContinue(postcard);
     }
 
     @Override
