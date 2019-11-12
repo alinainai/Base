@@ -2,13 +2,14 @@ package trunk.doi.base.ui.fragment.main;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.base.componentservice.gank.service.GankInfoService;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
@@ -17,8 +18,9 @@ import com.lib.commonsdk.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import io.reactivex.disposables.Disposable;
 import trunk.doi.base.R;
+import trunk.doi.base.R2;
+import trunk.doi.base.https.GankItemService;
 
 
 /**
@@ -29,16 +31,22 @@ public class MainFragment extends BaseFragment {
 
 
     public static final String TAG = "MainFragment";
-    @BindView(R.id.tv_show)
-    TextView tvShow;
 
-    @BindView(R.id.btn_load)
-    TextView mZhihuButton;
 
-    private Disposable mDisposable;
+    @BindView(R2.id.btn_load)
+    Button mZhihuButton;
+    @BindView(R2.id.btn_etr)
+    Button mGankButton;
+    @BindView(R2.id.btn_plugin_one)
+    Button mPluginOne;
+    @BindView(R2.id.btn_plugin_two)
+    Button mPluginTwo;
+
 
     @Autowired(name = RouterHub.ZHIHU_SERVICE_ZHIHUINFOSERVICE)
     ZhihuInfoService mZhihuInfoService;
+    @Autowired(name = RouterHub.GANK_SERVICE_GANKINFOSERVICE)
+    GankInfoService mGankInfoService;
 
 
     public MainFragment() {
@@ -60,13 +68,19 @@ public class MainFragment extends BaseFragment {
 
     }
 
-    private void loadZhihuInfo(){
+    private void loadZhihuInfo() {
         //当非集成调试阶段, 宿主 App 由于没有依赖其他组件, 所以使用不了对应组件提供的服务
         if (mZhihuInfoService == null) {
             mZhihuButton.setEnabled(false);
             return;
         }
         mZhihuButton.setText(mZhihuInfoService.getInfo().getName());
+
+        if (mGankInfoService == null) {
+            mGankButton.setEnabled(false);
+            return;
+        }
+        mGankButton.setText(mGankInfoService.getInfo().getName());
     }
 
 
@@ -81,25 +95,21 @@ public class MainFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.btn_load, R.id.btn_etr})
+    @OnClick({R.id.btn_load, R.id.btn_etr,R.id.btn_plugin_one, R.id.btn_plugin_two})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_load:
+            case R.id.btn_load://组件化模块一
                 Utils.navigation(getActivity(), RouterHub.ZHIHU_HOMEACTIVITY);
                 break;
-            case R.id.btn_etr:
-
+            case R.id.btn_etr://组件化模块二
+                Utils.navigation(getActivity(), RouterHub.GANK_MAINACTIVITY);
+                break;
+            case R.id.btn_plugin_one://插件一
+                break;
+            case R.id.btn_plugin_two://插件二
                 break;
         }
     }
 
-    @Override
-    public void onDestroy() {
-        if (mDisposable != null && mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
-        mDisposable = null;
-        super.onDestroy();
 
-    }
 }

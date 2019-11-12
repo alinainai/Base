@@ -71,7 +71,8 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-
+        assert getArguments() != null;
+        mSubtype = getArguments().getString(SUB_TYPE);
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         //刷新控件
@@ -92,8 +93,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
         mClassifyAdapter.setOnLoadMoreListener(isReload -> loadData());
 
-        assert getArguments() != null;
-        mSubtype = getArguments().getString(SUB_TYPE);
+
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 

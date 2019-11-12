@@ -44,6 +44,7 @@ public interface RouterHub {
      */
     String APP = "/app";//宿主 App 组件
     String ZHIHU = "/zhihu";//知乎组件
+    String GANK = "/gank";//知乎组件
 
 
     /**
@@ -65,8 +66,15 @@ public interface RouterHub {
      */
     String ZHIHU_SERVICE_ZHIHUINFOSERVICE = ZHIHU + SERVICE + "/ZhihuInfoService";
 
-    String ZHIHU_HOMEACTIVITY = ZHIHU + "/HomeActivity";
+    String ZHIHU_HOMEACTIVITY = ZHIHU + "/MainActivity";
     String ZHIHU_DETAILACTIVITY = ZHIHU + "/DetailActivity";
+
+
+    /**
+     * 知乎分组
+     */
+    String GANK_SERVICE_GANKINFOSERVICE = GANK + SERVICE + "/GankInfoService";
+    String GANK_MAINACTIVITY = GANK + "/MainActivity";
 
 
 }

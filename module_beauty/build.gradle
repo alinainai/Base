@@ -1,16 +1,16 @@
 apply from: "../common_component_build.gradle"
 
 android {
-    resourcePrefix "zhihu_" //给 Module 内的资源名增加前缀, 避免资源名冲突
+    resourcePrefix "gank_" //给 Module 内的资源名增加前缀, 避免资源名冲突
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation rootProject.ext.dependencies["androidx_cardview"]
+
     implementation(rootProject.ext.dependencies["androidx_appcompat"]) {
         exclude module: 'support-annotations'
     }
-
+    implementation rootProject.ext.dependencies["androidx_cardview"]
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation rootProject.ext.dependencies["junit"]
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
