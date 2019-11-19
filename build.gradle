@@ -1,7 +1,7 @@
 apply from: "config.gradle"
 
 buildscript {
-
+    ext.kotlin_version = '1.3.50'
     repositories {
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
@@ -13,6 +13,9 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.5.2'
         classpath 'com.novoda:bintray-release:0.9'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//        rootProject.ext.android["minSdkVersion"]
+
     }
 }
 

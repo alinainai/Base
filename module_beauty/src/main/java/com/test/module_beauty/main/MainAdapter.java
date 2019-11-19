@@ -17,7 +17,7 @@ public class MainAdapter extends SingleAdapter<GankItemBean> {
 
     @Override
     protected void convert(PageViewHolder holder, GankItemBean data, int position) {
-        ImageLoader.loadSet(mContext,data.getUrl(),holder.getView(R.id.iv_avatar),R.mipmap.gank_ic_launcher);
+        ImageLoader.loadSet(mContext,data.getUrl(),holder.getView(R.id.iv_avatar),R.mipmap.public_ic_launcher);
     }
 
     @Override

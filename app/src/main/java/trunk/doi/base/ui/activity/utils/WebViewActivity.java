@@ -94,7 +94,7 @@ public class WebViewActivity extends BaseActivity {
                 public void collection() {
 
                     if (null != service.query(url)) {
-                        ToastUtil.showCustomToast(mContext, "已添加过收藏", ToastUtil.TOAST_OF_WARING);
+                        ToastUtil.show(mContext, "已添加过收藏");
                     } else {
                         CollectionBean bean = new CollectionBean();
                         bean.setUrl(url);
@@ -102,7 +102,7 @@ public class WebViewActivity extends BaseActivity {
                         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
                         bean.setDataTime(sdf.format(new Date()));
                         service.addInfo(bean);
-                        ToastUtil.showCustomToast(mContext, "收藏成功", ToastUtil.TOAST_OF_SUCCESS);
+                        ToastUtil.show(mContext, "收藏成功");
                     }
                 }
 
@@ -115,7 +115,7 @@ public class WebViewActivity extends BaseActivity {
                     ClipData mClipData = ClipData.newPlainText("Label", url);
                     // 将ClipData内容放到系统剪贴板里。
                     cm.setPrimaryClip(mClipData);
-                    ToastUtil.showCustomToast(mContext, "地址复制成功", ToastUtil.TOAST_OF_SUCCESS);
+                    ToastUtil.show(mContext, "地址复制成功");
 
                 }
             }.showAsDropDown(mainCartTitle.getRightView(), 2, 0);
@@ -139,9 +139,9 @@ public class WebViewActivity extends BaseActivity {
     public void getStatusBarHeight(StatusLine statusBar) {
         super.getStatusBarHeight(statusBar);
         if (StatusBarManager.setStatusBarLightMode(mContext)) {
-            statusBar.setBackgroundColor(getResources().getColor(R.color.white));
+            statusBar.setBackgroundColor(getResources().getColor(R.color.public_white));
         } else {
-            statusBar.setBackgroundColor(getResources().getColor(R.color.black));
+            statusBar.setBackgroundColor(getResources().getColor(R.color.public_black));
         }
     }
 

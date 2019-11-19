@@ -4,8 +4,6 @@
     <string name="public_str_status_view_failed">加载失败, 点击重新加载</string>
     <string name="public_str_status_view_loading">玩命加载中&#8230;</string>
     <string name="public_str_empty">""</string>
-    <string name="public_str_negative">取消</string>
-    <string name="public_str_positive">确认</string>
     <string name="public_str_title">title</string>
     <string name="public_str_message">message</string>
     <string name="public_str_background">background</string>

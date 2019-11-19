@@ -1,8 +1,0 @@
-<animation-list
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:oneshot="false">
-    <item android:drawable="@mipmap/public_drawable_loading1" android:duration="130" />
-    <item android:drawable="@mipmap/public_drawable_loading2" android:duration="130" />
-    <item android:drawable="@mipmap/public_drawable_loading3" android:duration="130" />
-    <item android:drawable="@mipmap/public_drawable_loading4" android:duration="130" />
-</animation-list>

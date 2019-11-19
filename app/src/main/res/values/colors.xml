@@ -2,139 +2,20 @@
 <resources>
 
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="sv_blue">#688fdb</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="base_background">#f9f9f9</color>
-    <color name="base_bg">#f6f4f5</color>
-    <color name="bottom_tab_text_color_pre">#83ae2b</color>
+
     <color name="bottom_tab_text_color_nor">#999999</color>
-    <color name="white">#FFFFFF</color>
+
     <color name="base_divider_color">#e1e1e1</color>
     <color name="alpha_color">#66000000</color>
-    <color name="cff3e19">#ff3e19</color>
-    <color name="login_background">#86b624</color>
-    <color name="base_text_info_color">#666666</color>
-    <color name="black">#000000</color>
+
     <color name="base_text_color">#333333</color>
-    <color name="camera_color">#178ae2</color>
-    <color name="base_search_hint_color">#cccccc</color>
-    <color name="order_dialog_info_color">#88b625</color>
-    <color name="money_color">#fe3a2e</color>
-    <color name="pink">#FFB6C1</color>
-    <color name="red">#ea5858</color>
-    <color name="blue">#046eb8</color>
-    <color name="product_dot_pre">#ff4f64</color>
-    <color name="gray">#9c9c9c</color>
-    <color name="title_text_6">#FF529bd0</color>
-    <color name="yellow">#FFF7D23E</color>
-    <color name="trans">#00000000</color>
-    <color name="action_sheet_gray">#8F8F8F</color>
-    <color name="action_sheet_ed">#000000</color>
-    <color name="actionsheet_gray">#8F8F8F</color>
-    <color name="cff5000">#ff5000</color>
-    <color name="cdcdcdc">#dcdcdc</color>
-    <color name="c26c4e9">#26c4e9</color>
 
 
 
-    <color name="alertdialog_line">#c6c6c6</color>
-    <color name="actionsheet_blue">#037BFF</color>
-    <color name="actionsheet_red">#FD4A2E</color>
-    <color name="cefefef">#efefef</color>
-    <color name="c0c9ee3">#0c9ee3</color>
+
+    <color name="app_splash_icon_color">#E37C9A</color>
 
 
-    <color name="grayIconTint">#727272</color>
-
-    <color name="shopAccent">#84ceca</color>
-    <color name="shopSecondary">#727272</color>
-    <color name="shopRatedStar">#ffeb5a</color>
-    <color name="shopFabRipple">#51b2ac</color>
-    <color name="weatherAccent">#84ceca</color>
-    <color name="status_color">@color/black</color>
-
-    <color name="c999999">#999999</color>
-    <color name="c333333">#333333</color>
-    <color name="c666666">#666666</color>
-    <color name="cff6b16">#ff6b16</color>
-    <color name="cea6f6f">#ea6f6f</color>
-    <color name="c71d37a">#71d37a</color>
-    <color name="cc39f8a">#c39f8a</color>
-    <color name="cbbbbbb">#bbbbbb</color>
-    <color name="cffffff">#ffffff</color>
-    <color name="cf5f5f5">#f5f5f5</color>
-    <color name="ceeeeee">#eeeeee</color>
-    <color name="cf7e6dc">#f7e6dc</color>
-    <color name="ce84a55">#e84a55</color>
-    <color name="cde3743">#de3743</color>
-    <color name="cff9e74">#ff9e74</color>
-    <color name="cfd767f">#fd767f</color>
-    <color name="c7fe188">#7fe188</color>
-    <color name="cdddddd">#dddddd</color>
-    <color name="cffd0bb">#ffd0bb</color>
-    <color name="cff773c">#ff773c</color>
-    <color name="cb50a37">#b50a37</color>
-    <color name="cf1f1f1">#f1f1f1</color>
-    <color name="ce84b56">#e84b56</color>
-    <color name="c222222">#222222</color>
-    <color name="ce7e7e7">#e7e7e7</color>
-    <color name="cdddcdc">#dddcdc</color>
-    <color name="cef6c2d">#ef6c2d</color>
-    <color name="cffd2ba">#ffd2ba</color>
-    <color name="cff833f">#ff833f</color>
-    <color name="cffd1b8">#ffd1b8</color>
-    <color name="c000000">#000000</color>
-    <color name="c4f78d7">#4f78d7</color>
-    <color name="cc6cbd7">#c6cbd7</color>
-    <color name="c4f74c0">#4f74c0</color>
-    <color name="c67439b">#67439b</color>
-    <color name="c34aaf3">#34aaf3</color>
-
-    <color name="c6c94f2">#6c94f2</color>
-    <color name="caaaaaa">#aaaaaa</color>
-    <color name="c282828">#282828</color>
-    <color name="cd4d7d8">#d4d7d8</color>
-    <color name="ce1e1e1">#e1e1e1</color>
-
-    <color name="c7297e7">#7297e7</color>
-    <color name="c7879d5">#7879d5</color>
-    <color name="cfc7946">#fc7946</color>
-
-    <color name="cc7c7cd">#c7c7cd</color>
-
-    <color name="c9a9a9a">#9a9a9a</color>
-    <color name="c030303">#030303</color>
-    <color name="c6f7070">#6f7070</color>
-    <color name="cadadad">#adadad</color>
-    <color name="c7589df">#7589df</color>
-
-    <color name="cadaef7">#adaef7</color>
-    <color name="ce3e3fc">#e3e3fc</color>
-    <color name="c7589DF">#7589DF</color>
-    <color name="cced6ff">#CED6FF</color>
-    <color name="c55FD644B">#55FD644B</color>
-    <color name="cFD644B">#FD644B</color>
-    <color name="ca2a2a2">#a2a2a2</color>
-    <color name="cff593e">#ff593e</color>
-    <color name="cfafafa">#fafafa</color>
-    <color name="ceaf1f9">#eaf1f9</color>
-    <color name="caebdda">#aebdda</color>
-    <color name="ceaeaea">#eaeaea</color>
-    <color name="c7688ae">#7688ae</color>
-    <color name="ce5edfd">#e5edfd</color>
-    <color name="c808080">#808080</color>
-    <color name="c6293f9">#6293f9</color>
-    <color name="cbababa">#bababa</color>
-    <color name="ce3e3e3">#e3e3e3</color>
-
-
-    <color name="psts_background_tab_pressed">#1AFFFFFF</color>
-    <color name="psts_background_tab_pressed_ripple">#AAFFFFFF</color>
-
-    <color name="title_color">@color/black</color>
-    <color name="title_right_color">@color/black</color>
-    <color name="title_bar_color">@color/white</color>
 
 
 

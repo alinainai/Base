@@ -1,65 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="public_gas_dialog" parent="Theme.AppCompat.Light.Dialog">
-        <!-- 边框 -->
-        <item name="android:windowFrame">@null</item>
-        <!-- 是否浮现在activity之上 -->
-        <item name="android:windowIsFloating">true</item>
-        <!-- 是否透明 -->
-        <item name="android:windowIsTranslucent">false</item>
-        <!-- 无标题 -->
-        <item name="android:windowNoTitle">true</item>
-        <!-- 背景透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <!-- 模糊 -->
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowSoftInputMode">adjustPan</item>
-        <item name="android:windowContentOverlay">@null</item>
-    </style>
-    <!--<item name="android:windowAnimationStyle">@style/gas_dialog_anim</item>-->
-
-    <style name="public_gas_dialog_anim" parent="@android:style/Animation.Dialog">
-        <item name="android:windowEnterAnimation">@anim/public_gas_anim_show</item>
-        <item name="android:windowExitAnimation">@anim/public_gas_anim_dismiss</item>
-    </style>
-
-    <style name="public_gas_dialog_divder_line">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0.5dp</item>
-        <item name="android:background">#dedede</item>
-    </style>
-
-    <style name="public_gas_dialog_divder_line_vertical">
-        <item name="android:layout_width">0.5dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">#dedede</item>
-    </style>
-
-
-
     <!-- Base application theme. -->
-    <style name="public_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="public_app_theme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#000000</item>
-        <item name="colorPrimaryDark">#ff3e19</item>
-        <item name="colorAccent">#ff3e19</item>
+        <item name="colorPrimary">@color/public_color_primary</item>
+        <item name="colorPrimaryDark">@color/public_color_primary_dark</item>
+        <item name="colorAccent">@color/public_color_accent</item>
         <item name="colorButtonNormal">#ff3e19</item>
         <item name="colorControlHighlight">#ff3e19</item>
-        <item name="alertDialogTheme">@style/public_Theme.AppCompat.Light.Dialog.Alert.Self</item>
+        <item name="alertDialogTheme">@style/public_dialog_alert</item>
     </style>
 
 
 
     <!--设置dialogbutton颜色-->
-    <style name="public_Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+    <style name="public_dialog_alert" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <!--修改AlertDialog按钮的颜色-->
         <item name="colorAccent">#ff3e19</item>
     </style>
 
-    <style name="public_AppThemeNoStatus" parent="public_AppTheme">
+    <style name="public_app_theme_nostatusbar" parent="public_app_theme">
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>

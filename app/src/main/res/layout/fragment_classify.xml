@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <com.base.lib.view.StatusLine
-        android:background="@color/cff3e19"
+        android:background="@color/app_splash_icon_color"
         android:id="@+id/v_status"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
         android:layout_height="@dimen/public_title_bar_height"
-        android:background="@color/cff3e19"
+        android:background="@color/app_splash_icon_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_status"  />

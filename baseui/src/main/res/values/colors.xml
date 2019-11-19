@@ -11,6 +11,17 @@
     <color name="public_white">#ffffff</color>
     <color name="public_trans">#00000000</color>
     <color name="public_alpha">#66000000</color>
+    <color name="public_divider_color">#C0C0C0</color>
+
+    <color name="public_color_primary">#008577</color>
+    <color name="public_color_primary_dark">#00574B</color>
+    <color name="public_color_accent">#D81B60</color>
+
+
+    <color name="public_text_deep_color">#333333</color>
+    <color name="public_text_normal_color">#666666</color>
+    <color name="public_text_light_color">#999999</color>
+
 
 
 

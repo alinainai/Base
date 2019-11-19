@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 
 def static releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
@@ -27,9 +31,6 @@ android {
                 includeCompileClasspath true
             }
         }
-
-
-
     }
 
     dexOptions {
@@ -126,45 +127,51 @@ android {
     }
 
 }
-
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation rootProject.ext.dependencies["android-test-junit"]
+    androidTestImplementation rootProject.ext.dependencies["espresso-core"]
     testImplementation rootProject.ext.dependencies["junit"]
-    //noinspection GradleCompatible
-    implementation rootProject.ext.dependencies["androidx_appcompat"]
-    implementation rootProject.ext.dependencies["androidx_cardview"]
-    implementation rootProject.ext.dependencies["palette"]
-    implementation rootProject.ext.dependencies["material"]
-    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
-    //tools
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
-        exclude module: 'support-annotations'
-    }
-    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
 
+    implementation rootProject.ext.dependencies["material"]
+//    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.zhy:okhttputils:2.6.2'
+    //tools
+//    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
+//    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+//    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+//        exclude module: 'annotations'
+//    }
+
+    implementation rootProject.ext.dependencies["lottie"]
 
     //leakcanary
     debugImplementation rootProject.ext.dependencies["canary-debug"]
     releaseImplementation rootProject.ext.dependencies["canary-release"]
     testImplementation rootProject.ext.dependencies["canary-release"]
 
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+    kapt rootProject.ext.dependencies["butterknife-compiler"]
+
+
+
     if (!isBuildModule.toBoolean()) {
         //在宿主 App 中使用 implementation 依赖业务组件, 业务组件的代码就会完全暴露给宿主 App, 不利于代码的隔离
         //使用 runtimeOnly 依赖业务组件, 可实现业务组件的代码在编译时对宿主 App 不可见, 仅在运行时对宿主 App 可见
         runtimeOnly project(":module_zhihu")
         runtimeOnly project(":module_beauty")
+        runtimeOnly project(":module_test")
 
     }
 
-
-
-
     implementation project(path: ':magicindicator')
-    implementation project(path: ':commonsdk')
+    implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
 }

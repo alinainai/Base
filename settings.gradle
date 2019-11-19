@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate', ':magicindicator', ':commonsdk', ':module_zhihu', ':module_beauty'
+include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate', ':magicindicator', ':commonsdk', ':module_zhihu', ':module_beauty', ':module_test'

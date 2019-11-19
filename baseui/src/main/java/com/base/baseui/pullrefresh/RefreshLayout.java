@@ -12,6 +12,8 @@ import android.widget.AbsListView;
 import android.widget.ImageView;
 import android.widget.Scroller;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+
 import com.base.baseui.R;
 
 
@@ -31,16 +33,20 @@ public class RefreshLayout extends ViewGroup {
     private static final int SCROLL_TO_TOP_DURATION = 500;
     private static final int SCROLL_TO_REFRESH_DURATION = 250;
     private static final long SHOW_COMPLETED_TIME = 500;
-
-    private View refreshHeader; //刷新头
-    private View target; //下拉刷新的目标控件
-    private int currentTargetOffsetTop; // target/header偏移距离
+    //刷新头
+    private View refreshHeader;
+    //主体控件
+    private View target;
+    // 主体控件初始位置Offset
+    private int currentTargetOffsetTop;
     private int lastTargetOffsetTop;
-
-    private boolean hasMeasureHeader;   // 是否已经计算头部高度
+    // 是否已经计算头部高度
+    private boolean hasMeasureHeader;
     private int touchSlop;
-    private int headerHeight;       // header高度
-    private int totalDragDistance;  // 需要下拉这个距离才进入松手刷新状态，默认和header高度一致
+    // header高度
+    private int headerHeight;
+    // 需要下拉这个距离才进入松手刷新状态，默认和header高度一致
+    private int totalDragDistance;
     private int maxDragDistance;
     private int activePointerId;
     private boolean isTouch;
@@ -86,12 +92,8 @@ public class RefreshLayout extends ViewGroup {
 
         touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
         autoScroll = new AutoScroll();
-
-        // 添加默认的头部，先简单的用一个ImageView代替头部
-        ImageView imageView = new ImageView(context);
-        imageView.setImageResource(R.mipmap.public_indicator_arrow);
-        imageView.setBackgroundColor(Color.WHITE);
-        setRefreshHeader(imageView);
+        //添加默认刷新头
+        setRefreshHeader(new DefaultHeader(context));
     }
 
     /**
@@ -222,7 +224,7 @@ public class RefreshLayout extends ViewGroup {
     }
 
     /**
-     * 将第一个Child作为target
+     * 把第一个非refreshHeader的Child作为target
      */
     private void ensureTarget() {
         // Don't bother getting the parent height if the parent hasn't been laidout yet.

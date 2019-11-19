@@ -21,15 +21,20 @@ public abstract class LazyLoadFragment<P extends IPresenter> extends BaseFragmen
         tryLoadData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         mIsVisibleToUser = isVisibleToUser;
         tryLoadData();
-
-
     }
+
+
 
 
     public void tryLoadData() {

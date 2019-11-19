@@ -29,21 +29,23 @@ android {
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation rootProject.ext.dependencies["annotations"]
+    annotationProcessor rootProject.ext.dependencies["annotations"]
     //support
-    api(rootProject.ext.dependencies["androidx_support-v4"]) {
+    api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'annotations'
     }
-    api(rootProject.ext.dependencies["androidx_appcompat"]) {
+    api(rootProject.ext.dependencies["appcompat"]) {
         exclude module: 'annotations'
     }
-    api(rootProject.ext.dependencies["androidx_recyclerview"]) {
+    api(rootProject.ext.dependencies["recyclerview"]) {
         exclude module: 'annotations'
     }
-    api(rootProject.ext.dependencies["androidx_constraint_layout"]) {
+    api(rootProject.ext.dependencies["constraint_layout"]) {
         exclude module: 'annotations'
     }
     api rootProject.ext.dependencies["annotations"]
-    implementation 'androidx.multidex:multidex:2.0.1'
+
     //network
     api(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
@@ -61,11 +63,19 @@ dependencies {
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
-    api 'com.squareup.okhttp3:okhttp:4.2.2'
-    api 'com.squareup.okhttp3:logging-interceptor:4.0.0-alpha02'
+
+
+
+    api (rootProject.ext.dependencies["okhttp3"]){
+        exclude module: 'annotations'
+    }
+    api (rootProject.ext.dependencies["okhttp-logging-interceptor"]){
+        exclude module: 'annotations'
+    }
+
     //rx
-    api 'io.reactivex.rxjava2:rxjava:2.2.12'
-    api('io.reactivex.rxjava2:rxandroid:2.1.1') {
+    api rootProject.ext.dependencies["rxjava2"]
+    api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
     api(rootProject.ext.dependencies["rxlifecycle2"]) {
@@ -73,7 +83,7 @@ dependencies {
         exclude module: 'jsr305'
     }
     api(rootProject.ext.dependencies["rxlifecycle2-android"]) {
-        exclude module: 'support-annotations'
+        exclude module: 'annotations'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
@@ -93,7 +103,7 @@ dependencies {
     api rootProject.ext.dependencies["gson"]
     //glide图片加载
     api (rootProject.ext.dependencies["glide"]){
-        exclude module: 'support-annotations'
+        exclude module: 'annotations'
     }
 //    annotationProcessor 'androidx.annotation:annotation:1.0.2'
     annotationProcessor rootProject.ext.dependencies["glide-compiler"]
@@ -102,14 +112,12 @@ dependencies {
     api rootProject.ext.dependencies["timber"]
     //view
     api(rootProject.ext.dependencies["butterknife"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'support-compat'
+        exclude module: 'annotations'
     }
     compileOnly rootProject.ext.dependencies["androideventbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
 
-    implementation rootProject.ext.dependencies["support-annotations"]
-    annotationProcessor rootProject.ext.dependencies["support-annotations"]
+
 
 
 

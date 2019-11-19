@@ -8,6 +8,7 @@ import android.widget.VideoView;
  * Created by kobe.gong on 2015/7/17.
  */
 public class MyVideoView extends VideoView {
+
     public MyVideoView(Context context) {
         super(context);
     }

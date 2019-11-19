@@ -4,12 +4,6 @@ import android.content.Context;
 
 import com.base.lib.mvp.IView;
 
-import java.util.List;
-
-import io.reactivex.Observable;
-import trunk.doi.base.bean.Beauty;
-import trunk.doi.base.bean.GankItemData;
-
 public interface MineContract {
 
 
@@ -18,7 +12,7 @@ public interface MineContract {
     }
 
     interface Model {
-        Beauty getBody();
+
     }
 
 

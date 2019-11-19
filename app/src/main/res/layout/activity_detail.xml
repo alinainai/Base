@@ -18,7 +18,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_head_pic"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -29,13 +28,12 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/px_60"
-            android:src="@mipmap/user_icon"
+            android:src="@mipmap/public_ic_launcher"
             app:civ_border_color="@color/public_base_background"
             app:civ_border_width="1dp" />
 
     </RelativeLayout>
     <!-- 分割线 -->
-    <View style="@style/divider" />
     <!-- 昵称 -->
     <RelativeLayout
         android:id="@+id/detail_nickName_rl"
@@ -48,7 +46,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_nickname"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -58,7 +55,6 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img1"
             android:gravity="center_vertical"
-            android:text="@string/mine_nickname"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -71,7 +67,6 @@
             android:src="@mipmap/con_btn_right" />
     </RelativeLayout>
     <!-- 分割线 -->
-    <View style="@style/divider" />
 
 
     <!-- 用户名 -->
@@ -86,7 +81,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_username"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -96,7 +90,6 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img7"
             android:gravity="center_vertical"
-            android:text="@string/mine_username"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -110,7 +103,6 @@
             android:src="@mipmap/con_btn_right" />
     </RelativeLayout>
     <!-- 分割线 -->
-    <View style="@style/divider" />
 
     <!-- 性别 -->
     <RelativeLayout
@@ -125,7 +117,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_sex"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -135,7 +126,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/img2"
-            android:text="@string/mine_sex"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -148,7 +138,6 @@
             android:src="@mipmap/con_btn_right" />
     </RelativeLayout>
     <!-- 分割线 -->
-    <View style="@style/divider" />
 
     <!-- 出生日期 -->
     <RelativeLayout
@@ -164,7 +153,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_birth"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -174,7 +162,6 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img3"
             android:gravity="center_vertical"
-            android:text="@string/mine_birth"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -201,7 +188,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/band_phone"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -211,7 +197,6 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img4"
             android:gravity="center_vertical"
-            android:text="@string/band_phone"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -223,7 +208,6 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/con_btn_right" />
     </RelativeLayout>
-    <View style="@style/divider" />
     <!-- 服务地址管理 -->
     <RelativeLayout
         android:id="@+id/detail_service_address_rl"
@@ -236,7 +220,6 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/px_32"
             android:gravity="center_vertical"
-            android:text="@string/mine_service_address"
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
@@ -245,7 +228,6 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/img6"
             android:gravity="center_vertical"
-            android:text="@string/mine_city"
             android:textColor="@color/bottom_tab_text_color_nor"
             android:textSize="@dimen/text_size_26_px"
              />

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.base.BaseFragment;
@@ -36,7 +37,6 @@ import trunk.doi.base.util.ToastUtil;
  */
 // 在支持路由的页面上添加注解(必选)
 // 这里的路径需要注意的是至少需要有两级，/xx/xx
-
 @Route(path = RouterHub.APP_MAINACTIVITY)
 public class MainActivity extends BaseActivity {
 
@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
     Button rBtn3;
     @BindView(R.id.shopping_btn)
     Button rBtn4;
+
     //container
     private FragmentManager mFragManager;//fragment管理器
     private BaseFragment mHomeFragment;//首页的fragment
@@ -58,7 +59,8 @@ public class MainActivity extends BaseActivity {
 
     // 当前fragment的index
     public int mCurrentTabIndex = 0;
-    private static final String CURRENTTABINDEX = "CURRENTTABINDEX";
+
+    private static final String CURRENTTABINDEX = "current_tab_index";
 
 
     private static final SparseArray<String> FRAGMENTS = new SparseArray<String>() {
@@ -94,6 +96,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+
 
         mFragManager = getSupportFragmentManager();
         //防止屏幕切换等操作造成按钮错位

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.test.RatioViewActivity">
+
+    <com.gas.test.widget.RatioView
+        android:id="@+id/ratio_rv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#30ff0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/constraintlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/ratio_rv">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#300000ff"
+            app:layout_constraintDimensionRatio="2:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.gas.test.widget.RatioView
+        android:visibility="gone"
+        android:id="@+id/ratio_rv_2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#3000ff00"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintlayout"
+        app:layout_goneMarginTop="30dp" />
+    <!--    constraintDimensionRatio="H,1:2"中的 W or H 指后面比例的第1个是那个方向的，默认是w为第一个-->
+    <!--    layout_constraintVertical_bias="0.2"  上边间距占0.2 下边间距0.8-->
+    <ImageView
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="#3300ffff"
+        android:contentDescription="@string/test_app_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H,1:2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

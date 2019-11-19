@@ -24,8 +24,7 @@ import trunk.doi.base.ui.fragment.mine.mvp.MinePresenter;
 public class MineFragment extends LazyLoadFragment<MinePresenter> implements MineContract.View {
 
     public static final String TAG = "MineFragment";
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refresh;
+
 
 
     @Override
@@ -42,7 +41,7 @@ public class MineFragment extends LazyLoadFragment<MinePresenter> implements Min
     @Override
     public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        refresh.setEnabled(false);
+
     }
 
 

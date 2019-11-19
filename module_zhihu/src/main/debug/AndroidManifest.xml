@@ -14,12 +14,12 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/zhihu_ic_launcher"
+        android:icon="@mipmap/public_ic_launcher"
         android:label="@string/zhihu_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
-        android:roundIcon="@mipmap/zhihu_ic_launcher_round"
+        android:roundIcon="@mipmap/public_ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/public_AppTheme"
+        android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
 

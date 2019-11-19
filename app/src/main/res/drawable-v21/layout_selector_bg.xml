@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-android:color="@color/ce1e1e1"
+android:color="@color/public_divider_color"
     >
     <item android:id="@android:id/mask"
-        android:drawable="@color/white" />
-    <item android:drawable="@color/white" />
+        android:drawable="@color/public_white" />
+    <item android:drawable="@color/public_white" />
 
 </ripple>

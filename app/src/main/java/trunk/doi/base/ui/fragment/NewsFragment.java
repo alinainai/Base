@@ -91,8 +91,8 @@ public class NewsFragment extends BaseFragment {
             public IPagerTitleView getTitleView(Context context, final int index) {
                 SimplePagerTitleView simplePagerTitleView = new ColorFlipPagerTitleView(context);
                 simplePagerTitleView.setText(mTitles.get(index));
-                simplePagerTitleView.setNormalColor(mContext.getResources().getColor(R.color.white));
-                simplePagerTitleView.setSelectedColor(mContext.getResources().getColor(R.color.white));
+                simplePagerTitleView.setNormalColor(mContext.getResources().getColor(R.color.public_white));
+                simplePagerTitleView.setSelectedColor(mContext.getResources().getColor(R.color.public_white));
                 simplePagerTitleView.setTextSize(16);
                 simplePagerTitleView.setOnClickListener(v -> mViewPager.setCurrentItem(index));
                 return simplePagerTitleView;
@@ -107,7 +107,7 @@ public class NewsFragment extends BaseFragment {
                 indicator.setRoundRadius(UIUtil.dip2px(context, 1.5));
                 indicator.setStartInterpolator(new AccelerateInterpolator());
                 indicator.setEndInterpolator(new DecelerateInterpolator(2.0f));
-                indicator.setColors(mContext.getResources().getColor(R.color.white));
+                indicator.setColors(mContext.getResources().getColor(R.color.public_white));
                 return indicator;
             }
         });

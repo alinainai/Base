@@ -108,8 +108,8 @@ public class AdapterFragment extends BaseFragment {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         //刷新控件
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.app_splash_icon_color));
         mClassifyAdapter = new ClassifyAdapter(mContext);
 
 

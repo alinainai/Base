@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    android:layout_height="match_parent">
 
     <FrameLayout
-        android:clipToPadding="true"
         android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_above="@+id/main_ll_bottom"
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/main_ll_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        app:layout_constraintBottom_toTopOf="@+id/main_ll_bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/v_divider_line"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="42dp"
-        />
+        android:layout_height="4dp"
+        android:background="@drawable/public_title_shape_shadow_reverse" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/main_ll_bottom"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/public_white"
         android:orientation="horizontal"
+        android:paddingTop="6dp"
         android:paddingBottom="3dp"
-        android:paddingTop="6dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
 
         <Button
             android:id="@+id/home_btn"
@@ -45,4 +62,4 @@
             android:drawableTop="@drawable/home_service_s"
             android:text="@string/app_str_account_title" />
     </LinearLayout>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

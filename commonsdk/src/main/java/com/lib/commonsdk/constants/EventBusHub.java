@@ -39,5 +39,7 @@ public interface EventBusHub {
      */
     String APP = "app";//宿主 App 组件
     String ZHIHU = "zhihu";//知乎组件
+    String GANK = "gank";//知乎组件
+    String TEST = "test";//知乎组件
 
 }

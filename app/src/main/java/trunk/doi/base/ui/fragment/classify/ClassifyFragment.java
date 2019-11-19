@@ -76,8 +76,8 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
         mRecyclerView.setLayoutManager(mLayoutManager);
         //刷新控件
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.white);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.cff3e19));
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.app_splash_icon_color));
 
         //条目点击
         mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->

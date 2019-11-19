@@ -41,12 +41,12 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/public_ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/public_ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/public_AppTheme"
+        android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
@@ -77,12 +77,8 @@
             android:screenOrientation="portrait" /> <!-- WebView独立进程解决方案 -->
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
-            android:screenOrientation="portrait" /> <!-- 登陆界面 -->
-        <activity
-            android:name=".ui.activity.login.LoginActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
