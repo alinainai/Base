@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import com.base.lib.di.scope.ActivityScope;
-import com.base.lib.https.IRepositoryManager;
+import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 import com.gas.zhihu.http.ZhihuService;
 import com.gas.zhihu.bean.DailyListBean;

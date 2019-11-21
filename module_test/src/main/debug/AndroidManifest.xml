@@ -21,7 +21,6 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ui.kotlin.InfoActivity"></activity>
         <activity android:name=".ui.kotlin.KotlinActivity" />
         <activity
             android:name=".ui.home.HomeActivity"

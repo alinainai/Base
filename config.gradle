@@ -24,7 +24,7 @@ ext {
             appcompatVersion                  : '1.1.0',
             cardviewVersion                   : '1.0.0',
             paletteVersion                    : '1.0.0',
-            materialVersion                   : '1.2.0-alpha01',
+            materialVersion                   : '1.0.0',
             recyclerviewVersion               : '1.1.0-rc01',
             gsonVersion                      : '2.8.6',
 
@@ -69,7 +69,6 @@ ext {
             "constraint_layout": "androidx.constraintlayout:constraintlayout:${version["constraintLayoutVersion"]}",
             "palette"                   : "androidx.palette:palette:${version["paletteVersion"]}",
 
-
             //network
             "retrofit"                  : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
             "retrofit-converter-gson"   : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
@@ -90,6 +89,7 @@ ext {
             "paginate"                  : "com.github.markomilos:paginate:0.5.1",
             "vlayout"                   : "com.alibaba.android:vlayout:1.1.0@aar",
             "lottie"                    : "com.airbnb.android:lottie:3.2.2",
+            "autolayout"               : "com.zhy:autolayout:1.4.5",
 
 
             //rx2

@@ -21,9 +21,9 @@ import android.content.Context;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.base.lib.base.config.ClientConfigModule;
+import com.base.lib.integration.config.ClientConfigModule;
 import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.cache.IntelligentCache;
+import com.base.lib.integration.cache.IntelligentCache;
 import com.base.lib.di.module.ConfigModule;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.BuildConfig;
@@ -38,7 +38,7 @@ import java.util.List;
  * 这里用来配置一些组件自身私有的配置信息
  *
  * @see com.base.lib.base.delegate.AppDelegate
- * @see com.base.lib.base.config.ManifestParser
+ * @see com.base.lib.integration.config.ManifestParser
  * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki#3.3">ConfigModule wiki 官方文档</a>
  * Created by JessYan on 12/04/2017 17:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
@@ -72,7 +72,7 @@ public final class GlobalConfiguration implements ClientConfigModule {
                 @Override
                 public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
                     ((RefWatcher) ArmsUtils
-                            .getAppComponent(f.getActivity())
+                            .obtainAppComponentFromContext(f.getActivity())
                             .extras()
                             .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())))
                             .watch(f);

@@ -1,17 +1,22 @@
 package com.base.lib.di.module;
 
 import android.app.Application;
+import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.base.delegate.activity.ActivityLifecycle;
 import com.base.lib.base.delegate.fragment.FragmentLifecycle;
-import com.base.lib.cache.Cache;
-import com.base.lib.cache.CacheType;
-import com.base.lib.https.IRepositoryManager;
-import com.base.lib.https.RepositoryManager;
-import com.base.lib.lifecycle.ActivityLifecycleForRxLifecycle;
-import com.base.lib.util.AppManager;
+import com.base.lib.integration.cache.Cache;
+import com.base.lib.integration.cache.CacheType;
+import com.base.lib.integration.repository.IRepositoryManager;
+import com.base.lib.integration.repository.RepositoryManager;
+import com.base.lib.integration.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.base.lib.integration.AppManager;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,24 @@ public abstract class AppModule {
     static AppManager provideAppManager(Application application) {
         return AppManager.getAppManager().init(application);
     }
+
+
+    @Singleton
+    @Provides
+    static Gson provideGson(Application application, @Nullable GsonConfiguration configuration) {
+        GsonBuilder builder = new GsonBuilder();
+        if (configuration != null)
+            configuration.configGson(application, builder);
+        return builder.create();
+    }
+
+
+    public interface GsonConfiguration {
+        void configGson(@NonNull Context context, @NonNull GsonBuilder builder);
+    }
+
+
+
 
 
 }

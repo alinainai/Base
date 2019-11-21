@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.util.ArmsUtils;
-import com.base.lib.util.EventBusManager;
+import com.base.lib.integration.EventBusManager;
 import com.base.lib.util.LogUtils;
 
 import java.util.Objects;
@@ -44,12 +44,10 @@ import timber.log.Timber;
  * ================================================
  */
 public class FragmentDelegateImpl implements FragmentDelegate {
-    private final String TAG="FragmentDelegateImpl";
-
     private FragmentManager mFragmentManager;
     private Fragment mFragment;
     private IFragment iFragment;
-    private Unbinder mBinder;
+    private Unbinder mUnbinder;
 
     public FragmentDelegateImpl(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment) {
         this.mFragmentManager = fragmentManager;
@@ -59,50 +57,45 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        LogUtils.debugInfo(TAG,"onAttach");
+
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtils.debugInfo(TAG,"onCreate");
-        iFragment.setupFragmentComponent(ArmsUtils.getAppComponent((Objects.requireNonNull(mFragment.getActivity()))));
         if (iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBusManager.getInstance().register(mFragment);//注册到事件主线
+        iFragment.setupFragmentComponent(ArmsUtils.obtainAppComponentFromContext(mFragment.getActivity()));
     }
 
     @Override
-    public void onCreateView(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        LogUtils.debugInfo(TAG,"onCreateView");
-        mBinder = ButterKnife.bind(mFragment, view);
-        iFragment.initView(view,savedInstanceState);
+    public void onCreateView(@Nullable View view, @Nullable Bundle savedInstanceState) {
+        //绑定到butterknife
+        if (view != null)
+            mUnbinder = ButterKnife.bind(mFragment, view);
     }
 
     @Override
     public void onActivityCreate(@Nullable Bundle savedInstanceState) {
-        LogUtils.debugInfo(TAG,"onActivityCreate");
         iFragment.initData(savedInstanceState);
     }
 
     @Override
     public void onStart() {
-        LogUtils.debugInfo(TAG,"onStart");
+
     }
 
     @Override
     public void onResume() {
-        LogUtils.debugInfo(TAG,"onResume");
 
     }
 
     @Override
     public void onPause() {
-        LogUtils.debugInfo(TAG,"onPause");
 
     }
 
     @Override
     public void onStop() {
-        LogUtils.debugInfo(TAG,"onStop");
 
     }
 
@@ -113,11 +106,9 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroyView() {
-        LogUtils.debugInfo(TAG,"onDestroyView");
-
-        if (mBinder != null && mBinder != Unbinder.EMPTY) {
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY) {
             try {
-                mBinder.unbind();
+                mUnbinder.unbind();
             } catch (IllegalStateException e) {
                 e.printStackTrace();
                 //fix Bindings already cleared
@@ -128,10 +119,9 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDestroy() {
-        LogUtils.debugInfo(TAG,"onDestroy");
         if (iFragment != null && iFragment.useEventBus())//如果要使用eventbus请将此方法返回true
             EventBusManager.getInstance().unregister(mFragment);//注册到事件主线
-        this.mBinder = null;
+        this.mUnbinder = null;
         this.mFragmentManager = null;
         this.mFragment = null;
         this.iFragment = null;
@@ -139,7 +129,7 @@ public class FragmentDelegateImpl implements FragmentDelegate {
 
     @Override
     public void onDetach() {
-        LogUtils.debugInfo(TAG,"onDetach");
+
     }
 
     /**

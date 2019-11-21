@@ -3,10 +3,15 @@
     package="com.gas.test">
 
     <application>
-        <activity android:name=".ui.test.RatioViewActivity"
+        <activity
+            android:name=".ui.adapter.FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".ui.test.RatioViewActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.home.HomeActivity"
             android:configChanges="orientation|screenSize"

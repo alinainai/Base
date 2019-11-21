@@ -4,15 +4,9 @@ import android.app.Application;
 
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.mvp.BasePresenter;
-import com.base.lib.rx.RxBindManager;
-
-import java.util.List;
+import com.lib.commonsdk.rx.RxBindManager;
 
 import javax.inject.Inject;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
-import trunk.doi.base.bean.GankItemData;
 
 @FragmentScope
 public class MinePresenter extends BasePresenter<MineModle, MineContract.View> {

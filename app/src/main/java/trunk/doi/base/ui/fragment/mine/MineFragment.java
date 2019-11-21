@@ -2,7 +2,9 @@ package trunk.doi.base.ui.fragment.mine;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,27 +29,30 @@ public class MineFragment extends LazyLoadFragment<MinePresenter> implements Min
 
 
 
-    @Override
-    public int initLayoutId() {
-        return R.layout.fragment_mine;
-    }
+
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
         DaggerMineComponent.builder().appComponent(appComponent).view(this).build().inject(this);
     }
 
-
     @Override
-    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate( R.layout.fragment_mine,container,false);
     }
+
+
+
 
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+
+    }
+
+    @Override
+    public void setData(@Nullable Object data) {
 
     }
 
@@ -62,10 +67,7 @@ public class MineFragment extends LazyLoadFragment<MinePresenter> implements Min
         return mContext;
     }
 
-    @Override
-    public void onError() {
 
-    }
 
     @Override
     protected void lazyLoadData() {
@@ -73,4 +75,8 @@ public class MineFragment extends LazyLoadFragment<MinePresenter> implements Min
     }
 
 
+    @Override
+    public void showMessage(@NonNull String message) {
+
+    }
 }

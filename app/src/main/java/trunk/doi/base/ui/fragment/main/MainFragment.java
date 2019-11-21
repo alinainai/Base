@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.base.baseui.base.GasFragment;
 import com.base.componentservice.gank.service.GankInfoService;
 import com.base.componentservice.test.service.TestInfoService;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
@@ -27,7 +28,7 @@ import trunk.doi.base.R2;
  * Created by
  * 首页的fragment  (首页第二个栏目)
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends GasFragment {
 
 
     public static final String TAG = "MainFragment";
@@ -61,6 +62,8 @@ public class MainFragment extends BaseFragment {
         return R.layout.activity_blank;
     }
 
+
+
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -71,11 +74,13 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
+
         ARouter.getInstance().inject(this);
         loadZhihuInfo();
 
     }
+
 
     private void loadZhihuInfo() {
         //当非集成调试阶段, 宿主 App 由于没有依赖其他组件, 所以使用不了对应组件提供的服务
@@ -102,8 +107,10 @@ public class MainFragment extends BaseFragment {
     }
 
 
+
+
     @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
+    public void setData(@Nullable Object data) {
 
     }
 

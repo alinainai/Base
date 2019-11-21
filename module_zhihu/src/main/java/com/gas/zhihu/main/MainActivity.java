@@ -12,7 +12,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
-import com.base.lib.view.TitleView;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.main.di.DaggerMainComponent;
@@ -38,8 +37,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     RecyclerView.Adapter mAdapter;
 
 
-
-
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
 
@@ -53,37 +50,30 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public int initLayoutId() {
+    public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.zhihu_activity_main;
     }
 
     @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
-    }
 
-    @Override
-    public void initData() {
         mSwipeRefreshLayout.setRefreshing(true);
         mPresenter.requestDailyList();
+
     }
+
 
     @Override
     public void onRefresh() {
         mPresenter.requestDailyList();
     }
 
-    @Override
-    public void getTitleView(TitleView titleView) {
-        titleView.setCloseHide(true);
-        titleView.setTitleText("知乎模块页面");
-        titleView.setOnBackListener(v -> finish());
-    }
 
     @Override
     public Activity getActivity() {
@@ -101,4 +91,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
+    @Override
+    public void showMessage(@NonNull String message) {
+
+    }
 }

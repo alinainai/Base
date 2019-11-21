@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--************ QMUILoading ***********-->
     <declare-styleable name="public_QMUILoadingView">
@@ -9,7 +9,18 @@
     <attr name="public_QMUILoadingStyle" format="reference" />
 
 
-
+    <declare-styleable name="TitleView" tools:ignore="ResourceName">
+        <attr name="titleText" format="string|reference" />
+        <attr name="titleColor" format="color|reference" />
+        <attr name="backColor" format="color|reference" />
+        <attr name="rightText" format="string|reference" />
+        <attr name="rightTextColor" format="color|reference" />
+        <attr name="rightTextSize" format="dimension|reference" />
+        <attr name="backIcon" format="color|reference" />
+        <attr name="dividerHide" format="boolean" />
+        <attr name="backHide" format="boolean" />
+        <attr name="closeHide" format="boolean" />
+    </declare-styleable>
 
 
 

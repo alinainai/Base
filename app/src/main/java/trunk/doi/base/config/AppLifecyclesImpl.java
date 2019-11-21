@@ -22,13 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.multidex.MultiDex;
 
 import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.cache.IntelligentCache;
+import com.base.lib.integration.cache.IntelligentCache;
 import com.base.lib.util.ArmsUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import butterknife.ButterKnife;
-import timber.log.Timber;
 import trunk.doi.base.BuildConfig;
 
 
@@ -47,7 +45,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
             // You should not init your app in this process.
             return;
         }
-        ArmsUtils.getAppComponent(application).extras().put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
+        ArmsUtils.obtainAppComponentFromContext(application).extras().put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
                 , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
     }
 

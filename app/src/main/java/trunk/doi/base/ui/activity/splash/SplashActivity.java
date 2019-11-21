@@ -4,12 +4,9 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,11 +27,11 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 import trunk.doi.base.R;
-import trunk.doi.base.ui.MainActivity;
 import trunk.doi.base.ui.activity.splash.di.DaggerSplashComponent;
 import trunk.doi.base.ui.activity.splash.mvp.SplashContract;
 import trunk.doi.base.ui.activity.splash.mvp.SplashPresenter;
-import trunk.doi.base.util.ToastUtil;
+import trunk.doi.base.ui.main.MainActivity;
+import trunk.doi.base.utils.ToastUtil;
 import trunk.doi.base.view.MyVideoView;
 
 
@@ -66,17 +63,15 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     }
 
     @Override
-    public int initLayoutId() {
+    public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.activity_splash;
     }
 
     @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
-        mPresenter.showVersionCode();
-    }
+    public void initData(@Nullable Bundle savedInstanceState) {
 
-    @Override
-    public void initData() {
+        mPresenter.showVersionCode();
+
         try {
             File videoFile = getFileStreamPath(VIDEO_NAME);
             if (!videoFile.exists()) {
@@ -89,7 +84,9 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
         }
         Objects.requireNonNull(mPresenter).autoTimeDown();
+
     }
+
 
     /**
      * 播放背景动画
@@ -98,7 +95,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
      */
     private void playVideo(File videoFile) {
 
-        mVideoView = new MyVideoView(mContext.getApplicationContext());
+        mVideoView = new MyVideoView(this.getApplicationContext());
         mVideoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
         mRlVideo.addView(mVideoView);
         mVideoView.setVideoPath(videoFile.getPath());
@@ -179,19 +176,10 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         mPresenter.turnToMainForce();
     }
 
-    @Override
-    public boolean needTitle() {
-        return false;
-    }
-
-    @Override
-    public boolean needStatusBar() {
-        return false;
-    }
 
     @Override
     public void goMainActivity() {
-        startActivity(new Intent(mContext, MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 
@@ -205,10 +193,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         tv_version.setText(String.format("当前版本 v%s", code));
     }
 
-    @Override
-    public void onError() {
 
-    }
 
     @Override
     protected void onDestroy() {
@@ -235,4 +220,8 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         });
     }
 
+    @Override
+    public void showMessage(@NonNull String message) {
+
+    }
 }

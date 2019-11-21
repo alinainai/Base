@@ -74,7 +74,6 @@ class KotlinActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun login() {
         Timber.tag("TAG").e(kotlinEtPassword.text.toString())
-        startActivity(Intent(this, InfoActivity::class.java))
     }
 
 }

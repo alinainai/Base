@@ -73,7 +73,7 @@ public class SplashPresenter extends BasePresenter<IModel, SplashContract.View> 
      * 显示版本号
      */
     public void showVersionCode() {
-        mView.showVersionCode(ArmsUtils.getVersionName(mApplication));
+        mView.showVersionCode("李佳星");
     }
 
 

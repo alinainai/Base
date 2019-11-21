@@ -16,6 +16,7 @@ public interface ClassifyContract {
     interface View extends IView {
         void onSuccess(List<GankItemData> data);
         Context getWrapContext();
+        void onError();
     }
 
     interface Model {

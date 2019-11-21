@@ -7,12 +7,14 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.base.lib.base.callback.AppComponentCallbacks;
-import com.base.lib.base.config.ClientConfigModule;
-import com.base.lib.base.config.ManifestParser;
-import com.base.lib.cache.IntelligentCache;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.component.DaggerAppComponent;
 import com.base.lib.di.module.ConfigModule;
+import com.base.lib.integration.cache.IntelligentCache;
+import com.base.lib.integration.config.ClientConfigModule;
+import com.base.lib.integration.config.ManifestParser;
+import com.base.lib.integration.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.base.lib.util.Preconditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,7 @@ public class AppDelegate implements App, AppLifecyclers {
     @Named("ActivityLifecycle")
     protected Application.ActivityLifecycleCallbacks mActivityLifecycle;
     /**
-     * {@link com.base.lib.lifecycle.ActivityLifecycleForRxLifecycle}
+     * {@link ActivityLifecycleForRxLifecycle}
      */
     @Inject
     @Named("ActivityLifecycleForRxLifecycle")
@@ -148,18 +150,22 @@ public class AppDelegate implements App, AppLifecyclers {
     @NonNull
     @Override
     public AppComponent getAppComponent() {
+        Preconditions.checkNotNull(mAppComponent,
+                "%s == null, first call %s#onCreate(Application) in %s#onCreate()",
+                AppComponent.class.getName(), getClass().getName(), mApplication == null
+                        ? Application.class.getName() : mApplication.getClass().getName());
         return mAppComponent;
-    }
+}
 
     /**
      * 将app的全局配置信息封装进module(使用Dagger注入到需要配置信息的地方)
-     * 需要在AndroidManifest中声明{@link ConfigModule}的实现类,和Glide的配置方式相似
+     * 需要在AndroidManifest中声明{@link ClientConfigModule}的实现类,和Glide的配置方式相似
      *
      * @return GlobalConfigModule
      */
     private ConfigModule getGlobalConfigModule(Context context, List<ClientConfigModule> modules) {
 
-        ConfigModule.Builder builder = new ConfigModule.Builder();
+        ConfigModule.Builder builder = ConfigModule.builder();
 
         //遍历 ConfigModule 集合, 给全局配置 GlobalConfigModule 添加参数
         for (ClientConfigModule module : modules) {

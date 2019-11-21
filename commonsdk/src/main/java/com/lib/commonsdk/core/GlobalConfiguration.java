@@ -18,25 +18,25 @@ package com.lib.commonsdk.core;
 import android.app.Application;
 import android.content.Context;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.base.lib.base.config.ClientConfigModule;
+import com.base.lib.base.delegate.AppDelegate;
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.base.lib.di.module.ClientModule;
 import com.base.lib.di.module.ConfigModule;
 import com.base.lib.https.log.RequestInterceptor;
+import com.base.lib.integration.config.ClientConfigModule;
+import com.base.lib.integration.config.ManifestParser;
 import com.lib.commonsdk.BuildConfig;
+import com.lib.commonsdk.glide.GlideImageLoaderStrategy;
 import com.lib.commonsdk.http.Api;
 import com.lib.commonsdk.http.SSLSocketClient;
-
 
 import java.util.List;
 
 import butterknife.ButterKnife;
-
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.OkHttpClient;
 import timber.log.Timber;
@@ -44,15 +44,21 @@ import timber.log.Timber;
 
 /**
  * ================================================
- * CommonSDK 的 GlobalConfiguration 含有有每个组件都可公用的配置信息, 每个组件的 AndroidManifest 都应该声明此 ConfigModule
+ * App 的全局配置信息在此配置, 需要将此实现类声明到 AndroidManifest 中
+ * ConfigModule 的实现类可以有无数多个, 在 Application 中只是注册回调, 并不会影响性能 (多个 ConfigModule 在多 Module 环境下尤为受用)
+ * ConfigModule 接口的实现类对象是通过反射生成的, 这里会有些性能损耗
  *
- * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki#3.3">ConfigModule wiki 官方文档</a>
- * Created by JessYan on 30/03/2018 17:16
+ * @see AppDelegate
+ * @see ManifestParser
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog">更新日志, 升级必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/Issues">常见 Issues, 踩坑必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki">MVPArms 官方组件化方案 ArmsComponent, 进阶指南!</a>
+ * Created by JessYan on 12/04/2017 17:25
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
- */
-public class GlobalConfiguration implements ClientConfigModule {
+ */public class GlobalConfiguration implements ClientConfigModule {
 
     @Override
     public void applyOptions(Context context, ConfigModule.Builder builder) {
@@ -74,6 +80,7 @@ public class GlobalConfiguration implements ClientConfigModule {
                         RetrofitUrlManager.getInstance().with(builder);
                     }
                 })
+                .imageLoaderStrategy(new GlideImageLoaderStrategy())
                 .rxCacheConfiguration((context1, rxCacheBuilder) -> {//这里可以自己自定义配置RxCache的参数
                     rxCacheBuilder.useExpiredDataIfLoaderNotAvailable(true);
                     return null;

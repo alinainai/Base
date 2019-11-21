@@ -2,7 +2,9 @@ package trunk.doi.base.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
@@ -11,9 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.base.baseui.base.GasFragment;
+import com.base.baseui.base.GasLazyLoadFragment;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
+import com.lib.commonsdk.adapter.AdapterViewPager;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -25,7 +30,9 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,7 +45,7 @@ import trunk.doi.base.view.ColorFlipPagerTitleView;
  * Created by ly on 2016/5/30 11:05.
  * 分类的fragment  (首页第二个栏目)
  */
-public class NewsFragment extends BaseFragment {
+public class NewsFragment extends GasLazyLoadFragment {
     public static final String TAG = "NewsFragment";
 
 
@@ -47,7 +54,7 @@ public class NewsFragment extends BaseFragment {
     @BindView(R.id.viewpager)
     ViewPager mViewPager;
 
-    private SimpleFragmentPagerAdapter mAdapter;
+    private AdapterViewPager mAdapter;
     private List<Fragment> mFragments;
 
 
@@ -57,8 +64,10 @@ public class NewsFragment extends BaseFragment {
 
     @Override
     public int initLayoutId() {
-        return R.layout.fragment_classify;
+       return R.layout.fragment_classify;
     }
+
+
 
 
     @Override
@@ -67,15 +76,16 @@ public class NewsFragment extends BaseFragment {
     }
 
     @Override
-    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
 
-        List<String> mTitles = ArmsUtils.stringArrayToList(mContext, R.array.gank);
+
+        List<String> mTitles=Arrays.asList(mContext.getResources().getStringArray(R.array.gank));
         mFragments = new ArrayList<>();
 
         for (String subtype : mTitles) {
             mFragments.add(ClassifyFragment.newInstance(subtype));
         }
-        mAdapter = new SimpleFragmentPagerAdapter(mContext, getChildFragmentManager(), mFragments, mTitles);
+        mAdapter = new AdapterViewPager(getChildFragmentManager(), mFragments, mContext.getResources().getStringArray(R.array.gank));
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(mTitles.size() - 1);
 
@@ -114,13 +124,19 @@ public class NewsFragment extends BaseFragment {
         magicIndicator.setNavigator(navigator);
         ViewPagerHelper.bind(magicIndicator, mViewPager);
 
+
     }
 
 
     @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
+    public void setData(@Nullable Object data) {
+
 
     }
 
 
+    @Override
+    protected void lazyLoadData() {
+
+    }
 }

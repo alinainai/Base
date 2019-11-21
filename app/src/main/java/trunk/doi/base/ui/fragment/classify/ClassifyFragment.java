@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.base.baseui.base.GasLazyLoadFragment;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.paginate.interfaces.EmptyInterface;
@@ -32,7 +35,7 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyPresenter;
  * Author:
  * Time: 2016/8/12 14:28
  */
-public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ClassifyFragment extends GasLazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String SUB_TYPE = "SUB_TYPE";
     private int mPage = 1;//页数
@@ -50,10 +53,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @Inject
     ClassifyAdapter mClassifyAdapter;
 
-    @Override
-    public int initLayoutId() {
-        return R.layout.layout_base_refresh_recycler;
-    }
+
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
@@ -67,23 +67,28 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
 
     }
 
+    @Override
+    protected int initLayoutId() {
+        return R.layout.layout_base_refresh_recycler;
+    }
+
 
     @Override
-    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
+
 
         assert getArguments() != null;
         mSubtype = getArguments().getString(SUB_TYPE);
-
         mRecyclerView.setLayoutManager(mLayoutManager);
         //刷新控件
         mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.app_splash_icon_color));
 
         //条目点击
-        mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->
+        mClassifyAdapter.setOnMultiItemClickListener((viewHolder, item, position, viewType) ->
                 mContext.startActivity(new Intent(mContext, WebViewActivity.class)
-                        .putExtra("title", data.getDesc())
-                        .putExtra("url", data.getUrl()))
+                        .putExtra("title", item.getDesc())
+                        .putExtra("url", item.getUrl()))
         );
 
         mClassifyAdapter.setOnReloadListener(() -> {
@@ -92,22 +97,10 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         });
 
         mClassifyAdapter.setOnLoadMoreListener(isReload -> loadData());
-
-
-
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         mRecyclerView.setAdapter(mClassifyAdapter);
         mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
     }
-
-
-    @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
-
-
-    }
-
 
     private void loadData() {
         assert mPresenter != null;
@@ -182,4 +175,8 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     }
 
 
+    @Override
+    public void showMessage(@NonNull String message) {
+
+    }
 }

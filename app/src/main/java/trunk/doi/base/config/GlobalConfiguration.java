@@ -21,14 +21,11 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
-import com.base.lib.base.config.ClientConfigModule;
+import com.base.lib.integration.config.ClientConfigModule;
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.base.lib.di.module.ConfigModule;
-import com.base.lib.https.log.RequestInterceptor;
 
 import java.util.List;
-
-import trunk.doi.base.BuildConfig;
 
 
 public final class GlobalConfiguration implements ClientConfigModule {

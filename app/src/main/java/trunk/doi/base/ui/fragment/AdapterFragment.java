@@ -6,6 +6,7 @@ import android.os.Message;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.base.baseui.base.GasFragment;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.paginate.interfaces.EmptyInterface;
@@ -27,6 +29,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import timber.log.Timber;
 import trunk.doi.base.R;
+import trunk.doi.base.R2;
 import trunk.doi.base.ui.fragment.classify.ClassifyAdapter;
 import trunk.doi.base.bean.GankItemData;
 
@@ -35,15 +38,15 @@ import trunk.doi.base.bean.GankItemData;
  * Created by
  * 首页的fragment  (首页第一个栏目)
  */
-public class AdapterFragment extends BaseFragment {
+public class AdapterFragment extends GasFragment {
 
     public static final String TAG = "AdapterFragment";
 
     private ClassifyAdapter mClassifyAdapter;//适配器
 
-    @BindView(R.id.type_item_recyclerview)
+    @BindView(R2.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
-    @BindView(R.id.type_item_swipfreshlayout)
+    @BindView(R2.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private int mPage = 1;
@@ -87,22 +90,8 @@ public class AdapterFragment extends BaseFragment {
         return R.layout.fragment_adapter;
     }
 
-
-    public AdapterFragment() {
-    }
-
-    public static AdapterFragment newInstance() {
-        return new AdapterFragment();
-    }
-
     @Override
-    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-
-    }
-
-    @Override
-    public void initView(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
+    public void initData(@Nullable Bundle savedInstanceState) {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -147,11 +136,33 @@ public class AdapterFragment extends BaseFragment {
         mClassifyAdapter.addHeaderView(header);
         mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
         mHandler.sendEmptyMessageDelayed(2, DELAYTIME);
+
+
     }
 
 
+
+
+    public AdapterFragment() {
+    }
+
+    public static AdapterFragment newInstance() {
+        return new AdapterFragment();
+    }
+
     @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
+    public void setupFragmentComponent(@NonNull AppComponent appComponent) {
+
+    }
+
+
+
+
+
+
+
+    @Override
+    public void setData(@Nullable Object data) {
 
     }
 

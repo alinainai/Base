@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.lib.view.StatusLine
+    <com.base.baseui.view.StatusLine
         android:background="@color/app_splash_icon_color"
         android:id="@+id/v_status"
         android:layout_width="match_parent"

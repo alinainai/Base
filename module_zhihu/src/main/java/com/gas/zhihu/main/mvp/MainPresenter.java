@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
-import com.base.lib.rx.RxBindManager;
+import com.lib.commonsdk.rx.RxBindManager;
 import com.base.paginate.base.BaseAdapter;
 import com.gas.zhihu.bean.DailyListBean;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

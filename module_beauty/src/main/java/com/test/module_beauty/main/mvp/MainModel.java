@@ -1,7 +1,7 @@
 package com.test.module_beauty.main.mvp;
 
 import com.base.lib.di.scope.ActivityScope;
-import com.base.lib.https.IRepositoryManager;
+import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 import com.test.module_beauty.bean.GankBaseResponse;
 import com.test.module_beauty.bean.GankItemBean;

@@ -4,7 +4,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import com.base.lib.di.scope.FragmentScope;
-import com.base.lib.https.IRepositoryManager;
+import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 
 import javax.inject.Inject;

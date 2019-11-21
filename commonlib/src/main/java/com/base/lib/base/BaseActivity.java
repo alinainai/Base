@@ -1,26 +1,24 @@
 package com.base.lib.base;
 
-import android.os.Build;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-
+import android.util.AttributeSet;
+import android.view.InflateException;
 import android.view.View;
-import android.view.ViewStub;
-import android.view.Window;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.base.lib.R;
 import com.base.lib.base.delegate.activity.IActivity;
-import com.base.lib.cache.Cache;
-import com.base.lib.cache.CacheType;
-import com.base.lib.lifecycle.ActivityIRxLifecycle;
+import com.base.lib.integration.cache.Cache;
+import com.base.lib.integration.cache.CacheType;
+import com.base.lib.integration.lifecycle.ActivityIRxLifecycle;
 import com.base.lib.mvp.IPresenter;
 import com.base.lib.util.ArmsUtils;
-import com.base.lib.util.statusbar.StatusBarManager;
-import com.base.lib.view.StatusLine;
-import com.base.lib.view.TitleView;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -30,22 +28,29 @@ import butterknife.Unbinder;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
+import static com.base.lib.util.ThirdViewUtil.convertAutoView;
+
 
 /**
- * Activity的基类
- * 依赖activity_base布局
- * activity_base 初始化 @TitleView title和status_bar
+ * ================================================
+ * 因为 Java 只能单继承, 所以如果要用到需要继承特定 {@link Activity} 的三方库, 那你就需要自己自定义 {@link Activity}
+ * 继承于这个特定的 {@link Activity}, 然后再按照 {@link BaseActivity} 的格式, 将代码复制过去, 记住一定要实现{@link IActivity}
+ *
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog">更新日志, 升级必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/Issues">常见 Issues, 踩坑必看!</a>
+ * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki">MVPArms 官方组件化方案 ArmsComponent, 进阶指南!</a>
+ * Created by JessYan on 22/03/2016
+ * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
+ * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * ================================================
  */
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IActivity, ActivityIRxLifecycle {
 
     protected final String TAG = this.getClass().getSimpleName();
-    protected AppCompatActivity mContext;
-    protected Unbinder mBinder;
+    private final BehaviorSubject<ActivityEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
-
-    /**
-     * 如果当前页面逻辑简单, Presenter 可以为 null
-     */
+    private Unbinder mUnbinder;
     @Inject
     @Nullable
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
@@ -54,122 +59,75 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     @Override
     public synchronized Cache<String, Object> provideCache() {
         if (mCache == null) {
-            mCache = ArmsUtils.getAppComponent(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
+            mCache = ArmsUtils.obtainAppComponentFromContext(this).cacheFactory().build(CacheType.ACTIVITY_CACHE);
         }
         return mCache;
     }
 
-    //RxLifecycle
-    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
-
     @NonNull
     @Override
     public final Subject<ActivityEvent> provideLifecycleSubject() {
-        return lifecycleSubject;
+        return mLifecycleSubject;
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View view = convertAutoView(name, context, attrs);
+        return view == null ? super.onCreateView(name, context, attrs) : view;
+    }
 
-        //允许使用 Ver_5.0 转换动画
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
-        // 不需要toolbar
-        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //透明状态栏
-        StatusBarManager.fullTransStatusBar(this);
-        mContext = this;
-        setContentView(R.layout.activity_base);
-
-        //初始化界面内容layout
-        StatusLine statusBar = findViewById(R.id.v_status_bar);
-        TitleView titleView = findViewById(R.id.v_title);
-        ViewStub viewContent = findViewById(R.id.base_fragment_content);
-        if (needTitle()) {
-            if (titleView.getVisibility() != View.VISIBLE)
-                titleView.setVisibility(View.VISIBLE);
-        } else {
-            if (titleView.getVisibility() != View.GONE)
-                titleView.setVisibility(View.GONE);
+        try {
+            int layoutResID = initView(savedInstanceState);
+            //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
+            if (layoutResID != 0) {
+                setContentView(layoutResID);
+                //绑定到butterknife
+                mUnbinder = ButterKnife.bind(this);
+            }
+        } catch (Exception e) {
+            if (e instanceof InflateException) throw e;
+            e.printStackTrace();
         }
-        if (needStatusBar()) {
-            if (statusBar.getVisibility() != View.VISIBLE)
-                statusBar.setVisibility(View.VISIBLE);
-        } else {
-            if (statusBar.getVisibility() != View.GONE)
-                statusBar.setVisibility(View.GONE);
-        }
-        getTitleView(titleView);
-        getStatusBarHeight(statusBar);
-        viewContent.setLayoutResource(initLayoutId());
-
-        //添加ButterKnife绑定
-        mBinder = ButterKnife.bind(this, viewContent.inflate());
-
-        initView(savedInstanceState);
-        setListener();
-        initData();
-
-    }
-
-    /**
-     * 设置监听器
-     * 默认实现，需要的时候子类重写
-     * 比喻添加EditText的focus获取事件
-     */
-    public void setListener() {
-    }
-
-    /**
-     * 初始化数据
-     * 默认实现，需要的时候子类重写
-     */
-    public void initData() {
-
+        initData(savedInstanceState);
     }
 
     @Override
     protected void onDestroy() {
-
-        if (mBinder != null && mBinder != Unbinder.EMPTY)
-            mBinder.unbind();
-        this.mBinder = null;
-
+        super.onDestroy();
+        if (mUnbinder != null && mUnbinder != Unbinder.EMPTY)
+            mUnbinder.unbind();
+        this.mUnbinder = null;
         if (mPresenter != null)
             mPresenter.onDestroy();//释放资源
         this.mPresenter = null;
-
-        super.onDestroy();
     }
 
+    /**
+     * 是否使用 EventBus
+     * Arms 核心库现在并不会依赖某个 EventBus, 要想使用 EventBus, 还请在项目中自行依赖对应的 EventBus
+     * 现在支持两种 EventBus, greenrobot 的 EventBus 和畅销书 《Android源码设计模式解析与实战》的作者 何红辉 所作的 AndroidEventBus
+     * 确保依赖后, 将此方法返回 true, Arms 会自动检测您依赖的 EventBus, 并自动注册
+     * 这种做法可以让使用者有自行选择三方库的权利, 并且还可以减轻 Arms 的体积
+     *
+     * @return 返回 {@code true} (默认为 {@code true}), Arms 会自动注册 EventBus
+     */
+    @Override
+    public boolean useEventBus() {
+        return true;
+    }
 
+    /**
+     * 这个 {@link Activity} 是否会使用 {@link Fragment}, 框架会根据这个属性判断是否注册 {@link FragmentManager.FragmentLifecycleCallbacks}
+     * 如果返回 {@code false}, 那意味着这个 {@link Activity} 不需要绑定 {@link Fragment}, 那你再在这个 {@link Activity} 中绑定继承于 {@link BaseFragment} 的 {@link Fragment} 将不起任何作用
+     *
+     * @return 返回 {@code true} (默认为 {@code true}), 则需要使用 {@link Fragment}
+     */
     @Override
     public boolean useFragment() {
         return true;
-    }
-
-    @Override
-    public boolean needTitle() {
-        return true;
-    }
-
-    @Override
-    public boolean needStatusBar() {
-        return true;
-    }
-
-
-    @Override
-    public void getTitleView(TitleView titleView) {
-
-    }
-
-
-    @Override
-    public void getStatusBarHeight(StatusLine statusBar) {
-
     }
 
 

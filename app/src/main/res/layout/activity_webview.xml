@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/public_white"
-    >
+    android:background="@color/public_white">
+
+    <com.base.baseui.view.StatusLine
+        android:id="@+id/v_status_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/public_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="P" />
+
+    <com.base.baseui.view.TitleView
+        android:id="@+id/v_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_status_bar" />
+
     <RelativeLayout
         android:id="@+id/rl_webview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/public_title_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/v_title" />
 
     <ProgressBar
         android:id="@+id/progressbar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="3dp"
         android:indeterminateOnly="false"
         android:max="100"
-        android:progressDrawable="@drawable/progress_bar_states" />
+        android:progressDrawable="@drawable/progress_bar_states"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rl_webview" />
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

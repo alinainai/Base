@@ -10,7 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.gas.test.R
 import java.util.*
 
-class CodeView : AppCompatTextView {
+class CodeView constructor(context: Context, attrs: AttributeSet?) : AppCompatTextView(context,attrs) {
 
 
     private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -21,13 +21,8 @@ class CodeView : AppCompatTextView {
             "李沐安"
     )
 
-    //     int类型的数组，注意这里用的是 intArrayOf
-//    private var numList= intArrayOf(
-//           1,2,3,4
-//    )
-
     constructor(context: Context) : this(context, null)
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    init {
         setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
         gravity = Gravity.CENTER
         setBackgroundColor(context.resources.getColor(R.color.public_colorAccent))
@@ -35,7 +30,7 @@ class CodeView : AppCompatTextView {
 
         mPaint.style = Paint.Style.STROKE
         mPaint.color = context.resources.getColor(R.color.public_colorPrimary)
-        mPaint.strokeWidth = dp2px(5f)
+        mPaint.strokeWidth = 6f.dp2px()
 
         updateCode()
     }

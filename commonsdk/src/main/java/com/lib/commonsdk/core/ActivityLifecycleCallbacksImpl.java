@@ -17,7 +17,13 @@ package com.lib.commonsdk.core;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Window;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.lib.commonsdk.utils.statusbar.StatusBarManager;
 
 import timber.log.Timber;
 
@@ -33,6 +39,19 @@ import timber.log.Timber;
 public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+
+        //允许使用 Ver_5.0 转换动画
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0
+            activity.getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
+        // 不需要toolbar
+        if(activity instanceof  AppCompatActivity){
+            ((AppCompatActivity)activity).supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        }
+        //透明状态栏
+        StatusBarManager.fullTransStatusBar(activity);
+
         Timber.i(activity + " - onActivityCreated");
     }
 

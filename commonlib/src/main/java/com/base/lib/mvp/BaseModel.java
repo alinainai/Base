@@ -22,7 +22,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import com.base.lib.https.IRepositoryManager;
+import com.base.lib.integration.repository.IRepositoryManager;
 
 
 /**

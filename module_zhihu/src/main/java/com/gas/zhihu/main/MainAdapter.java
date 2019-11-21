@@ -20,7 +20,8 @@ public class MainAdapter extends SingleAdapter<DailyListBean.StoriesBean> {
     @Override
     protected void convert(PageViewHolder holder, DailyListBean.StoriesBean data, int position) {
         holder.setText(R.id.tv_name,data.getTitle());
-        ImageLoader.loadSet(mContext,data.getImages().get(0),holder.getView(R.id.iv_avatar),R.mipmap.public_ic_launcher);
+
+//        ImageLoader.loadSet(mContext,data.getImages().get(0),holder.getView(R.id.iv_avatar),R.mipmap.public_ic_launcher);
     }
 
     @Override

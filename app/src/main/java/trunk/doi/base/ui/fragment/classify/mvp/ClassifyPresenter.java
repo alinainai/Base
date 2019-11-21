@@ -2,11 +2,9 @@ package trunk.doi.base.ui.fragment.classify.mvp;
 
 import android.app.Application;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.mvp.BasePresenter;
-import com.base.lib.rx.RxBindManager;
+import com.lib.commonsdk.rx.RxBindManager;
 
 import java.util.List;
 

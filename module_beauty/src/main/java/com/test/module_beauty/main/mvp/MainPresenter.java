@@ -4,14 +4,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
-import com.base.lib.rx.RxBindManager;
-import com.base.paginate.base.BaseAdapter;
+import com.lib.commonsdk.rx.RxBindManager;
 import com.base.paginate.base.SingleAdapter;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.test.module_beauty.bean.GankBaseResponse;
 import com.test.module_beauty.bean.GankItemBean;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -84,7 +82,8 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     }
                     @Override
                     public void onComplete() {
-                        Timber.e("请求onComplete");
+
+
                     }
                 }, mView);
 

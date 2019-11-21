@@ -23,8 +23,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.base.lib.cache.Cache;
-import com.base.lib.cache.IntelligentCache;
+import com.base.lib.integration.cache.Cache;
+import com.base.lib.integration.cache.IntelligentCache;
+import com.base.lib.util.Preconditions;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -159,6 +160,8 @@ public class FragmentLifecycle extends FragmentManager.FragmentLifecycleCallback
 
     @NonNull
     private Cache<String, Object> getCacheFromFragment(IFragment fragment) {
-        return fragment.provideCache();
+        Cache<String, Object> cache = fragment.provideCache();
+        Preconditions.checkNotNull(cache, "%s cannot be null on Fragment", Cache.class.getName());
+        return cache;
     }
 }

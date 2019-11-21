@@ -12,7 +12,6 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
-import com.base.lib.view.TitleView;
 import com.base.paginate.base.SingleAdapter;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.lib.commonsdk.constants.RouterHub;
@@ -52,18 +51,17 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public int initLayoutId() {
+    public int initView(@Nullable Bundle savedInstanceState) {
         return R.layout.gank_activity_main;
     }
 
     @Override
-    public void initView(@Nullable Bundle savedInstanceState) {
+    public void initData(@Nullable Bundle savedInstanceState) {
 
         mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
-
 
         final SingleAdapter singleAdapter = ((SingleAdapter) mAdapter);
         singleAdapter.setOnReloadListener(() -> {
@@ -72,27 +70,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         });
         singleAdapter.setOnLoadMoreListener(isReload -> mPresenter.requestGirls(false));
         singleAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
+
         mRecyclerView.setAdapter(mAdapter);
 
-    }
-
-    @Override
-    public void initData() {
         mSwipeRefreshLayout.setRefreshing(true);
         mPresenter.requestGirls(true);
+
+
     }
+
 
     @Override
     public void onRefresh() {
         mPresenter.requestGirls(true);
     }
 
-    @Override
-    public void getTitleView(TitleView titleView) {
-        titleView.setCloseHide(true);
-        titleView.setTitleText("干货模块页面");
-        titleView.setOnBackListener(v -> finish());
-    }
 
     @Override
     public Activity getActivity() {
@@ -110,4 +102,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
+    @Override
+    public void showMessage(@NonNull String message) {
+
+    }
 }

@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.base.BaseFragment;
-import com.base.lib.base.config.ClientConfigModule;
 import com.base.lib.base.delegate.fragment.FragmentDelegate;
-import com.base.lib.cache.Cache;
-import com.base.lib.cache.IntelligentCache;
 import com.base.lib.di.module.ConfigModule;
-import com.base.lib.util.AppManager;
+import com.base.lib.integration.AppManager;
+import com.base.lib.integration.cache.Cache;
+import com.base.lib.integration.cache.IntelligentCache;
+import com.base.lib.integration.config.ClientConfigModule;
 
 import java.util.List;
 
@@ -56,6 +56,30 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+
+        boolean isNotAdd = false;
+        if (activity.getIntent() != null)
+            isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
+
+        if (!isNotAdd)
+            mAppManager.addActivity(activity);
+
+        //配置ActivityDelegate
+        if (activity instanceof IActivity) {
+            ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
+            if (activityDelegate == null) {
+                Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
+                activityDelegate = new ActivityDelegateImpl(activity);
+                //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
+                //否则存储在 LRU 算法的存储空间中, 前提是 Activity 使用的是 IntelligentCache (框架默认使用)
+                cache.put(IntelligentCache.getKeyOfKeep(ActivityDelegate.ACTIVITY_DELEGATE), activityDelegate);
+            }
+            activityDelegate.onCreate(savedInstanceState);
+        }
+
+        registerFragmentCallbacks(activity);
+
 
         mAppManager.addActivity(activity);
 

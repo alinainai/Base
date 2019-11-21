@@ -46,6 +46,8 @@ dependencies {
     }
     api rootProject.ext.dependencies["annotations"]
 
+    compileOnly rootProject.ext.dependencies["material"]
+
     //network
     api(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
@@ -116,6 +118,9 @@ dependencies {
     }
     compileOnly rootProject.ext.dependencies["androideventbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
+    api rootProject.ext.dependencies["rxpermissions2"]
+    compileOnly rootProject.ext.dependencies["autolayout"]
+    api 'me.jessyan:rxerrorhandler:2.1.1'
 
 
 

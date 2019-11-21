@@ -3,4 +3,6 @@
     <color name="test_colorPrimary">#008577</color>
     <color name="test_colorPrimaryDark">#00574B</color>
     <color name="test_colorAccent">#D81B60</color>
+
+    <color name="black_overlay">#66000000</color>
 </resources>

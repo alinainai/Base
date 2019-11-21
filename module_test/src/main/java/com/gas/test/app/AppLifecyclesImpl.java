@@ -21,7 +21,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.cache.IntelligentCache;
+import com.base.lib.integration.cache.IntelligentCache;
 import com.base.lib.util.ArmsUtils;
 import com.gas.test.BuildConfig;
 import com.squareup.leakcanary.LeakCanary;
@@ -56,7 +56,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
         //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码
         if (BuildConfig.IS_BUILD_MODULE) {
             //leakCanary内存泄露检查
-            ArmsUtils.getAppComponent(application).extras()
+            ArmsUtils.obtainAppComponentFromContext(application).extras()
                     .put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
                             , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
         }
