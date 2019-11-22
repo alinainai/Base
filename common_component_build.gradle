@@ -28,6 +28,7 @@ android {
                 includeCompileClasspath true
             }
         }
+        multiDexEnabled true
     }
     buildTypes {
         debug {

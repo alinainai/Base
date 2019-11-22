@@ -20,6 +20,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
+import androidx.multidex.MultiDex;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.lib.base.delegate.AppDelegate;
@@ -94,6 +95,7 @@ import timber.log.Timber;
 
             @Override
             public void attachBaseContext(@NonNull Context base) {
+                MultiDex.install(base);
             }
 
             @Override

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.base.baseui.view.StatusLine
+        android:id="@+id/v_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/public_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.base.baseui.view.TitleView
+        android:id="@+id/article_titleView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:backHide="true"
+        app:closeHide="true"
+        app:dividerHide="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v_status"
+        app:titleText="干货列表"
+
+        />
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/public_white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/article_titleView" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />
+
+    <View
+        android:id="@+id/v_divider_line"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:background="@drawable/public_title_shape_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/magic_indicator" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

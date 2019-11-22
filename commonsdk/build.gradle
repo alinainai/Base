@@ -17,6 +17,9 @@ android {
         versionName rootProject.ext.android["versionName"]
 
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
+
+
+
     }
 
     buildTypes {
@@ -51,6 +54,7 @@ dependencies {
 
 
     api 'me.jessyan:retrofit-url-manager:1.4.0'
+    api rootProject.ext.dependencies["multidex"]
 
 
 }
