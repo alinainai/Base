@@ -54,7 +54,9 @@ dependencies {
 
 
     api 'me.jessyan:retrofit-url-manager:1.4.0'
-    api rootProject.ext.dependencies["multidex"]
+    api (rootProject.ext.dependencies["multidex"]){
+        exclude module: 'annotations'
+    }
 
 
 }

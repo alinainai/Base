@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.fragment;
+package com.gas.beauty.article.di;
 
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.scope.FragmentScope;
+import com.gas.beauty.article.mvp.ArticleContract;
+import com.gas.beauty.article.ArticleFragment;
 
 import dagger.BindsInstance;
 import dagger.Component;
@@ -32,18 +34,18 @@ import dagger.Component;
  * ================================================
  */
 @FragmentScope
-@Component(modules = ClassifyModule.class, dependencies = AppComponent.class)
-public interface ClassifyComponent {
+@Component(modules = ArticleModule.class, dependencies = AppComponent.class)
+public interface ArticleComponent {
 
-    void inject(ClassifyFragment fragment);
+    void inject(ArticleFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        ClassifyComponent.Builder view(ClassifyContract.View view);
+        ArticleComponent.Builder view(ArticleContract.View view);
 
-        ClassifyComponent.Builder appComponent(AppComponent appComponent);
+        ArticleComponent.Builder appComponent(AppComponent appComponent);
 
-        ClassifyComponent build();
+        ArticleComponent build();
     }
 }

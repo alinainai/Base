@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.baseui.base.GasFragment;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.paginate.interfaces.EmptyInterface;
@@ -38,7 +37,7 @@ import trunk.doi.base.bean.GankItemData;
  * Created by
  * 首页的fragment  (首页第一个栏目)
  */
-public class AdapterFragment extends GasFragment {
+public class AdapterFragment extends BaseFragment {
 
     public static final String TAG = "AdapterFragment";
 
@@ -85,10 +84,7 @@ public class AdapterFragment extends GasFragment {
         }
     });
 
-    @Override
-    public int initLayoutId() {
-        return R.layout.fragment_adapter;
-    }
+
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
@@ -105,17 +101,9 @@ public class AdapterFragment extends GasFragment {
         //条目点击
         mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> {
                     Timber.tag(TAG).e("initView: position=%d", position);
-//                    mClassifyAdapter.remove(position);
+//                  
                     Toast.makeText(mContext,String.format(Locale.CHINA,"position=%d",position),Toast.LENGTH_SHORT).show();
-//                    ToastUtil.show(mContext,String.format(Locale.CHINA,"position=%d",position));
-//                    FragmentManager fragmentManager = getFragmentManager();
-//                    GasAlertDialog newFragment = new GasAlertDialog.Builder()
-//                            .setTitle("提示")
-//                            .setMsg("测试一下")
-//                            .setPosBtnTxt("点击关闭", null)
-//                            .setCancelable(false)
-//                            .creat();
-//                    newFragment.show(fragmentManager);
+//
                 }
         );
 
@@ -155,10 +143,10 @@ public class AdapterFragment extends GasFragment {
 
     }
 
-
-
-
-
+    @Override
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_adapter,container,false);
+    }
 
 
     @Override

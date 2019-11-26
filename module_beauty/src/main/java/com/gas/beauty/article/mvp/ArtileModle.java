@@ -1,4 +1,4 @@
-package com.gas.beauty.test;
+package com.gas.beauty.article.mvp;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -6,16 +6,17 @@ import androidx.lifecycle.OnLifecycleEvent;
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
+import com.gas.beauty.article.mvp.ArticleContract;
 
 import javax.inject.Inject;
 
 import timber.log.Timber;
 
 @FragmentScope
-public class ClassifyModle extends BaseModel implements ClassifyContract.Model {
+public class ArtileModle extends BaseModel implements ArticleContract.Model {
 
     @Inject
-    public ClassifyModle(IRepositoryManager repositoryManager) {
+    public ArtileModle(IRepositoryManager repositoryManager) {
         super(repositoryManager);
     }
 

@@ -46,13 +46,13 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
+        android:textStyle="bold"
         android:textColor="@color/public_black"
         android:textSize="@dimen/public_title_main_text_size"
         app:layout_constraintBottom_toBottomOf="@id/v_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/v_bg"
-
         />
 
     <TextView

@@ -59,7 +59,8 @@ import timber.log.Timber;
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
- */public class GlobalConfiguration implements ClientConfigModule {
+ */
+public class GlobalConfiguration implements ClientConfigModule {
 
     @Override
     public void applyOptions(Context context, ConfigModule.Builder builder) {

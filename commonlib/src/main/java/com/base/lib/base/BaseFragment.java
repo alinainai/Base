@@ -2,13 +2,13 @@ package com.base.lib.base;
 
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.base.lib.base.delegate.fragment.IFragment;
 import com.base.lib.integration.cache.Cache;
@@ -17,8 +17,6 @@ import com.base.lib.integration.lifecycle.FragmentIRxLifecycle;
 import com.base.lib.mvp.IPresenter;
 import com.base.lib.util.ArmsUtils;
 import com.trello.rxlifecycle2.android.FragmentEvent;
-
-import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -40,13 +38,12 @@ import io.reactivex.subjects.Subject;
  * ================================================
  */
 public abstract class BaseFragment<P extends IPresenter> extends Fragment implements IFragment, FragmentIRxLifecycle {
-
     protected final String TAG = this.getClass().getSimpleName();
     private final BehaviorSubject<FragmentEvent> mLifecycleSubject = BehaviorSubject.create();
     private Cache<String, Object> mCache;
     protected Context mContext;
-    @Inject
     @Nullable
+    @Inject
     protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
     @NonNull

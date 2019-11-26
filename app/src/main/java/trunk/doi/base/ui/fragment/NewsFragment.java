@@ -13,11 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.base.baseui.base.GasFragment;
-import com.base.baseui.base.GasLazyLoadFragment;
-import com.base.lib.base.BaseFragment;
+import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.util.ArmsUtils;
 import com.lib.commonsdk.adapter.AdapterViewPager;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
@@ -30,14 +27,12 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import trunk.doi.base.R;
-import trunk.doi.base.adapter.SimpleFragmentPagerAdapter;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 import trunk.doi.base.view.ColorFlipPagerTitleView;
 
@@ -45,7 +40,7 @@ import trunk.doi.base.view.ColorFlipPagerTitleView;
  * Created by ly on 2016/5/30 11:05.
  * 分类的fragment  (首页第二个栏目)
  */
-public class NewsFragment extends GasLazyLoadFragment {
+public class NewsFragment extends LazyLoadFragment {
     public static final String TAG = "NewsFragment";
 
 
@@ -62,13 +57,6 @@ public class NewsFragment extends GasLazyLoadFragment {
         return new NewsFragment();
     }
 
-    @Override
-    public int initLayoutId() {
-       return R.layout.fragment_classify;
-    }
-
-
-
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
@@ -76,10 +64,15 @@ public class NewsFragment extends GasLazyLoadFragment {
     }
 
     @Override
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_classify, container, false);
+    }
+
+    @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
 
-        List<String> mTitles=Arrays.asList(mContext.getResources().getStringArray(R.array.gank));
+        List<String> mTitles = Arrays.asList(mContext.getResources().getStringArray(R.array.gank));
         mFragments = new ArrayList<>();
 
         for (String subtype : mTitles) {

@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.test;
+package com.gas.test.test.test;
 
-import dagger.Binds;
+import com.base.lib.di.scope.FragmentScope;
+
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * ================================================
@@ -29,8 +31,15 @@ import dagger.Module;
  * ================================================
  */
 @Module
-public abstract class ClassifyModule {
-    @Binds
-    abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
+public abstract class ArticleModule {
+
+
+    @FragmentScope
+    @Provides
+    static String provideName() {
+
+        return "李佳星";
+    }
+
 
 }

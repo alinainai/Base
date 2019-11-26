@@ -28,11 +28,15 @@
 
         />
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
+    <com.google.android.material.tabs.TabLayout
         android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/public_white"
+        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/public_black"
+        app:tabSelectedTextColor="@color/public_black"
+        app:tabTextColor="@color/public_text_deep_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/article_titleView" />

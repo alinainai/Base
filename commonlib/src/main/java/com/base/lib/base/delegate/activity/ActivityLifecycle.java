@@ -15,6 +15,7 @@ import com.base.lib.integration.AppManager;
 import com.base.lib.integration.cache.Cache;
 import com.base.lib.integration.cache.IntelligentCache;
 import com.base.lib.integration.config.ClientConfigModule;
+import com.base.lib.util.Preconditions;
 
 import java.util.List;
 
@@ -43,12 +44,11 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     @Inject
     Application mApplication;
     @Inject
-    Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
-    @Inject
     Cache<String, Object> mExtras;
     @Inject
+    Lazy<FragmentManager.FragmentLifecycleCallbacks> mFragmentLifecycle;
+    @Inject
     Lazy<List<FragmentManager.FragmentLifecycleCallbacks>> mFragmentLifecycles;
-
 
     @Inject
     public ActivityLifecycle() {
@@ -56,32 +56,13 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-
+        //如果 intent 包含了此字段,并且为 true 说明不加入到 list 进行统一管理
         boolean isNotAdd = false;
         if (activity.getIntent() != null)
             isNotAdd = activity.getIntent().getBooleanExtra(AppManager.IS_NOT_ADD_ACTIVITY_LIST, false);
 
         if (!isNotAdd)
             mAppManager.addActivity(activity);
-
-        //配置ActivityDelegate
-        if (activity instanceof IActivity) {
-            ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
-            if (activityDelegate == null) {
-                Cache<String, Object> cache = getCacheFromActivity((IActivity) activity);
-                activityDelegate = new ActivityDelegateImpl(activity);
-                //使用 IntelligentCache.KEY_KEEP 作为 key 的前缀, 可以使储存的数据永久存储在内存中
-                //否则存储在 LRU 算法的存储空间中, 前提是 Activity 使用的是 IntelligentCache (框架默认使用)
-                cache.put(IntelligentCache.getKeyOfKeep(ActivityDelegate.ACTIVITY_DELEGATE), activityDelegate);
-            }
-            activityDelegate.onCreate(savedInstanceState);
-        }
-
-        registerFragmentCallbacks(activity);
-
-
-        mAppManager.addActivity(activity);
 
         //配置ActivityDelegate
         if (activity instanceof IActivity) {
@@ -130,6 +111,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
         if (mAppManager.getCurrentActivity() == activity) {
             mAppManager.setCurrentActivity(null);
         }
+
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onStop();
@@ -147,6 +129,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
     @Override
     public void onActivityDestroyed(Activity activity) {
         mAppManager.removeActivity(activity);
+
         ActivityDelegate activityDelegate = fetchActivityDelegate(activity);
         if (activityDelegate != null) {
             activityDelegate.onDestroy();
@@ -159,7 +142,7 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
      * 设置是否使用监听,如果这个 Activity 返回 false 的话,这个 Activity 下面的所有 Fragment 将不能使用 {@link FragmentDelegate}
      * 意味着 {@link BaseFragment} 也不能使用
      *
-     * @param activity Activity
+     * @param activity
      */
     private void registerFragmentCallbacks(Activity activity) {
 
@@ -196,6 +179,8 @@ public class ActivityLifecycle implements Application.ActivityLifecycleCallbacks
 
     @NonNull
     private Cache<String, Object> getCacheFromActivity(IActivity activity) {
-        return activity.provideCache();
+        Cache<String, Object> cache = activity.provideCache();
+        Preconditions.checkNotNull(cache, "%s cannot be null on Activity", Cache.class.getName());
+        return cache;
     }
 }

@@ -1,11 +1,10 @@
-package com.gas.test.ui.test;
+package com.gas.test.test.test;
+
+import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-
-import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
@@ -13,10 +12,7 @@ import com.base.lib.di.component.AppComponent;
 import com.gas.test.R;
 import com.lib.commonsdk.constants.RouterHub;
 
-import timber.log.Timber;
-
-@Route(path = RouterHub.TEST_HOMEACTIVITY)
-public class RatioViewActivity extends BaseActivity {
+public class Ratio2ViewActivity extends BaseActivity {
 
 
     @Override

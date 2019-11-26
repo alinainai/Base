@@ -1,7 +1,9 @@
 package trunk.doi.base.ui.fragment.main;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -9,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
-import com.base.baseui.base.GasFragment;
 import com.base.componentservice.gank.service.GankInfoService;
 import com.base.componentservice.test.service.TestInfoService;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
@@ -28,7 +29,7 @@ import trunk.doi.base.R2;
  * Created by
  * 首页的fragment  (首页第二个栏目)
  */
-public class MainFragment extends GasFragment {
+public class MainFragment extends BaseFragment {
 
 
     public static final String TAG = "MainFragment";
@@ -57,12 +58,6 @@ public class MainFragment extends GasFragment {
     public MainFragment() {
     }
 
-    @Override
-    public int initLayoutId() {
-        return R.layout.activity_blank;
-    }
-
-
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -71,6 +66,11 @@ public class MainFragment extends GasFragment {
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
 
+    }
+
+    @Override
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_blank, container, false);
     }
 
     @Override
@@ -105,8 +105,6 @@ public class MainFragment extends GasFragment {
 
         mTestButton.setText(mTestInfoService.getInfo().getName());
     }
-
-
 
 
     @Override

@@ -13,7 +13,7 @@ ext {
             supportSdkVersion              : '28.0.0',
             constraintVersion              : '1.1.3',
             retrofitSdkVersion             : '2.6.2',
-            dagger2SdkVersion              : '2.25.2',
+            dagger2SdkVersion              : '2.23.2',
             glideSdkVersion                : '4.10.0',
             butterknifeSdkVersion          : '10.2.0',
 

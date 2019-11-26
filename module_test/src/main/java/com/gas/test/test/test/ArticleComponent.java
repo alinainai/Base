@@ -13,30 +13,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.fragment;
+package com.gas.test.test.test;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.scope.FragmentScope;
 
-import dagger.Binds;
-import dagger.Module;
-import dagger.Provides;
+import dagger.BindsInstance;
+import dagger.Component;
 
 /**
  * ================================================
- * 展示 Module 的用法
+ * 展示 Component 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
- * Created by JessYan on 09/04/2016 11:10
+ * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.6">Component wiki 官方文档</a>
+ * Created by JessYan on 09/04/2016 11:17
  * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@Module
-public abstract class ClassifyModule {
-    @Binds
-    abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
+@FragmentScope
+@Component(modules = ArticleModule.class, dependencies = AppComponent.class)
+public interface ArticleComponent {
 
+    void inject(ArticleFragment fragment);
+
+    @Component.Builder
+    interface Builder {
+        @BindsInstance
+        ArticleComponent.Builder view(ArticleContract.View view);
+
+        ArticleComponent.Builder appComponent(AppComponent appComponent);
+
+        ArticleComponent build();
+    }
 }

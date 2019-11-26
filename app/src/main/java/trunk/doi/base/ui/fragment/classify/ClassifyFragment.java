@@ -3,7 +3,6 @@ package trunk.doi.base.ui.fragment.classify;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.base.baseui.base.GasLazyLoadFragment;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.paginate.interfaces.EmptyInterface;
@@ -35,7 +33,7 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyPresenter;
  * Author:
  * Time: 2016/8/12 14:28
  */
-public class ClassifyFragment extends GasLazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implements ClassifyContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String SUB_TYPE = "SUB_TYPE";
     private int mPage = 1;//页数
@@ -54,7 +52,6 @@ public class ClassifyFragment extends GasLazyLoadFragment<ClassifyPresenter> imp
     ClassifyAdapter mClassifyAdapter;
 
 
-
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
 
@@ -68,8 +65,8 @@ public class ClassifyFragment extends GasLazyLoadFragment<ClassifyPresenter> imp
     }
 
     @Override
-    protected int initLayoutId() {
-        return R.layout.layout_base_refresh_recycler;
+    public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.layout_base_refresh_recycler, container, false);
     }
 
 
@@ -100,6 +97,11 @@ public class ClassifyFragment extends GasLazyLoadFragment<ClassifyPresenter> imp
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setAdapter(mClassifyAdapter);
         mClassifyAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
+    }
+
+    @Override
+    public void setData(@Nullable Object data) {
+
     }
 
     private void loadData() {

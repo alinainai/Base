@@ -1,14 +1,15 @@
-package com.gas.beauty.test;
+package com.gas.test.test.test;
 
 import android.app.Application;
 
 import com.base.lib.di.scope.FragmentScope;
 import com.base.lib.mvp.BasePresenter;
+import com.base.lib.mvp.IModel;
 
 import javax.inject.Inject;
 
 @FragmentScope
-public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyContract.View> {
+public class ArticlePresenter extends BasePresenter<IModel, ArticleContract.View> {
 
 
     @Inject
@@ -16,8 +17,8 @@ public class ClassifyPresenter extends BasePresenter<ClassifyModle, ClassifyCont
 
 
     @Inject
-    public ClassifyPresenter(ClassifyModle model, ClassifyContract.View rootView) {
-        super(model, rootView);
+    public ArticlePresenter( ArticleContract.View rootView) {
+        super( rootView);
     }
 
 
