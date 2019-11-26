@@ -46,7 +46,6 @@ dependencies {
 
     api project(path: ':paginate')
     api project(path: ':commonsdk')
-    api project(path: ':magicindicator')
 
 
 }
