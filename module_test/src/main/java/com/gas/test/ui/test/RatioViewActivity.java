@@ -12,6 +12,7 @@ import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.test.R;
+import com.gas.test.R2;
 import com.lib.commonsdk.constants.RouterHub;
 
 import butterknife.ButterKnife;
@@ -37,17 +38,13 @@ public class RatioViewActivity extends BaseActivity {
 
     }
 
-
-
-    @OnClick({R.id.ratio_rv, R.id.ratio_rv_2})
+    @OnClick({R2.id.ratio_rv, R2.id.ratio_rv_2})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ratio_rv:
-                ArmsUtils.snackbarText("我点击了第一个条目");
-                break;
-            case R.id.ratio_rv_2:
-                ArmsUtils.snackbarText("我点击了第二个条目");
-                break;
+        int id = view.getId();
+        if (id == R.id.ratio_rv) {
+            ArmsUtils.snackbarText("我点击了第一个条目");
+        } else if (id == R.id.ratio_rv_2) {
+            ArmsUtils.snackbarText("我点击了第二个条目");
         }
     }
 }

@@ -15,7 +15,7 @@ ext {
             retrofitSdkVersion             : '2.6.2',
             dagger2SdkVersion              : '2.23.2',
             glideSdkVersion                : '4.10.0',
-            butterknifeSdkVersion          : '10.2.0',
+            butterknifeSdkVersion          : '10.1.0',
 
             rxlifecycleSdkVersion          : '1.0',
             rxlifecycle2SdkVersion         : '2.2.2',
@@ -53,8 +53,8 @@ ext {
     dependencies = [
 
             //kotlin
-            "kotlin_stdlib_jdk"         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version["kotlinVersion"]}",
-            "core_ktx"                  : "androidx.core:core-ktx:${version["coreKtxVersion"]}",
+            "kotlin-stdlib-jdk7"         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version["kotlinVersion"]}",
+            "core-ktx"                  : "androidx.core:core-ktx:${version["coreKtxVersion"]}",
 
             //support
             "appcompat"                 : "androidx.appcompat:appcompat:${version["appcompatVersion"]}",

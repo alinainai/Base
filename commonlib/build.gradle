@@ -115,6 +115,7 @@ dependencies {
     //view
     api(rootProject.ext.dependencies["butterknife"]) {
         exclude module: 'annotations'
+        exclude module: 'appcompat'
     }
     compileOnly rootProject.ext.dependencies["androideventbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
