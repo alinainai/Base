@@ -40,19 +40,13 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
-
-
-
     //tools
     api rootProject.ext.dependencies["androideventbus"]
-
     api(rootProject.ext.dependencies["arouter"]) {
         exclude module: 'support-v4'
         exclude module: 'annotations'
     }
     api project(path: ':commonlib')
-
-
     api 'me.jessyan:retrofit-url-manager:1.4.0'
     api (rootProject.ext.dependencies["multidex"]){
         exclude module: 'annotations'
