@@ -18,8 +18,6 @@ package com.gas.test.component.service;
 import android.content.Context;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
-import com.base.componentservice.gank.bean.GankInfo;
-import com.base.componentservice.gank.service.GankInfoService;
 import com.base.componentservice.test.bean.TestInfo;
 import com.base.componentservice.test.service.TestInfoService;
 import com.lib.commonsdk.constants.RouterHub;

@@ -45,6 +45,8 @@ public class MainFragment extends BaseFragment {
     Button mPluginOne;
     @BindView(R2.id.btn_plugin_two)
     Button mPluginTwo;
+    @BindView(R2.id.btn_etr2)
+    Button mGankButton2;
 
 
     @Autowired(name = RouterHub.ZHIHU_SERVICE_ZHIHUINFOSERVICE)
@@ -97,6 +99,8 @@ public class MainFragment extends BaseFragment {
         }
 
         mGankButton.setText(mGankInfoService.getInfo().getName());
+        mGankButton2.setText(mGankInfoService.getInfo().getName2());
+
 
         if (mTestInfoService == null) {
             mTestButton.setEnabled(false);
@@ -113,7 +117,9 @@ public class MainFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.btn_load, R.id.btn_etr, R.id.btn_plugin_one, R.id.btn_plugin_two, R.id.btn_thr})
+    @OnClick({R.id.btn_load, R.id.btn_etr, R.id.btn_plugin_one,
+            R2.id.btn_etr2,
+            R.id.btn_plugin_two, R.id.btn_thr})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_load://组件化模块一
@@ -121,6 +127,9 @@ public class MainFragment extends BaseFragment {
                 break;
             case R.id.btn_etr://组件化模块二
                 Utils.navigation(getActivity(), RouterHub.GANK_MAINACTIVITY);
+                break;
+            case R.id.btn_etr2://组件化模块二
+                Utils.navigation(getActivity(), RouterHub.GANK_HOMEACTIVITY);
                 break;
             case R.id.btn_thr://组件化模块三
                 Utils.navigation(getActivity(), RouterHub.TEST_HOMEACTIVITY);

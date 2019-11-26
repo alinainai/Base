@@ -13,15 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package trunk.doi.base.ui.fragment.classify.di;
+package com.gas.beauty.ui.home.di;
 
 import com.base.lib.di.component.AppComponent;
-import com.base.lib.di.scope.FragmentScope;
+import com.base.lib.di.scope.ActivityScope;
+import com.gas.beauty.ui.home.HomeActivity;
+import com.gas.beauty.ui.home.mvp.HomeContract;
+import com.gas.beauty.ui.main.MainActivity;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
 
 /**
  * ================================================
@@ -33,19 +34,19 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
  * <a href="https://github.com/JessYanCoding">Follow me</a>
  * ================================================
  */
-@FragmentScope
+@ActivityScope
 @Component(dependencies = AppComponent.class)
-public interface ClassifyComponent {
+public interface HomeComponent {
 
-    void inject(ClassifyFragment fragment);
+    void inject(HomeActivity activity);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        ClassifyComponent.Builder view(ClassifyContract.View view);
+        HomeComponent.Builder view(HomeContract.View view);
 
-        ClassifyComponent.Builder appComponent(AppComponent appComponent);
+        HomeComponent.Builder appComponent(AppComponent appComponent);
 
-        ClassifyComponent build();
+        HomeComponent build();
     }
 }

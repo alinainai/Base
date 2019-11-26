@@ -39,7 +39,7 @@ public class GankInfoServiceImpl implements GankInfoService {
 
     @Override
     public GankInfo getInfo() {
-        return new GankInfo("干货美女");
+        return new GankInfo("美女","干货");
     }
 
     @Override

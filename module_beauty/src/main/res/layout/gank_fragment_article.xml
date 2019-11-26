@@ -25,7 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/v_status"
         app:titleText="干货列表"
-
         />
 
     <com.google.android.material.tabs.TabLayout
@@ -33,13 +32,13 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="@color/public_white"
-        app:tabMode="scrollable"
-        app:tabIndicatorColor="@color/public_black"
-        app:tabSelectedTextColor="@color/public_black"
-        app:tabTextColor="@color/public_text_deep_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/article_titleView" />
+        app:layout_constraintTop_toBottomOf="@+id/article_titleView"
+        app:tabIndicatorColor="@color/public_black"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/public_black"
+        app:tabTextColor="@color/public_text_deep_color" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

@@ -76,6 +76,7 @@ public interface RouterHub {
      */
     String GANK_SERVICE_GANKINFOSERVICE = GANK + SERVICE + "/GankInfoService";
     String GANK_MAINACTIVITY = GANK + "/MainActivity";
+    String GANK_HOMEACTIVITY = GANK + "/HomeActivity";
 
     /**
      * 测试分组

@@ -29,7 +29,6 @@ import butterknife.OnClick;
 import timber.log.Timber;
 import trunk.doi.base.R;
 import trunk.doi.base.R2;
-import trunk.doi.base.ui.fragment.classify.ClassifyAdapter;
 import trunk.doi.base.bean.GankItemData;
 
 

@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package trunk.doi.base.ui.fragment.classify.di;
+package com.gas.beauty.ui.article.di;
 
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.scope.FragmentScope;
+import com.gas.beauty.ui.article.ArticleFragment;
+import com.gas.beauty.ui.article.mvp.ArticleContract;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
-import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
 
 /**
  * ================================================
@@ -34,18 +34,18 @@ import trunk.doi.base.ui.fragment.classify.mvp.ClassifyContract;
  * ================================================
  */
 @FragmentScope
-@Component(dependencies = AppComponent.class)
-public interface ClassifyComponent {
+@Component(modules = ArticleModule.class, dependencies = AppComponent.class)
+public interface ArticleComponent {
 
-    void inject(ClassifyFragment fragment);
+    void inject(ArticleFragment fragment);
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        ClassifyComponent.Builder view(ClassifyContract.View view);
+        ArticleComponent.Builder view(ArticleContract.View view);
 
-        ClassifyComponent.Builder appComponent(AppComponent appComponent);
+        ArticleComponent.Builder appComponent(AppComponent appComponent);
 
-        ClassifyComponent build();
+        ArticleComponent build();
     }
 }
