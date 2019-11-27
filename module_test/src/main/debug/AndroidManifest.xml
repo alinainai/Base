@@ -24,13 +24,21 @@
         <activity
             android:name=".ui.test.RatioViewActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".ui.activity.home.HomeActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
         <!--
  每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule
       CommonSDK 的 ConfigModule 含有有每个组件都可共用的配置信息, 业务组件自己的 ConfigModule 含有自己独有的配置

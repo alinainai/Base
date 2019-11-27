@@ -5,20 +5,16 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.test.R;
 import com.gas.test.R2;
-import com.lib.commonsdk.constants.RouterHub;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@Route(path = RouterHub.TEST_HOMEACTIVITY)
+
 public class RatioViewActivity extends BaseActivity {
 
 
