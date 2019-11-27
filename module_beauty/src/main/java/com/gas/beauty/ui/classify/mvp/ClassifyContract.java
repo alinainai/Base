@@ -2,6 +2,7 @@ package com.gas.beauty.ui.classify.mvp;
 
 import android.content.Context;
 
+import com.base.lib.mvp.IModel;
 import com.base.lib.mvp.IView;
 import com.gas.beauty.bean.GankItemBean;
 
@@ -18,7 +19,7 @@ public interface ClassifyContract {
 
     }
 
-    interface Model {
+    interface Model extends IModel {
         Observable<List<GankItemBean>> getGankItemData(String suburl);
     }
 

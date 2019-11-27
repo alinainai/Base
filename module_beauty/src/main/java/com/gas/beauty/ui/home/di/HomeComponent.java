@@ -19,7 +19,6 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.scope.ActivityScope;
 import com.gas.beauty.ui.home.HomeActivity;
 import com.gas.beauty.ui.home.mvp.HomeContract;
-import com.gas.beauty.ui.main.MainActivity;
 
 import dagger.BindsInstance;
 import dagger.Component;

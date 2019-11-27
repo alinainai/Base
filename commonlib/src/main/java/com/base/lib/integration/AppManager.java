@@ -400,10 +400,7 @@ public final class AppManager {
         }
     }
 
-    @Deprecated
-    public interface HandleListener {
-        void handleMessage(AppManager appManager, Message message);
-    }
+
 
 
 }

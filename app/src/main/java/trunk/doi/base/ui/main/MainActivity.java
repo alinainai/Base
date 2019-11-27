@@ -14,6 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.ArmsUtils;
 import com.lib.commonsdk.adapter.AdapterViewPager;
 import com.lib.commonsdk.constants.RouterHub;
 
@@ -189,7 +190,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         Timer tExit;
         if (!isExit) {
             isExit = true; // 准备退出
-//            ToastUtil.show(mContext, "再按一次退出程序");
+            ArmsUtils.snackbarText("再按一次退出程序");
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override
@@ -199,7 +200,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }, 2000); //如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
 
         } else {
-            finish();
+            ArmsUtils.exitApp();
         }
     }
 

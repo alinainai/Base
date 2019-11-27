@@ -1,6 +1,7 @@
 package com.gas.beauty.ui.home;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,12 +11,15 @@ import androidx.fragment.app.Fragment;
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.ArmsUtils;
 import com.gas.beauty.R;
 import com.gas.beauty.ui.article.ArticleFragment;
 import com.gas.beauty.ui.home.di.DaggerHomeComponent;
 import com.gas.beauty.ui.home.mvp.HomeContract;
 import com.gas.beauty.ui.home.mvp.HomePresenter;
 import com.lib.commonsdk.constants.RouterHub;
+
+import static com.base.lib.util.Preconditions.checkNotNull;
 
 @Route(path = RouterHub.GANK_HOMEACTIVITY)
 public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View {
@@ -55,11 +59,25 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     }
 
 
+
+
     @Override
     public void showMessage(@NonNull String message) {
-
-
+        checkNotNull(message);
+        ArmsUtils.snackbarText(message);
     }
+
+    @Override
+    public void launchActivity(@NonNull Intent intent) {
+        checkNotNull(intent);
+        ArmsUtils.startActivity(intent);
+    }
+
+    @Override
+    public void killMyself() {
+        finish();
+    }
+
 
 
 }
