@@ -6,29 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.home.HomeActivity">
 
-    <Button
-        android:textSize="16sp"
-        android:textColor="@color/public_white"
-        android:id="@+id/test_btn_ratio_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="成比例宽高页面"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:textSize="16sp"
-        android:textColor="@color/public_white"
-        android:id="@+id/test_btn_two"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="kotlin再次学习页面"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/test_btn_ratio_view"
-        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="4dp"
+        android:scrollbars="vertical" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

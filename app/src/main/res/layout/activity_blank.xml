@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:textColor="@color/public_text_deep_color"
+        android:textColor="@color/public_text_black_deep"
         android:textSize="20sp"
         android:text="组件化"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="插件化"
-        android:textColor="@color/public_text_deep_color"
+        android:textColor="@color/public_text_black_deep"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_thr" />

@@ -54,9 +54,6 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
     @BindView(R.id.v_title)
     TitleView mainCartTitle;
 
-    @BindView(R.id.v_status_bar)
-    StatusLine mStatusBar;
-
     @Inject
     WebView mWebView;
 
@@ -139,11 +136,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
 
         mContext = this;
 
-        if (StatusBarManager.setStatusBarLightMode(this)) {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.public_white));
-        } else {
-            mStatusBar.setBackgroundColor(getResources().getColor(R.color.public_black));
-        }
+
 
         initTitleView();
 

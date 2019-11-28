@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
 
@@ -46,14 +46,15 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
-        android:textStyle="bold"
-        android:textColor="@color/public_black"
+        android:maxLength="10"
+        android:textColor="@color/public_text_black_deep"
         android:textSize="@dimen/public_title_main_text_size"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/v_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/v_bg"
-        />
+        tools:text="@string/public_str_title" />
 
     <TextView
         android:id="@+id/title_bar_right"

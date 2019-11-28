@@ -23,7 +23,7 @@
             android:layout_width="@dimen/public_width_67dp"
             android:layout_height="@dimen/public_height_67dp"
             android:scaleType="centerCrop"
-            tools:src="@color/public_color_text_light"
+            tools:src="@color/public_text_black_light"
             android:contentDescription="@string/zhihu_image" />
 
 

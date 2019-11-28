@@ -17,12 +17,14 @@ package com.lib.commonsdk.core;
 
 import android.app.Activity;
 import android.app.Application;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.lib.commonsdk.R;
 import com.lib.commonsdk.utils.statusbar.StatusBarManager;
 
 import timber.log.Timber;
@@ -49,9 +51,10 @@ public class ActivityLifecycleCallbacksImpl implements Application.ActivityLifec
         if(activity instanceof  AppCompatActivity){
             ((AppCompatActivity)activity).supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         }
-        //透明状态栏
-        StatusBarManager.fullTransStatusBar(activity);
-
+        //设置状态栏图标黑色模式
+        if(StatusBarManager.setStatusBarLightMode(activity)){
+            StatusBarManager.setStatusBarColor(activity,Color.parseColor("#FFFFFF"));
+        }
         Timber.i(activity + " - onActivityCreated");
     }
 

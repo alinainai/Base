@@ -8,7 +8,7 @@
     <color name="public_base_bg">#f6f4f5</color>
 
     <color name="public_black">#000000</color>
-    <color name="public_white">#ffffff</color>
+    <color name="public_white">#FFFFFF</color>
     <color name="public_trans">#00000000</color>
     <color name="public_alpha">#66000000</color>
     <color name="public_divider_color">#C0C0C0</color>
@@ -17,11 +17,19 @@
     <color name="public_color_primary_dark">#00574B</color>
     <color name="public_color_accent">#D81B60</color>
 
+    <!--    文字颜色-->
+    <color name="public_text_black_deep">#333333</color>
+    <color name="public_text_black_normal">#666666</color>
+    <color name="public_text_black_light">#999999</color>
 
-    <color name="public_text_deep_color">#333333</color>
-    <color name="public_text_normal_color">#666666</color>
-    <color name="public_text_light_color">#999999</color>
-
+    <!-- 100% 白色 -->
+    <color name="public_text_white_pure">#FFFFFFFF</color>
+    <!-- 80% 白色 -->
+    <color name="public_text_white_deep">#CCFFFFFF</color>
+    <!-- 50% 白色 -->
+    <color name="public_text_white_alpha">#80FFFFFF</color>
+    <!-- 30% 白色 -->
+    <color name="public_text_white_light">#4DFFFFFF</color>
 
 
 

@@ -6,23 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/public_white">
 
-    <com.base.baseui.view.StatusLine
-        android:id="@+id/v_status_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/public_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:targetApi="P" />
-
     <com.base.baseui.view.TitleView
         android:id="@+id/v_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_status_bar" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <RelativeLayout
         android:id="@+id/rl_webview"

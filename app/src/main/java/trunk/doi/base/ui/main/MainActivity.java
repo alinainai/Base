@@ -1,6 +1,7 @@
 package trunk.doi.base.ui.main;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.lib.commonsdk.adapter.AdapterViewPager;
 import com.lib.commonsdk.constants.RouterHub;
+import com.lib.commonsdk.utils.statusbar.StatusBarManager;
 
 import java.util.List;
 import java.util.Timer;
@@ -74,6 +76,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
+        StatusBarManager.fullTransStatusBar(this);
+        StatusBarManager.setStatusBarLightMode(this);
         return R.layout.activity_main;
     }
 

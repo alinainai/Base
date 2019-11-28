@@ -4,8 +4,8 @@
     <string name="public_str_status_view_failed">加载失败, 点击重新加载</string>
     <string name="public_str_status_view_loading">玩命加载中&#8230;</string>
     <string name="public_str_empty">""</string>
-    <string name="public_str_title">title</string>
-    <string name="public_str_message">message</string>
+    <string name="public_str_title">这里要显示一个标题</string>
+    <string name="public_str_message">这里要显示一段文本</string>
     <string name="public_str_background">background</string>
     <string name="public_refresh_header_reset">&#8194;&#8194;下拉刷新&#8194;&#8194;</string>
     <string name="public_refresh_header_pull_over">&#8194;&#8194;释放刷新&#8194;&#8194;</string>

@@ -135,7 +135,9 @@ public class TitleView extends ConstraintLayout {
     public void setTitleText(String title) {
         this.titleText = title;
         if (null != tvTitle) {
-            tvTitle.setText(title);
+            if (!TextUtils.isEmpty(title)) {
+                tvTitle.setText(title);
+            }
         }
     }
 

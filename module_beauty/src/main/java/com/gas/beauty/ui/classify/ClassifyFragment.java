@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -20,6 +21,8 @@ import com.gas.beauty.R2;
 import com.gas.beauty.ui.classify.di.DaggerClassifyComponent;
 import com.gas.beauty.ui.classify.mvp.ClassifyContract;
 import com.gas.beauty.ui.classify.mvp.ClassifyPresenter;
+import com.lib.commonsdk.constants.Constants;
+import com.lib.commonsdk.constants.RouterHub;
 
 import javax.inject.Inject;
 
@@ -77,11 +80,14 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_white));
 
         //条目点击
-        mClassifyAdapter.setOnMultiItemClickListener((viewHolder, item, position, viewType) -> {
+        mClassifyAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> {
 
-//                mContext.startActivity(new Intent(mContext, WebViewActivity.class)
-//                        .putExtra("title", item.getDesc())
-//                        .putExtra("url", item.getUrl()))
+                    ARouter.getInstance()
+                            .build(RouterHub.APP_WEBVIEWACTIVITY)
+                            .withString(Constants.PUBLIC_TITLE, data.getDesc())
+                            .withString(Constants.PUBLIC_URL, data.getUrl())
+                            .navigation(mContext);
+
                 }
         );
         mClassifyAdapter.setOnReloadListener(() -> {

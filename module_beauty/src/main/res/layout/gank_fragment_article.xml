@@ -5,15 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.base.baseui.view.StatusLine
-        android:id="@+id/v_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/public_white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.base.baseui.view.TitleView
         android:id="@+id/article_titleView"
         android:layout_width="0dp"
@@ -23,14 +14,13 @@
         app:dividerHide="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v_status"
-        app:titleText="干货列表"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleText="干货列表" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/public_tab_height"
         android:background="@color/public_white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +28,8 @@
         app:tabIndicatorColor="@color/public_black"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/public_black"
-        app:tabTextColor="@color/public_text_deep_color" />
+        app:tabTextAppearance="@style/public_style_tab_text_size"
+        app:tabTextColor="@color/public_text_black_deep" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"

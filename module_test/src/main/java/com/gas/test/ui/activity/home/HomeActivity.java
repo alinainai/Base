@@ -1,27 +1,36 @@
 package com.gas.test.ui.activity.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.os.Message;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
+import com.base.paginate.interfaces.EmptyInterface;
 import com.gas.test.R;
 import com.gas.test.R2;
 import com.gas.test.ui.activity.home.di.DaggerHomeComponent;
 import com.gas.test.ui.activity.home.mvp.HomeContract;
 import com.gas.test.ui.activity.home.mvp.HomePresenter;
-import com.gas.test.ui.test.RatioViewActivity;
+import com.gas.test.ui.activity.show.ShowActivity;
 import com.lib.commonsdk.constants.RouterHub;
 
-import butterknife.OnClick;
+import java.lang.ref.WeakReference;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
+import static com.gas.test.ui.activity.show.IShowConst.SHOWFRAGMENTTYPE;
 
 
 /**
@@ -33,6 +42,20 @@ import static com.base.lib.util.Preconditions.checkNotNull;
  */
 @Route(path = RouterHub.TEST_HOMEACTIVITY)
 public class HomeActivity extends BaseActivity<HomePresenter> implements HomeContract.View {
+
+
+    private static final int LOADDATA = 0x01;
+    private static final long DELAYTIME = 700L;
+
+    @BindView(R2.id.home_recycler)
+    RecyclerView mRecyclerView;
+
+    @Inject
+    RecyclerView.LayoutManager mLayoutManager;
+    @Inject
+    HomeAdapter mAdapter;
+
+    private DelayHandler mHandler;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -53,6 +76,23 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+        mHandler = new DelayHandler(this);
+
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
+
+        //条目点击
+        mAdapter.setOnMultiItemClickListener((viewHolder, item, position, viewType) -> {
+                    ArmsUtils.startActivity(new Intent(HomeActivity.this,
+                            ShowActivity.class).putExtra(SHOWFRAGMENTTYPE, item.getTag()));
+                }
+        );
+        mAdapter.setOnReloadListener(() -> {
+            mPresenter.showTestInfos();
+        });
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
+
+        mHandler.sendEmptyMessageDelayed(LOADDATA, DELAYTIME);
     }
 
 
@@ -73,13 +113,48 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
         finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (mHandler != null) {
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler = null;
+        }
+        super.onDestroy();
+    }
 
-    @OnClick({R2.id.test_btn_ratio_view, R2.id.test_btn_two})
-    public void onViewClicked(View view) {
-        int id = view.getId();
-        if (id == R.id.test_btn_ratio_view) {
-            ArmsUtils.startActivity(RatioViewActivity.class);
-        } else if (id == R.id.test_btn_two) {
+    @Override
+    public Context getWrapContext() {
+        return this;
+    }
+
+    @Override
+    public void loadData() {
+        mPresenter.showTestInfos();
+    }
+
+    /**
+     * 这里展示静态内部类的的使用
+     * Handler 防止内存泄漏
+     * 在本类中实现延时{@link HomeActivity#DELAYTIME}时长的数据加载
+     */
+    private static class DelayHandler extends Handler {
+
+        WeakReference<HomeActivity> mHost;
+
+        DelayHandler(HomeActivity activity) {
+            mHost = new WeakReference<>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case LOADDATA:
+                    if (null != mHost.get())
+                        mHost.get().loadData();
+                    break;
+            }
         }
     }
+
 }

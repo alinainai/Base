@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.IntDef;
+import androidx.core.view.ViewCompat;
 
 import com.base.lib.R;
 
@@ -233,11 +235,13 @@ public class StatusBarManager {
         //状态栏透明
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0 全透明状态栏
 
-            View decorView = activity.getWindow().getDecorView();
+            Window window = activity.getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //拓展布局到状态栏后面 | 稳定的布局，不会随系统栏的隐藏、显示而变化
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            activity.getWindow().setStatusBarColor(Color.TRANSPARENT);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
 
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {//4.4 全透明状态栏
 
@@ -246,6 +250,23 @@ public class StatusBarManager {
 
         }
 
-
     }
+
+    public static void setStatusBarColor(Activity activity, int colorId) {
+
+        //Android6.0（API 23）以上，系统方法
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.setStatusBarColor(colorId);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //使用SystemBarTint库使4.4版本状态栏变色，需要先将状态栏设置为透明
+            fullTransStatusBar(activity);
+            //设置状态栏颜色
+            SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(colorId);
+        }
+    }
+
+
 }

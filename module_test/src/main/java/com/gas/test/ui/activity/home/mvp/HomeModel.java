@@ -1,6 +1,7 @@
 package com.gas.test.ui.activity.home.mvp;
 
 
+import com.base.componentservice.test.bean.TestInfo;
 import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 
@@ -8,7 +9,12 @@ import com.base.lib.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
+import com.gas.test.bean.TestInfoBean;
 import com.gas.test.ui.activity.home.mvp.HomeContract;
+import com.gas.test.ui.activity.show.IShowConst;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ================================================
@@ -24,6 +30,14 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     @Inject
     public HomeModel(IRepositoryManager repositoryManager) {
         super(repositoryManager);
+    }
+
+
+    @Override
+    public List<TestInfoBean> getInfoItems() {
+        List<TestInfoBean> beans= new ArrayList<>();
+        beans.add(new TestInfoBean("指定宽高比的自定义View", IShowConst.RATIOVIEWFRAGMENT));
+        return beans;
     }
 
     @Override
