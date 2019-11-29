@@ -37,6 +37,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     public List<TestInfoBean> getInfoItems() {
         List<TestInfoBean> beans= new ArrayList<>();
         beans.add(new TestInfoBean("指定宽高比的自定义View", IShowConst.RATIOVIEWFRAGMENT));
+        beans.add(new TestInfoBean("检测自定义RecyclerView的适配器", IShowConst.ADAPTERFRAGMENT));
         return beans;
     }
 

@@ -18,7 +18,10 @@ import com.gas.test.ui.activity.show.mvp.ShowPresenter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import dagger.Lazy;
+
 import static com.base.lib.util.Preconditions.checkNotNull;
+import static com.gas.test.ui.activity.show.IShowConst.ADAPTERFRAGMENT;
 import static com.gas.test.ui.activity.show.IShowConst.RATIOVIEWFRAGMENT;
 import static com.gas.test.ui.activity.show.IShowConst.SHOWFRAGMENTTYPE;
 
@@ -37,6 +40,9 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Inject
     @Named(RATIOVIEWFRAGMENT)
     Fragment mRatioFragment;
+    @Inject
+    @Named(ADAPTERFRAGMENT)
+    Lazy<Fragment> mAdapterFragment;
 
 
     @Override
@@ -68,6 +74,9 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
 
             case RATIOVIEWFRAGMENT:
                 fragment = mRatioFragment;
+                break;
+            case ADAPTERFRAGMENT:
+                fragment = mAdapterFragment.get();
                 break;
 
         }

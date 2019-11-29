@@ -79,32 +79,25 @@ public class MainFragment extends BaseFragment {
     public void initData(@Nullable Bundle savedInstanceState) {
 
         ARouter.getInstance().inject(this);
-        loadZhihuInfo();
+        loadModuleInfo();
 
     }
 
 
-    private void loadZhihuInfo() {
+    private void loadModuleInfo() {
         //当非集成调试阶段, 宿主 App 由于没有依赖其他组件, 所以使用不了对应组件提供的服务
-        if (mZhihuInfoService == null) {
-            mZhihuButton.setEnabled(false);
+        if (mZhihuInfoService != null) {
+            mZhihuButton.setText(mZhihuInfoService.getInfo().getName());
+        }
+        if (mGankInfoService != null) {
+            mGankButton.setText(mGankInfoService.getInfo().getName());
+            mGankButton2.setText(mGankInfoService.getInfo().getName2());
         }
 
-        mZhihuButton.setText(mZhihuInfoService.getInfo().getName());
-
-        if (mGankInfoService == null) {
-            mGankButton.setEnabled(false);
+        if (mTestInfoService != null) {
+            mTestButton.setText(mTestInfoService.getInfo().getName());
         }
 
-        mGankButton.setText(mGankInfoService.getInfo().getName());
-        mGankButton2.setText(mGankInfoService.getInfo().getName2());
-
-
-        if (mTestInfoService == null) {
-            mTestButton.setEnabled(false);
-        }
-
-        mTestButton.setText(mTestInfoService.getInfo().getName());
     }
 
 
