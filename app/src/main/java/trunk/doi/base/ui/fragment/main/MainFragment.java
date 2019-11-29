@@ -88,14 +88,12 @@ public class MainFragment extends BaseFragment {
         //当非集成调试阶段, 宿主 App 由于没有依赖其他组件, 所以使用不了对应组件提供的服务
         if (mZhihuInfoService == null) {
             mZhihuButton.setEnabled(false);
-            return;
         }
 
         mZhihuButton.setText(mZhihuInfoService.getInfo().getName());
 
         if (mGankInfoService == null) {
             mGankButton.setEnabled(false);
-            return;
         }
 
         mGankButton.setText(mGankInfoService.getInfo().getName());
@@ -104,7 +102,6 @@ public class MainFragment extends BaseFragment {
 
         if (mTestInfoService == null) {
             mTestButton.setEnabled(false);
-            return;
         }
 
         mTestButton.setText(mTestInfoService.getInfo().getName());

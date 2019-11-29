@@ -1,7 +1,6 @@
 package trunk.doi.base.ui.main;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -42,6 +41,9 @@ import trunk.doi.base.ui.main.mvp.MainPresenter;
 @Route(path = RouterHub.APP_MAINACTIVITY)
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
+
+
+
     @BindView(R.id.container)
     ViewPager mVp;
 
@@ -59,9 +61,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Inject
     List<Fragment> mFragments;
 
+
+    private static final String CURRENTTABINDEX = "current_tab_index";
     // 当前fragment的index
     public int mCurrentTabIndex = 0;
-    private static final String CURRENTTABINDEX = "current_tab_index";
+
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -207,7 +212,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             ArmsUtils.exitApp();
         }
     }
-
 
 
     @Override

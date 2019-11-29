@@ -2,16 +2,11 @@
 <resources>
 
 
-    <color name="public_colorPrimary">#3F51B5</color>
-    <color name="public_colorAccent">#FF4081</color>
-    <color name="public_base_background">#f9f9f9</color>
-    <color name="public_base_bg">#f6f4f5</color>
-
     <color name="public_black">#000000</color>
     <color name="public_white">#FFFFFF</color>
     <color name="public_trans">#00000000</color>
     <color name="public_alpha">#66000000</color>
-    <color name="public_divider_color">#C0C0C0</color>
+
 
     <color name="public_color_primary">#008577</color>
     <color name="public_color_primary_dark">#00574B</color>
@@ -31,6 +26,12 @@
     <!-- 30% 白色 -->
     <color name="public_text_white_light">#4DFFFFFF</color>
 
+    <!-- 背景颜色-->
+    <color name="public_bg_title_default">#FFFFFF</color>
+    <color name="public_bg_default">#F9F9F9</color>
+    <color name="public_bg_button">#FFFFFF</color>
+    <color name="public_bg_default_hint">#EBEBEB</color>
+    <color name="public_divider_color">#C0C0C0</color>
 
 
 </resources>

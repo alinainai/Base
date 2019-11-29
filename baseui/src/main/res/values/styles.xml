@@ -4,22 +4,24 @@
     <!-- Base application theme. -->
     <style name="public_app_theme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/public_color_primary</item>
-        <item name="colorPrimaryDark">@color/public_color_primary_dark</item>
-        <item name="colorAccent">@color/public_color_accent</item>
-        <item name="colorButtonNormal">#ff3e19</item>
-        <item name="colorControlHighlight">#ff3e19</item>
+        <item name="colorPrimary">@color/public_white</item>
+        <item name="colorPrimaryDark">@color/public_white</item>
+        <item name="colorAccent">@color/public_text_black_deep</item>
+        <item name="colorButtonNormal">@color/public_bg_button</item>
+        <item name="android:textColorPrimary">@color/public_text_black_deep</item>
+        <item name="colorControlHighlight">@color/public_bg_default_hint</item>
         <item name="alertDialogTheme">@style/public_dialog_alert</item>
+        <item name="buttonStyle">@style/Widget.AppCompat.Button</item>
     </style>
 
 
     <!--设置dialogbutton颜色-->
     <style name="public_dialog_alert" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
         <!--修改AlertDialog按钮的颜色-->
-        <item name="colorAccent">#ff3e19</item>
+        <item name="colorAccent">@color/public_bg_button</item>
     </style>
 
-    <style name="public_app_theme_nostatusbar" parent="public_app_theme">
+    <style name="public_app_theme_noBar" parent="public_app_theme">
         <!-- Customize your theme here. -->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsTranslucent">true</item>

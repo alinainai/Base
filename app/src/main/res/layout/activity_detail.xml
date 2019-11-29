@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/public_base_background"
+    android:background="@color/public_bg_default"
     android:orientation="vertical">
 
     <!-- 头像 -->
@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/px_60"
             android:src="@mipmap/public_ic_launcher"
-            app:civ_border_color="@color/public_base_background"
+            app:civ_border_color="@color/public_bg_default"
             app:civ_border_width="1dp" />
 
     </RelativeLayout>

@@ -70,7 +70,7 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
-        return R.layout.test_activity_home;
+        return R.layout.test_activity_home_content;
     }
 
     @Override

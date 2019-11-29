@@ -21,7 +21,6 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-
         <activity
             android:name=".ui.activity.show.ShowActivity"
             android:configChanges="orientation|screenSize"
@@ -29,16 +28,10 @@
         <activity
             android:name=".ui.activity.home.HomeActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
 
-
-        <activity
-            android:name=".ui.activity.home.HomeActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

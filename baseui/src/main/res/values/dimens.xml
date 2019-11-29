@@ -10,7 +10,7 @@
     <dimen name="public_title_right_text_size">14sp</dimen>
     <dimen name="public_title_bar_height">50dp</dimen>
     <dimen name="public_tab_text_size">14sp</dimen>
-    <dimen name="public_tab_height">24dp</dimen>
+    <dimen name="public_tab_height">26dp</dimen>
 
     <!--    默认圆角-->
     <dimen name="public_corner_dimens">6dp</dimen>

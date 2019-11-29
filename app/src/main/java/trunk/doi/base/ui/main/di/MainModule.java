@@ -12,7 +12,6 @@ import java.util.List;
 import dagger.Module;
 import dagger.Provides;
 import trunk.doi.base.ui.fragment.AdapterFragment;
-import trunk.doi.base.ui.fragment.NewsFragment;
 import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 import trunk.doi.base.ui.fragment.main.MainFragment;
 import trunk.doi.base.ui.fragment.mine.MineFragment;
