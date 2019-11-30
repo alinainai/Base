@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.WebView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.base.baseui.view.TitleView;
 
 public class AppMoudleUtil {
@@ -55,6 +56,22 @@ public class AppMoudleUtil {
         ClipData mClipData = ClipData.newPlainText("Label", copyData);
         // 将ClipData内容放到系统剪贴板里。
         cm.setPrimaryClip(mClipData);
+    }
+
+    public static void stopLottieAnimation(LottieAnimationView view){
+
+        if(view!=null){
+            if(view.isAnimating())
+                view.cancelAnimation();
+            view.setProgress(0);
+        }
+
+    }
+    public static void startLottieAnimation(LottieAnimationView view){
+        if(view!=null){
+            if(!view.isAnimating())
+                view.playAnimation();
+        }
     }
 
 }

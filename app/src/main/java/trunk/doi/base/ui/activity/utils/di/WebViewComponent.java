@@ -15,17 +15,13 @@
  */
 package trunk.doi.base.ui.activity.utils.di;
 
-import android.webkit.WebView;
-
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.di.scope.ActivityScope;
-import com.base.lib.di.scope.FragmentScope;
 
 import dagger.BindsInstance;
 import dagger.Component;
 import trunk.doi.base.ui.activity.utils.WebViewActivity;
 import trunk.doi.base.ui.activity.utils.mvp.WebViewContract;
-import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
 
 /**
  * ================================================

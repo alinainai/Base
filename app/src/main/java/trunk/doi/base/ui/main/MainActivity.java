@@ -4,14 +4,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.base.baseui.view.NoScrollViewPager;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -26,11 +27,13 @@ import java.util.TimerTask;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import trunk.doi.base.R;
 import trunk.doi.base.ui.main.di.DaggerMainComponent;
 import trunk.doi.base.ui.main.mvp.MainContract;
 import trunk.doi.base.ui.main.mvp.MainPresenter;
+import trunk.doi.base.utils.AppMoudleUtil;
 
 
 /**
@@ -42,19 +45,26 @@ import trunk.doi.base.ui.main.mvp.MainPresenter;
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
 
-
-
     @BindView(R.id.container)
-    ViewPager mVp;
+    NoScrollViewPager mVp;
 
-    @BindView(R.id.home_btn)
-    Button rBtn1;
-    @BindView(R.id.classify_btn)
-    Button rBtn2;
-    @BindView(R.id.account_btn)
-    Button rBtn3;
-    @BindView(R.id.shopping_btn)
-    Button rBtn4;
+    @BindView(R.id.main_btn1)
+    TextView rBtn1;
+    @BindView(R.id.main_btn2)
+    TextView rBtn2;
+    @BindView(R.id.main_btn3)
+    TextView rBtn3;
+    @BindView(R.id.main_btn4)
+    TextView rBtn4;
+
+    @BindView(R.id.main_icon1)
+    LottieAnimationView mIcon1;
+    @BindView(R.id.main_icon2)
+    LottieAnimationView mIcon2;
+    @BindView(R.id.main_icon3)
+    LottieAnimationView mIcon3;
+    @BindView(R.id.main_icon4)
+    LottieAnimationView mIcon4;
 
     @Inject
     AdapterViewPager mAdapter;
@@ -64,8 +74,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     private static final String CURRENTTABINDEX = "current_tab_index";
     // 当前fragment的index
-    public int mCurrentTabIndex = 0;
-
+    public int mCurrentTabIndex = -1;
+    public int mSavedTabIndex = -1;
 
 
     @Override
@@ -88,30 +98,22 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        //防止屏幕切换等操作造成按钮错位
-        if (null != savedInstanceState) {
-            mCurrentTabIndex = savedInstanceState.getInt(CURRENTTABINDEX, 0);
-        }
 
         mVp.setAdapter(mAdapter);
         mVp.setOffscreenPageLimit(mFragments.size() - 1);
-        mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
+        //防止屏幕切换等操作造成按钮错位
+        if (null != savedInstanceState) {
+            mSavedTabIndex = savedInstanceState.getInt(CURRENTTABINDEX, -1);
+            if (mSavedTabIndex != -1)
+                resetButton(mSavedTabIndex);
+            else
+                resetButton(0);
+        } else {
+            resetButton(0);
+        }
 
-            @Override
-            public void onPageSelected(int position) {
-                resetButton(position);
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        resetButton(mCurrentTabIndex);
     }
 
 
@@ -122,19 +124,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         super.onSaveInstanceState(outState);
     }
 
-    @OnClick({R.id.home_btn, R.id.classify_btn, R.id.account_btn, R.id.shopping_btn})
+    @OnClick({R.id.main_btn1, R.id.main_btn2, R.id.main_btn3, R.id.main_btn4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.home_btn:
+            case R.id.main_btn1:
                 resetButton(0);
                 break;
-            case R.id.classify_btn:
+            case R.id.main_btn2:
                 resetButton(1);
                 break;
-            case R.id.account_btn:
+            case R.id.main_btn3:
                 resetButton(2);
                 break;
-            case R.id.shopping_btn:
+            case R.id.main_btn4:
                 resetButton(3);
                 break;
         }
@@ -142,34 +144,52 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     public void resetButton(int index) {
 
+        if (index == mCurrentTabIndex)
+            return;
+
         switch (index) {
             case 0:
                 rBtn1.setSelected(true);
                 rBtn2.setSelected(false);
                 rBtn3.setSelected(false);
                 rBtn4.setSelected(false);
+                AppMoudleUtil.startLottieAnimation(mIcon1);
+                AppMoudleUtil.stopLottieAnimation(mIcon2);
+                AppMoudleUtil.stopLottieAnimation(mIcon3);
+                AppMoudleUtil.stopLottieAnimation(mIcon4);
                 break;
             case 1:
                 rBtn1.setSelected(false);
                 rBtn2.setSelected(true);
                 rBtn3.setSelected(false);
                 rBtn4.setSelected(false);
+                AppMoudleUtil.stopLottieAnimation(mIcon1);
+                AppMoudleUtil.startLottieAnimation(mIcon2);
+                AppMoudleUtil.stopLottieAnimation(mIcon3);
+                AppMoudleUtil.stopLottieAnimation(mIcon4);
                 break;
             case 2:
                 rBtn1.setSelected(false);
                 rBtn2.setSelected(false);
                 rBtn3.setSelected(true);
                 rBtn4.setSelected(false);
+                AppMoudleUtil.stopLottieAnimation(mIcon1);
+                AppMoudleUtil.stopLottieAnimation(mIcon2);
+                AppMoudleUtil.startLottieAnimation(mIcon3);
+                AppMoudleUtil.stopLottieAnimation(mIcon4);
                 break;
             case 3:
                 rBtn1.setSelected(false);
                 rBtn2.setSelected(false);
                 rBtn3.setSelected(false);
                 rBtn4.setSelected(true);
+                AppMoudleUtil.stopLottieAnimation(mIcon1);
+                AppMoudleUtil.stopLottieAnimation(mIcon2);
+                AppMoudleUtil.stopLottieAnimation(mIcon3);
+                AppMoudleUtil.startLottieAnimation(mIcon4);
                 break;
         }
-        if (index == mCurrentTabIndex)
-            return;
+
         mVp.setCurrentItem(index, false);
         mCurrentTabIndex = index;
 
@@ -223,4 +243,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     public void showMessage(@NonNull String message) {
 
     }
+
+
 }

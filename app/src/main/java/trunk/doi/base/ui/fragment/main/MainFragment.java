@@ -1,13 +1,17 @@
 package trunk.doi.base.ui.fragment.main;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.alibaba.android.arouter.facade.annotation.Autowired;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,23 +20,30 @@ import com.base.componentservice.test.service.TestInfoService;
 import com.base.componentservice.zhihu.service.ZhihuInfoService;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
+import com.base.lib.util.ArmsUtils;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import trunk.doi.base.R;
 import trunk.doi.base.R2;
+import trunk.doi.base.ui.fragment.main.di.DaggerMainComponent;
+import trunk.doi.base.ui.fragment.main.mvp.MainContract;
+import trunk.doi.base.ui.fragment.main.mvp.MainPresenter;
+
+import static com.base.lib.util.Preconditions.checkNotNull;
+
+import trunk.doi.base.R;
 
 
 /**
- * Created by
- * 首页的fragment  (首页第二个栏目)
+ * ================================================
+ * Description:
+ * <p>
+ * Created by GasMvpFragment on 11/30/2019 15:27
+ * ================================================
  */
-public class MainFragment extends BaseFragment {
-
-
-    public static final String TAG = "MainFragment";
+public class MainFragment extends BaseFragment<MainPresenter> implements MainContract.View {
 
 
     @BindView(R2.id.btn_load)
@@ -57,22 +68,26 @@ public class MainFragment extends BaseFragment {
     TestInfoService mTestInfoService;
 
 
-    public MainFragment() {
-    }
 
 
     public static MainFragment newInstance() {
-        return new MainFragment();
+        MainFragment fragment = new MainFragment();
+        return fragment;
     }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {
-
+        DaggerMainComponent //如找不到该类,请编译一下项目
+                .builder()
+                .appComponent(appComponent)
+                .view(this)
+                .build()
+                .inject(this);
     }
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_blank, container, false);
+        return inflater.inflate(R.layout.fragment_main, container, false);
     }
 
     @Override
@@ -80,6 +95,29 @@ public class MainFragment extends BaseFragment {
 
         ARouter.getInstance().inject(this);
         loadModuleInfo();
+
+    }
+
+
+    @Override
+    public void setData(@Nullable Object data) {
+
+    }
+
+    @Override
+    public void showMessage(@NonNull String message) {
+        checkNotNull(message);
+        ArmsUtils.snackbarText(message);
+    }
+
+    @Override
+    public void launchActivity(@NonNull Intent intent) {
+        checkNotNull(intent);
+        ArmsUtils.startActivity(intent);
+    }
+
+    @Override
+    public void killMyself() {
 
     }
 
@@ -100,16 +138,8 @@ public class MainFragment extends BaseFragment {
 
     }
 
-
-    @Override
-    public void setData(@Nullable Object data) {
-
-    }
-
-
     @OnClick({R.id.btn_load, R.id.btn_etr, R.id.btn_plugin_one,
-            R2.id.btn_etr2,
-            R.id.btn_plugin_two, R.id.btn_thr})
+            R2.id.btn_etr2, R.id.btn_plugin_two, R.id.btn_thr})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_load://组件化模块一
@@ -130,6 +160,5 @@ public class MainFragment extends BaseFragment {
                 break;
         }
     }
-
 
 }

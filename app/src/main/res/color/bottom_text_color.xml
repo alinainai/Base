@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:color="@color/app_splash_icon_color"/>
-    <item android:state_checked="true" android:color="@color/app_splash_icon_color"/>
-    <item android:color="@color/bottom_tab_text_color_nor"/> <!-- not selected -->
+    <item android:color="#EC5B4E" android:state_selected="true" />
+    <item android:color="#EC5B4E" android:state_checked="true" />
+    <item android:color="@color/public_text_black_normal" /> <!-- not selected -->
 </selector>

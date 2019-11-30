@@ -11,10 +11,10 @@ import java.util.List;
 
 import dagger.Module;
 import dagger.Provides;
-import trunk.doi.base.ui.fragment.AdapterFragment;
-import trunk.doi.base.ui.fragment.classify.ClassifyFragment;
+import trunk.doi.base.ui.fragment.info.InfoFragment;
 import trunk.doi.base.ui.fragment.main.MainFragment;
 import trunk.doi.base.ui.fragment.mine.MineFragment;
+import trunk.doi.base.ui.fragment.product.ProductFragment;
 import trunk.doi.base.ui.main.mvp.MainContract;
 
 @Module
@@ -31,9 +31,9 @@ public abstract class MainModule {
     @Provides
     static List<Fragment> provideFragments() {
         List<Fragment> mFragments = new ArrayList<>(4);
-        mFragments.add(AdapterFragment.newInstance());
         mFragments.add(MainFragment.newInstance());
-        mFragments.add(ClassifyFragment.newInstance());
+        mFragments.add(InfoFragment.newInstance());
+        mFragments.add(ProductFragment.newInstance());
         mFragments.add(MineFragment.newInstance());
         return mFragments;
     }
