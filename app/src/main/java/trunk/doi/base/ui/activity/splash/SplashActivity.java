@@ -173,6 +173,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @OnClick(R.id.tv_skip)
     public void onViewClicked() {
+        tv_skip.setEnabled(false);
         mPresenter.turnToMainForce();
     }
 

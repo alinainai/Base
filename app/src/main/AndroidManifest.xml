@@ -75,7 +75,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" /> <!-- WebView独立进程解决方案 -->
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
