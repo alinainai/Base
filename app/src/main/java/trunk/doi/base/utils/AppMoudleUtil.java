@@ -70,7 +70,7 @@ public class AppMoudleUtil {
     public static void startLottieAnimation(LottieAnimationView view){
         if(view!=null){
             if(!view.isAnimating())
-                view.playAnimation();
+                view.postDelayed(view::playAnimation,150);
         }
     }
 
