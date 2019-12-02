@@ -87,8 +87,12 @@ public class AdapterPresenter extends BasePresenter<AdapterContract.Model, Adapt
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        if(mHandler!=null){
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler=null;
+        }
 
+        super.onDestroy();
     }
 
     /**

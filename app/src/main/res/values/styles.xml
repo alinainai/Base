@@ -1,8 +1,6 @@
 <resources>
 
 
-
-
     <!-- 首页radio_button的格式 -->
     <style name="app_main_bottom_btn" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">10sp</item>
@@ -25,8 +23,6 @@
     </style>
 
 
-
-
     <!--通用分割线-->
     <style name="divider_wrap" parent="android:Widget">
         <item name="android:background">@color/public_divider_color</item>
@@ -34,8 +30,12 @@
         <item name="android:layout_height">0.5dp</item>
     </style>
 
-
-
+    <!--     防止冷启动白屏-->
+    <style name="public_app_theme_noBar" parent="public_app_theme">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@drawable/app_splash_bg</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
 
 </resources>

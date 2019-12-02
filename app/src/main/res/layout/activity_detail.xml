@@ -28,7 +28,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/px_60"
-            android:src="@mipmap/public_ic_launcher"
+            android:src="@drawable/public_ic_launcher"
             app:civ_border_color="@color/public_bg_default"
             app:civ_border_width="1dp" />
 

@@ -14,10 +14,10 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@mipmap/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher"
         android:label="@string/gank_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
-        android:roundIcon="@mipmap/public_ic_launcher_round"
+        android:roundIcon="@drawable/public_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"

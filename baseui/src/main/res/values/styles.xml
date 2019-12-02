@@ -21,12 +21,6 @@
         <item name="colorAccent">@color/public_bg_button</item>
     </style>
 
-    <style name="public_app_theme_noBar" parent="public_app_theme">
-        <!-- Customize your theme here. -->
-        <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">true</item>
-    </style>
-
 
     <style name="public_style_tab_text_size">
         <item name="android:textSize">@dimen/public_tab_text_size</item>

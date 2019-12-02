@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/public_bg_default">
 
     <RelativeLayout
         android:id="@+id/rl_video"
@@ -14,14 +15,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/splash_v_bottom_bg"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:background="@color/public_white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+       >
 
     <TextView
         android:id="@+id/tv_skip"
@@ -43,32 +47,29 @@
         app:layout_constraintTop_toTopOf="@+id/splash_v_bottom_bg"
         tools:text="@string/app_str_skip_with_time" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/splash_img_icon"
-        android:layout_width="57dp"
+    <ImageView
+        android:id="@+id/app_splash_img"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="lottie/login_logo_animation.json"
-        app:lottie_loop="true"
-        app:layout_constraintBottom_toTopOf="@+id/tv_version"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/splash_v_bottom_bg"
-        app:layout_constraintVertical_chainStyle="spread" />
-
+        android:layout_marginTop="20dp"
+        android:contentDescription="@null"
+        android:src="@drawable/app_ic_launcher"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <TextView
+        android:layout_marginTop="10dp"
         android:id="@+id/tv_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/public_text_black_light"
+        android:textColor="@color/public_text_black_normal"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/splash_v_bottom_bg"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/splash_img_icon"
+        app:layout_constraintTop_toBottomOf="@+id/app_splash_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/public_str_title" />
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
