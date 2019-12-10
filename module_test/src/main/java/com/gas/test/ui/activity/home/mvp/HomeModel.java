@@ -1,20 +1,16 @@
 package com.gas.test.ui.activity.home.mvp;
 
 
-import com.base.componentservice.test.bean.TestInfo;
+import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
-
-import com.base.lib.di.scope.ActivityScope;
-
-import javax.inject.Inject;
-
 import com.gas.test.bean.TestInfoBean;
-import com.gas.test.ui.activity.home.mvp.HomeContract;
 import com.gas.test.ui.activity.show.IShowConst;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * ================================================
@@ -35,9 +31,10 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
 
     @Override
     public List<TestInfoBean> getInfoItems() {
-        List<TestInfoBean> beans= new ArrayList<>();
+        List<TestInfoBean> beans = new ArrayList<>();
         beans.add(new TestInfoBean("指定宽高比的自定义View", IShowConst.RATIOVIEWFRAGMENT));
         beans.add(new TestInfoBean("检测自定义RecyclerView的适配器", IShowConst.ADAPTERFRAGMENT));
+        beans.add(new TestInfoBean("Retrofit的使用和源码分析", IShowConst.RETROFITFRAGMENT));
         return beans;
     }
 

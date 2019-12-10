@@ -15,7 +15,7 @@
             app:backHide="true"
             app:closeHide="true"
             app:dividerHide="true"
-            app:layout_scrollFlags="scroll"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:titleText="干货列表" />
 
         <com.google.android.material.tabs.TabLayout
