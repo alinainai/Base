@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/public_bg_default"
-    tools:context=".ui.fragment.info.InfoFragment">
+    tools:context="com.gas.app.ui.fragment.info.InfoFragment">
 
 
     <TextView

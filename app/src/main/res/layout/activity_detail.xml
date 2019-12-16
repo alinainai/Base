@@ -21,7 +21,7 @@
             android:textColor="@color/base_text_color"
             android:textSize="@dimen/text_size_26_px" />
 
-        <trunk.doi.base.view.CircleImageView
+        <com.gas.app.view.CircleImageView
             android:id="@+id/mine_user_icon_img"
             android:layout_width="@dimen/px_84"
             android:layout_height="@dimen/px_84"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="trunk.doi.base">
+    package="com.gas.app">
 
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -54,7 +54,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="trunk.doi.base.provider"
+            android:authorities="com.gas.app.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -63,7 +63,7 @@
         </provider>
 
         <activity
-            android:name=".ui.activity.splash.SplashActivity"
+            android:name="com.gas.app.ui.activity.splash.SplashActivity"
             android:theme="@style/public_app_theme_noBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -73,11 +73,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.gas.app.ui.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.utils.WebViewActivity"
+            android:name="com.gas.app.ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
 
 
@@ -86,7 +86,7 @@
             android:value="ClientConfigModule"/>
 
         <meta-data
-            android:name="trunk.doi.base.config.GlobalConfiguration"
+            android:name="com.gas.app.config.GlobalConfiguration"
             android:value="ClientConfigModule" />
     </application>
 

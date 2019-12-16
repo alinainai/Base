@@ -21,7 +21,7 @@
             path="." />
         <external-path
             name="files_root"
-            path="Android/data/trunk.doi.base/" />
+            path="Android/data/com.gas.base/" />
         <external-path
             name="external_storage_root"
             path="." />
