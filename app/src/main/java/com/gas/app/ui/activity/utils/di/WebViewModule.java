@@ -18,6 +18,7 @@ package com.gas.app.ui.activity.utils.di;
 import android.annotation.SuppressLint;
 import android.net.http.SslError;
 import android.os.Build;
+import android.webkit.CookieManager;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,12 +26,13 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 
 import com.base.lib.di.scope.ActivityScope;
+import com.gas.app.BuildConfig;
+import com.gas.app.ui.activity.utils.ApkDownloadListener;
+import com.gas.app.ui.activity.utils.mvp.WebViewContract;
 
 import dagger.Module;
 import dagger.Provides;
-import com.gas.app.ui.activity.utils.mvp.WebViewContract;
-import com.gas.app.BuildConfig;
-import com.gas.app.ui.activity.utils.ApkDownloadListener;
+import timber.log.Timber;
 
 /**
  * ================================================
@@ -67,6 +69,19 @@ public abstract class WebViewModule {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+
+//                if (view.hasAfterM() == false) {
+//                    addJavascriptInterface();
+//                }
+
+                //打印 cookie
+                CookieManager cookieManager = CookieManager.getInstance();
+                String CookieStr = cookieManager.getCookie(url);
+                Timber.e("Cookies = %s",  CookieStr);
             }
 
         });

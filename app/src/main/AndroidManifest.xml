@@ -63,7 +63,7 @@
         </provider>
 
         <activity
-            android:name="com.gas.app.ui.activity.splash.SplashActivity"
+            android:name=".ui.activity.splash.SplashActivity"
             android:theme="@style/public_app_theme_noBar"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -73,11 +73,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gas.app.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gas.app.ui.activity.utils.WebViewActivity"
+            android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
 
 

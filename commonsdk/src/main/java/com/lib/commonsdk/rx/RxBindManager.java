@@ -17,7 +17,14 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
+ * ================================================
+ * desc:
  *
+ * created by author ljx 
+ * Date  2020-02-07
+ * email 569932357@qq.com
+ *
+ * ================================================
  */
 public class RxBindManager {
 
