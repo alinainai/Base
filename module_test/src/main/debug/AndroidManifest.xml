@@ -29,11 +29,7 @@
             android:name=".ui.activity.lifecycle.FirstActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.show.ShowActivity"
@@ -43,7 +39,11 @@
             android:name=".ui.activity.home.HomeActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!--
  每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule
