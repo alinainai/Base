@@ -7,12 +7,34 @@
     tools:context=".ui.fragment.timedown.TimeDownFragment">
 
 
-  <com.gas.test.widget.TimeDownView
-      app:layout_constraintTop_toTopOf="parent"
-      android:id="@+id/tdv_1"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      />
+    <com.gas.test.widget.TimeDownView
+        android:layout_marginTop="30dp"
+        android:id="@+id/tdv_1"
+        app:timeZoneTextSize="16sp"
+        app:timeZoneTextColor="@color/public_text_black_deep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/tmw_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="开始倒计时"
+        app:layout_constraintEnd_toStartOf="@+id/tmw_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tdv_1" />
+
+    <Button
+        android:id="@+id/tmw_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="取消倒计时"
+        app:layout_constraintBottom_toBottomOf="@+id/tmw_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tmw_start"
+        app:layout_constraintTop_toTopOf="@+id/tmw_start" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

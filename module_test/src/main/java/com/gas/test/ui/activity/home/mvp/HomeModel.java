@@ -35,12 +35,12 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
         beans.add(new TestInfoBean("指定宽高比的自定义View", IShowConst.RATIOVIEWFRAGMENT));
         beans.add(new TestInfoBean("检测自定义RecyclerView的适配器", IShowConst.ADAPTERFRAGMENT));
         beans.add(new TestInfoBean("Retrofit的使用和源码分析", IShowConst.RETROFITFRAGMENT));
+        beans.add(new TestInfoBean("倒计时布局", IShowConst.TIMEDOWNFRAGMENT));
         return beans;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 }

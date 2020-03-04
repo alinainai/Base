@@ -6,6 +6,7 @@ import com.gas.test.ui.activity.show.IShowConst;
 import com.gas.test.ui.fragment.adapter.AdapterFragment;
 import com.gas.test.ui.fragment.ratioview.RatioViewFragment;
 import com.gas.test.ui.fragment.retrofit.RetrofitFragment;
+import com.gas.test.ui.fragment.timedown.TimeDownFragment;
 
 import javax.inject.Named;
 
@@ -39,6 +40,12 @@ public abstract class ShowModule {
     @Named(IShowConst.RETROFITFRAGMENT)
     static Fragment provideRetrofitFragment() {
         return RetrofitFragment.newInstance();
+    }
+
+    @Provides
+    @Named(IShowConst.TIMEDOWNFRAGMENT)
+    static Fragment provideTimedownFragment() {
+        return TimeDownFragment.newInstance();
     }
 
 }

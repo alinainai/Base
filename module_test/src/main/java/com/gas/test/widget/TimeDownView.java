@@ -123,7 +123,7 @@ public class TimeDownView extends LinearLayout {
         mTimeDownDayUnit = view.findViewById(R.id.time_down_day_unit);
         mTimeOption = new TimeOption();
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TimeDownView);
-        String titleText = a.getString(R.styleable.TimeDownView_TimeTitleText);
+        String titleText = a.getString(R.styleable.TimeDownView_timeTitleText);
 
         if (TextUtils.isEmpty(titleText)) {
             mTimeDownTitle.setVisibility(GONE);
@@ -132,11 +132,11 @@ public class TimeDownView extends LinearLayout {
             mTimeDownTitle.setText(titleText);
         }
 
-        String unitText = a.getString(R.styleable.TimeDownView_TimeDayUnit);
+        String unitText = a.getString(R.styleable.TimeDownView_timeDayUnit);
         mTimeDownDayUnit.setText(TextUtils.isEmpty(unitText) ? DAY_UNIT : unitText);
 
-        if (a.hasValue(R.styleable.TimeDownView_TimeZoneBackground)) {
-            Drawable background = a.getDrawable(R.styleable.TimeDownView_TimeZoneBackground);
+        if (a.hasValue(R.styleable.TimeDownView_timeZoneBackground)) {
+            Drawable background = a.getDrawable(R.styleable.TimeDownView_timeZoneBackground);
             if (null != background) {
                 mDayCount.setBackground(background);
                 mHourCount.setBackground(background);
@@ -145,9 +145,9 @@ public class TimeDownView extends LinearLayout {
             }
         }
 
-        if (a.hasValue(R.styleable.TimeDownView_TimeZoneTextColor)) {
+        if (a.hasValue(R.styleable.TimeDownView_timeZoneTextColor)) {
 
-            int titleTextColor = a.getColor(R.styleable.TimeDownView_TimeZoneTextColor, Color.parseColor("#FFFFFFFF"));
+            int titleTextColor = a.getColor(R.styleable.TimeDownView_timeZoneTextColor, Color.parseColor("#FFFFFFFF"));
 
             mDayCount.setTextColor(titleTextColor);
             mHourCount.setTextColor(titleTextColor);
@@ -158,9 +158,9 @@ public class TimeDownView extends LinearLayout {
 
         }
 
-        if (a.hasValue(R.styleable.TimeDownView_TimeZoneTextSize)) {
+        if (a.hasValue(R.styleable.TimeDownView_timeZoneTextSize)) {
 
-            float textSize = a.getDimension(R.styleable.TimeDownView_TimeZoneTextSize, 16);
+            float textSize = a.getDimension(R.styleable.TimeDownView_timeZoneTextSize, 16);
             mDayCount.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             mHourCount.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
             mMinuteCount.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);

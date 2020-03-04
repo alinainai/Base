@@ -2,27 +2,26 @@ package com.gas.test.ui.fragment.timedown;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Message;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
-
+import com.gas.test.R;
 import com.gas.test.ui.fragment.timedown.di.DaggerTimeDownComponent;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownContract;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownPresenter;
+import com.gas.test.widget.TimeDownView;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
-
-import com.gas.test.R;
 
 
 /**
@@ -33,6 +32,12 @@ import com.gas.test.R;
  * ================================================
  */
 public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements TimeDownContract.View {
+
+
+    private static final long TWO_DAY_TIME = 2 * 24 * 60 * 60 * 1000L;
+    @BindView(R.id.tdv_1)
+    TimeDownView tdv1;
+
 
     public static TimeDownFragment newInstance() {
         TimeDownFragment fragment = new TimeDownFragment();
@@ -59,42 +64,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
     }
 
-    /**
-     * 通过此方法可以使 Fragment 能够与外界做一些交互和通信, 比如说外部的 Activity 想让自己持有的某个 Fragment 对象执行一些方法,
-     * 建议在有多个需要与外界交互的方法时, 统一传 {@link Message}, 通过 what 字段来区分不同的方法, 在 {@link #setData(Object)}
-     * 方法中就可以 {@code switch} 做不同的操作, 这样就可以用统一的入口方法做多个不同的操作, 可以起到分发的作用
-     * <p>
-     * 调用此方法时请注意调用时 Fragment 的生命周期, 如果调用 {@link #setData(Object)} 方法时 {@link Fragment#onCreate(Bundle)} 还没执行
-     * 但在 {@link #setData(Object)} 里却调用了 Presenter 的方法, 是会报空的, 因为 Dagger 注入是在 {@link Fragment#onCreate(Bundle)} 方法中执行的
-     * 然后才创建的 Presenter, 如果要做一些初始化操作,可以不必让外部调用 {@link #setData(Object)}, 在 {@link #initData(Bundle)} 中初始化就可以了
-     * <p>
-     * Example usage:
-     * <pre>
-     * public void setData(@Nullable Object data) {
-     *     if (data != null && data instanceof Message) {
-     *         switch (((Message) data).what) {
-     *             case 0:
-     *                 loadData(((Message) data).arg1);
-     *                 break;
-     *             case 1:
-     *                 refreshUI();
-     *                 break;
-     *             default:
-     *                 //do something
-     *                 break;
-     *         }
-     *     }
-     * }
-     *
-     * // call setData(Object):
-     * Message data = new Message();
-     * data.what = 0;
-     * data.arg1 = 1;
-     * fragment.setData(data);
-     * </pre>
-     *
-     * @param data 当不需要参数时 {@code data} 可以为 {@code null}
-     */
+
     @Override
     public void setData(@Nullable Object data) {
 
@@ -126,4 +96,15 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
     public void killMyself() {
 
     }
+
+    @OnClick({R.id.tmw_start, R.id.tmw_end})
+    public void onViewClicked(View view) {
+        if (view.getId() == R.id.tmw_start) {
+            tdv1.setTimeDown(TWO_DAY_TIME);
+        } else if (view.getId() == R.id.tmw_end) {
+            tdv1.stopDownTime();
+        }
+    }
+
+
 }

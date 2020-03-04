@@ -51,6 +51,10 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Named(RETROFITFRAGMENT)
     Lazy<Fragment> mRetrofitFragment;
 
+    @Inject
+    @Named(TIMEDOWNFRAGMENT)
+    Lazy<Fragment> mTimeDownFragment;
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -89,7 +93,7 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
                 fragment = mRetrofitFragment.get();
                 break;
             case TIMEDOWNFRAGMENT:
-                fragment = mRetrofitFragment.get();
+                fragment = mTimeDownFragment.get();
                 break;
 
         }
