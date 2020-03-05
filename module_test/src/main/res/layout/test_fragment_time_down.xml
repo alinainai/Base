@@ -8,13 +8,13 @@
 
 
     <com.gas.test.widget.TimeDownView
-        android:layout_marginTop="30dp"
         android:id="@+id/tdv_1"
-        app:timeZoneTextSize="16sp"
-        app:timeZoneTextColor="@color/public_text_black_deep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:timeZoneTextColor="@color/public_text_black_deep"
+        app:timeZoneTextSize="16sp" />
 
     <Button
         android:id="@+id/tmw_start"
@@ -35,6 +35,85 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tmw_start"
         app:layout_constraintTop_toTopOf="@+id/tmw_start" />
+
+    <Button
+        android:id="@+id/tmw_top_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="顶部弹窗配置1"
+        app:layout_constraintEnd_toStartOf="@+id/tmw_top_show1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tmw_start" />
+
+    <Button
+        android:id="@+id/tmw_top_show1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="顶部弹窗配置2"
+        app:layout_constraintBottom_toBottomOf="@+id/tmw_top_show"
+        app:layout_constraintEnd_toStartOf="@+id/tmw_top_hide"
+        app:layout_constraintStart_toEndOf="@+id/tmw_top_show"
+        app:layout_constraintTop_toTopOf="@+id/tmw_top_show" />
+
+    <Button
+        android:id="@+id/tmw_top_hide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隐藏顶部弹窗"
+        app:layout_constraintBottom_toBottomOf="@+id/tmw_top_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tmw_top_show1"
+        app:layout_constraintTop_toTopOf="@+id/tmw_top_show" />
+
+
+    <Button
+        android:id="@+id/tmw_bottom_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="底部弹窗配置1"
+        app:layout_constraintEnd_toStartOf="@+id/tmw_bottom_show1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tmw_top_show" />
+
+    <Button
+        android:id="@+id/tmw_bottom_show1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="底部弹窗配置2"
+        app:layout_constraintBottom_toBottomOf="@+id/tmw_bottom_show"
+        app:layout_constraintEnd_toStartOf="@+id/tmw_bottom_hide"
+        app:layout_constraintStart_toEndOf="@+id/tmw_bottom_show"
+        app:layout_constraintTop_toTopOf="@+id/tmw_bottom_show" />
+
+    <Button
+        android:id="@+id/tmw_bottom_hide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="隐藏底部弹窗"
+        app:layout_constraintBottom_toBottomOf="@+id/tmw_bottom_show"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tmw_bottom_show1"
+        app:layout_constraintTop_toTopOf="@+id/tmw_bottom_show" />
+
+
+
+
+    <com.gas.test.widget.banner.TimeDownPromptBanner
+        android:id="@+id/top_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.gas.test.widget.banner.BottomTimeDownPromptBanner
+        android:id="@+id/bottom_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import dagger.Provides;
 
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownContract;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownModel;
+import com.gas.test.widget.banner.TimeDownPromptBanner;
 
 
 /**
@@ -22,6 +23,5 @@ public abstract class TimeDownModule {
 
     @Binds
     abstract TimeDownContract.Model bindTimeDownModel(TimeDownModel model);
-
 
 }

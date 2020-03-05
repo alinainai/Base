@@ -24,7 +24,7 @@ import java.text.DecimalFormat;
 
 /**
  * ================================================
- * desc: 倒计时布局
+ * desc: 抢购倒计时布局
  * <p>
  * created by author ljx
  * Date  2020-03-04
