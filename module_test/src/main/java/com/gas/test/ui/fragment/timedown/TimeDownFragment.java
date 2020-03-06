@@ -182,7 +182,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
                     .setTag("bottom2")
                     .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
 
-            bottomBanner.show(mBottomBannerConfig);
+            bottomBanner.showAfterDuration(mBottomBannerConfig,3);
 
         }else if (view.getId() == R.id.tmw_bottom_hide) {
             bottomBanner.dismiss();

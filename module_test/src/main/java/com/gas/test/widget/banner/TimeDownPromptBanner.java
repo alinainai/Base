@@ -299,11 +299,11 @@ public class TimeDownPromptBanner extends FrameLayout {
     /**
      * 延迟 duration 毫秒后展示且不带倒计时关闭
      *
-     * @param duration 延迟展示时长 单位：ms
+     * @param duration 延迟展示时长 单位：s
      */
     public void showAfterDuration(BannerConfig config, long duration) {
         this.mConfig = config;
-        sendMessage(SHOW_ACTION, duration);
+        sendMessage(SHOW_ACTION, duration*1000);
     }
 
 

@@ -34,18 +34,52 @@ import java.text.DecimalFormat;
  */
 public class TimeDownView extends LinearLayout {
 
+    /**
+     * 消息tag
+     */
     private static final int MESSAGE_UPDATE = 0xF1;
-    private static final long DELAY_INTERNAL = 1000L;
-    private static final String DEFAULT_TIME = "00";
-    private static final String DEFAULT_TIME_SINGLE = "0";
-    private static final String DAY_UNIT = "天";
 
     /**
-     * 为了减少计算，传入的计时时间戳要先 /1000 操作。
+     * 每隔 1s 发送一次 UI 变化消息
      */
-    private static final long DEFAULT_SECOND_MILLISECOND = 1L;
+    private static final long DELAY_INTERNAL = 1000L;
+
+    /**
+     * 二位数的默认时间显示
+     * 时、分、秒
+     */
+    private static final String DEFAULT_TIME = "00";
+
+    /**
+     * 一位数的默认时间显示
+     * 天
+     */
+    private static final String DEFAULT_TIME_SINGLE = "0";
+
+    /**
+     *  天数单位，此处可以做多语言兼容扩展
+     */
+    private static final String DAY_UNIT = "天";
+
+
+    /**
+     * 每秒=1000毫秒
+     */
+    private static final long DEFAULT_SECOND_MILLISECOND = 1000L;
+
+    /**
+     * 每分钟 -> ms
+     */
     private static final long DEFAULT_MINUTE_MILLISECOND = 60 * DEFAULT_SECOND_MILLISECOND;
+
+    /**
+     * 每小时 -> ms
+     */
     private static final long DEFAULT_HOUR_MILLISECOND = 60 * DEFAULT_MINUTE_MILLISECOND;
+
+    /**
+     * 每天 -> ms
+     */
     private static final long DEFAULT_DAY_MILLISECOND = 24 * DEFAULT_HOUR_MILLISECOND;
 
     /**
@@ -182,9 +216,9 @@ public class TimeDownView extends LinearLayout {
     public void setTimeDown(long timeDownStamp) {
 
         if (timeDownStamp >= 1000) {
-            this.mTimeDownStamp = timeDownStamp / 1000;
+            this.mTimeDownStamp = timeDownStamp;
         } else if (timeDownStamp >= 500) {
-            this.mTimeDownStamp = 1;
+            this.mTimeDownStamp = 1000;
         } else {
             this.mTimeDownStamp = 0;
         }
@@ -196,7 +230,7 @@ public class TimeDownView extends LinearLayout {
      */
     private void updateTimeStamp() {
 
-        if (mTimeDownStamp >= 1) {
+        if (mTimeDownStamp >= 1000) {
             long currentStamp = mTimeDownStamp;
             //天数
             long dayCount = currentStamp / DEFAULT_DAY_MILLISECOND;
@@ -217,7 +251,7 @@ public class TimeDownView extends LinearLayout {
             //更新UI
             updateTimeView(mTimeOption);
             //时间戳自减一
-            mTimeDownStamp--;
+            mTimeDownStamp-=1000;
             //开始倒计时
             sendDownTimeMsg();
 
@@ -312,7 +346,7 @@ public class TimeDownView extends LinearLayout {
         }
     }
 
-    private class TimeOption {
+    private static class TimeOption {
 
         private String optionDay;
         private String optionHour;
