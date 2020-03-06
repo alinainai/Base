@@ -116,7 +116,11 @@ public class TimeDownPromptBanner extends FrameLayout {
      */
     private View mBannerBg;
 
-
+    /**
+     * banner的显示配置信息
+     *
+     * {@link BannerConfig}
+     */
     private BannerConfig mConfig;
 
 
@@ -167,6 +171,10 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerIcon != null) {
                 mBannerIcon.setImageResource(config.getIconResId());
             }
+        }else {
+            if (mBannerIcon != null) {
+                mBannerIcon.setImageResource(getDefaultIconRes());
+            }
         }
 
         //设置主标题
@@ -174,16 +182,20 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerTitle != null) {
                 mBannerTitle.setText(config.getTitle());
             }
+        }else {
+            if (mBannerTitle != null) {
+                mBannerTitle.setText("");
+            }
         }
 
         //设置主标题颜色
         if (config.getTitleColor() != 0) {
             if (mBannerTitle != null) {
-                mBannerTitle.setTextColor(getContext().getResources().getColor(config.getTitleColor()));
+                mBannerTitle.setTextColor(getResources().getColor(config.getTitleColor()));
             }
         } else {
             if (mBannerTitle != null) {
-                mBannerTitle.setTextColor(getContext().getResources().getColor(getDefaultTextColor()));
+                mBannerTitle.setTextColor(getResources().getColor(getDefaultTextColor()));
             }
         }
 
@@ -202,11 +214,11 @@ public class TimeDownPromptBanner extends FrameLayout {
         //设置副标题颜色
         if (config.getSubTitleColor() != 0) {
             if (mBannerSubTitle != null) {
-                mBannerSubTitle.setTextColor(config.getSubTitleColor());
+                mBannerSubTitle.setTextColor(getResources().getColor(config.getSubTitleColor()));
             }
         } else {
-            if (mBannerTitle != null) {
-                mBannerTitle.setTextColor(getContext().getResources().getColor(getDefaultTextColor()));
+            if (mBannerSubTitle != null) {
+                mBannerSubTitle.setTextColor(getResources().getColor(getDefaultTextColor()));
             }
         }
 
@@ -215,6 +227,10 @@ public class TimeDownPromptBanner extends FrameLayout {
         if (config.getCloseResId() != 0) {
             if (mBannerClose != null) {
                 mBannerClose.setImageResource(config.getCloseResId());
+            }
+        }else {
+            if (mBannerClose != null) {
+                mBannerClose.setImageResource(getDefaultCloseRes());
             }
         }
 
@@ -318,6 +334,9 @@ public class TimeDownPromptBanner extends FrameLayout {
                 mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
                 sendMessage(HIDE_ACTION, mCloseDuration * 1000);
                 sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
+            }else {
+                removeMessage(HIDE_ACTION);
+                removeMessage(SHOW_TIME_COUNT_ACTION);
             }
             this.setVisibility(View.VISIBLE);
             this.setTag(mConfig.getTag());
@@ -361,6 +380,16 @@ public class TimeDownPromptBanner extends FrameLayout {
     protected @DrawableRes
     int getDefaultBgRes() {
         return R.drawable.drawable_banner_time_down_bg;
+    }
+
+    protected @DrawableRes
+    int getDefaultCloseRes() {
+        return R.drawable.drawable_banner_time_down_close;
+    }
+
+    protected @DrawableRes
+    int getDefaultIconRes() {
+        return R.mipmap.drawable_banner_time_down_icon;
     }
 
     /**
@@ -625,7 +654,7 @@ public class TimeDownPromptBanner extends FrameLayout {
         }
 
         public int getCloseResId() {
-            return mSubTitleColor;
+            return mCloseResId;
         }
 
         public Runnable getOnSubTitleClick() {

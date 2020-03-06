@@ -48,8 +48,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
     BottomTimeDownPromptBanner bottomBanner;
 
 
-    private TimeDownPromptBanner.BannerConfig mTopBannerConfig;
-    private TimeDownPromptBanner.BannerConfig mBottomBannerConfig;
+
 
     public static TimeDownFragment newInstance() {
         TimeDownFragment fragment = new TimeDownFragment();
@@ -73,37 +72,11 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-        initTopBanner();
-    }
-
-
-    private void initTopBanner() {
-
-        mTopBannerConfig = new TimeDownPromptBanner
-                .BannerConfig("顶部弹窗")
-                .setSubTitle("顶部副标题")
-                .setIconResId(R.drawable.public_ic_launcher)
-                .setBgResId(R.color.public_color_primary)
-                .setCloseResId(R.mipmap.lib_title_bar_back)
-                .setOnCloseClick(() -> showMessage("关闭点击"))
-                .setViewOnClick(() -> showMessage("条目点击"))
-                .setShowDuration(6)
-                .setTitleColor(R.color.public_color_accent)
-                .setSubTitleOnClick(() -> showMessage("副标题点击"));
-
-        mBottomBannerConfig = new TimeDownPromptBanner
-                .BannerConfig("底部弹窗")
-                .setSubTitle("底部副标题")
-                .setIconResId(R.drawable.public_ic_launcher)
-                .setCloseResId(R.mipmap.lib_title_bar_back)
-                .setOnCloseClick(() -> showMessage("底部关闭点击"))
-                .setViewOnClick(() -> showMessage("底部条目点击"))
-                .setShowDuration(6)
-                .setTag("bottom")
-                .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
-
 
     }
+
+
+
 
 
     @Override
@@ -151,6 +124,17 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
         } else if (view.getId() == R.id.tmw_top_show) {
 
+            TimeDownPromptBanner.BannerConfig  mTopBannerConfig = new TimeDownPromptBanner
+                    .BannerConfig("顶部弹窗1")
+                    .setSubTitle("顶部副标题1")
+                    .setIconResId(R.drawable.public_ic_launcher)
+                    .setBgResId(R.color.public_color_primary)
+                    .setCloseResId(R.mipmap.lib_title_bar_back)
+                    .setOnCloseClick(() -> showMessage("关闭点击1"))
+                    .setViewOnClick(() -> showMessage("条目点击1"))
+                    .setTitleColor(R.color.public_color_accent)
+                    .setSubTitleOnClick(() -> showMessage("副标题点击1"));
+
             topBanner.show(mTopBannerConfig);
 
         } else if (view.getId() == R.id.tmw_top_hide) {
@@ -159,13 +143,44 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
         }else if (view.getId() == R.id.tmw_top_show1) {
 
-            topBanner.show(mBottomBannerConfig);
+            TimeDownPromptBanner.BannerConfig  mTopBannerConfig = new TimeDownPromptBanner
+                    .BannerConfig("顶部弹窗2")
+                    .setSubTitle("顶部副标题2")
+                    .setOnCloseClick(() -> showMessage("关闭点击2"))
+                    .setViewOnClick(() -> showMessage("条目点击2"))
+                    .setTag("Banner2")
+                    .setShowDuration(5)
+                    .setSubTitleOnClick(() -> showMessage("副标题点击2"));
+            topBanner.show(mTopBannerConfig);
 
         }else if (view.getId() == R.id.tmw_bottom_show) {
 
-            bottomBanner.show(mTopBannerConfig);
+
+            TimeDownPromptBanner.BannerConfig  mBottomBannerConfig = new TimeDownPromptBanner
+                    .BannerConfig("底部弹窗1")
+                    .setSubTitle("底部副标题1")
+                    .setIconResId(R.drawable.public_ic_launcher)
+                    .setBgResId(R.color.public_color_primary)
+                    .setTitleColor(R.color.public_white)
+                    .setOnCloseClick(() -> showMessage("底部关闭点击"))
+                    .setViewOnClick(() -> showMessage("底部条目点击"))
+                    .setShowDuration(6)
+                    .setTag("bottom")
+                    .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
+            bottomBanner.show(mBottomBannerConfig);
 
         } else if (view.getId() == R.id.tmw_bottom_show1) {
+
+            TimeDownPromptBanner.BannerConfig   mBottomBannerConfig = new TimeDownPromptBanner
+                    .BannerConfig("底部弹窗2")
+                    .setSubTitle("底部副标题2")
+                    .setIconResId(R.drawable.public_ic_launcher)
+                    .setCloseResId(R.mipmap.lib_title_bar_back)
+                    .setOnCloseClick(() -> showMessage("底部关闭点击"))
+                    .setViewOnClick(() -> showMessage("底部条目点击"))
+                    .setShowDuration(6)
+                    .setTag("bottom2")
+                    .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
 
             bottomBanner.show(mBottomBannerConfig);
 
