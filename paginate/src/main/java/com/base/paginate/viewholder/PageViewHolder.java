@@ -1,41 +1,33 @@
-package com.base.paginate;
+package com.base.paginate.viewholder;
 
-import android.content.Context;
 import android.util.SparseArray;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- *
+ * ================================================
+ * desc: ViewHolder 基类
+ * <p>
+ * created by author ljx
+ * Date  2020-03-06
+ * email 569932357@qq.com
+ * <p>
+ * ================================================
  */
-
 @SuppressWarnings("WeakerAccess")
 public class PageViewHolder extends RecyclerView.ViewHolder {
+
+
     private SparseArray<View> mViews;
     private View mConvertView;
 
-    /**
-     * 私有构造方法
-     *
-     * @param itemView View
-     */
-    private PageViewHolder(View itemView) {
+
+    public PageViewHolder(View itemView) {
         super(itemView);
         mConvertView = itemView;
         mViews = new SparseArray<>();
-    }
-
-    public static PageViewHolder create(Context context, int layoutId, ViewGroup parent) {
-        View itemView = LayoutInflater.from(context).inflate(layoutId, parent, false);
-        return new PageViewHolder(itemView);
-    }
-
-    public static PageViewHolder create(View itemView) {
-        return new PageViewHolder(itemView);
     }
 
     /**

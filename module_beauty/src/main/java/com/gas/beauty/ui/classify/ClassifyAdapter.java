@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 
-import com.base.paginate.PageViewHolder;
+import com.base.paginate.viewholder.PageViewHolder;
 import com.base.paginate.base.SingleAdapter;
 import com.gas.beauty.R;
 import com.gas.beauty.bean.GankItemBean;

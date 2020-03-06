@@ -2,9 +2,7 @@ package com.base.paginate.base;
 
 import android.content.Context;
 
-import com.base.paginate.PageViewHolder;
-
-import java.util.List;
+import com.base.paginate.viewholder.PageViewHolder;
 
 /**
  * @param <T>

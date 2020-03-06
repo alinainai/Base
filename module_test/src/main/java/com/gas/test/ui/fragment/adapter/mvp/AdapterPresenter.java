@@ -57,7 +57,7 @@ public class AdapterPresenter extends BasePresenter<AdapterContract.Model, Adapt
         if(isOne){
             mAdapter.insert(mModel.provideNewItem());
         }else {
-            mAdapter.insert(mModel.provideInsertItems(3));
+            mAdapter.insertAll(mModel.provideInsertItems(3));
         }
 
     }

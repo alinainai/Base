@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -68,7 +69,15 @@ public class DefaultEmptyView extends LinearLayout implements EmptyInterface {
             case STATUS_EMPTY://数据为空
                 mTextView.setText(R.string.str_base_adapter_end);
                 break;
+            case STATUS_NETWORK_FAIL://网络异常，加载失败
+                mTextView.setText(R.string.str_base_adapter_network_fail);
+                break;
         }
 
+    }
+
+    @Override
+    public View getRefreshView() {
+        return mTextView;
     }
 }

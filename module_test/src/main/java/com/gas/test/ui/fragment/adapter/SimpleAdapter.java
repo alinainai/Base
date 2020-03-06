@@ -2,7 +2,7 @@ package com.gas.test.ui.fragment.adapter;
 
 import android.content.Context;
 
-import com.base.paginate.PageViewHolder;
+import com.base.paginate.viewholder.PageViewHolder;
 import com.base.paginate.base.SingleAdapter;
 import com.gas.test.R;
 

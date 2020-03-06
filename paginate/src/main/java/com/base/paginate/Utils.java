@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.base.paginate.viewholder.PageViewHolder;
+
 /**
  * Author: Othershe
  * Time: 2016/9/1 11:57
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
-public class Util {
+public class Utils {
     /**
      * StaggeredGridLayoutManager时，查找position最大的列
      *
@@ -99,6 +101,28 @@ public class Util {
         return (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,dp, context.getApplicationContext().getResources().getDisplayMetrics());
     }
 
+
+    /**
+     * 生成 PageViewHolder 对象
+     *
+     * @param layoutId
+     * @param parent
+     * @return
+     */
+    public static PageViewHolder createPageViewHolder(int layoutId, ViewGroup parent) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
+        return createPageViewHolder(itemView);
+    }
+
+    /**
+     * 生成 PageViewHolder 对象
+     *
+     * @param itemView
+     * @return
+     */
+    public static PageViewHolder createPageViewHolder(View itemView) {
+        return new PageViewHolder(itemView);
+    }
 
 
 }

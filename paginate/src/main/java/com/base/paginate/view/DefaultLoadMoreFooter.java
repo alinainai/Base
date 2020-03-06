@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.base.paginate.R;
-import com.base.paginate.Util;
+import com.base.paginate.Utils;
 import com.base.paginate.interfaces.FooterInterface;
 
 
@@ -42,13 +42,13 @@ public class DefaultLoadMoreFooter extends LinearLayout implements FooterInterfa
 
         setOrientation(HORIZONTAL);
         setGravity(Gravity.CENTER);
-        setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Util.dpToPx(getContext(), 50)));
+        setLayoutParams(new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, Utils.dpToPx(getContext(), 50)));
         LayoutInflater.from(getContext()).inflate(getLayoutID(), this, true);
         setBackgroundColor(Color.WHITE);
 
         mTextView = findViewById(R.id.base_empty_tv);
         mProgressBar = findViewById(R.id.progress_bar);
-        setStatus(STATUS_LOADING);//初始化为loading状态
+        setStatus(STATUS_PRE_LOADING);//初始化为loading状态
 
     }
 
@@ -72,7 +72,11 @@ public class DefaultLoadMoreFooter extends LinearLayout implements FooterInterfa
 
         boolean show = true;
         switch (status) {
-            case FooterInterface.STATUS_LOADING://加载中
+            case FooterInterface.STATUS_PRE_LOADING://开始进行加载布局
+                mTextView.setText(R.string.str_base_adapter_loading);
+                show = true;
+                break;
+                case FooterInterface.STATUS_LOADING://加载中
                 mTextView.setText(R.string.str_base_adapter_loading);
                 show = true;
                 break;

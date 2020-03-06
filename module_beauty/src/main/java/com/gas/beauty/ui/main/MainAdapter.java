@@ -5,7 +5,7 @@ import android.content.Context;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.https.image.ImageLoader;
 import com.base.lib.util.ArmsUtils;
-import com.base.paginate.PageViewHolder;
+import com.base.paginate.viewholder.PageViewHolder;
 import com.base.paginate.base.SingleAdapter;
 import com.lib.commonsdk.glide.ImageConfigImpl;
 import com.gas.beauty.R;

@@ -9,13 +9,14 @@ import java.lang.annotation.RetentionPolicy;
 public interface FooterInterface {
 
 
-    public static final int STATUS_LOADING = 0xF1;
-    public static final int STATUS_FAIL = 0xF2;
-    public static final int STATUS_END = 0xF4;
+    int STATUS_LOADING = 0xF1;
+     int STATUS_FAIL = 0xF2;
+    int STATUS_END = 0xF4;
+    int STATUS_PRE_LOADING = 0xF5;
 
 
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({STATUS_LOADING, STATUS_FAIL, STATUS_END})
+    @IntDef({STATUS_LOADING, STATUS_FAIL, STATUS_END,STATUS_PRE_LOADING})
     public @interface FooterType {
     }
 
