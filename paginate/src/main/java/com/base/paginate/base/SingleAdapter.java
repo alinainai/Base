@@ -2,6 +2,8 @@ package com.base.paginate.base;
 
 import android.content.Context;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.paginate.viewholder.PageViewHolder;
 
 /**
@@ -38,8 +40,8 @@ public abstract class SingleAdapter<T> extends MultiAdapter<T> {
     }
 
     @Override
-    protected void convert(PageViewHolder holder, T data, int position, int viewType) {
-        convert(holder, data, position);
+    protected void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType) {
+        convert((PageViewHolder)holder, data, position);
     }
 
     protected abstract void convert(PageViewHolder holder, T data, int position);

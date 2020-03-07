@@ -13,6 +13,7 @@ import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.test.R;
+import com.gas.test.R2;
 import com.gas.test.ui.fragment.timedown.di.DaggerTimeDownComponent;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownContract;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownPresenter;
@@ -38,13 +39,13 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
     private static final long TWO_DAY_TIME = 2 * 24 * 60 * 60 * 1000L;
 
-    @BindView(R.id.tdv_1)
+    @BindView(R2.id.tdv_1)
     TimeDownView tdv1;
 
-    @BindView(R.id.top_banner)
+    @BindView(R2.id.top_banner)
     TimeDownPromptBanner topBanner;
 
-    @BindView(R.id.bottom_banner)
+    @BindView(R2.id.bottom_banner)
     BottomTimeDownPromptBanner bottomBanner;
 
 
@@ -111,8 +112,8 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
     }
 
-    @OnClick({R.id.tmw_start, R.id.tmw_end, R.id.tmw_top_show, R.id.tmw_top_hide,
-            R.id.tmw_top_show1,R.id.tmw_bottom_show,R.id.tmw_bottom_show1,R.id.tmw_bottom_hide})
+    @OnClick({R2.id.tmw_start, R2.id.tmw_end, R2.id.tmw_top_show, R2.id.tmw_top_hide,
+            R2.id.tmw_top_show1,R2.id.tmw_bottom_show,R2.id.tmw_bottom_show1,R2.id.tmw_bottom_hide})
     public void onViewClicked(View view) {
         if (view.getId() == R.id.tmw_start) {
 

@@ -3,7 +3,10 @@ package com.base.paginate.base;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.paginate.Utils;
+import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.base.paginate.viewholder.PageViewHolder;
 
 
@@ -15,6 +18,13 @@ import com.base.paginate.viewholder.PageViewHolder;
 @SuppressWarnings({"WeakerAccess", "unused"})
 public abstract class MultiAdapter<T> extends BaseAdapter<T> {
 
+
+
+    /**
+     * 条目点击监听
+     */
+    protected OnMultiItemClickListeners<T> mItemClickListener;
+
     public MultiAdapter(Context context) {
         this(context, true);
     }
@@ -24,7 +34,7 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T> {
     }
 
     public MultiAdapter(Context context, boolean openLoadMore, boolean openEmpty) {
-        super(context, openLoadMore, openEmpty);
+        super(openLoadMore, openEmpty);
     }
 
     protected abstract int getItemLayoutId(int viewType);
@@ -43,6 +53,11 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T> {
         });
 
         return holder;
+    }
+
+
+    public void setOnMultiItemClickListener(OnMultiItemClickListeners<T> itemClickListener) {
+        mItemClickListener = itemClickListener;
     }
 
 

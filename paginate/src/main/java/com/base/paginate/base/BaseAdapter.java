@@ -10,12 +10,10 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.base.paginate.viewholder.PageViewHolder;
 import com.base.paginate.Utils;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.base.paginate.interfaces.FooterInterface;
 import com.base.paginate.interfaces.OnLoadMoreListener;
-import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.base.paginate.interfaces.OnReloadListener;
 import com.base.paginate.view.DefaultEmptyView;
 import com.base.paginate.view.DefaultLoadMoreFooter;
@@ -31,11 +29,11 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 /**
  * ================================================
  * desc: 加载更多和空布局的adapter
- *
+ * <p>
  * created by author ljx
  * Date  2020-03-06
  * email 569932357@qq.com
- *
+ * <p>
  * ================================================
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
@@ -45,17 +43,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private final String TAG = this.getClass().getSimpleName();
 
     /**
-     * TYPE_FOOTER_VIEW 底部根布局，上拉加载的显示框
+     * footer 类型的 viewType
      */
     private static final int TYPE_FOOTER_VIEW = 0x00000333;//footer类型 Item
 
     /**
-     * TYPE_BASE_HEADER_VIEW 头部Header布局
+     * header 类型的 viewType
      */
     private static final int TYPE_BASE_HEADER_VIEW = 0x00000444;
 
     /**
-     * 初始空布局
+     * 初始空布局的 viewType
      */
     private static final int TYPE_EMPTY_VIEW = 0x00000555;
 
@@ -65,19 +63,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     private OnLoadMoreListener mLoadMoreListener;
 
     /**
-     * 条目点击监听
-     */
-    protected OnMultiItemClickListeners<T> mItemClickListener;
-
-
-    protected Context mContext;
-
-    /**
      * 真正的数据集合
      */
     protected List<T> mData;
+
     /**
-     * 是否开启加载更多
+     * 是否开启加载更多功能
      */
     private boolean mOpenLoadMore;
 
@@ -91,10 +82,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     private boolean mOpenEmpty;
 
+
     /**
-     * LoadMoreFooter的抽象类，可以展示
+     * 初始加载布局的抽象类
      */
-    private FooterInterface mFooterLayout;
+    private EmptyInterface mEmptyView;
 
     /**
      * HeaderLayout的容器
@@ -104,7 +96,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * LoadMoreFooter的抽象类，可以展示
      */
-    private EmptyInterface mEmptyView;
+    private FooterInterface mFooterLayout;
+
 
     /**
      * 是否正在加载更多
@@ -116,33 +109,29 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     private OnReloadListener mReloadListener;
 
+
+    /**
+     * 返回 ViewType
+     *
+     * @param position
+     * @param data
+     * @return
+     */
     protected abstract int getViewType(int position, T data);
 
     protected abstract RecyclerView.ViewHolder getViewHolder(ViewGroup parent, int viewType);
 
-    protected abstract void convert(PageViewHolder holder, T data, int position, int viewType);
+    protected abstract void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType);
 
 
-    public BaseAdapter(Context context, boolean isOpenLoadMore, boolean openEmpty) {
-        init(context, isOpenLoadMore, openEmpty);
+    public BaseAdapter(boolean isOpenLoadMore, boolean openEmpty) {
+        init(isOpenLoadMore, openEmpty);
     }
 
-    private void init(Context context, boolean isOpenLoadMore, boolean openEmpty) {
-
-        mContext = context;
+    private void init(boolean isOpenLoadMore, boolean openEmpty) {
         mData = new ArrayList<>();
         mOpenEmpty = openEmpty;
         mOpenLoadMore = isOpenLoadMore;
-
-        //打开加载更多功能，初始化DefaultLoadMoreFooter
-        if (mOpenLoadMore) {
-            mFooterLayout = getFooterLayout();
-        }
-
-        //打开加载更多功能，初始化 初始loading布局（占满整个RecyclerView的size）
-        if (mOpenEmpty) {
-            mEmptyView = getEmptyLayout();
-        }
     }
 
 
@@ -152,13 +141,16 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case TYPE_FOOTER_VIEW:
+                mFooterLayout = getFooterLayout(parent.getContext());
                 viewHolder = Utils.createPageViewHolder((View) mFooterLayout);
                 break;
             case TYPE_BASE_HEADER_VIEW:
+
                 viewHolder = Utils.createPageViewHolder(mHeaderLayout);
                 break;
             case TYPE_EMPTY_VIEW:
-                viewHolder =Utils.createPageViewHolder((View) mEmptyView);
+                mEmptyView = getEmptyLayout(parent.getContext());
+                viewHolder = Utils.createPageViewHolder((View) mEmptyView);
                 break;
             default:
                 viewHolder = getViewHolder(parent, viewType);
@@ -176,13 +168,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, final int viewType) {
-        final PageViewHolder viewHolder = (PageViewHolder) holder;
-        convert(viewHolder, mData.get(position), position, viewType);
+        convert(holder, mData.get(position), position, viewType);
     }
 
     @Override
     public int getItemCount() {
-
         int count;
         if (1 == getEmptyViewCount()) {
             count = 1;
@@ -330,8 +320,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * @return mData的position
      */
     private int getDataPosition(int position) {
-        if (getHeaderCount() == 0)
-            return position;
         return position - getHeaderCount();
     }
 
@@ -354,9 +342,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
         if (!mOpenEmpty)
             return 0;
-        if (mEmptyView == null || (mEmptyView instanceof ViewGroup && ((ViewGroup) mEmptyView).getChildCount() == 0)) {
-            return 0;
-        }
+
         if (mData.size() != 0) {
             return 0;
         }
@@ -711,16 +697,20 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * 重置foorterView为normal状态
      */
     private void resetLoading() {
-        mFooterLayout.setStatus(FooterInterface.STATUS_PRE_LOADING);
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_PRE_LOADING);
+        }
     }
 
     /**
      * 重置foorterView为normal状态
      */
     private void resetFootLoadFail() {
-        mFooterLayout.setStatus(FooterInterface.STATUS_FAIL);
-        if (mFooterLayout instanceof View) {
-            ((View) mFooterLayout).setOnClickListener(v -> loadMore(true));
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_FAIL);
+            if (mFooterLayout instanceof View) {
+                ((View) mFooterLayout).setOnClickListener(v -> loadMore(true));
+            }
         }
     }
 
@@ -729,7 +719,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     public void loadEnd() {
         isLoading = false;
-        mFooterLayout.setStatus(FooterInterface.STATUS_END);
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_END);
+        }
     }
 
     /**
@@ -741,12 +733,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    protected FooterInterface getFooterLayout() {
-        return new DefaultLoadMoreFooter(mContext);
+    protected FooterInterface getFooterLayout(Context context) {
+        return new DefaultLoadMoreFooter(context);
     }
 
-    protected EmptyInterface getEmptyLayout() {
-        return new DefaultEmptyView(mContext);
+    protected EmptyInterface getEmptyLayout(Context context) {
+        return new DefaultEmptyView(context);
     }
 
 
@@ -758,10 +750,5 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         mReloadListener = reloadListener;
 
     }
-
-    public void setOnMultiItemClickListener(OnMultiItemClickListeners<T> itemClickListener) {
-        mItemClickListener = itemClickListener;
-    }
-
 
 }

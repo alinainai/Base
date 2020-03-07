@@ -2,7 +2,6 @@ package com.gas.test.widget.banner;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -118,7 +117,7 @@ public class TimeDownPromptBanner extends FrameLayout {
 
     /**
      * banner的显示配置信息
-     *
+     * <p>
      * {@link BannerConfig}
      */
     private BannerConfig mConfig;
@@ -160,7 +159,7 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerBg != null) {
                 mBannerBg.setBackgroundResource(config.getBgResId());
             }
-        }else {
+        } else {
             if (mBannerBg != null) {
                 mBannerBg.setBackgroundResource(getDefaultBgRes());
             }
@@ -171,7 +170,7 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerIcon != null) {
                 mBannerIcon.setImageResource(config.getIconResId());
             }
-        }else {
+        } else {
             if (mBannerIcon != null) {
                 mBannerIcon.setImageResource(getDefaultIconRes());
             }
@@ -182,7 +181,7 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerTitle != null) {
                 mBannerTitle.setText(config.getTitle());
             }
-        }else {
+        } else {
             if (mBannerTitle != null) {
                 mBannerTitle.setText("");
             }
@@ -228,7 +227,7 @@ public class TimeDownPromptBanner extends FrameLayout {
             if (mBannerClose != null) {
                 mBannerClose.setImageResource(config.getCloseResId());
             }
-        }else {
+        } else {
             if (mBannerClose != null) {
                 mBannerClose.setImageResource(getDefaultCloseRes());
             }
@@ -303,7 +302,7 @@ public class TimeDownPromptBanner extends FrameLayout {
      */
     public void showAfterDuration(BannerConfig config, long duration) {
         this.mConfig = config;
-        sendMessage(SHOW_ACTION, duration*1000);
+        sendMessage(SHOW_ACTION, duration * 1000);
     }
 
 
@@ -312,8 +311,12 @@ public class TimeDownPromptBanner extends FrameLayout {
 
         if (this.getVisibility() != View.GONE && mCloseTimeDown > 0) {
             mCloseTimeDown--;
-            mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
-            sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
+            if (mBannerTimeDown != null) {
+                mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
+                sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
+            } else {
+                removeMessage(SHOW_TIME_COUNT_ACTION);
+            }
         } else {
             removeMessage(SHOW_TIME_COUNT_ACTION);
         }
@@ -334,7 +337,7 @@ public class TimeDownPromptBanner extends FrameLayout {
                 mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
                 sendMessage(HIDE_ACTION, mCloseDuration * 1000);
                 sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
-            }else {
+            } else {
                 removeMessage(HIDE_ACTION);
                 removeMessage(SHOW_TIME_COUNT_ACTION);
             }
