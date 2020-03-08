@@ -323,20 +323,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         return position - getHeaderCount();
     }
 
-    /**
-     * 根据position得到data
-     *
-     * @param position 位置
-     * @return datum
-     */
-    @SuppressWarnings("unused")
-    public T getItem(int position) {
-        if (mData.isEmpty() || position >= mData.size()) {
-            return null;
-        }
-        return mData.get(position);
-    }
-
 
     public int getEmptyViewCount() {
 
@@ -358,7 +344,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         return position < getHeaderCount();
     }
 
-    private int getHeaderViewPosition() {
+    private int getHeaderPosition() {
         return 0;
     }
 
@@ -384,6 +370,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * @param index  the position of header
      */
     public int addHeaderView(View header, final int index) {
+
+        if (header == null)
+            return -1;
         if (mHeaderLayout == null) {
             mHeaderLayout = new LinearLayout(header.getContext());
             mHeaderLayout.setOrientation(LinearLayout.VERTICAL);
@@ -391,33 +380,19 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         }
         final int childCount = mHeaderLayout.getChildCount();
         int mIndex = index;
-        if (index < 0 || index > childCount) {
+        if (index < 0 || index >= childCount) {
             mIndex = childCount;
+            mHeaderLayout.addView(header, mIndex);
+        } else {
+            mHeaderLayout.removeViewAt(mIndex);
+            mHeaderLayout.addView(header, mIndex);
         }
-        mHeaderLayout.addView(header, mIndex);
         if (mHeaderLayout.getChildCount() == 1) {
-            int position = getHeaderViewPosition();
-            if (position != -1) {
-                notifyItemInserted(position);
-            }
+            notifyItemInserted(getHeaderPosition());
         }
         return mIndex;
     }
 
-
-    public int setHeaderView(View header) {
-        return setHeaderView(header, 0);
-    }
-
-    public int setHeaderView(View header, int index) {
-        if (mHeaderLayout == null || mHeaderLayout.getChildCount() <= index) {
-            return addHeaderView(header, index);
-        } else {
-            mHeaderLayout.removeViewAt(index);
-            mHeaderLayout.addView(header, index);
-            return index;
-        }
-    }
 
 
     /**
@@ -431,7 +406,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
         mHeaderLayout.removeView(header);
         if (mHeaderLayout.getChildCount() == 0) {
-            int position = getHeaderViewPosition();
+            int position = getHeaderPosition();
             if (position != -1) {
                 notifyItemRemoved(position);
             }
@@ -459,11 +434,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     /**
      * 是否是普通数据条目
-     * 条目分为 ：
-     * {@link BaseAdapter#TYPE_FOOTER_VIEW } 底部加载布局
-     * {@link BaseAdapter#TYPE_BASE_HEADER_VIEW } 头布局
-     * {@link BaseAdapter#TYPE_EMPTY_VIEW } 初始布局
-     *
      * @param viewType viewType
      * @return true 是数据条目
      */
@@ -516,7 +486,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     /**
      * 清空所有数据
      */
-    public void dataClear() {
+    private void dataClear() {
         if (!mData.isEmpty()) {
             mData.clear();
         }
