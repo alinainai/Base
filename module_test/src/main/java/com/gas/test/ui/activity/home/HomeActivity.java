@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.gas.test.ui.activity.home.di.DaggerHomeComponent;
 import com.gas.test.ui.activity.home.mvp.HomeContract;
 import com.gas.test.ui.activity.home.mvp.HomePresenter;
 import com.gas.test.ui.activity.show.ShowActivity;
+import com.gas.test.ui.activity.trans.TransActivity;
 import com.lib.commonsdk.constants.RouterHub;
 
 import java.lang.ref.WeakReference;
@@ -28,6 +30,7 @@ import java.lang.ref.WeakReference;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
 import static com.gas.test.ui.activity.show.IShowConst.SHOWFRAGMENTTYPE;
@@ -131,6 +134,20 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
     public void loadData() {
         mPresenter.showTestInfos();
     }
+
+    @OnClick({R2.id.tmw_top_show, R2.id.tmw_top_hide, R2.id.tmw_top_show1})
+    public void onViewClicked(View view) {
+        if (view.getId() == R.id.tmw_top_show) {
+            startActivity(new Intent(this, TransActivity.class));
+        } else if (view.getId() == R.id.tmw_top_show1) {
+
+
+        } else if (view.getId() == R.id.tmw_top_hide) {
+
+
+        }
+    }
+
 
     /**
      * 这里展示静态内部类的的使用
