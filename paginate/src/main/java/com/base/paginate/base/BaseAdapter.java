@@ -141,15 +141,18 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case TYPE_FOOTER_VIEW:
-                mFooterLayout = getFooterLayout(parent.getContext());
+                if(mFooterLayout==null){
+                    mFooterLayout = getFooterLayout(parent.getContext());
+                }
                 viewHolder = Utils.createPageViewHolder((View) mFooterLayout);
                 break;
             case TYPE_BASE_HEADER_VIEW:
-
                 viewHolder = Utils.createPageViewHolder(mHeaderLayout);
                 break;
             case TYPE_EMPTY_VIEW:
-                mEmptyView = getEmptyLayout(parent.getContext());
+                if(mEmptyView==null){
+                    mEmptyView = getEmptyLayout(parent.getContext());
+                }
                 viewHolder = Utils.createPageViewHolder((View) mEmptyView);
                 break;
             default:
@@ -229,6 +232,17 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+
+        if(mOpenEmpty){
+            if(mEmptyView==null){
+                mEmptyView = getEmptyLayout(recyclerView.getContext());
+            }
+        }
+        if(mOpenLoadMore){
+            if(mFooterLayout==null){
+                mFooterLayout = getFooterLayout(recyclerView.getContext());
+            }
+        }
 
         final RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
         if (layoutManager instanceof GridLayoutManager) {

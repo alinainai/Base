@@ -13,7 +13,7 @@ public class MainAdapter extends SingleAdapter<DailyListBean.StoriesBean> {
 
 
     public MainAdapter(Context context) {
-        super(context,false,true);
+        super(context);
     }
 
     @Override

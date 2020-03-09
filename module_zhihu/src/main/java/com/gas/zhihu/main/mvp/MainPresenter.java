@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
+import com.base.paginate.interfaces.EmptyInterface;
 import com.lib.commonsdk.rx.RxBindManager;
 import com.base.paginate.base.BaseAdapter;
 import com.gas.zhihu.bean.DailyListBean;
@@ -45,9 +46,16 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     public void onNext(DailyListBean result) {
                         Timber.e("请求成功success");
                         mView.success();
-                        if (null != result&& null!= result.getStories()) {
+                        if (null != result&& null!= result.getStories()&&!result.getStories().isEmpty()) {
                             ((BaseAdapter) mAdapter).setNewData(result.getStories());
+                            if (result.getStories().size() < 10) {//如果小于10个
+                                ((BaseAdapter) mAdapter).loadEnd();
+                            }
+                        }else {
+                            ((BaseAdapter) mAdapter).loadEnd();
                         }
+
+
 
                     }
 

@@ -3,10 +3,11 @@
     package="com.gas.test">
 
     <application>
-        <activity android:name=".ui.activity.trans.TransActivity"
+        <activity android:name=".ui.activity.adapter.AdapterActivity"></activity>
+        <activity
+            android:name=".ui.activity.trans.TransActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/transparent_activity_style"
-            />
+            android:theme="@style/transparent_activity_style" />
         <activity
             android:name=".ui.activity.show.ShowActivity"
             android:configChanges="orientation|screenSize"
