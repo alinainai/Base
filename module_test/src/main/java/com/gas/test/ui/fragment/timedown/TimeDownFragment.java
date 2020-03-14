@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.base.baseui.banner.BottomTimeDownPromptBanner;
+import com.base.baseui.banner.TimeDownPromptBanner;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -18,8 +20,7 @@ import com.gas.test.ui.fragment.timedown.di.DaggerTimeDownComponent;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownContract;
 import com.gas.test.ui.fragment.timedown.mvp.TimeDownPresenter;
 import com.gas.test.widget.TimeDownView;
-import com.gas.test.widget.banner.BottomTimeDownPromptBanner;
-import com.gas.test.widget.banner.TimeDownPromptBanner;
+
 
 import butterknife.BindView;
 import butterknife.OnClick;

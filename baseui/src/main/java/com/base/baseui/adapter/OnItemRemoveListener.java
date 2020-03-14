@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter;
+package com.base.baseui.adapter;
 
 public interface OnItemRemoveListener<T> {
 

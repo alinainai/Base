@@ -1,29 +1,10 @@
-package com.gas.test.widget.banner;
+package com.base.baseui.banner;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
-import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.annotation.ColorRes;
-import androidx.annotation.DrawableRes;
-import androidx.annotation.IntRange;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
+import com.base.baseui.R;
 
-import com.gas.test.R;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.lang.ref.WeakReference;
 
 /**
  * ================================================
@@ -62,16 +43,16 @@ public class BottomTimeDownPromptBanner extends TimeDownPromptBanner {
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.layout_bottom_banner_timedown;
+        return R.layout.public_layout_bottom_banner_timedown;
     }
 
     @Override
     protected int getShowAnimRes() {
-        return R.anim.slide_in_from_bottom;
+        return R.anim.public_slide_in_from_bottom;
     }
 
     @Override
     protected int getHideAnimRes() {
-        return  R.anim.slide_out_to_bottom;
+        return  R.anim.public_slide_out_to_bottom;
     }
 }

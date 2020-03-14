@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter;
+package com.base.baseui.adapter;
 
 import com.base.paginate.base.BaseAdapter;
 import com.base.paginate.interfaces.EmptyInterface;

@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter;
+package com.base.baseui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -11,11 +11,10 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-
+import com.base.baseui.R;
 import com.base.baseui.view.QMUILoadingView;
 import com.base.paginate.Utils;
 import com.base.paginate.interfaces.FooterInterface;
-import com.gas.test.R;
 
 
 public class ExamLoadFooter extends LinearLayout implements FooterInterface {

@@ -1,12 +1,11 @@
-package com.gas.test.learn.adapter.expended;
+package com.base.baseui.adapter.expended;
 
 import android.content.Context;
 
-
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.baseui.adapter.ExamMultiAdapter;
 import com.base.paginate.viewholder.PageViewHolder;
-import com.gas.test.learn.adapter.ExamMultiAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

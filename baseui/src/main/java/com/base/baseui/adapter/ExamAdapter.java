@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter;
+package com.base.baseui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;

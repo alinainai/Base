@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter.expended;
+package com.base.baseui.adapter.expended;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.gas.test.learn.adapter;
+package com.base.baseui.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -14,9 +14,9 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.baseui.R;
 import com.base.baseui.view.QMUILoadingView;
 import com.base.paginate.interfaces.EmptyInterface;
-import com.gas.test.R;
 
 public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
 
@@ -28,7 +28,7 @@ public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
     private int mLoadMoreStatus;
 
     private @DrawableRes
-    int mDataEmptyRes = R.mipmap.test_adapter_data_empty;
+    int mDataEmptyRes = R.mipmap.baseui_adapter_data_empty;
 
     public int getDataEmptyRes() {
         return mDataEmptyRes;
@@ -101,7 +101,7 @@ public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
             case STATUS_FAIL://加载失败
                 mLoading.setVisibility(GONE);
                 mImg.setVisibility(VISIBLE);
-                mImg.setImageResource(R.mipmap.test_adapter_data_load_fail);
+                mImg.setImageResource(R.mipmap.baseui_adapter_data_load_fail);
                 mBtn.setVisibility(VISIBLE);
                 mTextView.setText("数据加载失败，请刷新重试");
                 break;
@@ -115,7 +115,7 @@ public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
             case STATUS_NETWORK_FAIL://网络异常
                 mLoading.setVisibility(GONE);
                 mImg.setVisibility(VISIBLE);
-                mImg.setImageResource(R.mipmap.test_adapter_network_fail);
+                mImg.setImageResource(R.mipmap.baseui_adapter_network_fail);
                 mBtn.setVisibility(VISIBLE);
                 mTextView.setText("网络异常，请刷新重试");
                 break;

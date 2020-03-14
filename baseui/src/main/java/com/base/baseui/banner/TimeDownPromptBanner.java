@@ -1,4 +1,4 @@
-package com.gas.test.widget.banner;
+package com.base.baseui.banner;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -19,7 +19,8 @@ import androidx.annotation.IntRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 
-import com.gas.test.R;
+
+import com.base.baseui.R;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -363,16 +364,16 @@ public class TimeDownPromptBanner extends FrameLayout {
 
 
     protected int getShowAnimRes() {
-        return R.anim.slide_in_from_top;
+        return R.anim.public_slide_in_from_top;
     }
 
     protected int getHideAnimRes() {
-        return R.anim.slide_out_to_top;
+        return R.anim.public_slide_out_to_top;
     }
 
     protected @LayoutRes
     int getLayoutResId() {
-        return R.layout.layout_banner_timedown;
+        return R.layout.public_layout_banner_timedown;
     }
 
     protected @ColorRes
@@ -382,12 +383,12 @@ public class TimeDownPromptBanner extends FrameLayout {
 
     protected @DrawableRes
     int getDefaultBgRes() {
-        return R.drawable.drawable_banner_time_down_bg;
+        return R.drawable.public_banner_time_down_bg;
     }
 
     protected @DrawableRes
     int getDefaultCloseRes() {
-        return R.drawable.drawable_banner_time_down_close;
+        return R.drawable.public_banner_time_down_close;
     }
 
     protected @DrawableRes

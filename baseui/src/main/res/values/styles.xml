@@ -26,6 +26,27 @@
         <item name="android:textSize">@dimen/public_tab_text_size</item>
     </style>
 
+    <style name="dialogBottomWindowAnim" parent="android:Animation" mce_bogus="1" tools:ignore="ResourceName">
+        <item name="android:windowEnterAnimation">@anim/public_slide_in_from_bottom</item>
+        <item name="android:windowExitAnimation">@anim/public_slide_out_to_bottom</item>
+    </style>
+
+    <style name="public_common_dialog" parent="@android:style/Theme.Dialog">
+        <!-- 边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否透明 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 无标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 背景透明 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 模糊 -->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
     <style name="transparent_activity_style" parent="Theme.AppCompat.NoActionBar" tools:ignore="ResourceName">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
