@@ -21,6 +21,16 @@ import android.widget.FrameLayout.LayoutParams;
 
 import java.lang.reflect.Method;
 
+/**
+ * ================================================
+ * desc: 适配 4.4 以前版本状态栏
+ *
+ * created by author ljx
+ * Date  2020/3/14
+ * email 569932357@qq.com
+ *
+ * ================================================
+ */
 public class SystemBarTintManager {
 
     static {

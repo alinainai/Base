@@ -5,20 +5,26 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.IntDef;
-import androidx.core.view.ViewCompat;
-
-import com.base.lib.R;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * ================================================
+ * desc: 状态栏颜色管理类 深色和浅色切换
+ *
+ * created by author ljx
+ * Date  2020/3/14
+ * email 569932357@qq.com
+ *
+ * ================================================
+ */
 public class StatusBarManager {
 
 
@@ -32,9 +38,9 @@ public class StatusBarManager {
     private final static int STATUSBAR_TYPE_MIUI = 1;
     private final static int STATUSBAR_TYPE_FLYME = 2;
     private final static int STATUSBAR_TYPE_ANDROID6 = 3; // Android 6.0
-    private final static String ZTEC2016 = "zte c2016";
 
-    private static @StatusBarType int mStatuBarType = STATUSBAR_TYPE_DEFAULT;
+    private static @StatusBarType
+    int mStatuBarType = STATUSBAR_TYPE_DEFAULT;
 
 
     private StatusBarManager() {
@@ -49,8 +55,11 @@ public class StatusBarManager {
      * @param activity 需要被处理的 Activity
      */
     public static boolean setStatusBarLightMode(Activity activity) {
+
+        if (activity == null) return false;
+
         // 无语系列：ZTK C2016只能时间和电池图标变色。。。。
-        if(isZTKC2016()){
+        if (QMUIDeviceHelper.isZTKC2016()) {
             return false;
         }
 
@@ -58,7 +67,7 @@ public class StatusBarManager {
             return setStatusBarLightMode(activity, mStatuBarType);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (MIUISetStatusBarLightMode(activity.getWindow(), true)) {
+            if (isMIUICustomStatusBarLightModeImpl() && MIUISetStatusBarLightMode(activity.getWindow(), true)) {
                 mStatuBarType = STATUSBAR_TYPE_MIUI;
                 return true;
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
@@ -90,8 +99,6 @@ public class StatusBarManager {
         }
         return false;
     }
-
-
 
 
     /**
@@ -138,15 +145,20 @@ public class StatusBarManager {
      * 设置状态栏字体图标为深色，Android 6
      *
      * @param window 需要设置的窗口
-     * @param light   是否把状态栏字体及图标颜色设置为深色
+     * @param light  是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
      */
     @TargetApi(23)
-    private static boolean Android6SetStatusBarLightMode(Window window, boolean light){
+    private static boolean Android6SetStatusBarLightMode(Window window, boolean light) {
         View decorView = window.getDecorView();
         int systemUi = light ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
         systemUi = changeStatusBarModeRetainFlag(window, systemUi);
         decorView.setSystemUiVisibility(systemUi);
+        if (QMUIDeviceHelper.isMIUIV9()) {
+            // MIUI 9 低于 6.0 版本依旧只能回退到以前的方案
+            // https://github.com/Tencent/QMUI_Android/issues/160
+            MIUISetStatusBarLightMode(window, light);
+        }
         return true;
     }
 
@@ -154,10 +166,10 @@ public class StatusBarManager {
      * 设置状态栏字体图标为深色，需要 MIUIV6 以上
      *
      * @param window 需要设置的窗口
-     * @param dark   是否把状态栏字体及图标颜色设置为深色
+     * @param light  是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回 true
      */
-    public static boolean MIUISetStatusBarLightMode(Window window, boolean dark) {
+    public static boolean MIUISetStatusBarLightMode(Window window, boolean light) {
         boolean result = false;
         if (window != null) {
             Class clazz = window.getClass();
@@ -167,30 +179,34 @@ public class StatusBarManager {
                 Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
                 darkModeFlag = field.getInt(layoutParams);
                 Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-                if (dark) {
+                if (light) {
                     extraFlagField.invoke(window, darkModeFlag, darkModeFlag);//状态栏透明且黑色字体
                 } else {
                     extraFlagField.invoke(window, 0, darkModeFlag);//清除黑色字体
                 }
                 result = true;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }
         return result;
     }
 
+
     /**
      * 设置状态栏图标为深色和魅族特定的文字风格
      * 可以用来判断是否为 Flyme 用户
      *
      * @param window 需要设置的窗口
-     * @param dark   是否把状态栏字体及图标颜色设置为深色
+     * @param light  是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
      */
-    public static boolean FlymeSetStatusBarLightMode(Window window, boolean dark) {
+    public static boolean FlymeSetStatusBarLightMode(Window window, boolean light) {
         boolean result = false;
         if (window != null) {
+            // flyme 在 6.2.0.0A 支持了 Android 官方的实现方案，旧的方案失效
+            Android6SetStatusBarLightMode(window, light);
+
             try {
                 WindowManager.LayoutParams lp = window.getAttributes();
                 Field darkFlag = WindowManager.LayoutParams.class
@@ -201,7 +217,7 @@ public class StatusBarManager {
                 meizuFlags.setAccessible(true);
                 int bit = darkFlag.getInt(null);
                 int value = meizuFlags.getInt(lp);
-                if (dark) {
+                if (light) {
                     value |= bit;
                 } else {
                     value &= ~bit;
@@ -209,21 +225,25 @@ public class StatusBarManager {
                 meizuFlags.setInt(lp, value);
                 window.setAttributes(lp);
                 result = true;
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }
         return result;
     }
 
-    public static boolean isZTKC2016(){
-        final String board = android.os.Build.MODEL;
-        if (board == null) {
-            return false;
-        }
-        return board.toLowerCase().contains(ZTEC2016);
-    }
 
+    /**
+     * 更改状态栏图标、文字颜色的方案是否是MIUI自家的， MIUI9 && Android 6 之后用回Android原生实现
+     * 见小米开发文档说明：https://dev.mi.com/console/doc/detail?pId=1159
+     */
+    private static boolean isMIUICustomStatusBarLightModeImpl() {
+        if (QMUIDeviceHelper.isMIUIV9() && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true;
+        }
+        return QMUIDeviceHelper.isMIUIV5() || QMUIDeviceHelper.isMIUIV6() ||
+                QMUIDeviceHelper.isMIUIV7() || QMUIDeviceHelper.isMIUIV8();
+    }
 
     /**
      * 使传入 {@link Activity} 状态栏全透明状态栏

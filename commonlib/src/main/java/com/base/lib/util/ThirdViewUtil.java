@@ -95,12 +95,18 @@ public class ThirdViewUtil {
         }
 
         View view = null;
-        if (name.equals(LAYOUT_FRAMELAYOUT)) {
-            view = new AutoFrameLayout(context, attrs);
-        } else if (name.equals(LAYOUT_LINEARLAYOUT)) {
-            view = new AutoLinearLayout(context, attrs);
-        } else if (name.equals(LAYOUT_RELATIVELAYOUT)) {
-            view = new AutoRelativeLayout(context, attrs);
+        switch (name) {
+            case LAYOUT_FRAMELAYOUT:
+                view = new AutoFrameLayout(context, attrs);
+                break;
+            case LAYOUT_LINEARLAYOUT:
+                view = new AutoLinearLayout(context, attrs);
+                break;
+            case LAYOUT_RELATIVELAYOUT:
+                view = new AutoRelativeLayout(context, attrs);
+                break;
+            default:
+                break;
         }
         return view;
     }

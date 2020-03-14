@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Base.iml" filepath="$PROJECT_DIR$/Base.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/baseui/baseui.iml" filepath="$PROJECT_DIR$/baseui/baseui.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonsdk/commonsdk.iml" filepath="$PROJECT_DIR$/commonsdk/commonsdk.iml" />
-      <module fileurl="file://$PROJECT_DIR$/componentservice/componentservice.iml" filepath="$PROJECT_DIR$/componentservice/componentservice.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module_beauty/module_beauty.iml" filepath="$PROJECT_DIR$/module_beauty/module_beauty.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module_test/module_test.iml" filepath="$PROJECT_DIR$/module_test/module_test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module_zhihu/module_zhihu.iml" filepath="$PROJECT_DIR$/module_zhihu/module_zhihu.iml" />
-      <module fileurl="file://$PROJECT_DIR$/paginate/paginate.iml" filepath="$PROJECT_DIR$/paginate/paginate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Base.iml" filepath="$PROJECT_DIR$/Base.iml" group="Base" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Base/app" />
+      <module fileurl="file://$PROJECT_DIR$/baseui/baseui.iml" filepath="$PROJECT_DIR$/baseui/baseui.iml" group="Base/baseui" />
+      <module fileurl="file://$PROJECT_DIR$/commonlib/commonlib.iml" filepath="$PROJECT_DIR$/commonlib/commonlib.iml" group="Base/commonlib" />
+      <module fileurl="file://$PROJECT_DIR$/commonsdk/commonsdk.iml" filepath="$PROJECT_DIR$/commonsdk/commonsdk.iml" group="Base/commonsdk" />
+      <module fileurl="file://$PROJECT_DIR$/componentservice/componentservice.iml" filepath="$PROJECT_DIR$/componentservice/componentservice.iml" group="Base/componentservice" />
+      <module fileurl="file://$PROJECT_DIR$/module_beauty/module_beauty.iml" filepath="$PROJECT_DIR$/module_beauty/module_beauty.iml" group="Base/module_beauty" />
+      <module fileurl="file://$PROJECT_DIR$/module_test/module_test.iml" filepath="$PROJECT_DIR$/module_test/module_test.iml" group="Base/module_test" />
+      <module fileurl="file://$PROJECT_DIR$/module_zhihu/module_zhihu.iml" filepath="$PROJECT_DIR$/module_zhihu/module_zhihu.iml" group="Base/module_zhihu" />
+      <module fileurl="file://$PROJECT_DIR$/paginate/paginate.iml" filepath="$PROJECT_DIR$/paginate/paginate.iml" group="Base/paginate" />
     </modules>
   </component>
 </project>
