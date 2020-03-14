@@ -17,7 +17,14 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
+ * ================================================
+ * desc: RxJava事件解绑工具类
  *
+ * created by author ljx
+ * Date  2020/3/14
+ * email 569932357@qq.com
+ *
+ * ================================================
  */
 public class RxBindManager {
 

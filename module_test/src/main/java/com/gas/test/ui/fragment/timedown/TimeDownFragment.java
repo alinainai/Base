@@ -40,7 +40,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
     private static final long TWO_DAY_TIME = 2 * 24 * 60 * 60 * 1000L;
 
-    @BindView(R2.id.tdv_1)
+    @BindView(R2.id.tv_time_down)
     TimeDownView tdv1;
 
     @BindView(R2.id.top_banner)

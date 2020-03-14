@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/adapter_recycler"
+            android:id="@+id/test_adapter_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:overScrollMode="never"

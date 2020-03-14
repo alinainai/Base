@@ -41,7 +41,7 @@ import static com.base.lib.util.Preconditions.checkNotNull;
  */
 public class AdapterFragment extends BaseFragment<AdapterPresenter> implements AdapterContract.View , SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R2.id.adapter_recycler)
+    @BindView(R2.id.test_adapter_recycler)
     RecyclerView mRecyclerView;
     @BindView(R2.id.adapter_refresh)
     SwipeRefreshLayout mRefresh;
