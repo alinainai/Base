@@ -145,10 +145,9 @@ dependencies {
 
     implementation rootProject.ext.dependencies["lottie"]
 
-    //leakcanary
+    //leakcanary 2.0+
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-    releaseImplementation rootProject.ext.dependencies["canary-release"]
-    testImplementation rootProject.ext.dependencies["canary-release"]
+
 
 
     if (!isBuildModule.toBoolean()) {

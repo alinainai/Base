@@ -99,7 +99,7 @@ public class ArticleFragment extends LazyLoadFragment<ArticlePresenter> implemen
 
     @Override
     protected void lazyLoadData() {
-        GasUtil.setIndicator(mTabLayout, 5, 5);
+        GasUtil.setIndicatorWidth(mTabLayout,  5);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(mTitles.length - 1);

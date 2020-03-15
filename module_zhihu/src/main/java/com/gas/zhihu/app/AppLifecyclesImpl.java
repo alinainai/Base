@@ -21,11 +21,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.integration.cache.IntelligentCache;
-import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.BuildConfig;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
@@ -50,20 +46,20 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
     @Override
     public void onCreate(@NonNull Application application) {
-        if (LeakCanary.isInAnalyzerProcess(application)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
+//        if (LeakCanary.isInAnalyzerProcess(application)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
         //使用 RetrofitUrlManager 切换 BaseUrl
         //使用 RetrofitUrlManager 切换 BaseUrl
         RetrofitUrlManager.getInstance().putDomain(ZHIHU_DOMAIN_NAME, ZHIHU_DOMAIN);
         //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码
         if (BuildConfig.IS_BUILD_MODULE) {
             //leakCanary内存泄露检查
-            ArmsUtils.obtainAppComponentFromContext(application).extras()
-                    .put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
-                            , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+//            ArmsUtils.obtainAppComponentFromContext(application).extras()
+//                    .put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
+//                            , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
         }
     }
 

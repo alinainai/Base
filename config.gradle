@@ -19,7 +19,7 @@ ext {
 
             rxlifecycleSdkVersion          : '1.0',
             rxlifecycle2SdkVersion         : '2.2.2',
-            canarySdkVersion               : '1.6.3',
+            canarySdkVersion               : '2.2',
             constraintLayoutVersion        : '1.1.3',
             appcompatVersion               : '1.1.0',
             cardviewVersion                : '1.0.0',
@@ -122,8 +122,8 @@ ext {
             "espresso-intents"          : "androidx.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
             "mockito-core"              : "org.mockito:mockito-core:1.+",
             "timber"                    : "com.jakewharton.timber:timber:4.7.1",
-            "canary-debug"              : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
-            "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
+            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
+            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
 
 
     ]
