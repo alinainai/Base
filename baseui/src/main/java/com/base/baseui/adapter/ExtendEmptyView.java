@@ -18,7 +18,7 @@ import com.base.baseui.R;
 import com.base.baseui.view.QMUILoadingView;
 import com.base.paginate.interfaces.EmptyInterface;
 
-public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
+public class ExtendEmptyView extends ConstraintLayout implements EmptyInterface {
 
 
     private TextView mTextView;
@@ -49,17 +49,17 @@ public class ExamEmptyView extends ConstraintLayout implements EmptyInterface {
     private String mDataEmptyStr = "暂时没有数据哦！";
 
 
-    public ExamEmptyView(Context context) {
+    public ExtendEmptyView(Context context) {
         super(context);
         init();
     }
 
-    public ExamEmptyView(Context context, @Nullable AttributeSet attrs) {
+    public ExtendEmptyView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ExamEmptyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ExtendEmptyView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

@@ -24,8 +24,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lib.commonsdk.R;
-import com.lib.commonsdk.utils.statusbar.StatusBarManager;
+import com.lib.commonsdk.statusbar.StatusBarManager;
 
 import timber.log.Timber;
 

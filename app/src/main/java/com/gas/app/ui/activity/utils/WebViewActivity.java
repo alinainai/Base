@@ -18,7 +18,7 @@ import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.lib.commonsdk.constants.RouterHub;
-import com.lib.commonsdk.utils.statusbar.StatusBarManager;
+import com.lib.commonsdk.statusbar.StatusBarManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.lib.commonsdk.utils.statusbar;
+package com.lib.commonsdk.statusbar;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;

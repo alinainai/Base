@@ -4,13 +4,13 @@ import android.content.Context;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.base.baseui.adapter.ExamMultiAdapter;
+import com.base.baseui.adapter.ExtendMultiAdapter;
 import com.base.paginate.viewholder.PageViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ExpendedRecyclerAdapter<G, C> extends ExamMultiAdapter<Object> {
+public abstract class ExpendedRecyclerAdapter<G, C> extends ExtendMultiAdapter<Object> {
 
     public static final int GROUPTYPE = 0x01;
     public static final int CHILDTYPE = 0x02;

@@ -3,38 +3,38 @@ package com.base.baseui.adapter;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.base.paginate.base.SingleAdapter;
+import com.base.paginate.base.MultiAdapter;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.base.paginate.interfaces.FooterInterface;
+/**
+ * ================================================
+ * desc: 可定制 footerView 和 emptyView 的适配器
+ *
+ * created by author ljx
+ * Date  2020/3/18
+ * email 569932357@qq.com
+ *
+ * ================================================
+ */
+public abstract class ExtendMultiAdapter<T> extends MultiAdapter<T> {
 
-public abstract class ExamAdapter<T> extends SingleAdapter<T> {
 
 
-    protected OnItemRemoveListener<T> OnItemRemoveListener;
-
-    public ExamAdapter(Context context) {
+    public ExtendMultiAdapter(Context context) {
         super(context);
-        init();
     }
 
-    public ExamAdapter(Context context, boolean openLoadMore) {
-        super(context, openLoadMore);
-        init();
+    public ExtendMultiAdapter(Context context, boolean openLoadMore) {
+        super( context, openLoadMore);
     }
 
-    public ExamAdapter(Context context, boolean openLoadMore, boolean openEmpty) {
+    public ExtendMultiAdapter(Context context, boolean openLoadMore, boolean openEmpty) {
         super(context, openLoadMore, openEmpty);
-        init();
     }
-
-    private void init() {
-
-    }
-
 
     @Override
     protected EmptyInterface getEmptyLayout(Context context) {
-        ExamEmptyView emptyView = new ExamEmptyView(context);
+        ExtendEmptyView emptyView = new ExtendEmptyView(context);
         if (!TextUtils.isEmpty(getDataEmptyStr())) {
             emptyView.setDataEmptyStr(getDataEmptyStr());
         }
@@ -47,9 +47,8 @@ public abstract class ExamAdapter<T> extends SingleAdapter<T> {
 
     @Override
     protected FooterInterface getFooterLayout(Context context) {
-        return new ExamLoadFooter(context);
+        return new ExtendLoadFooter(context);
     }
-
 
     protected String getDataEmptyStr() {
         return "";
@@ -59,9 +58,6 @@ public abstract class ExamAdapter<T> extends SingleAdapter<T> {
         return -1;
     }
 
-    public void setOnItemRemoveListener(OnItemRemoveListener<T> onItemRemoveListener) {
-        OnItemRemoveListener = onItemRemoveListener;
-    }
 
 
 }

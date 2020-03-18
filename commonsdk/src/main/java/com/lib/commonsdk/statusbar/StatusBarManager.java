@@ -1,4 +1,4 @@
-package com.lib.commonsdk.utils.statusbar;
+package com.lib.commonsdk.statusbar;
 
 import android.annotation.TargetApi;
 import android.app.Activity;

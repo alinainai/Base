@@ -17,23 +17,23 @@ import com.base.paginate.Utils;
 import com.base.paginate.interfaces.FooterInterface;
 
 
-public class ExamLoadFooter extends LinearLayout implements FooterInterface {
+public class ExtendLoadFooter extends LinearLayout implements FooterInterface {
 
     private TextView mTextView;
     private QMUILoadingView mProgressBar;
     private int mLoadMoreStatus;
 
-    public ExamLoadFooter(Context context) {
+    public ExtendLoadFooter(Context context) {
         super(context);
         init();
     }
 
-    public ExamLoadFooter(Context context, @Nullable AttributeSet attrs) {
+    public ExtendLoadFooter(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public ExamLoadFooter(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ExtendLoadFooter(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

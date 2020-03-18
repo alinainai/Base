@@ -1,20 +1,31 @@
 package com.base.baseui.adapter;
 
+import androidx.annotation.NonNull;
+
 import com.base.paginate.base.BaseAdapter;
 import com.base.paginate.interfaces.EmptyInterface;
 
 import java.util.List;
-
-public class ExamAdapterUtil {
+/**
+ * ================================================
+ * desc:
+ *
+ * created by author ljx
+ * Date  2020/3/18
+ * email 569932357@qq.com
+ *
+ * ================================================
+ */
+public class ExtendAdapterUtil {
 
     public static final int PAGE_NUM = 10;
 
-    public static boolean setAdapterData(BaseAdapter adapter, List data, int page) {
+    public static <T> boolean setAdapterData(BaseAdapter<T> adapter, List<T> data, int page) {
         return setAdapterData(adapter, data, page, PAGE_NUM);
     }
 
 
-    public static boolean setAdapterData(BaseAdapter adapter, List data, int page, int pageItemCount) {
+    public static <T> boolean setAdapterData(@NonNull BaseAdapter<T> adapter, List<T> data, int page, int pageItemCount) {
 
         if (null != data) {
             //如果数据为空
