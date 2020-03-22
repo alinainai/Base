@@ -17,7 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.base.baseui.R;
 import com.base.baseui.view.QMUILoadingView;
 import com.base.paginate.interfaces.EmptyInterface;
-
+/**
+ * ================================================
+ * desc: 自定义Adapter的空布局
+ *
+ * created by author ljx
+ * date  2020/3/20
+ * email 569932357@qq.com
+ *
+ * ================================================
+ */
 public class ExtendEmptyView extends ConstraintLayout implements EmptyInterface {
 
 

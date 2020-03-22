@@ -108,7 +108,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.base.baseui.banner.BottomTimeDownPromptBanner
+    <com.base.baseui.banner.TimeDownPromptBanner
         android:id="@+id/bottom_banner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

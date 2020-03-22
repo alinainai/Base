@@ -8,7 +8,7 @@ import com.base.paginate.interfaces.EmptyInterface;
 import java.util.List;
 /**
  * ================================================
- * desc:
+ * desc: 一个Adapter的辅助工具，可以快速实现分页加载数据
  *
  * created by author ljx
  * Date  2020/3/18

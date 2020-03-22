@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.base.baseui.banner.BottomTimeDownPromptBanner;
 import com.base.baseui.banner.TimeDownPromptBanner;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
@@ -25,6 +24,7 @@ import com.gas.test.widget.TimeDownView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.base.baseui.banner.TimeDownPromptBanner.BannerConfig.ANIM_BOTTOM;
 import static com.base.lib.util.Preconditions.checkNotNull;
 
 
@@ -47,7 +47,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
     TimeDownPromptBanner topBanner;
 
     @BindView(R2.id.bottom_banner)
-    BottomTimeDownPromptBanner bottomBanner;
+    TimeDownPromptBanner bottomBanner;
 
 
 
@@ -127,7 +127,8 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
         } else if (view.getId() == R.id.tmw_top_show) {
 
             TimeDownPromptBanner.BannerConfig  mTopBannerConfig = new TimeDownPromptBanner
-                    .BannerConfig("顶部弹窗1")
+                    .BannerConfig(R.layout.public_layout_banner_timedown)
+                    .setTitle("顶部弹窗1")
                     .setSubTitle("顶部副标题1")
                     .setIconResId(R.drawable.public_ic_launcher)
                     .setBgResId(R.color.public_color_primary)
@@ -135,6 +136,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
                     .setOnCloseClick(() -> showMessage("关闭点击1"))
                     .setViewOnClick(() -> showMessage("条目点击1"))
                     .setTitleColor(R.color.public_color_accent)
+                    .setAnimStyle(TimeDownPromptBanner.BannerConfig.ANIM_LEFT)
                     .setSubTitleOnClick(() -> showMessage("副标题点击1"));
 
             topBanner.show(mTopBannerConfig);
@@ -146,7 +148,8 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
         }else if (view.getId() == R.id.tmw_top_show1) {
 
             TimeDownPromptBanner.BannerConfig  mTopBannerConfig = new TimeDownPromptBanner
-                    .BannerConfig("顶部弹窗2")
+                    .BannerConfig(R.layout.public_layout_banner_timedown)
+                    .setTitle("顶部弹窗2")
                     .setSubTitle("顶部副标题2")
                     .setOnCloseClick(() -> showMessage("关闭点击2"))
                     .setViewOnClick(() -> showMessage("条目点击2"))
@@ -159,7 +162,8 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
 
 
             TimeDownPromptBanner.BannerConfig  mBottomBannerConfig = new TimeDownPromptBanner
-                    .BannerConfig("底部弹窗1")
+                    .BannerConfig(com.base.baseui.R.layout.public_layout_bottom_banner_timedown)
+                    .setTitle("底部弹窗1")
                     .setSubTitle("底部副标题1")
                     .setIconResId(R.drawable.public_ic_launcher)
                     .setBgResId(R.color.public_color_primary)
@@ -168,13 +172,15 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
                     .setViewOnClick(() -> showMessage("底部条目点击"))
                     .setShowDuration(6)
                     .setTag("bottom")
+                    .setAnimStyle(ANIM_BOTTOM)
                     .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
             bottomBanner.show(mBottomBannerConfig);
 
         } else if (view.getId() == R.id.tmw_bottom_show1) {
 
             TimeDownPromptBanner.BannerConfig   mBottomBannerConfig = new TimeDownPromptBanner
-                    .BannerConfig("底部弹窗2")
+                    .BannerConfig(com.base.baseui.R.layout.public_layout_bottom_banner_timedown)
+                    .setTitle("底部弹窗2")
                     .setSubTitle("底部副标题2")
                     .setIconResId(R.drawable.public_ic_launcher)
                     .setCloseResId(R.mipmap.lib_title_bar_back)
@@ -182,6 +188,7 @@ public class TimeDownFragment extends BaseFragment<TimeDownPresenter> implements
                     .setViewOnClick(() -> showMessage("底部条目点击"))
                     .setShowDuration(6)
                     .setTag("bottom2")
+                    .setAnimStyle(ANIM_BOTTOM)
                     .setSubTitleOnClick(() -> showMessage("底部副标题点击"));
 
             bottomBanner.showAfterDuration(mBottomBannerConfig,3);

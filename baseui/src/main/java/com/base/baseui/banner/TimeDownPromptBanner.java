@@ -15,15 +15,17 @@ import android.widget.TextView;
 
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.IntRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
-
 
 import com.base.baseui.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 
 /**
@@ -123,25 +125,36 @@ public class TimeDownPromptBanner extends FrameLayout {
      */
     private BannerConfig mConfig;
 
+    /**
+     * 动画方式，默认自上而下出现，自下而上隐藏
+     */
+    @BannerConfig.AnimStyle
+    private int mAnimStyle = BannerConfig.ANIM_TOP;
+
 
     public TimeDownPromptBanner(Context context) {
         super(context);
-        init();
+        setVisibility(View.GONE);
     }
 
 
     public TimeDownPromptBanner(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        setVisibility(View.GONE);
     }
 
     public TimeDownPromptBanner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        setVisibility(View.GONE);
     }
 
-    private void init() {
-        View view = View.inflate(getContext(), getLayoutResId(), this);
+    private void initLayout(@LayoutRes int layout) {
+
+        if (this.getChildCount() > 0) {
+            this.removeAllViews();
+        }
+
+        View view = View.inflate(getContext(), layout, this);
         mBannerBg = view.findViewById(R.id.banner_bg);
         mBannerIcon = view.findViewById(R.id.banner_icon);
         mBannerTitle = view.findViewById(R.id.banner_main_title);
@@ -149,11 +162,12 @@ public class TimeDownPromptBanner extends FrameLayout {
         mBannerTimeDown = view.findViewById(R.id.banner_time_down);
         mBannerClose = view.findViewById(R.id.banner_close);
         mHandler = new TimeDownHandler(this);
-        setVisibility(View.GONE);
     }
 
 
     private void setConfig(@NotNull BannerConfig config) {
+
+        mAnimStyle = config.getAnimStyle();
 
         // 设置背景资源
         if (config.getBgResId() != 0) {
@@ -330,18 +344,23 @@ public class TimeDownPromptBanner extends FrameLayout {
      */
     @SuppressLint("DefaultLocale")
     private void showView() {
+
+        removeMessage(HIDE_ACTION);
+        removeMessage(SHOW_TIME_COUNT_ACTION);
+
         if (this.getVisibility() != VISIBLE) {
+            initLayout(mConfig.getLayoutId());
             setConfig(mConfig);
             this.clearAnimation();
             if (mCloseDuration != DEFAULT_SHOW_DURATION) {
                 mCloseTimeDown = mCloseDuration;
-                mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
+                if (mBannerTimeDown != null) {
+                    mBannerTimeDown.setText(String.format(TIME_DOWN_WRAP_UNIT, mCloseTimeDown));
+                    sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
+                }
                 sendMessage(HIDE_ACTION, mCloseDuration * 1000);
-                sendMessage(SHOW_TIME_COUNT_ACTION, 1000);
-            } else {
-                removeMessage(HIDE_ACTION);
-                removeMessage(SHOW_TIME_COUNT_ACTION);
             }
+
             this.setVisibility(View.VISIBLE);
             this.setTag(mConfig.getTag());
             Animation a = AnimationUtils.loadAnimation(this.getContext(), getShowAnimRes());
@@ -364,17 +383,35 @@ public class TimeDownPromptBanner extends FrameLayout {
 
 
     protected int getShowAnimRes() {
-        return R.anim.public_slide_in_from_top;
+
+        switch (mAnimStyle) {
+            case BannerConfig.ANIM_LEFT:
+                return R.anim.public_slide_in_from_left;
+            case BannerConfig.ANIM_RIGHT:
+                return R.anim.public_slide_in_from_right;
+            case BannerConfig.ANIM_BOTTOM:
+                return R.anim.public_slide_in_from_bottom;
+            case BannerConfig.ANIM_TOP:
+            default:
+                return R.anim.public_slide_in_from_top;
+        }
+
     }
 
     protected int getHideAnimRes() {
-        return R.anim.public_slide_out_to_top;
+        switch (mAnimStyle) {
+            case BannerConfig.ANIM_LEFT:
+                return R.anim.public_slide_out_to_left;
+            case BannerConfig.ANIM_RIGHT:
+                return R.anim.public_slide_out_to_right;
+            case BannerConfig.ANIM_BOTTOM:
+                return R.anim.public_slide_out_to_bottom;
+            case BannerConfig.ANIM_TOP:
+            default:
+                return R.anim.public_slide_out_to_top;
+        }
     }
 
-    protected @LayoutRes
-    int getLayoutResId() {
-        return R.layout.public_layout_banner_timedown;
-    }
 
     protected @ColorRes
     int getDefaultTextColor() {
@@ -499,6 +536,21 @@ public class TimeDownPromptBanner extends FrameLayout {
     public static class BannerConfig {
 
 
+        public static final int ANIM_TOP = 1;
+        public static final int ANIM_BOTTOM = 2;
+        public static final int ANIM_LEFT = 3;
+        public static final int ANIM_RIGHT = 4;
+
+        // 自定义一个注解MyState
+        @Retention(RetentionPolicy.SOURCE)
+        @IntDef({ANIM_TOP, ANIM_BOTTOM, ANIM_LEFT, ANIM_RIGHT})
+        public @interface AnimStyle {
+        }
+
+
+        @LayoutRes
+        private int mLayoutId;
+
         /**
          * 整个条目背景资源Id
          */
@@ -520,7 +572,7 @@ public class TimeDownPromptBanner extends FrameLayout {
         /**
          * title
          */
-        private String mTitle = "";
+        private String mTitle;
 
         /**
          * subTitleColor
@@ -563,6 +615,10 @@ public class TimeDownPromptBanner extends FrameLayout {
          * 一个界面多次展示不同消息的TAG，防止多次显示
          */
         private String mTag = DEFAULT_BANNER_TAG;
+
+        @AnimStyle
+        private int mAnimStyle = ANIM_TOP;
+
 
         public BannerConfig setBgResId(@DrawableRes int bgResId) {
             this.mBannerBgId = bgResId;
@@ -627,8 +683,13 @@ public class TimeDownPromptBanner extends FrameLayout {
             return this;
         }
 
-        public BannerConfig(String title) {
-            this.mTitle = title;
+        public BannerConfig setAnimStyle(@AnimStyle int style) {
+            this.mAnimStyle = style;
+            return this;
+        }
+
+        public BannerConfig(@LayoutRes int layoutId) {
+            this.mLayoutId = layoutId;
         }
 
         public int getBgResId() {
@@ -679,6 +740,16 @@ public class TimeDownPromptBanner extends FrameLayout {
 
         public String getTag() {
             return mTag;
+        }
+
+        @AnimStyle
+        public int getAnimStyle() {
+            return mAnimStyle;
+        }
+
+        @LayoutRes
+        public int getLayoutId() {
+            return mLayoutId;
         }
     }
 
