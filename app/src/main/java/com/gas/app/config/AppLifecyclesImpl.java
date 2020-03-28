@@ -26,6 +26,7 @@ import com.base.lib.util.ArmsUtils;
 
 
 import com.gas.app.BuildConfig;
+import com.lib.commonsdk.utils.GasAppUtil;
 
 
 public class AppLifecyclesImpl implements AppLifecyclers {
@@ -37,14 +38,9 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
     @Override
     public void onCreate(@NonNull Application application) {
-
-//        if (LeakCanary.isInAnalyzerProcess(application)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return;
-//        }
-//        ArmsUtils.obtainAppComponentFromContext(application).extras().put(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())
-//                , BuildConfig.USE_CANARY ? LeakCanary.install(application) : RefWatcher.DISABLED);
+        if (!BuildConfig.IS_BUILD_MODULE) {
+            GasAppUtil.init(application);
+        }
     }
 
     @Override
