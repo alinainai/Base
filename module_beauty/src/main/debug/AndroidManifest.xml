@@ -14,7 +14,7 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@drawable/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher_dpi"
         android:label="@string/gank_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
         android:roundIcon="@drawable/public_ic_launcher_round"

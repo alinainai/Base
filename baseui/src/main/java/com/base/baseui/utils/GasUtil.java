@@ -80,9 +80,7 @@ public class GasUtil {
     }
 
 
-    private static final String USER_ID = "userId";
 
-    public static final boolean IS_SHOW_LOG = true;
 
     public static void setUrlTitle(TitleView titleView, String title) {
 

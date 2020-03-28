@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:contentDescription="@null"
-            android:src="@drawable/public_ic_launcher"
+            android:src="@drawable/public_ic_launcher_dpi"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

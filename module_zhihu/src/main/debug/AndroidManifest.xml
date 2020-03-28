@@ -14,7 +14,7 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@drawable/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher_dpi"
         android:label="@string/zhihu_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
         android:roundIcon="@drawable/public_ic_launcher_round"
@@ -22,22 +22,31 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".map.MapActivity"></activity>
-        <activity android:name=".login.LoginActivity" />
-        <activity
-            android:name=".main.MainActivity"
+        <activity android:name=".map.MapActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="fullSensor"
+            />
+        <activity android:name=".login.LoginActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="fullSensor">
+
+        </activity>
         <activity
             android:name=".detial.DetailsActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="fullSensor" />
         <!--
  每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule
         CommonSDK 的 ConfigModule 含有有每个组件都可共用的配置信息, 业务组件自己的 ConfigModule 含有自己独有的配置

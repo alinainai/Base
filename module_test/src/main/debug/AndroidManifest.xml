@@ -14,7 +14,7 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@drawable/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher_dpi"
         android:label="@string/test_app_name"
         android:roundIcon="@drawable/public_ic_launcher_round"
         android:supportsRtl="true"

@@ -16,7 +16,7 @@
         android:gravity="bottom|center_horizontal">
         <bitmap
             android:gravity="fill_horizontal|fill_vertical"
-            android:src="@drawable/app_ic_launcher" />
+            android:src="@drawable/public_app_ic_launcher" />
     </item>
 
 
