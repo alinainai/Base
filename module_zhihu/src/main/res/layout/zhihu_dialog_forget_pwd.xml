@@ -9,21 +9,12 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/img_icon"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerInside"
-            android:src="@mipmap/zhihu_tip_icon"
-            app:layout_constraintBottom_toTopOf="@+id/guide"
-            app:layout_constraintEnd_toEndOf="@+id/dialog_title"
-            app:layout_constraintStart_toStartOf="@+id/dialog_title"
-            android:contentDescription="@string/app_name" />
+
         <View
             android:id="@+id/guide"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintTop_toTopOf="@+id/dialog_title"
             app:layout_constraintEnd_toEndOf="@+id/dialog_title"
             app:layout_constraintStart_toStartOf="@+id/dialog_title"
@@ -32,18 +23,32 @@
 
         <TextView
             android:id="@+id/dialog_title"
-            android:layout_width="280dp"
-            android:layout_height="350dp"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/public_default_dialog_shape"
             android:paddingStart="15dp"
+            android:paddingBottom="150dp"
             android:paddingTop="60dp"
             android:paddingEnd="15dp"
-            android:text="这个是忘记密码的提示"
+            android:textStyle="bold"
+            android:text="提示"
             android:textColor="#333333"
             android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/zhihu_tip_icon"
+            app:layout_constraintBottom_toTopOf="@+id/guide"
+            app:layout_constraintEnd_toEndOf="@+id/dialog_title"
+            app:layout_constraintStart_toStartOf="@+id/dialog_title"
+            android:contentDescription="@string/app_name" />
 
         <Button
             android:id="@+id/btn_go_login"

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,7 @@ import com.gas.zhihu.app.ZhihuConfig;
 import com.gas.zhihu.ui.login.di.DaggerLoginComponent;
 import com.gas.zhihu.ui.login.mvp.LoginContract;
 import com.gas.zhihu.ui.login.mvp.LoginPresenter;
+import com.gas.zhihu.ui.map.MapActivity;
 import com.gas.zhihu.view.CleanEditText;
 
 import butterknife.BindView;
@@ -173,6 +175,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
     private void showForgetTip() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.zhihu_dialog_forget_pwd, null);
+        TextView tv= view.findViewById(R.id.dialog_title);
+        tv.setText("这个是登录的提示");
         CommonDialog pauseDialog = new CommonDialog.Builder(mContext).setCustomView(view).create();
         view.findViewById(R.id.btn_go_login).setOnClickListener(view1 -> {
             pauseDialog.dismiss();
@@ -197,7 +201,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
 
         if (userName.equals(ZhihuConfig.ZHIHU_USER_NAME) && passWord.equals(ZhihuConfig.ZHIHU_PASSWORD)) {
-            //
+            startActivity(new Intent(mContext, MapActivity.class));
+            finish();
         } else {
             GasUtil.toast("请输入正确的用户名和密码");
         }
