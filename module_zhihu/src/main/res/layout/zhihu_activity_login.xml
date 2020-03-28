@@ -5,13 +5,25 @@
     android:layout_height="match_parent"
     android:background="@color/public_white">
 
+    <com.base.baseui.view.TitleView
+        app:titleText="登录"
+        app:dividerHide="true"
+        app:backHide="true"
+        app:closeHide="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
 
     <ImageView
         android:id="@+id/image_success"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="100dp"
         android:contentDescription="@null"
         android:scaleType="centerCrop"
         android:src="@drawable/public_app_ic_launcher"
@@ -123,14 +135,14 @@
     <Button
         android:id="@+id/btn_go_login"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
+        android:layout_height="42dp"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="30dp"
         android:background="@drawable/public_default_btn_selector_blue_corner"
         android:text="登录"
         android:textColor="@color/public_white"
-        android:textSize="18sp"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/user_psw" />
@@ -147,8 +159,8 @@
         android:gravity="end"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
-        android:text="忘记密码"
-        android:textColor="#999999"
+        android:text="忘记密码？"
+        android:textColor="@color/zhihu_c6293f9"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_go_login" />

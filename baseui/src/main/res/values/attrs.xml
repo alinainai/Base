@@ -23,9 +23,13 @@
     </declare-styleable>
 
     <!--上下滚动消息属性-->
-    <declare-styleable name="JDAdverView" tools:ignore="ResourceName">
-        <attr name="gap" format="integer" />
-        <attr name="animDuration" format="integer" />
+    <declare-styleable name="VerticalScrollView" tools:ignore="ResourceName">
+        <attr name="verticalGap" format="integer" />
+        <attr name="verticalAnimDuration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="GalleryView" tools:ignore="ResourceName">
+        <attr name="animDuration" format="integer"/>
     </declare-styleable>
 
 </resources>

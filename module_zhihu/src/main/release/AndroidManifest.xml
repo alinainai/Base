@@ -4,21 +4,21 @@
 
     <application>
         <activity
-            android:name=".detial.DetailsActivity"
+            android:name=".ui.detial.DetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_main"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".map.MapActivity"
+        <activity android:name=".ui.map.MapActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="fullSensor"
             />
-        <activity android:name=".login.LoginActivity"
+        <activity android:name=".ui.login.LoginActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="fullSensor"
             />
