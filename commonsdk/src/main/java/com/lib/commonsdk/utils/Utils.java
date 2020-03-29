@@ -25,6 +25,7 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * ================================================
@@ -34,6 +35,22 @@ import java.text.DecimalFormat;
  * ================================================
  */
 public class Utils {
+
+
+    public static String CHINESE_LANG = "zh";
+    public static String CHINA = "CN";
+    public static String TAIWAN = "TW";
+    public static String HONGKONG = "HK";
+    public static String MACAU = "MO";
+    public static String ITALY = "IT";
+    public static String ITALY_LANG = "it";
+    public static String GERMANY = "DE";
+    public static String GERMANY_LANG = "de";
+    public static String KOREA_LANG = "ko";
+    public static String ENGLISH_LANG = "en";
+    public static String currSysLang;
+
+
     private Utils() {
         throw new IllegalStateException("you can't instantiate me!");
     }
@@ -100,6 +117,16 @@ public class Utils {
             cm.setPrimaryClip(mClipData);
         }
 
+    }
+
+
+    public static boolean isChinese() {
+        boolean isCH = false;
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equals(CHINESE_LANG) && locale.getCountry().equals(CHINA)) {
+            isCH = true;
+        }
+        return isCH;
     }
 
 }

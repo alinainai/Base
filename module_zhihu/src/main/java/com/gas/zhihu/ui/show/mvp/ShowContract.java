@@ -17,6 +17,10 @@ public interface ShowContract {
     interface View extends IView {
 
         void setDataInfo(MapBean data);
+        void setQrCode(String data);
+        void successView();
+        void showLoading();
+        void emptyView();
 
     }
 

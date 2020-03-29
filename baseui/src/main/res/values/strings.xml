@@ -12,4 +12,12 @@
     <string name="public_refresh_header_refreshing">&#8194;&#8194;加载中&#8194;&#8194;</string>
     <string name="public_refresh_header_load_success">&#8194;&#8194;加载完成&#8194;&#8194;</string>
     <string name="public_refresh_header_load_fail">&#8194;&#8194;加载失败&#8194;&#8194;</string>
+
+    <string name="public_date_today">&#8194;&#8194;加载失败&#8194;&#8194;</string>
+    <string name="public_refresh_header_load_fail">&#8194;&#8194;加载失败&#8194;&#8194;</string>
+    <string name="public_refresh_header_load_fail">&#8194;&#8194;加载失败&#8194;&#8194;</string>
+
+
+
+
 </resources>

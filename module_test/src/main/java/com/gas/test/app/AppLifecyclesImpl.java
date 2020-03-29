@@ -22,9 +22,7 @@ import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.gas.test.BuildConfig;
-import com.lib.commonsdk.utils.GasAppUtil;
-
-import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
+import com.lib.commonsdk.utils.GasAppUtils;
 
 
 /**
@@ -48,7 +46,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
         //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码
         if (BuildConfig.IS_BUILD_MODULE) {
-            GasAppUtil.init(application);
+            GasAppUtils.init(application);
         }
     }
 

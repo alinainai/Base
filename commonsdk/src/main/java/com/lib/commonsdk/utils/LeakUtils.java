@@ -12,7 +12,7 @@ public class LeakUtils {
 
     public static void fixSoftInputLeaks(final Window window) {
         InputMethodManager imm =
-                (InputMethodManager) GasAppUtil.getApp().getSystemService(Context.INPUT_METHOD_SERVICE);
+                (InputMethodManager) GasAppUtils.getApp().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) return;
         String[] leakViews = new String[]{"mLastSrvView", "mCurRootView", "mServedView", "mNextServedView"};
         for (String leakView : leakViews) {

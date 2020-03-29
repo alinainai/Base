@@ -23,7 +23,7 @@ import com.gas.zhihu.ui.map.di.DaggerMapComponent;
 import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.gas.zhihu.ui.map.mvp.MapPresenter;
 import com.gas.zhihu.ui.show.ShowActivity;
-import com.lib.commonsdk.utils.GasAppUtil;
+import com.lib.commonsdk.utils.GasAppUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -125,7 +125,7 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
         String search = ViewUtils.getNoSpaceText(etInput);
 
         if (TextUtils.isEmpty(search)) {
-            GasAppUtil.toast("请输入正确的匹配规则");
+            GasAppUtils.toast("请输入正确的匹配规则");
             return;
         }
         startActivity(new Intent(mContext, ShowActivity.class));

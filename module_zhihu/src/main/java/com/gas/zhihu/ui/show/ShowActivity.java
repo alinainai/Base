@@ -20,7 +20,8 @@ import com.gas.zhihu.bean.MapBean;
 import com.gas.zhihu.ui.show.di.DaggerShowComponent;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
 import com.gas.zhihu.ui.show.mvp.ShowPresenter;
-import com.lib.commonsdk.utils.GasAppUtil;
+import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.QRCode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -136,9 +137,33 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Override
     public void setDataInfo(MapBean data) {
 
-        tvDataInfo.setText(GasAppUtil.getString(R.string.zhihu_map_title_name, data.getMapName()));
+        tvDataInfo.setText(GasAppUtils.getString(R.string.zhihu_map_title_name, data.getMapName()));
         tvAddressInfoTrue.setText(data.getLocationInfo());
         tvRemarkInfoTrue.setText(data.getNote());
 
+    }
+
+    @Override
+    public void setQrCode(String data) {
+        imageCode.setImageBitmap( QRCode.createQRCode(data,200));
+
+    }
+
+    @Override
+    public void successView() {
+
+        emptyView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLoading() {
+        emptyView.setStatus(EmptyInterface.STATUS_LOADING);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void emptyView() {
+        emptyView.setStatus(EmptyInterface.STATUS_EMPTY);
+        emptyView.setVisibility(View.VISIBLE);
     }
 }

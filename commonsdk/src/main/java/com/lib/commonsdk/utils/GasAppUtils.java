@@ -12,7 +12,7 @@ import androidx.annotation.StringRes;
 import java.lang.reflect.InvocationTargetException;
 
 
-public class GasAppUtil {
+public class GasAppUtils {
 
 
     private static Application mApplication;

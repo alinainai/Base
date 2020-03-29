@@ -17,7 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.base.baseui.dialog.CommonDialog;
-import com.base.baseui.utils.FastClickUitls;
+import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -29,7 +29,7 @@ import com.gas.zhihu.ui.login.mvp.LoginContract;
 import com.gas.zhihu.ui.login.mvp.LoginPresenter;
 import com.gas.zhihu.ui.map.MapActivity;
 import com.gas.zhihu.view.CleanEditText;
-import com.lib.commonsdk.utils.GasAppUtil;
+import com.lib.commonsdk.utils.GasAppUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -165,7 +165,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         } else if (id == R.id.btn_go_login) {
 
-            if (FastClickUitls.isFastClick()) return;
+            if (FastClickUtils.isFastClick()) return;
             login();
 
         } else if (id == R.id.tv_login_other) {
@@ -191,12 +191,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (TextUtils.isEmpty(userName)) {
-            GasAppUtil.toast("请输入登录账号");
+            GasAppUtils.toast("请输入登录账号");
             return;
         }
 
         if (TextUtils.isEmpty(passWord)) {
-            GasAppUtil.toast("请输入登录密码");
+            GasAppUtils.toast("请输入登录密码");
             return;
         }
 
@@ -204,7 +204,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             startActivity(new Intent(mContext, MapActivity.class));
             finish();
         } else {
-            GasAppUtil.toast("请输入正确的用户名和密码");
+            GasAppUtils.toast("请输入正确的用户名和密码");
         }
 
     }

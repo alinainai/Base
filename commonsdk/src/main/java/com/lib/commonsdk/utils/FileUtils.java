@@ -36,6 +36,7 @@ import javax.net.ssl.HttpsURLConnection;
  *     desc  : utils about file
  * </pre>
  */
+@SuppressWarnings({"WeakerAccess", "unused"})
 public final class FileUtils {
 
     private static final String LINE_SEP = System.getProperty("line.separator");
@@ -66,7 +67,7 @@ public final class FileUtils {
         } else {
             try {
                 Uri uri = Uri.parse(filePath);
-                ContentResolver cr = GasAppUtil.getApp().getContentResolver();
+                ContentResolver cr = GasAppUtils.getApp().getContentResolver();
                 AssetFileDescriptor afd = cr.openAssetFileDescriptor(uri, "r");
                 if (afd == null) return false;
                 try {
@@ -1381,7 +1382,7 @@ public final class FileUtils {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri = Uri.fromFile(file);
         intent.setData(uri);
-        GasAppUtil.getApp().sendBroadcast(intent);
+        GasAppUtils.getApp().sendBroadcast(intent);
     }
 
     /**

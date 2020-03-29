@@ -1,10 +1,10 @@
-package com.base.baseui.utils;
+package com.lib.commonsdk.utils;
 
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class FastClickUitls {
+public class FastClickUtils {
 
     private static long lastClickTime;
 

@@ -21,12 +21,10 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.integration.cache.IntelligentCache;
-import com.base.lib.util.ArmsUtils;
 
 
 import com.gas.app.BuildConfig;
-import com.lib.commonsdk.utils.GasAppUtil;
+import com.lib.commonsdk.utils.GasAppUtils;
 
 
 public class AppLifecyclesImpl implements AppLifecyclers {
@@ -39,7 +37,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
     @Override
     public void onCreate(@NonNull Application application) {
         if (!BuildConfig.IS_BUILD_MODULE) {
-            GasAppUtil.init(application);
+            GasAppUtils.init(application);
         }
     }
 
