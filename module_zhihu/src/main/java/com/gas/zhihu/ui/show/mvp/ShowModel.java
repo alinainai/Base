@@ -37,4 +37,9 @@ public class ShowModel extends BaseModel implements ShowContract.Model {
     public MapBean getMapInfo(String key) {
         return null;
     }
+
+    @Override
+    public MapBean getDefaultMapInfo() {
+        return new MapBean();
+    }
 }

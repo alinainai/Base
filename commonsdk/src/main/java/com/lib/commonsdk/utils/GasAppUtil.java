@@ -11,32 +11,34 @@ import androidx.annotation.StringRes;
 
 import java.lang.reflect.InvocationTargetException;
 
+
 public class GasAppUtil {
+
 
     private static Application mApplication;
 
-    public static void init(Application application){
-        mApplication=application;
+    public static void init(Application application) {
+        mApplication = application;
     }
 
-    public static Application getApplication(){
-        return mApplication==null?getApplicationByReflect():mApplication;
+    public static Application getApp() {
+        return mApplication == null ? getApplicationByReflect() : mApplication;
     }
 
-    public static Resources getResources(){
-        return getApplication().getResources();
+    public static Resources getResources() {
+        return getApp().getResources();
     }
 
-    public static String getString(@StringRes int sId,Object... args){
-        return getApplication().getResources().getString(sId,args);
+    public static String getString(@StringRes int sId, Object... args) {
+        return getApp().getResources().getString(sId, args);
     }
 
-    public static Drawable getDrawable(@DrawableRes int sId){
-        return getApplication().getResources().getDrawable(sId);
+    public static Drawable getDrawable(@DrawableRes int sId) {
+        return getApp().getResources().getDrawable(sId);
     }
 
     public static void toast(CharSequence text) {
-        Toast.makeText(getApplication().getApplicationContext(),text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApp().getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     private static Application getApplicationByReflect() {
@@ -54,5 +56,6 @@ public class GasAppUtil {
         }
         throw new NullPointerException("u should init first");
     }
+
 
 }

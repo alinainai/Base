@@ -119,15 +119,16 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
             case R.id.image_address:
                 break;
             case R.id.tv_address_copy:
-
-
-
+                mPresenter.setAddressToCopy();
                 break;
             case R.id.tv_address_info_true:
+                mPresenter.setAddressToCopy();
                 break;
             case R.id.tv_remark_modify:
+
                 break;
             case R.id.image_code:
+
                 break;
         }
     }
