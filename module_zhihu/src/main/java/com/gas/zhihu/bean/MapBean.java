@@ -2,11 +2,11 @@ package com.gas.zhihu.bean;
 
 public class MapBean {
 
-    private String pathName;
-    private String locationInfo;
-    private String mapName;
-    private String keyName;
-    private String note;
+    private String pathName= "";
+    private String locationInfo= "";
+    private String mapName= "";
+    private String keyName= "";
+    private String note= "";
 
 
 

@@ -14,23 +14,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.base.baseui.dialog.CommonDialog;
-import com.base.baseui.utils.GasUtil;
 import com.base.baseui.utils.ViewUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
-import com.gas.zhihu.app.ZhihuConfig;
 import com.gas.zhihu.ui.map.di.DaggerMapComponent;
 import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.gas.zhihu.ui.map.mvp.MapPresenter;
 import com.gas.zhihu.ui.show.ShowActivity;
+import com.lib.commonsdk.utils.GasAppUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
@@ -66,7 +64,7 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
-        mContext=this;
+        mContext = this;
         return R.layout.zhihu_activity_map;
 
     }
@@ -111,10 +109,9 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
     }
 
 
-
     private void showRuleDialog() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.zhihu_dialog_forget_pwd, null);
-        TextView tv= view.findViewById(R.id.dialog_title);
+        TextView tv = view.findViewById(R.id.dialog_title);
         tv.setText("这个是匹配规则的提示");
         CommonDialog pauseDialog = new CommonDialog.Builder(mContext).setCustomView(view).create();
         view.findViewById(R.id.btn_go_login).setOnClickListener(view1 -> {
@@ -128,12 +125,13 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
         String search = ViewUtils.getNoSpaceText(etInput);
 
         if (TextUtils.isEmpty(search)) {
-            GasUtil.toast("请输入正确的匹配规则");
+            GasAppUtil.toast("请输入正确的匹配规则");
             return;
         }
         startActivity(new Intent(mContext, ShowActivity.class));
 
     }
+
     /**
      * 双击退出函数
      */

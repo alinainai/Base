@@ -2,23 +2,30 @@ package com.gas.zhihu.ui.show;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.base.baseui.adapter.ExtendEmptyView;
+import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
-
-
+import com.base.paginate.interfaces.EmptyInterface;
+import com.gas.zhihu.R;
+import com.gas.zhihu.bean.MapBean;
 import com.gas.zhihu.ui.show.di.DaggerShowComponent;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
 import com.gas.zhihu.ui.show.mvp.ShowPresenter;
+import com.lib.commonsdk.utils.GasAppUtil;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
-
-import com.gas.zhihu.R;
 
 
 /**
@@ -30,6 +37,21 @@ import com.gas.zhihu.R;
  */
 
 public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowContract.View {
+
+    @BindView(R.id.title_view)
+    TitleView titleView;
+    @BindView(R.id.tv_data_info)
+    TextView tvDataInfo;
+    @BindView(R.id.image_address)
+    ImageView imageAddress;
+    @BindView(R.id.tv_address_info_true)
+    TextView tvAddressInfoTrue;
+    @BindView(R.id.tv_remark_info_true)
+    TextView tvRemarkInfoTrue;
+    @BindView(R.id.image_code)
+    ImageView imageCode;
+    @BindView(R.id.empty_view)
+    ExtendEmptyView emptyView;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -50,7 +72,26 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+        initView();
 
+    }
+
+    private void initView() {
+        emptyView.getRefreshView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        emptyView.setStatus(EmptyInterface.STATUS_LOADING);
+        emptyView.setVisibility(View.VISIBLE);
+
+        titleView.setOnBackListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                killMyself();
+            }
+        });
     }
 
 
@@ -69,5 +110,34 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Override
     public void killMyself() {
         finish();
+    }
+
+
+    @OnClick({R.id.image_address, R.id.tv_address_copy, R.id.tv_address_info_true, R.id.tv_remark_modify, R.id.image_code})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.image_address:
+                break;
+            case R.id.tv_address_copy:
+
+
+
+                break;
+            case R.id.tv_address_info_true:
+                break;
+            case R.id.tv_remark_modify:
+                break;
+            case R.id.image_code:
+                break;
+        }
+    }
+
+    @Override
+    public void setDataInfo(MapBean data) {
+
+        tvDataInfo.setText(GasAppUtil.getString(R.string.zhihu_map_title_name, data.getMapName()));
+        tvAddressInfoTrue.setText(data.getLocationInfo());
+        tvRemarkInfoTrue.setText(data.getNote());
+
     }
 }

@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.base.baseui.utils.GasUtil;
+import com.base.baseui.utils.ViewUtils;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.LazyLoadFragment;
 import com.base.lib.di.component.AppComponent;
@@ -99,7 +99,7 @@ public class ArticleFragment extends LazyLoadFragment<ArticlePresenter> implemen
 
     @Override
     protected void lazyLoadData() {
-        GasUtil.setIndicatorWidth(mTabLayout,  5);
+        ViewUtils.setIndicatorWidth(mTabLayout,  5);
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(mTitles.length - 1);

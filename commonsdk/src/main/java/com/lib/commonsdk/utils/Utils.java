@@ -16,9 +16,15 @@
 package com.lib.commonsdk.utils;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 
 import com.alibaba.android.arouter.launcher.ARouter;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 /**
  * ================================================
@@ -54,4 +60,46 @@ public class Utils {
     public static void navigation(Context context, String path) {
         ARouter.getInstance().build(path).navigation(context);
     }
+
+
+    /**
+     * String 保留小数
+     */
+    public static String strToDoubleBit(String str) {
+        double data;
+        try {
+            data = Double.parseDouble(str);
+        } catch (NumberFormatException e) {
+            return str;
+        }
+        DecimalFormat decimalFormat = new DecimalFormat(",###.##");
+        return decimalFormat.format(data);
+    }
+
+    /**
+     * 如果小数点后为零则显示整数否则保留两位小数
+     */
+
+    public static String formatDouble(double d) {
+        BigDecimal bg = new BigDecimal(d).setScale(2, RoundingMode.UP);
+        double num = bg.doubleValue();
+        if (Math.round(num) - num == 0) {
+            return String.valueOf((long) num);
+        }
+        return String.valueOf(num);
+    }
+
+    public static void copyData(Context context, String copyData) {
+
+        //获取剪贴板管理器：
+        ClipboardManager cm = (ClipboardManager) context.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        // 创建普通字符型ClipData
+        ClipData mClipData = ClipData.newPlainText("Label", copyData);
+        // 将ClipData内容放到系统剪贴板里。
+        if(cm!=null){
+            cm.setPrimaryClip(mClipData);
+        }
+
+    }
+
 }

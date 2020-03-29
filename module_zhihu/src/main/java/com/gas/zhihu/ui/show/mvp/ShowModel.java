@@ -8,6 +8,7 @@ import com.base.lib.di.scope.ActivityScope;
 
 import javax.inject.Inject;
 
+import com.gas.zhihu.bean.MapBean;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
 
 /**
@@ -30,5 +31,10 @@ public class ShowModel extends BaseModel implements ShowContract.Model {
     public void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Override
+    public MapBean getMapInfo(String key) {
+        return null;
     }
 }

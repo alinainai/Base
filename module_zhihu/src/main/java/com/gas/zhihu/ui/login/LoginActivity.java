@@ -18,7 +18,6 @@ import androidx.core.content.ContextCompat;
 
 import com.base.baseui.dialog.CommonDialog;
 import com.base.baseui.utils.FastClickUitls;
-import com.base.baseui.utils.GasUtil;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -30,6 +29,7 @@ import com.gas.zhihu.ui.login.mvp.LoginContract;
 import com.gas.zhihu.ui.login.mvp.LoginPresenter;
 import com.gas.zhihu.ui.map.MapActivity;
 import com.gas.zhihu.view.CleanEditText;
+import com.lib.commonsdk.utils.GasAppUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -191,12 +191,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (TextUtils.isEmpty(userName)) {
-            GasUtil.toast("请输入登录账号");
+            GasAppUtil.toast("请输入登录账号");
             return;
         }
 
         if (TextUtils.isEmpty(passWord)) {
-            GasUtil.toast("请输入登录密码");
+            GasAppUtil.toast("请输入登录密码");
             return;
         }
 
@@ -204,7 +204,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             startActivity(new Intent(mContext, MapActivity.class));
             finish();
         } else {
-            GasUtil.toast("请输入正确的用户名和密码");
+            GasAppUtil.toast("请输入正确的用户名和密码");
         }
 
     }

@@ -47,13 +47,15 @@ ext {
             rxjavaVersion                  : '2.2.14',
             rxandroidVersion               : '2.1.1',
 
+            greenDaoVersion                : '3.2.2',
+
 
     ]
 
     dependencies = [
 
             //kotlin
-            "kotlin-stdlib-jdk7"         : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version["kotlinVersion"]}",
+            "kotlin-stdlib-jdk7"        : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${version["kotlinVersion"]}",
             "core-ktx"                  : "androidx.core:core-ktx:${version["coreKtxVersion"]}",
 
             //support
@@ -113,6 +115,8 @@ ext {
             "javax.annotation"          : "javax.annotation:jsr250-api:1.0",
             "arouter"                   : "com.alibaba:arouter-api:1.5.0",
             "arouter-compiler"          : "com.alibaba:arouter-compiler:1.2.2",
+            "greenDao"                  : "org.greenrobot:greendao:${version["greenDaoVersion"]}",
+            "zxing"                     : "com.google.zxing:core:3.3.0",
 
             //test
             "junit"                     : "junit:junit:${version["junitVersion"]}",
@@ -122,8 +126,8 @@ ext {
             "espresso-intents"          : "androidx.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
             "mockito-core"              : "org.mockito:mockito-core:1.+",
             "timber"                    : "com.jakewharton.timber:timber:4.7.1",
-            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
-            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
+            "canary-debug"              : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
+            "canary-release"            : "com.squareup.leakcanary:leakcanary-android-no-op:1.6.3",
 
 
     ]

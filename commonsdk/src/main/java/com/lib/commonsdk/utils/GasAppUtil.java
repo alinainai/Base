@@ -27,8 +27,8 @@ public class GasAppUtil {
         return getApplication().getResources();
     }
 
-    public static String getString(@StringRes int sId){
-        return getApplication().getResources().getString(sId);
+    public static String getString(@StringRes int sId,Object... args){
+        return getApplication().getResources().getString(sId,args);
     }
 
     public static Drawable getDrawable(@DrawableRes int sId){
