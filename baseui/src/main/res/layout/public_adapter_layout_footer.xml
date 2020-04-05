@@ -14,7 +14,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:color="#999999"
-        app:public_qmui_loading_view_size="16dp" />
+        app:qmui_loading_view_size="16dp" />
     <TextView
         android:id="@+id/base_empty_tv"
         android:layout_marginStart="5dp"

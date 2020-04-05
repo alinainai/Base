@@ -49,9 +49,14 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
-        <!--        android:roundIcon="@drawable/public_ic_launcher_round"-->
+        <activity
+            android:name=".ui.activity.login.LoginActivity"
+            android:label="@string/title_activity_login">
 
 
+
+        </activity>
+         <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.gas.app.provider"
@@ -63,28 +68,27 @@
         </provider>
 
         <activity
-            android:name="com.gas.app.ui.activity.splash.SplashActivity"
-            android:theme="@style/public_app_theme_noBar"
-            android:screenOrientation="portrait">
+            android:name=".ui.activity.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/public_app_theme_noBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
-            android:name="com.gas.app.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gas.app.ui.activity.utils.WebViewActivity"
+            android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
-
 
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
-            android:value="ClientConfigModule"/>
-
+            android:value="ClientConfigModule" />
         <meta-data
             android:name="com.gas.app.config.GlobalConfiguration"
             android:value="ClientConfigModule" />

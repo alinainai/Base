@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 
 def static releaseTime() {
@@ -129,9 +130,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     androidTestImplementation rootProject.ext.dependencies["android-test-junit"]
     androidTestImplementation rootProject.ext.dependencies["espresso-core"]
-    testImplementation "junit:junit:4.12"
+    testImplementation rootProject.ext.dependencies["junit"]
 
 
 //    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
@@ -145,9 +147,8 @@ dependencies {
 
     implementation rootProject.ext.dependencies["lottie"]
 
-    //leakcanary 2.0+
+    //leak canary 2.0+
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-
 
 
     if (!isBuildModule.toBoolean()) {
@@ -160,4 +161,5 @@ dependencies {
     }
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
+
 }

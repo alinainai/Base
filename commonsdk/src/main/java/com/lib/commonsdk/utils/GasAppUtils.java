@@ -2,6 +2,8 @@ package com.lib.commonsdk.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
@@ -40,6 +42,11 @@ public class GasAppUtils {
     public static void toast(CharSequence text) {
         Toast.makeText(getApp().getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
+
+    public static boolean checkMapAppsIsExist( String packagename) {
+      return   Utils.checkMapAppsIsExist(getApp(),packagename);
+    }
+
 
     private static Application getApplicationByReflect() {
         try {

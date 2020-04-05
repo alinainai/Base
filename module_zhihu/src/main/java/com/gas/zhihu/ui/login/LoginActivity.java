@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
 import com.base.baseui.dialog.CommonDialog;
+import com.gas.zhihu.dialog.TipShowDialog;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
@@ -140,12 +141,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         finish();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @OnClick({R2.id.iv_eye, R2.id.btn_go_login, R2.id.tv_login_other})
     public void onViewClicked(View view) {
@@ -174,14 +170,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
     private void showForgetTip() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.zhihu_dialog_forget_pwd, null);
-        TextView tv= view.findViewById(R.id.dialog_title);
-        tv.setText("这个是登录的提示");
-        CommonDialog pauseDialog = new CommonDialog.Builder(mContext).setCustomView(view).create();
-        view.findViewById(R.id.btn_go_login).setOnClickListener(view1 -> {
-            pauseDialog.dismiss();
-        });
-        pauseDialog.show();
+      new TipShowDialog().show(this,"提示","登录密码提示");
     }
 
     private void login() {

@@ -23,6 +23,7 @@ public class ShowPresenter extends BasePresenter<ShowContract.Model, ShowContrac
     public ShowPresenter(ShowContract.Model model, ShowContract.View rootView) {
         super(model, rootView);
         mMap = model.getDefaultMapInfo();
+        mMap.setLocationInfo("东直门");
     }
 
 

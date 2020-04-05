@@ -32,7 +32,7 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_tile"
-        app:public_qmui_loading_view_size="16dp" />
+        app:qmui_loading_view_size="16dp" />
 
     <TextView
         android:id="@+id/tv_tile"

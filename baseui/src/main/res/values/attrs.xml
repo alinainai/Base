@@ -2,11 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--************ QMUILoading ***********-->
-    <declare-styleable name="public_QMUILoadingView">
-        <attr name="public_qmui_loading_view_size" format="dimension" />
+    <declare-styleable name="QMUILoadingView" tools:ignore="ResourceName">
+        <attr name="qmui_loading_view_size" format="dimension" />
         <attr name="android:color" />
     </declare-styleable>
-    <attr name="public_QMUILoadingStyle" format="reference" />
+    <attr name="QMUILoadingStyle" format="reference" tools:ignore="ResourceName" />
 
 
     <declare-styleable name="TitleView" tools:ignore="ResourceName">

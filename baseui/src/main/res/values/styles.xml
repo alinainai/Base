@@ -58,5 +58,15 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="public_dialog_map_text">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/public_text_black_deep</item>
+    </style>
+
 
 </resources>

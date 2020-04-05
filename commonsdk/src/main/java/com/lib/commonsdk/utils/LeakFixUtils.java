@@ -7,7 +7,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.lang.reflect.Field;
 
-public class LeakUtils {
+public class LeakFixUtils {
 
 
     public static void fixSoftInputLeaks(final Window window) {

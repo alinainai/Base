@@ -80,4 +80,9 @@
     <dimen name="public_mar_bottom_5dp">5dp</dimen>
 
 
+
+    <dimen name="public_menu_max_height">270dp</dimen>
+
+
+
 </resources>

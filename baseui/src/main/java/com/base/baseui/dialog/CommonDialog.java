@@ -62,10 +62,12 @@ public class CommonDialog extends Dialog {
             mTitle = title;
             return this;
         }
+
         public CommonDialog.Builder setLeftTitle(String leftTitle) {
             mPositiveBtnText = leftTitle;
             return this;
         }
+
         public CommonDialog.Builder setRightTitle(String rightTitle) {
             mNegativeBtnText = rightTitle;
             return this;
@@ -76,6 +78,7 @@ public class CommonDialog extends Dialog {
             mTitle = mContext.getString(resId);
             return this;
         }
+
         public CommonDialog.Builder setCustomView(View contentView) {
             mContentView = contentView;
             return this;
@@ -107,7 +110,7 @@ public class CommonDialog extends Dialog {
                 if (!TextUtils.isEmpty(mPositiveBtnText)) {
                     left_title.setVisibility(View.VISIBLE);
                     left_title.setText(mPositiveBtnText);
-                }else {
+                } else {
                     left_title.setVisibility(View.GONE);
                 }
                 if (!TextUtils.isEmpty(mNegativeBtnText)) {
@@ -153,7 +156,7 @@ public class CommonDialog extends Dialog {
             window.setGravity(Gravity.CENTER);
             window.setDimAmount(0.5f);
             //设置窗口出现和窗口隐藏的动画
-//        window.setWindowAnimations(R.style.ios_bottom_dialog_anim);
+//            window.setWindowAnimations(R.style.dialogCenterWindowAnim);
 
             WindowManager.LayoutParams lp = window.getAttributes();
             lp.width = WindowManager.LayoutParams.WRAP_CONTENT;

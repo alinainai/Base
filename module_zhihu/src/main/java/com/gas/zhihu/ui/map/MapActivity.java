@@ -19,6 +19,7 @@ import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
+import com.gas.zhihu.dialog.TipShowDialog;
 import com.gas.zhihu.ui.map.di.DaggerMapComponent;
 import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.gas.zhihu.ui.map.mvp.MapPresenter;
@@ -110,14 +111,8 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
 
 
     private void showRuleDialog() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.zhihu_dialog_forget_pwd, null);
-        TextView tv = view.findViewById(R.id.dialog_title);
-        tv.setText("这个是匹配规则的提示");
-        CommonDialog pauseDialog = new CommonDialog.Builder(mContext).setCustomView(view).create();
-        view.findViewById(R.id.btn_go_login).setOnClickListener(view1 -> {
-            pauseDialog.dismiss();
-        });
-        pauseDialog.show();
+        new TipShowDialog().show(this,"提示","匹配规则的提示");
+
     }
 
     private void toSearch() {

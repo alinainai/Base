@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 
 import com.alibaba.android.arouter.launcher.ARouter;
 
@@ -127,6 +128,24 @@ public class Utils {
             isCH = true;
         }
         return isCH;
+    }
+
+    /**
+     * 检测地图应用是否安装
+     *
+     * @param context
+     * @param packagename
+     * @return
+     */
+    public static boolean checkMapAppsIsExist(Context context, String packagename) {
+        PackageInfo packageInfo;
+        try {
+            packageInfo = context.getApplicationContext().getPackageManager().getPackageInfo(packagename, 0);
+        } catch (Exception e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        return packageInfo != null;
     }
 
 }

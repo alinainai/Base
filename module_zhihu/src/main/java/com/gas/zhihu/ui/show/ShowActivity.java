@@ -16,10 +16,14 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.gas.zhihu.R;
+import com.gas.zhihu.R2;
+import com.gas.zhihu.bean.LocationBean;
 import com.gas.zhihu.bean.MapBean;
+import com.gas.zhihu.dialog.SelectMapDialog;
 import com.gas.zhihu.ui.show.di.DaggerShowComponent;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
 import com.gas.zhihu.ui.show.mvp.ShowPresenter;
+import com.gas.zhihu.utils.LocationUtils;
 import com.lib.commonsdk.utils.GasAppUtils;
 import com.lib.commonsdk.utils.QRCode;
 
@@ -27,6 +31,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
+import static com.gas.zhihu.utils.LocationUtils.MAP_AMAP;
+import static com.gas.zhihu.utils.LocationUtils.MAP_BAIDU;
+import static com.gas.zhihu.utils.LocationUtils.MAP_TECENT;
 
 
 /**
@@ -39,19 +46,19 @@ import static com.base.lib.util.Preconditions.checkNotNull;
 
 public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowContract.View {
 
-    @BindView(R.id.title_view)
+    @BindView(R2.id.title_view)
     TitleView titleView;
-    @BindView(R.id.tv_data_info)
+    @BindView(R2.id.tv_data_info)
     TextView tvDataInfo;
-    @BindView(R.id.image_address)
+    @BindView(R2.id.image_address)
     ImageView imageAddress;
-    @BindView(R.id.tv_address_info_true)
+    @BindView(R2.id.tv_address_info_true)
     TextView tvAddressInfoTrue;
-    @BindView(R.id.tv_remark_info_true)
+    @BindView(R2.id.tv_remark_info_true)
     TextView tvRemarkInfoTrue;
-    @BindView(R.id.image_code)
+    @BindView(R2.id.image_code)
     ImageView imageCode;
-    @BindView(R.id.empty_view)
+    @BindView(R2.id.empty_view)
     ExtendEmptyView emptyView;
 
     @Override
@@ -74,6 +81,7 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initView();
+        mPresenter.freshViewData();
 
     }
 
@@ -123,7 +131,7 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
                 mPresenter.setAddressToCopy();
                 break;
             case R.id.tv_address_info_true:
-                mPresenter.setAddressToCopy();
+                showMapDialog();
                 break;
             case R.id.tv_remark_modify:
 
@@ -145,13 +153,12 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
 
     @Override
     public void setQrCode(String data) {
-        imageCode.setImageBitmap( QRCode.createQRCode(data,200));
+        imageCode.setImageBitmap(QRCode.createQRCode(data, 200));
 
     }
 
     @Override
     public void successView() {
-
         emptyView.setVisibility(View.GONE);
     }
 
@@ -165,5 +172,36 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     public void emptyView() {
         emptyView.setStatus(EmptyInterface.STATUS_EMPTY);
         emptyView.setVisibility(View.VISIBLE);
+    }
+
+
+    private void showMapDialog() {
+
+        // 经度：116.44000 纬度： 39.93410
+        LocationBean bean = new LocationBean();
+        bean.dname = "东直门";
+        bean.dlat = 39.93410d;
+        bean.dlon = 116.44000d;
+
+        new SelectMapDialog().show(this, map -> {
+
+            switch (map) {
+                case MAP_AMAP:
+                    startActivity(LocationUtils.getAMapMapIntent(bean));
+                    break;
+                case MAP_BAIDU:
+                    startActivity(LocationUtils.getBaiduMapIntent(bean));
+                    break;
+                case MAP_TECENT:
+                    startActivity(LocationUtils.getTecentMapIntent(bean));
+                    break;
+                default:
+                    //do nothing
+                    break;
+            }
+
+
+        });
+
     }
 }

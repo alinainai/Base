@@ -35,7 +35,7 @@ ext {
 
 
             //kotlin版本号
-            kotlinVersion                  : '1.3.50',
+            kotlinVersion                  : '1.3.61',
             coreKtxVersion                 : '1.1.0',
 
             //okhttp版本号
@@ -48,6 +48,8 @@ ext {
             rxandroidVersion               : '2.1.1',
 
             greenDaoVersion                : '3.2.2',
+
+
 
 
     ]
