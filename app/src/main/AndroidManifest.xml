@@ -49,13 +49,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
-        <activity
-            android:name=".ui.activity.login.LoginActivity"
-            android:label="@string/title_activity_login">
 
-
-
-        </activity>
          <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -18,6 +18,7 @@ public class ShowPresenter extends BasePresenter<ShowContract.Model, ShowContrac
 
 
     private MapBean mMap;
+    private String mQrCodeInfo=TimeUtils.getDateAndTime(TimeUtils.getNow());
 
     @Inject
     public ShowPresenter(ShowContract.Model model, ShowContract.View rootView) {
@@ -40,8 +41,13 @@ public class ShowPresenter extends BasePresenter<ShowContract.Model, ShowContrac
 
         mView.successView();
         mView.setDataInfo(mMap);
-        mView.setQrCode(TimeUtils.getDateAndTime(TimeUtils.getNow()));
+        mView.setQrCode(mQrCodeInfo);
 
+    }
+
+    public String getQrCodeInfo(){
+
+        return mQrCodeInfo;
     }
 
 

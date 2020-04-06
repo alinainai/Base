@@ -19,6 +19,7 @@ import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.bean.LocationBean;
 import com.gas.zhihu.bean.MapBean;
+import com.gas.zhihu.dialog.QrCodeShowDialog;
 import com.gas.zhihu.dialog.SelectMapDialog;
 import com.gas.zhihu.ui.show.di.DaggerShowComponent;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
@@ -137,7 +138,7 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
 
                 break;
             case R.id.image_code:
-
+               new QrCodeShowDialog().show(this,"签到二维码",mPresenter.getQrCodeInfo());
                 break;
         }
     }
