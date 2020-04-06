@@ -123,7 +123,7 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
             GasAppUtils.toast("请输入正确的匹配规则");
             return;
         }
-        startActivity(new Intent(mContext, ShowActivity.class));
+        ShowActivity.launchActivity(mContext,search);
 
     }
 

@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_tip_info">
 
         <EditText
+            android:text="DK001"
             android:id="@+id/et_input"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

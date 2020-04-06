@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import com.gas.zhihu.bean.MapBean;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
+import com.gas.zhihu.utils.MapBeanDbUtils;
 
 /**
  * ================================================
@@ -35,7 +36,7 @@ public class ShowModel extends BaseModel implements ShowContract.Model {
 
     @Override
     public MapBean getMapInfo(String key) {
-        return null;
+        return MapBeanDbUtils.queryData(key);
     }
 
     @Override

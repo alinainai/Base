@@ -16,7 +16,7 @@ class QrCodeShowDialog {
         val dialog_title = view.findViewById<TextView>(R.id.dialog_title)
         val dialog_info = view.findViewById<ImageView>(R.id.dialog_info)
         dialog_title.text = title
-        dialog_info.setImageBitmap(QRCode.createQRCode(info, 500))
+        dialog_info.setImageBitmap(QRCode.createQRCode(info, 800))
 
         val dialog = CommonDialog.Builder(context)
                 .setCustomView(view)

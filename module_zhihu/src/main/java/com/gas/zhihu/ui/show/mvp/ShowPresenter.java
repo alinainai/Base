@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
+import com.gas.zhihu.bean.LocationBean;
 import com.gas.zhihu.bean.MapBean;
 import com.lib.commonsdk.utils.GasAppUtils;
 import com.lib.commonsdk.utils.TimeUtils;
@@ -18,18 +19,23 @@ public class ShowPresenter extends BasePresenter<ShowContract.Model, ShowContrac
 
 
     private MapBean mMap;
-    private String mQrCodeInfo=TimeUtils.getDateAndTime(TimeUtils.getNow());
+    private String mQrCodeInfo;
 
     @Inject
     public ShowPresenter(ShowContract.Model model, ShowContract.View rootView) {
         super(model, rootView);
-        mMap = model.getDefaultMapInfo();
-        mMap.setLocationInfo("东直门");
     }
 
 
+    public MapBean queryDate(String keyName){
+        mMap= mModel.getMapInfo(keyName);
+        mQrCodeInfo=TimeUtils.getDateWithoutTime(TimeUtils.getNow());
+        return mMap;
+    }
+
     public void setAddressToCopy(){
-        if(!TextUtils.isEmpty(mMap.getLocationInfo())){
+
+        if(mMap!=null && !TextUtils.isEmpty(mMap.getLocationInfo())){
             Utils.copyData(GasAppUtils.getApp(),mMap.getLocationInfo());
             mView.showMessage("复制成功，请去地图软件搜索");
         }else {
@@ -46,14 +52,23 @@ public class ShowPresenter extends BasePresenter<ShowContract.Model, ShowContrac
     }
 
     public String getQrCodeInfo(){
-
         return mQrCodeInfo;
     }
+
+    public MapBean getMapBeanInfo(){
+        return mMap;
+    }
+    public LocationBean getLocationInfo(){
+        if(mMap==null){
+            return new LocationBean();
+        }
+        return mMap.getLocationBean();
+    }
+
 
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 }

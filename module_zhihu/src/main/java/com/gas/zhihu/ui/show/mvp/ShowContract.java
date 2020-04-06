@@ -21,6 +21,7 @@ public interface ShowContract {
         void successView();
         void showLoading();
         void emptyView();
+        void errorView();
 
     }
 

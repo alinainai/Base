@@ -1,7 +1,9 @@
 package com.gas.zhihu.ui.show;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,11 +27,21 @@ import com.gas.zhihu.ui.show.di.DaggerShowComponent;
 import com.gas.zhihu.ui.show.mvp.ShowContract;
 import com.gas.zhihu.ui.show.mvp.ShowPresenter;
 import com.gas.zhihu.utils.LocationUtils;
+import com.gas.zhihu.utils.MapBeanDbUtils;
 import com.lib.commonsdk.utils.GasAppUtils;
 import com.lib.commonsdk.utils.QRCode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
 import static com.gas.zhihu.utils.LocationUtils.MAP_AMAP;
@@ -47,6 +59,7 @@ import static com.gas.zhihu.utils.LocationUtils.MAP_TECENT;
 
 public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowContract.View {
 
+
     @BindView(R2.id.title_view)
     TitleView titleView;
     @BindView(R2.id.tv_data_info)
@@ -61,6 +74,11 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     ImageView imageCode;
     @BindView(R2.id.empty_view)
     ExtendEmptyView emptyView;
+
+    private static final String MAP_KEY_ARG="map_key_arg";
+    private Disposable mDisposable;
+
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -82,26 +100,61 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
         initView();
-        mPresenter.freshViewData();
-
     }
 
     private void initView() {
-        emptyView.getRefreshView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        emptyView.getRefreshView().setOnClickListener(v -> loadData());
+        titleView.setOnBackListener(v -> killMyself());
+        loadData();
+    }
 
-            }
-        });
-        emptyView.setStatus(EmptyInterface.STATUS_LOADING);
-        emptyView.setVisibility(View.VISIBLE);
+    private void loadData(){
+        if(getIntent()!=null&&! TextUtils.isEmpty(getIntent().getStringExtra(MAP_KEY_ARG)) ){
 
-        titleView.setOnBackListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                killMyself();
-            }
-        });
+            Observable.create((ObservableOnSubscribe<MapBean>) emitter -> {
+                MapBean map = mPresenter.queryDate(getIntent().getStringExtra(MAP_KEY_ARG));
+                if(map==null){
+                    emitter.onNext(new MapBean());
+                }else {
+                    emitter.onNext(map);
+                }
+                emitter.onComplete();
+            }).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<MapBean>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            mDisposable= d;
+                            showLoading();
+                        }
+
+                        @Override
+                        public void onNext(MapBean mapBean) {
+
+                            if(!TextUtils.isEmpty(mapBean.getKeyName())){
+                                mPresenter.freshViewData();
+                            }else {
+                                emptyView();
+                            }
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            errorView();
+                            mDisposable.dispose();
+                        }
+
+                        @Override
+                        public void onComplete() {
+                            mDisposable.dispose();
+                        }
+                    });
+
+
+        }else {
+            errorView();
+        }
     }
 
 
@@ -117,6 +170,13 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
         ArmsUtils.startActivity(intent);
     }
 
+
+    public static void launchActivity(Context context, String key) {
+        Intent intent = new Intent(context,ShowActivity.class);
+        intent.putExtra(MAP_KEY_ARG,key);
+        ArmsUtils.startActivity(intent);
+    }
+
     @Override
     public void killMyself() {
         finish();
@@ -127,14 +187,16 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.image_address:
+
                 break;
             case R.id.tv_address_copy:
                 mPresenter.setAddressToCopy();
                 break;
             case R.id.tv_address_info_true:
-                showMapDialog();
+                showMapDialog(mPresenter.getLocationInfo());
                 break;
             case R.id.tv_remark_modify:
+
 
                 break;
             case R.id.image_code:
@@ -145,17 +207,14 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
 
     @Override
     public void setDataInfo(MapBean data) {
-
         tvDataInfo.setText(GasAppUtils.getString(R.string.zhihu_map_title_name, data.getMapName()));
         tvAddressInfoTrue.setText(data.getLocationInfo());
         tvRemarkInfoTrue.setText(data.getNote());
-
     }
 
     @Override
     public void setQrCode(String data) {
         imageCode.setImageBitmap(QRCode.createQRCode(data, 200));
-
     }
 
     @Override
@@ -175,17 +234,26 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
         emptyView.setVisibility(View.VISIBLE);
     }
 
+    @Override
+    public void errorView() {
+        emptyView.setStatus(EmptyInterface.STATUS_FAIL);
+        emptyView.setVisibility(View.VISIBLE);
+    }
 
-    private void showMapDialog() {
+
+    private void showMapDialog(LocationBean bean) {
+
+        if(bean==null){
+            GasAppUtils.toast("数据错误");
+            return;
+        }
+        if(bean.isInfoError()){
+            GasAppUtils.toast("数据错误");
+            return;
+        }
 
         // 经度：116.44000 纬度： 39.93410
-        LocationBean bean = new LocationBean();
-        bean.dname = "东直门";
-        bean.dlat = 39.93410d;
-        bean.dlon = 116.44000d;
-
         new SelectMapDialog().show(this, map -> {
-
             switch (map) {
                 case MAP_AMAP:
                     startActivity(LocationUtils.getAMapMapIntent(bean));
@@ -200,8 +268,6 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
                     //do nothing
                     break;
             }
-
-
         });
 
     }

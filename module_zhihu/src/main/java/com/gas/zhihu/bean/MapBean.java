@@ -1,7 +1,16 @@
 package com.gas.zhihu.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
+import org.greenrobot.greendao.annotation.Generated;
+
+@Entity
 public class MapBean {
 
+
+    @Id(autoincrement = true)
+    Long id;
     /**
      * 存储地址
      */
@@ -17,7 +26,9 @@ public class MapBean {
     /**
      * 搜索键名
      */
+    @Unique
     private String keyName= "";
+
     /**
      * 备注
      */
@@ -32,6 +43,24 @@ public class MapBean {
      * 纬度
      */
     private double latitude;
+
+
+    @Generated(hash = 1181097025)
+    public MapBean(Long id, String pathName, String locationInfo, String mapName,
+            String keyName, String note, double longitude, double latitude) {
+        this.id = id;
+        this.pathName = pathName;
+        this.locationInfo = locationInfo;
+        this.mapName = mapName;
+        this.keyName = keyName;
+        this.note = note;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
+    @Generated(hash = 412228366)
+    public MapBean() {
+    }
 
 
     public double getLongitude() {
@@ -98,6 +127,14 @@ public class MapBean {
         bean.dlon=getLongitude();
         return bean;
 
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
 }

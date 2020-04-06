@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.gas.zhihu.BuildConfig;
+import com.gas.zhihu.db.DbUtils;
 import com.lib.commonsdk.utils.GasAppUtils;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
@@ -47,13 +48,13 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
     @Override
     public void onCreate(@NonNull Application application) {
-//
         //使用 RetrofitUrlManager 切换 BaseUrl
         RetrofitUrlManager.getInstance().putDomain(ZHIHU_DOMAIN_NAME, ZHIHU_DOMAIN);
         //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码
         if (BuildConfig.IS_BUILD_MODULE) {
             GasAppUtils.init(application);
         }
+        DbUtils.getInstance().init(application);
     }
 
     @Override
