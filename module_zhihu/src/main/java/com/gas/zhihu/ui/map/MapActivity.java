@@ -1,9 +1,11 @@
 package com.gas.zhihu.ui.map;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,12 +28,16 @@ import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.gas.zhihu.ui.map.mvp.MapPresenter;
 import com.gas.zhihu.ui.show.ShowActivity;
 import com.lib.commonsdk.utils.GasAppUtils;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
 
@@ -52,6 +58,8 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
     @BindView(R2.id.et_input)
     EditText etInput;
     private Context mContext;
+
+    private Disposable mDisposable;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -159,5 +167,37 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
         }
         return false;
     }
+
+    private void requestPermissions() {
+        mDisposable  = new RxPermissions(this).requestEach(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_CALENDAR,
+                        Manifest.permission.READ_CALL_LOG,
+                        Manifest.permission.READ_CONTACTS,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_SMS,
+                        Manifest.permission.RECORD_AUDIO,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.SEND_SMS)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) throws Exception {
+                        if (permission.granted) {
+                            // 用户已经同意该权限
+                            Log.d(TAG, permission.name + " is granted.");
+                        } else if (permission.shouldShowRequestPermissionRationale) {
+                            // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+                            Log.d(TAG, permission.name + " is denied. More info should be provided.");
+                        } else {
+                            // 用户拒绝了该权限，并且选中『不再询问』
+                            Log.d(TAG, permission.name + " is denied.");
+                        }
+                    }
+                });
+
+
+    }
+
 
 }

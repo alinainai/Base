@@ -32,4 +32,19 @@
         <attr name="animDuration" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="WaveView" tools:ignore="ResourceName">
+        <!-- 中心圆颜色-->
+        <attr name="waveCenterColor" format="color"/>
+        <!-- 中心圆半径（起始扩散波纹的起始半径）-->
+        <attr name="waveCenterRadius" format="dimension"/>
+        <!-- 扩散最大半径-->
+        <attr name="waveMaxRadius" format="dimension"/>
+        <!-- 创建新的波纹的间隔时间(毫秒)-->
+        <attr name="waveIntervalTime" format="integer"/>
+        <!-- 一个波纹从创建到消失的持续时间(毫秒)-->
+        <attr name="waveDuration" format="integer"/>
+        <!-- 波纹的宽度-->
+        <attr name="waveWidth" format="dimension"/>
+    </declare-styleable>
+
 </resources>
