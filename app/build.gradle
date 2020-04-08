@@ -3,6 +3,10 @@ apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
+apply plugin: 'kotlin-kapt'
+kapt {
+    generateStubs = true
+}
 
 
 def static releaseTime() {
@@ -140,11 +144,11 @@ dependencies {
 //    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.zhy:okhttputils:2.6.2'
     //tools
-    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'annotations'
     }
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
 
     implementation rootProject.ext.dependencies["lottie"]
 

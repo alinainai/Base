@@ -30,10 +30,6 @@ import com.gas.zhihu.R;
 
 public class CleanEditText extends AppCompatEditText {
 
-
-    public static final int INPUT_TYPE_PHONENUM = 0;
-    public static final int INPUT_TYPE_INTGER = 1;
-    public static final int INPUT_TYPE_BANKCARD = 2;
     private static final int DRAWABLE_LEFT = 0;
     private static final int DRAWABLE_TOP = 1;
     private static final int DRAWABLE_RIGHT = 2;
@@ -67,80 +63,9 @@ public class CleanEditText extends AppCompatEditText {
         init();
     }
 
-
     private void init() {
         mClearDrawable = getResources().getDrawable(R.mipmap.zhihu_clear_normal);
-
-        addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (mInputType == 0)
-                    format(s, CleanEditText.this);
-                else if (mInputType == 2)
-                    format(s);
-            }
-        });
     }
-
-    private void format(Editable editable, EditText mInputET) {
-        if (shouldStopChange) {
-            shouldStopChange = false;
-            return;
-        }
-
-        shouldStopChange = true;
-        String str = editable.toString().trim().replaceAll(WHITE_SPACE, "");
-        int len = str.length();
-        int courPos;
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            builder.append(str.charAt(i));
-            if (i == 2 || i == 6) {
-                if (i != len - 1)
-                    builder.append(WHITE_SPACE);
-            }
-        }
-        courPos = builder.length();
-        mInputET.setText(builder.toString());
-        mInputET.setSelection(courPos);
-    }
-
-    private void format(Editable editable) {
-        if (shouldStopChange) {
-            shouldStopChange = false;
-            return;
-        }
-
-        shouldStopChange = true;
-
-        String str = editable.toString().trim().replaceAll(WHITE_SPACE, "");
-        int len = str.length();
-        int courPos;
-
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < len; i++) {
-            builder.append(str.charAt(i));
-            if (i == 3 || i == 7 || i == 11 || i == 15) {
-                if (i != len - 1)
-                    builder.append(WHITE_SPACE);
-            }
-        }
-        courPos = builder.length();
-        setText(builder.toString());
-        setSelection(courPos);
-    }
-
 
     public void setmInputType(int mInputType) {
         this.mInputType = mInputType;
@@ -183,7 +108,6 @@ public class CleanEditText extends AppCompatEditText {
     }
 
     public void setDeleteClickListener(OnDeleteClickListener listener) {
-
         mDeleteClicklistener = listener;
     }
 

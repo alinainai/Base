@@ -19,6 +19,7 @@ import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
+import com.gas.zhihu.R2;
 import com.gas.zhihu.dialog.TipShowDialog;
 import com.gas.zhihu.ui.map.di.DaggerMapComponent;
 import com.gas.zhihu.ui.map.mvp.MapContract;
@@ -48,7 +49,7 @@ import static com.base.lib.util.Preconditions.checkNotNull;
 
 public class MapActivity extends BaseActivity<MapPresenter> implements MapContract.View {
 
-    @BindView(R.id.et_input)
+    @BindView(R2.id.et_input)
     EditText etInput;
     private Context mContext;
 
@@ -94,20 +95,21 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
     }
 
 
-    @OnClick({R.id.iv_clear, R.id.btn_go_login, R.id.text_see_match_rule})
+
+    @OnClick({R2.id.iv_clear, R2.id.btn_go_login, R2.id.text_see_match_rule})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_clear:
-                etInput.setText("");
-                break;
-            case R.id.btn_go_login:
-                toSearch();
-                break;
-            case R.id.text_see_match_rule:
-                showRuleDialog();
-                break;
+        if (view.getId() == R.id.iv_clear) {
+            etInput.setText("");
+        } else if (view.getId() == R.id.btn_go_login) {
+            toSearch();
+
+        } else if (view.getId() == R.id.text_see_match_rule) {
+            showRuleDialog();
+
         }
     }
+
+
 
 
     private void showRuleDialog() {
@@ -123,7 +125,7 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
             GasAppUtils.toast("请输入正确的匹配规则");
             return;
         }
-        ShowActivity.launchActivity(mContext,search);
+        ShowActivity.Companion.launchActivity(mContext,search);
 
     }
 
