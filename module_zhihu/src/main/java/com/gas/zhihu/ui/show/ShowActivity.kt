@@ -181,6 +181,9 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         emptyView!!.visibility = View.VISIBLE
     }
 
+    /**
+     * 显示地图选择弹框
+     */
     private fun showMapDialog(bean: LocationBean?) {
         if (bean == null) {
             GasAppUtils.toast("数据错误")

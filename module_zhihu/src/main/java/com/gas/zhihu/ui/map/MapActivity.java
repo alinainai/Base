@@ -18,12 +18,14 @@ import androidx.annotation.Nullable;
 
 import com.base.baseui.dialog.CommonDialog;
 import com.base.baseui.utils.ViewUtils;
+import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
 import com.gas.zhihu.dialog.TipShowDialog;
+import com.gas.zhihu.ui.detial.DetailsActivity;
 import com.gas.zhihu.ui.map.di.DaggerMapComponent;
 import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.gas.zhihu.ui.map.mvp.MapPresenter;
@@ -60,6 +62,10 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
 
     @BindView(R2.id.et_input)
     EditText etInput;
+
+    @BindView(R2.id.title_view)
+    TitleView title;
+
     private Context mContext;
 
     @Inject
@@ -85,6 +91,10 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
+
+        title.setOnRightListener(v -> {
+            startActivity(new Intent(this, DetailsActivity.class));
+        });
 
     }
 

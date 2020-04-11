@@ -5,7 +5,7 @@ import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 
-@Entity
+@Entity(nameInDb = "mapbean")
 public class MapBean {
 
 
