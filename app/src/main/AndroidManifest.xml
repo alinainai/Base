@@ -50,6 +50,7 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
+        android:hasFragileUserData="true"
         tools:targetApi="n">
 
          <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->

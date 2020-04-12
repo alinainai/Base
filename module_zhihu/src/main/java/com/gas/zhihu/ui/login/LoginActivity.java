@@ -6,25 +6,24 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.base.baseui.dialog.CommonDialog;
+import com.alibaba.android.arouter.facade.annotation.Route;
+import com.gas.zhihu.app.ZhihuConstants;
 import com.gas.zhihu.dialog.TipShowDialog;
+import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
-import com.gas.zhihu.app.ZhihuConfig;
 import com.gas.zhihu.ui.login.di.DaggerLoginComponent;
 import com.gas.zhihu.ui.login.mvp.LoginContract;
 import com.gas.zhihu.ui.login.mvp.LoginPresenter;
@@ -33,7 +32,6 @@ import com.gas.zhihu.view.CleanEditText;
 import com.lib.commonsdk.utils.GasAppUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
@@ -46,7 +44,7 @@ import static com.base.lib.util.Preconditions.checkNotNull;
  * Created by GasMvpTemplate on 03/24/2020 20:50
  * ================================================
  */
-
+@Route(path = RouterHub.ZHIHU_HOMEACTIVITY)
 public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View {
 
     @BindView(R2.id.et_phone_num)
@@ -189,7 +187,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             return;
         }
 
-        if (userName.equals(ZhihuConfig.ZHIHU_USER_NAME) && passWord.equals(ZhihuConfig.ZHIHU_PASSWORD)) {
+        if (userName.equals(ZhihuConstants.ZHIHU_USER_NAME) && passWord.equals(ZhihuConstants.ZHIHU_PASSWORD)) {
             startActivity(new Intent(mContext, MapActivity.class));
             finish();
         } else {

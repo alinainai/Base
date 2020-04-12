@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
@@ -45,6 +46,60 @@ public class GasAppUtils {
 
     public static boolean checkMapAppsIsExist( String packagename) {
       return   Utils.checkMapAppsIsExist(getApp(),packagename);
+    }
+
+    /**
+     * Return the application's version name.
+     *
+     * @return the application's version name
+     */
+    public static String getAppVersionName() {
+        return getAppVersionName(getApp().getPackageName());
+    }
+
+    /**
+     * Return the application's version name.
+     *
+     * @param packageName The name of the package.
+     * @return the application's version name
+     */
+    public static String getAppVersionName(final String packageName) {
+
+        try {
+            PackageManager pm = getApp().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(packageName, 0);
+            return pi == null ? null : pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    /**
+     * Return the application's version code.
+     *
+     * @return the application's version code
+     */
+    public static int getAppVersionCode() {
+        return getAppVersionCode(getApp().getPackageName());
+    }
+
+    /**
+     * Return the application's version code.
+     *
+     * @param packageName The name of the package.
+     * @return the application's version code
+     */
+    public static int getAppVersionCode(final String packageName) {
+
+        try {
+            PackageManager pm = getApp().getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(packageName, 0);
+            return pi == null ? -1 : pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
 

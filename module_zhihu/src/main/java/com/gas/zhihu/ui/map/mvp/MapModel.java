@@ -5,6 +5,8 @@ import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 
 import com.base.lib.di.scope.ActivityScope;
+import com.gas.zhihu.bean.MapBean;
+import com.gas.zhihu.utils.MapBeanDbUtils;
 
 import javax.inject.Inject;
 
@@ -29,4 +31,9 @@ public class MapModel extends BaseModel implements MapContract.Model {
         super.onDestroy();
 
     }
+    @Override
+    public int getMapDataCount(){
+        return MapBeanDbUtils.getMapDataCount();
+    }
+
 }

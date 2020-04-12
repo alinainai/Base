@@ -23,7 +23,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-@Route(path = RouterHub.ZHIHU_HOMEACTIVITY)
+@Route(path = RouterHub.ZHIHU_LOGINACTIVITY)
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R2.id.type_item_recyclerview)

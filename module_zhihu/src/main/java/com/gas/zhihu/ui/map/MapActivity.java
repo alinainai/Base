@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.base.baseui.dialog.CommonDialog;
+import com.base.baseui.dialog.QMUITipDialog;
 import com.base.baseui.utils.ViewUtils;
 import com.base.baseui.view.TitleView;
 import com.base.lib.base.BaseActivity;
@@ -41,6 +42,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
@@ -70,6 +72,11 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
 
     @Inject
     RxPermissions mRxPermissions;
+
+
+
+    private QMUITipDialog loadDialog;
+
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -118,11 +125,9 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
 
 
 
-    @OnClick({R2.id.iv_clear, R2.id.btn_go_login, R2.id.text_see_match_rule})
+    @OnClick({ R2.id.btn_go_login, R2.id.text_see_match_rule})
     public void onViewClicked(View view) {
-        if (view.getId() == R.id.iv_clear) {
-            etInput.setText("");
-        } else if (view.getId() == R.id.btn_go_login) {
+        if (view.getId() == R.id.btn_go_login) {
             toSearch();
 
         } else if (view.getId() == R.id.text_see_match_rule) {
@@ -183,7 +188,25 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
     }
 
 
+    @Override
+    public void showLoading() {
+        if(loadDialog==null){
+            loadDialog = new QMUITipDialog.Builder(mContext)
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord("正在加载")
+                    .create();
+            loadDialog.show();
+        }else {
+            loadDialog.show();
+        }
+    }
 
+    @Override
+    public void hideLoading() {
+        if (loadDialog != null && loadDialog.isShowing()) {
+            loadDialog.dismiss();
+        }
+    }
 
     @Override
     public RxPermissions getRxPermissions() {

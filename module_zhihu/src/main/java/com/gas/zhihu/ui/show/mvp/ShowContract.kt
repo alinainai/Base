@@ -1,5 +1,6 @@
 package com.gas.zhihu.ui.show.mvp
 
+import android.app.Activity
 import com.base.lib.mvp.IModel
 import com.base.lib.mvp.IView
 import com.gas.zhihu.bean.MapBean
@@ -20,6 +21,7 @@ interface ShowContract {
         fun successView()
         fun emptyView()
         fun errorView()
+        fun getActivity():Activity
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存

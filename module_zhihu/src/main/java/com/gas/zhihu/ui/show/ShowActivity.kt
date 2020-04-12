@@ -1,23 +1,21 @@
 package com.gas.zhihu.ui.show
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
 import butterknife.OnClick
-import com.base.baseui.adapter.ExtendEmptyView
-import com.base.baseui.view.TitleView
 import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
+import com.base.lib.https.image.ImageLoader
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.base.paginate.interfaces.EmptyInterface
 import com.gas.zhihu.R
 import com.gas.zhihu.R2
+import com.gas.zhihu.app.ZhihuConstants.ZHIHU_TEST_IMAGE_FILe_NAME
 import com.gas.zhihu.bean.LocationBean
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.dialog.QrCodeShowDialog
@@ -31,39 +29,41 @@ import com.gas.zhihu.utils.LocationUtils.MAP_TECENT
 import com.gas.zhihu.utils.LocationUtils.getAMapMapIntent
 import com.gas.zhihu.utils.LocationUtils.getBaiduMapIntent
 import com.gas.zhihu.utils.LocationUtils.getTecentMapIntent
+import com.lib.commonsdk.glide.ImageConfigImpl
 import com.lib.commonsdk.utils.GasAppUtils
 import com.lib.commonsdk.utils.QRCode
+import com.lib.commonsdk.utils.Utils
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.zhihu_activity_show.*
+import java.io.File
+import javax.inject.Inject
 
 /**
  * ================================================
- * Description:
+ * desc:
  *
+ * created by author ljx
+ * date  2020/4/12
+ * email 569932357@qq.com
  *
- * Created by GasMvpTemplate on 03/28/2020 21:18
  * ================================================
  */
 class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
-    @BindView(R2.id.title_view)
-    lateinit  var titleView: TitleView
-    @BindView(R2.id.tv_data_info)
-    lateinit   var tvDataInfo: TextView
-    @BindView(R2.id.image_address)
-    lateinit  var imageAddress: ImageView
-    @BindView(R2.id.tv_address_info_true)
-    lateinit  var tvAddressInfoTrue: TextView
-    @BindView(R2.id.tv_remark_info_true)
-    lateinit   var tvRemarkInfoTrue: TextView
-    @BindView(R2.id.image_code)
-    lateinit  var imageCode: ImageView
-    @BindView(R2.id.empty_view)
-    lateinit  var emptyView: ExtendEmptyView
+
+
+    @Inject
+    lateinit var imageLoader: ImageLoader
+
+
     private var mDisposable: Disposable? = null
+
+    private var mImagePath: String? = null
+
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerShowComponent //如找不到该类,请编译一下项目
                 .builder()
@@ -82,8 +82,11 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     }
 
     private fun initView() {
-        emptyView!!.refreshView.setOnClickListener { v: View? -> loadData() }
-        titleView!!.setOnBackListener { v: View? -> killMyself() }
+
+        mImagePath = File(Utils.getExternalFilesDir(getActivity()).path, ZHIHU_TEST_IMAGE_FILe_NAME).path
+
+        emptyView.refreshView.setOnClickListener { v: View? -> loadData() }
+       viewClickInit()
         loadData()
     }
 
@@ -141,21 +144,36 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         finish()
     }
 
-    @OnClick(R2.id.image_address, R2.id.tv_address_copy, R2.id.tv_address_info_true, R2.id.tv_remark_modify, R2.id.image_code)
-    fun onViewClicked(view: View) {
-        if (view.id == R.id.image_address) {
+
+    private fun viewClickInit() {
+
+        titleView.setOnBackListener {  killMyself() }
+        imageAddress.setOnClickListener {  }
+        tvAddressCopy.setOnClickListener {  mPresenter!!.setAddressToCopy()}
+        tvAddressInfoTrue.setOnClickListener {  showMapDialog(mPresenter!!.locationInfo) }
+        imageCode.setOnClickListener {
+            mPresenter!!.qrCodeInfo?.let { QrCodeShowDialog().show(this, "签到二维码", it) }
         }
-        else if (view.id == R.id.tv_address_copy) mPresenter!!.setAddressToCopy()
-        else if (view.id == R.id.tv_address_info_true) showMapDialog(mPresenter!!.locationInfo)
-        else if (view.id == R.id.tv_remark_modify) {
-        }
-        else if (view.id == R.id.image_code) mPresenter!!.qrCodeInfo?.let { QrCodeShowDialog().show(this, "签到二维码", it) }
+
     }
 
     override fun setDataInfo(data: MapBean?) {
-        tvDataInfo!!.text = GasAppUtils.getString(R.string.zhihu_map_title_name, data?.mapName)
-        tvAddressInfoTrue!!.text = data?.locationInfo
-        tvRemarkInfoTrue!!.text = data?.note
+
+        data?.let {
+            tvDataInfo!!.text = GasAppUtils.getString(R.string.zhihu_map_title_name, data.mapName)
+            tvAddressInfoTrue!!.text = data.locationInfo
+            tvRemarkInfoTrue!!.text = data.note
+
+            imageLoader.loadImage(this,
+                    ImageConfigImpl
+                            .builder()
+                            .url(File(mImagePath, data.pathName).path)
+                            .imageView(imageAddress)
+                            .build())
+
+        }
+
+
     }
 
     override fun setQrCode(data: String?) {
@@ -179,6 +197,10 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     override fun errorView() {
         emptyView!!.setStatus(EmptyInterface.STATUS_FAIL)
         emptyView!!.visibility = View.VISIBLE
+    }
+
+    override fun getActivity(): Activity {
+        return this
     }
 
     /**

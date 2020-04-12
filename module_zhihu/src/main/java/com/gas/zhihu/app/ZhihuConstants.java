@@ -15,6 +15,8 @@
  */
 package com.gas.zhihu.app;
 
+import java.io.File;
+
 /**
  * ================================================
  * Created by JessYan on 25/04/2018 16:48
@@ -27,4 +29,17 @@ public interface ZhihuConstants {
     String DETAIL_TITLE = "detail_title";
     String DETAIL_URL = "detail_url";
     String ENCODING = "UTF-8";
+    /**
+     * 用户名
+     */
+    String ZHIHU_USER_NAME = "qqqqqqqq";
+    /**
+     * 密码
+     */
+    String ZHIHU_PASSWORD = "qqqqqq";
+
+    String ZHUHI_IMAGE_ZIP_FILE_NAME = "testimage.zip";
+    String ZHIHU_ASSET_DATA_JSON_PATH = "config" + File.separator + "datajson.json";
+    String ZHIHU_ASSET_IMAGE_ZIP_PATH = "data" + File.separator + ZHUHI_IMAGE_ZIP_FILE_NAME;
+    String ZHIHU_TEST_IMAGE_FILe_NAME = "testimage";
 }

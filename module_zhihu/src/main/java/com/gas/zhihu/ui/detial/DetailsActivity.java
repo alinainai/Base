@@ -38,11 +38,11 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         String title = getIntent().getStringExtra(Constants.PUBLIC_TITLE);
         String url = getIntent().getStringExtra(Constants.PUBLIC_URL);
-        tvTitle.setText(getResources().getString(R.string.zhihu_title_format, title));
-        tvUrl.setText(getResources().getString(R.string.zhihu_url_format, url));
+//        tvTitle.setText(getResources().getString(R.string.zhihu_title_format, title));
+//        tvUrl.setText(getResources().getString(R.string.zhihu_url_format, url));
     }
 
-    @OnClick({R2.id.tv_title, R2.id.tv_url})
+    @OnClick({R2.id.tv_title, R2.id.tv_url,R2.id.tv_delete})
     public void onViewClicked(View view) {
         int id = view.getId();
         if (id == R.id.tv_title) {
@@ -62,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
 
 
-        } else if (id == R.id.tv_url) {
+        } else if (id == R.id.tv_delete) {
           List<MapBean> beans= MapBeanDbUtils.queryAllMapData();
           if(beans!=null ){
 
@@ -73,7 +73,8 @@ public class DetailsActivity extends AppCompatActivity {
 
           }
 
-
+        }else if (id == R.id.tv_url) {
+            MapBeanDbUtils.deleteAll();
         }
     }
 }

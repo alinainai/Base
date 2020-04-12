@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.alibaba.android.arouter.facade.Postcard;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.lib.commonsdk.constants.Constants;
@@ -33,6 +35,7 @@ import com.gas.app.ui.activity.splash.mvp.SplashContract;
 import com.gas.app.ui.activity.splash.mvp.SplashPresenter;
 import com.gas.app.utils.ToastUtil;
 import com.gas.app.view.MyVideoView;
+import com.lib.commonsdk.utils.Utils;
 
 
 @Route(path = RouterHub.APP_SPLASHACTIVITY)
@@ -180,7 +183,19 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void goMainActivity() {
-        startActivity(new Intent(this, MainActivity.class));
+        Utils.navigation(this, RouterHub.ZHIHU_HOMEACTIVITY, new NavCallback() {
+            @Override
+            public void onArrival(Postcard postcard) {
+
+            }
+
+            @Override
+            public void onLost(Postcard postcard) {
+                super.onLost(postcard);
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
+        });
+//
         finish();
     }
 

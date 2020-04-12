@@ -20,9 +20,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
+import android.os.Environment;
 
+import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.alibaba.android.arouter.launcher.ARouter;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
@@ -79,6 +82,10 @@ public class Utils {
         ARouter.getInstance().build(path).navigation(context);
     }
 
+    public static void navigation(Context context, String path, NavCallback callback) {
+        ARouter.getInstance().build(path).navigation(context, callback);
+    }
+
 
     /**
      * String 保留小数
@@ -114,7 +121,7 @@ public class Utils {
         // 创建普通字符型ClipData
         ClipData mClipData = ClipData.newPlainText("Label", copyData);
         // 将ClipData内容放到系统剪贴板里。
-        if(cm!=null){
+        if (cm != null) {
             cm.setPrimaryClip(mClipData);
         }
 
@@ -146,6 +153,14 @@ public class Utils {
             e.printStackTrace();
         }
         return packageInfo != null;
+    }
+
+    public static File getExternalFilesDir(Context context){
+        return  getExternalFilesDir(context,null);
+    }
+
+    public static File getExternalFilesDir(Context context, String fileName){
+        return context.getApplicationContext().getExternalFilesDir(fileName);
     }
 
 }

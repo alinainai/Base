@@ -90,6 +90,20 @@ public class MapBeanDbUtils {
         }
 
     }
+    @SuppressWarnings("unchecked")
+    public static int getMapDataCount() {
+
+        DaoSession daoSession = DbUtils.getInstance().getDaoSession();
+        MapBeanDao dao = daoSession.getMapBeanDao();
+
+        QueryBuilder qb = dao.queryBuilder();
+        ArrayList<MapBean> list = (ArrayList<MapBean>) qb.list();
+        if (list != null && !list.isEmpty()) {
+            return list.size();
+        }
+        return 0;
+
+    }
 
 
 }
