@@ -1,5 +1,6 @@
 apply from: "../common_component_build.gradle"
 
+
 android {
 
     buildTypes {
@@ -35,4 +36,5 @@ dependencies {
 
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
+
 }

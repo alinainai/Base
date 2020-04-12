@@ -25,20 +25,7 @@ public class CommonDialog extends Dialog {
     }
 
 
-    public interface onDialogClickListener {
 
-        default void onLeftClick() {
-
-        }
-
-        void onRightClick();
-
-        default void onDismiss() {
-
-        }
-
-
-    }
 
     public static class Builder {
 
@@ -164,6 +151,23 @@ public class CommonDialog extends Dialog {
             window.setAttributes(lp);
 
             return dialog;
+
+        }
+
+
+    }
+
+    public interface onDialogClickListener {
+
+        default void onLeftClick() {
+
+        }
+
+        default void onRightClick(){
+
+        }
+
+        default void onDismiss() {
 
         }
 

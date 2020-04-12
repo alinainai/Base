@@ -131,8 +131,8 @@ public class MapActivity extends BaseActivity<MapPresenter> implements MapContra
             toSearch();
 
         } else if (view.getId() == R.id.text_see_match_rule) {
-            showRuleDialog();
-
+//            showRuleDialog();
+            startActivity(new Intent(this, DetailsActivity.class));
         }
     }
 

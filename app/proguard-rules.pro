@@ -84,7 +84,7 @@
 # 保持内部类
 -keepattributes InnerClasses,EnclosingMethod
 -dontoptimize
--optimizations optimization_filter
+
 
 #gson解析类排除
 -keepattributes Signature

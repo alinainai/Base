@@ -129,6 +129,9 @@ android {
         disable "ResourceType"
         abortOnError false
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
 }
 

@@ -57,9 +57,8 @@ public class GalleryView extends RelativeLayout {
     private List<IPhotoProvider> photoList;
     private PhotoParameter firstClickItemParameterModel;
     private PhotoAdapter adapter;
-    private final static int WHAT_SAVE_SUCCESS = 1;
-    private final static int WHAT_SAVE_FAILED = 2;
-    private RxPermissions rxPermissions;
+
+
 
 
 
@@ -408,24 +407,6 @@ public class GalleryView extends RelativeLayout {
         }
         return scale;
     }
-
-    private android.os.Handler handler = new android.os.Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case WHAT_SAVE_SUCCESS:
-                    Toast.makeText(getContext(), "保存成功", Toast.LENGTH_SHORT).show();
-                    break;
-                case WHAT_SAVE_FAILED:
-                    Toast.makeText(getContext(), "保存失败", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-        }
-    };
-
-
-
 
 
 }

@@ -162,7 +162,7 @@
                 android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="5"
-                android:text="默认备注数据"
+                android:text="暂无备注"
                 android:textColor="@color/public_text_black_light"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -205,4 +205,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleText="搜索结果" />
+
+    <com.base.baseui.photoshow.view.GalleryView
+        android:id="@+id/galleryView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:animDuration="300"
+      />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

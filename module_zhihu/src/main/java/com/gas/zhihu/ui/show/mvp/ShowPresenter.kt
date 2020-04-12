@@ -5,6 +5,7 @@ import com.base.lib.di.scope.ActivityScope
 import com.base.lib.mvp.BasePresenter
 import com.gas.zhihu.bean.LocationBean
 import com.gas.zhihu.bean.MapBean
+import com.gas.zhihu.utils.MapBeanDbUtils
 import com.lib.commonsdk.utils.GasAppUtils
 import com.lib.commonsdk.utils.TimeUtils
 import com.lib.commonsdk.utils.Utils
@@ -38,10 +39,26 @@ class ShowPresenter @Inject constructor(model: ShowContract.Model?, rootView: Sh
         mView!!.setQrCode(qrCodeInfo)
     }
 
+    fun addComment(str:String){
+        str.let {
+            mapBeanInfo?.let {
+                MapBeanDbUtils.addComment(mapBeanInfo?.keyName,str)
+                updateComment();
+            }
+        }
+    }
+
+    fun updateComment(){
+        mapBeanInfo = mModel!!.getMapInfo(mapBeanInfo?.keyName)
+        mView?.setDataInfo(mapBeanInfo)
+    }
+
     val locationInfo: LocationBean
         get() = if (mapBeanInfo == null) {
             LocationBean()
         } else mapBeanInfo!!.locationBean
+
+
 
     override fun onDestroy() {
         super.onDestroy()

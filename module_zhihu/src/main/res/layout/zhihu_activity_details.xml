@@ -6,7 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ui.detial.DetailsActivity">
 
+
+
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -21,6 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_url"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -48,6 +52,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/wrapPhotoView"
+        android:layout_marginTop="@dimen/public_title_bar_height"
+        android:background="@color/public_black"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.base.baseui.view.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:closeHide="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleText="搜索规则" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
