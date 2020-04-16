@@ -53,6 +53,7 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
     @Inject
     RxErrorHandler mErrorHandler;
 
+
     @Inject
     public MapPresenter(MapContract.Model model, MapContract.View rootView) {
         super(model, rootView);
@@ -73,14 +74,14 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
             @Override
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
-                if (mModel.getMapDataCount() == 0 || ZhihuUtils.getSpVersionCode() == GasAppUtils.getAppVersionCode()) {
+                if (mModel.getMapDataCount() == 0 || ZhihuUtils.getSpVersionCode() != GasAppUtils.getAppVersionCode()) {
                     getMapDataFromAsset();
                 }
             }
 
             @Override
             public void onRequestPermissionFailure(List<String> permissions) {
-
+                GasAppUtils.toast("请开启数据读取权限，否则搜索功能无法读取数据");
             }
 
             @Override
@@ -99,7 +100,6 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
 
         Observable.just(DATA_JSON_PATH)
                 .flatMap((Function<String, ObservableSource<String>>) s -> {
-
                     StringBuilder stringBuilder = new StringBuilder();
                     //获取assets资源管理器
                     AssetManager assetManager = mView.getActivity().getApplicationContext().getAssets();
@@ -112,23 +112,25 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
                     }
                     reader.close();
                     bf.close();
-
                     return Observable.just(stringBuilder.toString());
                 })
                 .subscribeOn(Schedulers.io())
-                .flatMap(new Function<String, ObservableSource<Boolean>>() {
-                    @Override
-                    public ObservableSource<Boolean> apply(String s) throws Exception {
-                        MapBeanDbUtils.deleteAll();
-                        Type type = new TypeToken<List<MapBean>>() {
-                        }.getType();
-                        List<MapBean> list = GsonUtils.fromJson(s, type);
-                        for (MapBean bean : list) {
-                            //添加预存数据到数据库
+                .flatMap((Function<String, ObservableSource<Boolean>>) s -> {
+                    MapBeanDbUtils.deleteAll();
+                    Type type = new TypeToken<List<MapBean>>() {
+                    }.getType();
+                    List<MapBean> list = GsonUtils.fromJson(s, type);
+                    for (MapBean bean : list) {
+                        //添加预存数据到数据库
+                        MapBean dbBean = MapBeanDbUtils.queryData(bean.getKeyName());
+                        if (dbBean == null) {
                             MapBeanDbUtils.insertMapBean(bean);
+                        } else {
+                            dbBean.updateInfo(bean);
+                            MapBeanDbUtils.updateBean(dbBean);
                         }
-                        return Observable.just(true);
                     }
+                    return Observable.just(true);
                 })
                 .flatMap((Function<Boolean, ObservableSource<Boolean>>) aBoolean -> {
                     if (FileUtils.isFileExists(imageZipFile)) {
@@ -172,6 +174,18 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
                 });
 
 
+    }
+
+    public List<String> getSearchRecord() {
+        return mModel.getRecordHistory();
+    }
+
+    public void setSearchRecord(List<String> items) {
+        mModel.setRecordHistory(items);
+    }
+
+    public void clearSearchRecord() {
+        mModel.clearRecordHistory();
     }
 
 

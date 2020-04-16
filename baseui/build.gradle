@@ -53,6 +53,7 @@ dependencies {
     api project(path: ':paginate')
     api project(path: ':commonsdk')
     api rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
+    api 'com.google.android:flexbox:1.0.0'
 
 
 }

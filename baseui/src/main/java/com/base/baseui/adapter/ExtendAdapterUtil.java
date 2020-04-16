@@ -71,6 +71,8 @@ public class ExtendAdapterUtil {
     }
 
     /**
+     * 网络请求错误/数据异常
+     *
      * @param adapter   适配器
      * @param page
      * @param isNetWork 是否是网络请求错误

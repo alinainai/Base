@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -141,7 +142,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         RecyclerView.ViewHolder viewHolder;
         switch (viewType) {
             case TYPE_FOOTER_VIEW:
-                if(mFooterLayout==null){
+                if (mFooterLayout == null) {
                     mFooterLayout = getFooterLayout(parent.getContext());
                 }
                 viewHolder = Utils.createPageViewHolder((View) mFooterLayout);
@@ -150,7 +151,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 viewHolder = Utils.createPageViewHolder(mHeaderLayout);
                 break;
             case TYPE_EMPTY_VIEW:
-                if(mEmptyView==null){
+                if (mEmptyView == null) {
                     mEmptyView = getEmptyLayout(parent.getContext());
                 }
                 viewHolder = Utils.createPageViewHolder((View) mEmptyView);
@@ -233,13 +234,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
 
-        if(mOpenEmpty){
-            if(mEmptyView==null){
+        if (mOpenEmpty) {
+            if (mEmptyView == null) {
                 mEmptyView = getEmptyLayout(recyclerView.getContext());
             }
         }
-        if(mOpenLoadMore){
-            if(mFooterLayout==null){
+        if (mOpenLoadMore) {
+            if (mFooterLayout == null) {
                 mFooterLayout = getFooterLayout(recyclerView.getContext());
             }
         }
@@ -408,7 +409,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-
     /**
      * remove header view from mHeaderLayout.
      * When the child count of mHeaderLayout is 0, mHeaderLayout will be set to null.
@@ -448,6 +448,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     /**
      * 是否是普通数据条目
+     *
      * @param viewType viewType
      * @return true 是数据条目
      */
@@ -456,27 +457,96 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
 
-    /**
-     * 刷新加载更多的数据
-     *
-     * @param data {@link List}
-     */
-    public void setLoadMoreData(@NonNull List<T> data) {
-        if (isLoading)
-            isLoading = false;
 
-        if (data.isEmpty()) {
-            if (mOpenLoadMore)
-                resetFootLoadFail();
+
+    /********************************** EmptyView Method ****************************************/
+
+
+    protected EmptyInterface getEmptyLayout(Context context) {
+        return new DefaultEmptyView(context);
+    }
+
+    public void setEmptyView(@EmptyInterface.EmptyType int statusType) {
+
+        if (!mOpenEmpty || mEmptyView == null)
             return;
+        mEmptyView.setStatus(statusType);
+        if (statusType == EmptyInterface.STATUS_FAIL || statusType == EmptyInterface.STATUS_NETWORK_FAIL) {
+
+            if (mEmptyView.getRefreshView() != null) {
+                mEmptyView.getRefreshView().setOnClickListener(v -> {
+                    if (null != mReloadListener) {
+                        mReloadListener.onReload();
+                    }
+                });
+            }
+
+        }
+        if (mData.size() > 0) {
+            int count = mData.size();
+            mData.clear();
+            notifyDataSetChanged();
         }
 
-        int size = mData.size();
-        mData.addAll(data);
-        notifyItemInserted(size + getHeaderCount());
-        if (mOpenLoadMore)
-            resetLoading();
     }
+
+    public void setDefaultEmptyView(@NonNull EmptyInterface emptyView) {
+        if (!mOpenEmpty)
+            return;
+        this.mEmptyView = emptyView;
+    }
+
+    /********************************** FooterView Method ****************************************/
+    protected FooterInterface getFooterLayout(Context context) {
+        return new DefaultLoadMoreFooter(context);
+    }
+
+    public void setDefaultFooterLoadMore(@NonNull FooterInterface loadMore) {
+        if (!mOpenLoadMore)
+            return;
+        this.mFooterLayout = loadMore;
+    }
+
+    /**
+     * 重置foorterView为normal状态
+     */
+    private void resetLoading() {
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_PRE_LOADING);
+        }
+    }
+
+    /**
+     * 重置foorterView为normal状态
+     */
+    private void resetFootLoadFail() {
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_FAIL);
+            if (mFooterLayout instanceof View) {
+                ((View) mFooterLayout).setOnClickListener(v -> loadMore(true));
+            }
+        }
+    }
+
+    /**
+     * 数据加载完成
+     */
+    public void loadEnd() {
+        isLoading = false;
+        if (mFooterLayout != null) {
+            mFooterLayout.setStatus(FooterInterface.STATUS_END);
+        }
+    }
+
+    /**
+     * 数据加载失败
+     */
+    public void showFooterFail() {
+        resetFootLoadFail();
+        isLoading = false;
+    }
+
+    /********************************** 数据相关 Method ****************************************/
 
     /**
      * 初次加载、或下拉刷新要替换全部旧数据时刷新数据
@@ -513,21 +583,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * @param position 数据的位置
      */
     public void remove(int position) {
-        if (position >= mData.size() || position < 0) {
-            return;
-        }
-        mData.remove(position);
-        int internalPosition = position + getHeaderCount();
-        notifyItemRemoved(internalPosition);
-        if (mData.isEmpty()) {
-            if (mOpenLoadMore)
-                resetLoading();
-            if (mEmptyView != null) {
-                mEmptyView.setStatus(EmptyInterface.STATUS_EMPTY);
-            }
-            notifyDataSetChanged();
-        } else
-            notifyItemRangeChanged(internalPosition, mData.size() - position);
+        removeRange(position,1);
     }
 
 
@@ -541,7 +597,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         if (position >= mData.size() || position < 0) {
             return;
         }
-
         if (position + count > mData.size()) {
             return;
         }
@@ -619,18 +674,19 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     /**
-     * 从某个位置开始添加若干个数据
+     * 从某个位置开始添加若干个数据，此方法不会触发刷新逻辑
      *
      * @param data     多个数据
      * @param position //mData的位置
      */
     public void insertAll(List<T> data, int position) {
+        //如果position不符合规范，默认在末尾插入
         if (position > mData.size() || position < 0) {
-            return;
+            position = mData.size();
         }
         if (mData.isEmpty()) {
-            mData.addAll(0, data);
-            notifyDataSetChanged();
+            mData.addAll(data);
+            notifyItemRangeInserted(0, mData.size());
         } else {
             mData.addAll(position, data);
             int dataPosition = position + getHeaderCount();
@@ -640,91 +696,83 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     }
 
+    /**
+     * 刷新加载更多的数据
+     *
+     * @param data {@link List}
+     */
+    public void setLoadMoreData(@NonNull List<T> data) {
+        if (isLoading)
+            isLoading = false;
 
-    public void setEmptyView(@EmptyInterface.EmptyType int statusType) {
-
-        if (!mOpenEmpty || mEmptyView == null)
+        if (data.isEmpty()) {
+            if (mOpenLoadMore)
+                resetFootLoadFail();
             return;
-        mEmptyView.setStatus(statusType);
-        if (statusType == EmptyInterface.STATUS_FAIL || statusType == EmptyInterface.STATUS_NETWORK_FAIL) {
-
-            if (mEmptyView.getRefreshView() != null) {
-                mEmptyView.getRefreshView().setOnClickListener(v -> {
-                    if (null != mReloadListener) {
-                        mReloadListener.onReload();
-                    }
-                });
-            }
-
         }
-        if (mData.size() > 0) {
-            int count = mData.size();
+        insertAll(data);
+        if (mOpenLoadMore)
+            resetLoading();
+    }
+
+
+
+    /**
+     * 当数据多条目删除操作/或者数据源变化比较大时
+     * <p>
+     * 必须重写
+     * <p>
+     * {@link #itemsSameCompare}
+     * {@link #contentsSameCompare}
+     *
+     * @param data 删除该删除数据之后的数据
+     *             如果data = null的话，会清空列表
+     */
+    public void showDataDiff(List<T> data) {
+        if (data == null) {
+            data = Collections.emptyList();
+        }
+        if (mData.size() == 0) {
+            mData.addAll(data);
+            notifyItemRangeInserted(0, mData.size());
+        } else {
+            List<T> finalData = data;
+            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+                @Override
+                public int getOldListSize() {
+                    return mData.size();
+                }
+
+                @Override
+                public int getNewListSize() {
+                    return finalData.size();
+                }
+
+                @Override
+                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                    return itemsSameCompare(mData.get(oldItemPosition), finalData.get(newItemPosition));
+                }
+
+                @Override
+                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                    return contentsSameCompare(mData.get(oldItemPosition), finalData.get(newItemPosition));
+                }
+            });
             mData.clear();
-            notifyDataSetChanged();
-        }
-
-    }
-
-    public void setDefaultEmptyView(@NonNull EmptyInterface emptyView) {
-        if (!mOpenEmpty)
-            return;
-        this.mEmptyView = emptyView;
-    }
-
-    public void setDefaultFooterLoadMore(@NonNull FooterInterface loadMore) {
-        if (!mOpenLoadMore)
-            return;
-        this.mFooterLayout = loadMore;
-    }
-
-    /**
-     * 重置foorterView为normal状态
-     */
-    private void resetLoading() {
-        if (mFooterLayout != null) {
-            mFooterLayout.setStatus(FooterInterface.STATUS_PRE_LOADING);
+            mData.addAll(data);
+            result.dispatchUpdatesTo(this);
         }
     }
 
-    /**
-     * 重置foorterView为normal状态
-     */
-    private void resetFootLoadFail() {
-        if (mFooterLayout != null) {
-            mFooterLayout.setStatus(FooterInterface.STATUS_FAIL);
-            if (mFooterLayout instanceof View) {
-                ((View) mFooterLayout).setOnClickListener(v -> loadMore(true));
-            }
-        }
+    protected boolean itemsSameCompare(T oldItem, T newItem) {
+        return false;
     }
 
-    /**
-     * 数据加载完成
-     */
-    public void loadEnd() {
-        isLoading = false;
-        if (mFooterLayout != null) {
-            mFooterLayout.setStatus(FooterInterface.STATUS_END);
-        }
+    protected boolean contentsSameCompare(T oldItem, T newItem) {
+        return false;
     }
 
-    /**
-     * 数据加载失败
-     */
-    public void showFooterFail() {
-        resetFootLoadFail();
-        isLoading = false;
-    }
-
-
-    protected FooterInterface getFooterLayout(Context context) {
-        return new DefaultLoadMoreFooter(context);
-    }
-
-    protected EmptyInterface getEmptyLayout(Context context) {
-        return new DefaultEmptyView(context);
-    }
-
+    /************************************** Set Listener ****************************************/
 
     public void setOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
         mLoadMoreListener = loadMoreListener;

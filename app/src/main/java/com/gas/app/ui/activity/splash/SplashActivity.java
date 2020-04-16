@@ -16,8 +16,16 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.facade.callback.NavCallback;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
+import com.gas.app.R;
+import com.gas.app.ui.activity.splash.di.DaggerSplashComponent;
+import com.gas.app.ui.activity.splash.mvp.SplashContract;
+import com.gas.app.ui.activity.splash.mvp.SplashPresenter;
+import com.gas.app.ui.main.MainActivity;
+import com.gas.app.utils.ToastUtil;
+import com.gas.app.view.MyVideoView;
 import com.lib.commonsdk.constants.Constants;
 import com.lib.commonsdk.constants.RouterHub;
+import com.lib.commonsdk.utils.Utils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,20 +36,13 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import com.gas.app.ui.main.MainActivity;
-import com.gas.app.R;
-import com.gas.app.ui.activity.splash.di.DaggerSplashComponent;
-import com.gas.app.ui.activity.splash.mvp.SplashContract;
-import com.gas.app.ui.activity.splash.mvp.SplashPresenter;
-import com.gas.app.utils.ToastUtil;
-import com.gas.app.view.MyVideoView;
-import com.lib.commonsdk.utils.Utils;
 
 
 @Route(path = RouterHub.APP_SPLASHACTIVITY)
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
     public static final String VIDEO_NAME = "welcome_video.mp4";
+    private boolean isRelease = false;
 
     @BindView(R.id.tv_version)
     TextView tv_version;
@@ -183,19 +184,24 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void goMainActivity() {
-        Utils.navigation(this, RouterHub.ZHIHU_HOMEACTIVITY, new NavCallback() {
-            @Override
-            public void onArrival(Postcard postcard) {
 
-            }
 
-            @Override
-            public void onLost(Postcard postcard) {
-                super.onLost(postcard);
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            }
-        });
-//
+        if (isRelease) {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        } else {
+            Utils.navigation(this, RouterHub.ZHIHU_HOMEACTIVITY, new NavCallback() {
+                @Override
+                public void onArrival(Postcard postcard) {
+
+                }
+
+                @Override
+                public void onLost(Postcard postcard) {
+                    super.onLost(postcard);
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                }
+            });
+        }
         finish();
     }
 
@@ -208,7 +214,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     public void showVersionCode(String code) {
         tv_version.setText(String.format("当前版本 v%s", code));
     }
-
 
 
     @Override

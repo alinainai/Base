@@ -6,6 +6,8 @@ import com.base.lib.mvp.IModel;
 import com.base.lib.mvp.IView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.util.List;
+
 
 /**
  * ================================================
@@ -25,6 +27,9 @@ public interface MapContract {
     interface Model extends IModel {
 
         int getMapDataCount();
+        List<String> getRecordHistory();
+        void setRecordHistory(List<String> items);
+        void clearRecordHistory();
 
     }
 }

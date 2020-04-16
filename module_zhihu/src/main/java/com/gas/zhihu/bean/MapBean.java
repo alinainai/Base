@@ -44,10 +44,26 @@ public class MapBean {
      */
     private double latitude;
 
+    /**
+     * 额外参数一
+     */
+    private String extraStr1;
 
-    @Generated(hash = 1181097025)
+    /**
+     * 额外参数二
+     */
+    private String extraStr3;
+
+    /**
+     * 额外参数参数
+     */
+    private String extraStr4;
+
+
+    @Generated(hash = 116259395)
     public MapBean(Long id, String pathName, String locationInfo, String mapName,
-            String keyName, String note, double longitude, double latitude) {
+            String keyName, String note, double longitude, double latitude,
+            String extraStr1, String extraStr3, String extraStr4) {
         this.id = id;
         this.pathName = pathName;
         this.locationInfo = locationInfo;
@@ -56,6 +72,9 @@ public class MapBean {
         this.note = note;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.extraStr1 = extraStr1;
+        this.extraStr3 = extraStr3;
+        this.extraStr4 = extraStr4;
     }
 
     @Generated(hash = 412228366)
@@ -119,6 +138,30 @@ public class MapBean {
         this.note = note;
     }
 
+    public String getExtraStr1() {
+        return extraStr1;
+    }
+
+    public void setExtraStr1(String extraStr1) {
+        this.extraStr1 = extraStr1;
+    }
+
+    public String getExtraStr3() {
+        return extraStr3;
+    }
+
+    public void setExtraStr3(String extraStr3) {
+        this.extraStr3 = extraStr3;
+    }
+
+    public String getExtraStr4() {
+        return extraStr4;
+    }
+
+    public void setExtraStr4(String extraStr4) {
+        this.extraStr4 = extraStr4;
+    }
+
     public LocationBean getLocationBean(){
 
         LocationBean bean = new LocationBean();
@@ -126,6 +169,16 @@ public class MapBean {
         bean.dlat=getLatitude();
         bean.dlon=getLongitude();
         return bean;
+
+    }
+
+    public void updateInfo(MapBean bean){
+
+        this.latitude=bean.getLatitude();
+        this.longitude=bean.getLongitude();
+        this.locationInfo=bean.getLocationInfo();
+        this.mapName=bean.getMapName();
+        this.pathName=bean.getPathName();
 
     }
 

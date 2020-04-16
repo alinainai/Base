@@ -35,6 +35,8 @@
     <declare-styleable name="WaveView" tools:ignore="ResourceName">
         <!-- 中心圆颜色-->
         <attr name="waveCenterColor" format="color"/>
+        <!-- 水波纹颜色-->
+        <attr name="waveColor" format="color"/>
         <!-- 中心圆半径（起始扩散波纹的起始半径）-->
         <attr name="waveCenterRadius" format="dimension"/>
         <!-- 扩散最大半径-->
@@ -45,6 +47,13 @@
         <attr name="waveDuration" format="integer"/>
         <!-- 波纹的宽度-->
         <attr name="waveWidth" format="dimension"/>
+        <!-- 波纹的样式-->
+        <attr name="waveStyle" format="enum">
+            <enum name="stroke" value="0"/>
+            <enum name="fill" value="1"/>
+        </attr>
     </declare-styleable>
+
+
 
 </resources>

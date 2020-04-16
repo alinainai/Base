@@ -16,38 +16,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:id="@+id/constraintlayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/ratio_rv">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="#300000ff"
-            app:layout_constraintDimensionRatio="2:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.gas.test.widget.RatioView
-        android:id="@+id/ratio_rv_2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#3000ff00"
+    <com.base.baseui.view.WaveView
+        android:id="@+id/waveView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintlayout"
-        app:layout_goneMarginTop="30dp" />
-    <!--    constraintDimensionRatio="H,1:2"中的 W or H 指后面比例的第1个是那个方向的，默认是w为第一个-->
-    <!--    layout_constraintVertical_bias="0.2"  上边间距占0.2 下边间距0.8-->
+        app:layout_constraintTop_toBottomOf="@+id/ratio_rv"
+        app:waveCenterRadius="10dp"
+        app:waveDuration="3000"
+        app:waveIntervalTime="1000"
+        app:waveMaxRadius="40dp"
+        app:waveStyle="fill"
+        app:waveWidth="1dp" />
+
     <ImageView
-        android:visibility="gone"
+        android:id="@+id/imgClick"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:background="#3300ffff"
@@ -56,7 +41,15 @@
         app:layout_constraintDimensionRatio="H,1:2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="1" />
+
+    <com.gas.test.learn.viewcircle.LifecycleView
+        android:id="@+id/viewLifecycle"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

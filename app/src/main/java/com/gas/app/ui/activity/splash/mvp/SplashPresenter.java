@@ -5,6 +5,7 @@ import android.app.Application;
 import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
 import com.base.lib.mvp.IModel;
+import com.lib.commonsdk.utils.GasAppUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -72,7 +73,7 @@ public class SplashPresenter extends BasePresenter<IModel, SplashContract.View> 
      * 显示版本号
      */
     public void showVersionCode() {
-        mView.showVersionCode("李佳星");
+        mView.showVersionCode(GasAppUtils.getAppVersionName());
     }
 
 

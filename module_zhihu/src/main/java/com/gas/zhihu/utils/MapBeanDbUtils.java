@@ -9,6 +9,7 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MapBeanDbUtils {
 
@@ -103,6 +104,13 @@ public class MapBeanDbUtils {
         }
         return 0;
 
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void updateBean(MapBean bean) {
+        DaoSession daoSession = DbUtils.getInstance().getDaoSession();
+        MapBeanDao dao = daoSession.getMapBeanDao();
+        dao.update(bean);
     }
 
 

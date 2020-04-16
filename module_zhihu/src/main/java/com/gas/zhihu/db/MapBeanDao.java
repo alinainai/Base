@@ -32,6 +32,9 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
         public final static Property Note = new Property(5, String.class, "note", false, "NOTE");
         public final static Property Longitude = new Property(6, double.class, "longitude", false, "LONGITUDE");
         public final static Property Latitude = new Property(7, double.class, "latitude", false, "LATITUDE");
+        public final static Property ExtraStr1 = new Property(8, String.class, "extraStr1", false, "EXTRA_STR1");
+        public final static Property ExtraStr3 = new Property(9, String.class, "extraStr3", false, "EXTRA_STR3");
+        public final static Property ExtraStr4 = new Property(10, String.class, "extraStr4", false, "EXTRA_STR4");
     }
 
 
@@ -54,7 +57,10 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
                 "\"KEY_NAME\" TEXT UNIQUE ," + // 4: keyName
                 "\"NOTE\" TEXT," + // 5: note
                 "\"LONGITUDE\" REAL NOT NULL ," + // 6: longitude
-                "\"LATITUDE\" REAL NOT NULL );"); // 7: latitude
+                "\"LATITUDE\" REAL NOT NULL ," + // 7: latitude
+                "\"EXTRA_STR1\" TEXT," + // 8: extraStr1
+                "\"EXTRA_STR3\" TEXT," + // 9: extraStr3
+                "\"EXTRA_STR4\" TEXT);"); // 10: extraStr4
     }
 
     /** Drops the underlying database table. */
@@ -98,6 +104,21 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
         }
         stmt.bindDouble(7, entity.getLongitude());
         stmt.bindDouble(8, entity.getLatitude());
+ 
+        String extraStr1 = entity.getExtraStr1();
+        if (extraStr1 != null) {
+            stmt.bindString(9, extraStr1);
+        }
+ 
+        String extraStr3 = entity.getExtraStr3();
+        if (extraStr3 != null) {
+            stmt.bindString(10, extraStr3);
+        }
+ 
+        String extraStr4 = entity.getExtraStr4();
+        if (extraStr4 != null) {
+            stmt.bindString(11, extraStr4);
+        }
     }
 
     @Override
@@ -135,6 +156,21 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
         }
         stmt.bindDouble(7, entity.getLongitude());
         stmt.bindDouble(8, entity.getLatitude());
+ 
+        String extraStr1 = entity.getExtraStr1();
+        if (extraStr1 != null) {
+            stmt.bindString(9, extraStr1);
+        }
+ 
+        String extraStr3 = entity.getExtraStr3();
+        if (extraStr3 != null) {
+            stmt.bindString(10, extraStr3);
+        }
+ 
+        String extraStr4 = entity.getExtraStr4();
+        if (extraStr4 != null) {
+            stmt.bindString(11, extraStr4);
+        }
     }
 
     @Override
@@ -152,7 +188,10 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // keyName
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // note
             cursor.getDouble(offset + 6), // longitude
-            cursor.getDouble(offset + 7) // latitude
+            cursor.getDouble(offset + 7), // latitude
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // extraStr1
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // extraStr3
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // extraStr4
         );
         return entity;
     }
@@ -167,6 +206,9 @@ public class MapBeanDao extends AbstractDao<MapBean, Long> {
         entity.setNote(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setLongitude(cursor.getDouble(offset + 6));
         entity.setLatitude(cursor.getDouble(offset + 7));
+        entity.setExtraStr1(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setExtraStr3(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setExtraStr4(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
      }
     
     @Override

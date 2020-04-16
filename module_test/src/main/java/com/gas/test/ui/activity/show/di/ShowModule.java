@@ -27,7 +27,7 @@ public abstract class ShowModule {
     @Provides
     @Named(IShowConst.RATIOVIEWFRAGMENT)
     static Fragment provideRatioViewFragment() {
-        return RatioViewFragment.newInstance();
+        return RatioViewFragment.Companion.newInstance();
     }
 
     @Provides

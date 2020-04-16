@@ -5,24 +5,54 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.text.TextUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * ================================================
  * desc:
- *
+ * <p>
  * created by author ljx
  * date  2020/4/12
  * email 569932357@qq.com
- *
+ * <p>
  * ================================================
  */
 public class AssetHelper {
     private static final String SEPARATOR = File.separator;//路径分隔符
+
+
+    /**
+     * 复制assets中的文件到指定目录
+     *
+     * @param context    上下文
+     * @param assetsPath assets资源路径*
+     */
+    public static void getTextFromAssetsFile(Context context, String assetsPath) {
+        try {
+            StringBuilder stringBuilder = new StringBuilder();
+            //获取assets资源管理器
+            AssetManager assetManager = context.getApplicationContext().getAssets();
+            //通过管理器打开文件并读取
+            InputStreamReader reader = new InputStreamReader(assetManager.open(assetsPath));
+            BufferedReader bf = new BufferedReader(reader);
+            String line;
+            while ((line = bf.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+            reader.close();
+            bf.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     /**
      * 复制assets中的文件到指定目录
@@ -55,7 +85,7 @@ public class AssetHelper {
 
             // 获取assets目录下的所有文件及目录名
             String[] fileNames = assetManager.list(assetsPath);
-            if(fileNames!=null){
+            if (fileNames != null) {
                 if (fileNames.length > 0) {//如果是目录 apk
                     for (String fileName : fileNames) {
                         if (!TextUtils.isEmpty(assetsPath)) {
