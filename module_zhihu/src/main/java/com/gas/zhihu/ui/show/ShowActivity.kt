@@ -234,7 +234,7 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
             return
         }
         // 经度：116.44000 纬度： 39.93410
-        SelectMapDialog().show(this, object : SelectMapDialog.OnMapClickListener {
+        SelectMapDialog(this).show( object : SelectMapDialog.OnMapClickListener {
             override fun onMapClick(map: Int) {
                 when (map) {
                     MAP_AMAP -> startActivity(getAMapMapIntent(bean))

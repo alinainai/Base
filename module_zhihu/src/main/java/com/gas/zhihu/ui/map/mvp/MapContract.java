@@ -30,6 +30,7 @@ public interface MapContract {
         List<String> getRecordHistory();
         void setRecordHistory(List<String> items);
         void clearRecordHistory();
+        List<String> getSearchKeySequence(String key);
 
     }
 }

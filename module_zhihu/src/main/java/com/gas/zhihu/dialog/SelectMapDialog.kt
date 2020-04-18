@@ -1,5 +1,7 @@
 package com.gas.zhihu.dialog
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
@@ -14,9 +16,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
-class SelectMapDialog {
+class SelectMapDialog constructor(val context: Context) {
     private var mDisposable: Disposable? = null
-    fun show(context: Context?, mapClickListener: OnMapClickListener?) {
+    private val shortAnimationDuration by lazy {
+        context.resources.getInteger(android.R.integer.config_shortAnimTime)
+    }
+
+    fun show(mapClickListener: OnMapClickListener?) {
         @SuppressLint("InflateParams") val view = LayoutInflater.from(context).inflate(R.layout.zhihu_dialog_select_map, null)
         val loading = view.findViewById<View>(R.id.loading)
         val empty = view.findViewById<View>(R.id.empty)
@@ -66,23 +72,54 @@ class SelectMapDialog {
         }
         mDisposable = Observable.timer(500, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { aLong: Long? ->
-                    loading.visibility = View.GONE
+                .subscribe {
+                    viewFadaOut(loading)
                     if (GasAppUtils.checkMapAppsIsExist(LocationUtils.TECENT_MAP_PACKAGE)) {
-                        tv_tecent_map.visibility = View.VISIBLE
+                        viewFadaIn(tv_tecent_map)
                     }
                     if (GasAppUtils.checkMapAppsIsExist(LocationUtils.BAIDU_MAP_PACKAGE)) {
-                        tv_baidu_map.visibility = View.VISIBLE
+                        viewFadaIn(tv_baidu_map)
                     }
                     if (GasAppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
-                        tv_amap_map.visibility = View.VISIBLE
+                        viewFadaIn(tv_amap_map)
                     }
                     if (tv_tecent_map.visibility == View.GONE && tv_baidu_map.visibility == View.GONE && tv_amap_map.visibility == View.GONE) {
-                        empty.visibility = View.VISIBLE
+                        viewFadaIn(empty)
                     }
-                    mDisposable!!.dispose()
                 }
+        dialog.setOnDismissListener {
+            mDisposable?.apply {
+                mDisposable!!.dispose()
+            }
+        }
         dialog.show()
+    }
+
+    private fun viewFadaIn(view:View){
+        view.apply {
+            // Set the content view to 0% opacity but visible, so that it is visible
+            // (but fully transparent) during the animation.
+            alpha = 0f
+            visibility = View.VISIBLE
+
+            // Animate the content view to 100% opacity, and clear any animation
+            // listener set on the view.
+            animate()
+                    .alpha(1f)
+                    .setDuration(shortAnimationDuration.toLong())
+                    .setListener(null)
+        }
+    }
+
+    private fun viewFadaOut(view:View){
+        view.animate()
+                .alpha(0f)
+                .setDuration(shortAnimationDuration.toLong())
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                    }
+                })
     }
 
     interface OnMapClickListener : CommonBottomDialog.onDialogClickListener {

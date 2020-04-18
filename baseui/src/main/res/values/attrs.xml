@@ -32,6 +32,10 @@
         <attr name="animDuration" format="integer"/>
     </declare-styleable>
 
+    <declare-styleable name="RecyclerViewWithMaxHeight" tools:ignore="ResourceName">
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
+
     <declare-styleable name="WaveView" tools:ignore="ResourceName">
         <!-- 中心圆颜色-->
         <attr name="waveCenterColor" format="color"/>

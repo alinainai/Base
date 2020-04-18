@@ -75,4 +75,9 @@ public class MapModel extends BaseModel implements MapContract.Model {
         ZhihuUtils.setSearchRecord("");
     }
 
+    @Override
+    public List<String> getSearchKeySequence(String key) {
+        return MapBeanDbUtils.getSearchKeysLike(key);
+    }
+
 }

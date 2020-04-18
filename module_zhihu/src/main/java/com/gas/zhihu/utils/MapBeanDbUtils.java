@@ -113,5 +113,21 @@ public class MapBeanDbUtils {
         dao.update(bean);
     }
 
+    @SuppressWarnings("unchecked")
+    public static List<String> getSearchKeysLike(String key) {
+
+        List<String> strs = new ArrayList<>();
+        DaoSession daoSession = DbUtils.getInstance().getDaoSession();
+        MapBeanDao dao = daoSession.getMapBeanDao();
+        QueryBuilder qb = dao.queryBuilder();
+        ArrayList<MapBean> list = (ArrayList<MapBean>) qb.where(MapBeanDao.Properties.KeyName.like("%" + key + "%")).list();
+        if (list != null && !list.isEmpty()) {
+            for (MapBean mapBean : list) {
+                strs.add(mapBean.getKeyName());
+            }
+        }
+        return strs;
+    }
+
 
 }

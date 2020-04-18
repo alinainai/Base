@@ -18,7 +18,7 @@ android {
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "trunk.doi.base"
+        applicationId "com.gas.app"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]

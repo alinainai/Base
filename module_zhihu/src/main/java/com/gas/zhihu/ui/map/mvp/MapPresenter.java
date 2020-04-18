@@ -188,6 +188,9 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
         mModel.clearRecordHistory();
     }
 
+    public List<String> getSearchKeysWithKey(String key) {
+        return mModel.getSearchKeySequence(key);
+    }
 
     @Override
     public void onDestroy() {
