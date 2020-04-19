@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".ui.tip.TipActivity"
+            android:name=".ui.add.AddActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_details"
             android:screenOrientation="portrait"

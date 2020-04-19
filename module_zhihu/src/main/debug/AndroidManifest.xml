@@ -22,12 +22,11 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity
-            android:name=".ui.tip.TipActivity"
+        <activity android:name=".ui.add.AddActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_details"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".ui.show.ShowActivity"
             android:configChanges="orientation|screenSize"
