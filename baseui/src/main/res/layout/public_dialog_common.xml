@@ -40,7 +40,7 @@
             android:id="@+id/left_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/public_btn_default_selector"
+            android:background="@drawable/public_default_dialog_left_btn_selector"
             android:gravity="center"
             android:paddingTop="11dp"
             android:paddingBottom="11dp"

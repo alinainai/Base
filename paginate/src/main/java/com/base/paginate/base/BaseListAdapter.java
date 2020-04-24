@@ -1,14 +1,15 @@
 package com.base.paginate.base;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.AsyncDifferConfig;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -20,7 +21,6 @@ import com.base.paginate.interfaces.OnReloadListener;
 import com.base.paginate.view.DefaultEmptyView;
 import com.base.paginate.view.DefaultLoadMoreFooter;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,8 +39,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * ================================================
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public abstract class BaseListAdapter<T> extends ListAdapter<T, RecyclerView.ViewHolder> {
 
     private final String TAG = this.getClass().getSimpleName();
 
@@ -64,10 +63,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     private OnLoadMoreListener mLoadMoreListener;
 
-    /**
-     * 真正的数据集合
-     */
-    protected List<T> mData;
 
     /**
      * 是否开启加载更多功能
@@ -83,7 +78,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * 是否显示初始布局
      */
     private boolean mOpenEmpty;
-
 
     /**
      * 初始加载布局的抽象类
@@ -123,15 +117,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     protected abstract RecyclerView.ViewHolder getViewHolder(ViewGroup parent, int viewType);
 
-    protected abstract void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType);
+    protected abstract void convert(RecyclerView.ViewHolder holder, T data, int position);
+
+    protected abstract void convertDiff(RecyclerView.ViewHolder holder, T data, int position, List<Object> payloads);
 
 
-    public BaseAdapter(boolean isOpenLoadMore, boolean openEmpty) {
+    public BaseListAdapter(boolean isOpenLoadMore, boolean openEmpty, DiffUtil.ItemCallback<T> diffCallback) {
+        super(diffCallback);
+        init(isOpenLoadMore, openEmpty);
+    }
+
+    public BaseListAdapter(boolean isOpenLoadMore, boolean openEmpty, @NonNull AsyncDifferConfig<T> config) {
+        super(config);
         init(isOpenLoadMore, openEmpty);
     }
 
     private void init(boolean isOpenLoadMore, boolean openEmpty) {
-        mData = new ArrayList<>();
         mOpenEmpty = openEmpty;
         mOpenLoadMore = isOpenLoadMore;
     }
@@ -168,12 +169,24 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         int viewType = holder.getItemViewType();
         if (isCommonItemView(viewType)) {
-            bindCommonItem(holder, adapterPositionToDataPosition(position), viewType);
+            bindCommonItem(holder, adapterPositionToDataPosition(position));
         }
     }
 
-    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, final int viewType) {
-        convert(holder, mData.get(position), position, viewType);
+    @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List<Object> payloads) {
+
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            int positionOfData = adapterPositionToDataPosition(position);
+            convertDiff(holder, getData().get(positionOfData), positionOfData, payloads);
+        }
+
+    }
+
+    private void bindCommonItem(RecyclerView.ViewHolder holder, final int position) {
+        convert(holder, getData().get(position), position);
     }
 
     @Override
@@ -185,7 +198,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 count++;
             }
         } else {
-            count = getHeaderCount() + mData.size() + getFooterViewCount();
+            count = getHeaderCount() + super.getItemCount() + getFooterViewCount();
         }
         return count;
     }
@@ -204,10 +217,13 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 return TYPE_FOOTER_VIEW;
             }
             int dataPosition = adapterPositionToDataPosition(position);
-            return getViewType(dataPosition, mData.get(dataPosition));
+            return getViewType(dataPosition, getData().get(dataPosition));
         }
     }
 
+    private List<T> getData() {
+        return getCurrentList();
+    }
 
     /**
      * StaggeredGridLayoutManager模式时，HeaderView、FooterView可占据一行
@@ -279,7 +295,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    Log.e("TAG","onScrollStateChanged:SCROLL_STATE_IDLE" );
+
                     //开启加载更过 && 最后一个条目可见 && recyclerView没有在顶端（解决SwipeRefresh下拉刷新后先进行加载更多的bug）
                     if (!isAutoLoadMore && Utils.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount() &&
                             recyclerView.canScrollVertically(-1) && getEmptyViewCount() != 1) {
@@ -290,10 +306,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                Log.e("TAG","onScrolled" );
                 super.onScrolled(recyclerView, dx, dy);
                 if (isAutoLoadMore && Utils.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount() && getEmptyViewCount() != 1) {
-                    if (!mData.isEmpty()) {
+                    if (!getData().isEmpty()) {
                         loadMore(false);
                     }
                 } else if (isAutoLoadMore) {
@@ -301,19 +316,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
                 }
             }
         });
-        recyclerView.getAdapter().registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onItemRangeRemoved(positionStart, itemCount);
-                if (Utils.findLastVisibleItemPosition(layoutManager) + 1 == getItemCount() && getEmptyViewCount() != 1) {
-                    if (!mData.isEmpty()) {
-                        loadMore(false);
-                    }
-                }
-            }
-        });
     }
-
 
     /**
      * 到达底部开始刷新
@@ -330,7 +333,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             }
         }
     }
-
 
     public void setRefreshState(boolean refresh) {
         isLoading = refresh;
@@ -431,7 +433,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         if (!mOpenEmpty)
             return 0;
 
-        if (mData.size() != 0) {
+        if (getData().size() != 0) {
             return 0;
         }
         return 1;
@@ -443,6 +445,9 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     public void setEmptyView(@EmptyInterface.EmptyType int statusType) {
 
+        if (!getData().isEmpty()) {
+            return;
+        }
         if (!mOpenEmpty || mEmptyView == null)
             return;
         mEmptyView.setStatus(statusType);
@@ -457,11 +462,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
             }
 
         }
-        if (mData.size() > 0) {
-            int count = mData.size();
-            mData.clear();
-            notifyDataSetChanged();
-        }
+
 
     }
 
@@ -493,7 +494,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * @return FooterViewCount
      */
     private int getFooterViewCount() {
-        return mOpenLoadMore && !mData.isEmpty() ? 1 : 0;
+        return mOpenLoadMore && !getData().isEmpty() ? 1 : 0;
     }
 
 
@@ -504,7 +505,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     /**
-     * 重置foorterView为normal状态
+     * 重置footerView为normal状态
      */
     private void resetLoading() {
         if (mFooterLayout != null) {
@@ -513,7 +514,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     /**
-     * 重置foorterView为normal状态
+     * 重置footerView为fail状态
      */
     private void resetFootLoadFail() {
         if (mFooterLayout != null) {
@@ -544,7 +545,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
 
     /********************************** 数据相关 Method ****************************************/
 
-
     /**
      * 获得列表数据个数
      *
@@ -552,7 +552,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
 
     public int getDataSize() {
-        return mData.size();
+        return getData().size();
     }
 
     /**
@@ -566,230 +566,27 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
     }
 
     /**
-     * 获取item 在Adapter中的位置
-     *
-     * @param position 条目在mData的位置
-     * @return position
-     */
-    public int dataPositionToAdapterPosition(int position) {
-        return position + getHeaderCount();
-    }
-
-    /**
-     * 获取item 在mData中的位置
-     *
-     * @param item 条目
-     * @return position
-     */
-    public int getItemIndexOfData(T item) {
-        return mData.indexOf(item);
-    }
-
-    /**
-     * 获取item 在Adapter中的位置
-     *
-     * @param item 条目
-     * @return position
-     */
-    public int getItemIndexOfAdapter(T item) {
-        return mData.indexOf(item) + getHeaderCount();
-    }
-
-
-    /**
-     * 初次加载、或下拉刷新要替换全部旧数据时刷新数据
-     * 会清除掉所有旧数据
+     * 数据变化调用
      *
      * @param data List<T>
      */
-    public void setNewData(List<T> data) {
-        isAutoLoadMore = true;
-        dataClear();
-        if (null != data && !data.isEmpty()) {
-            mData.addAll(data);
-        }
-        notifyDataSetChanged();
-        if (mOpenLoadMore)
-            resetLoading();
+    public void setDataDiff(List<T> data) {
+
         if (isLoading)
             isLoading = false;
-    }
-
-    /**
-     * 刷新加载更多的数据
-     *
-     * @param data {@link List}
-     */
-    public void setLoadMoreData(@NonNull List<T> data) {
-        if (isLoading)
-            isLoading = false;
-
-        if (data.isEmpty()) {
-            if (mOpenLoadMore)
-                resetFootLoadFail();
-            return;
+        if (data.isEmpty()||getData().isEmpty()) {
+            isAutoLoadMore = true;
         }
-        insertAll(data);
+        submitList(data);
         if (mOpenLoadMore)
             resetLoading();
-    }
-
-    /**
-     * 给列表末尾追加单个数据
-     *
-     * @param datum 单个数据
-     */
-    public void insert(T datum) {
-        insert(datum, mData.size());
-    }
-
-    /**
-     * 添加单个数据到指定位置
-     *
-     * @param datum    data
-     * @param position position
-     */
-    public void insert(T datum, int position) {
-        insertAll(Collections.singletonList(datum), position);
-    }
-
-
-    /**
-     * 给列表末尾追加多个数据
-     *
-     * @param data {#{@link List}}多个数据
-     */
-    public void insertAll(List<T> data) {
-        insertAll(data, mData.size());
-    }
-
-    /**
-     * 从某个位置开始添加若干个数据，此方法不会触发刷新逻辑
-     *
-     * @param data     多个数据
-     * @param position //mData的位置
-     */
-    public void insertAll(List<T> data, int position) {
-        //如果position不符合规范，默认在末尾插入
-        if (position > mData.size() || position < 0) {
-            position = mData.size();
-        }
-        if (mData.isEmpty()) {
-            mData.addAll(data);
-            notifyItemRangeInserted(0, mData.size());
-        } else {
-            mData.addAll(position, data);
-            int dataPosition = position + getHeaderCount();
-            notifyItemRangeInserted(dataPosition, data.size());
-            notifyItemRangeChanged(dataPosition, mData.size() - position);
-        }
 
     }
 
-    /**
-     * 删除某个位置的数据
-     *
-     * @param position 数据的位置
-     */
-    public void remove(int position) {
-        removeRange(position, 1);
-    }
+    @Override
+    public void onCurrentListChanged(@NonNull List<T> previousList, @NonNull List<T> currentList) {
+        super.onCurrentListChanged(previousList, currentList);
 
-
-    /**
-     * 删除某个位置开始的count个数据
-     *
-     * @param position 数据的位置
-     * @param count    数据的个数
-     */
-    public void removeRange(int position, int count) {
-        if (position >= mData.size() || position < 0) {
-            return;
-        }
-        if (position + count > mData.size()) {
-            return;
-        }
-        mData.subList(position, position + count).clear();
-        int internalPosition = position + getHeaderCount();
-        notifyItemRangeRemoved(internalPosition, count);
-        if (mData.isEmpty()) {
-            if (mOpenLoadMore)
-                resetLoading();
-            if (mEmptyView != null) {
-                mEmptyView.setStatus(EmptyInterface.STATUS_EMPTY);
-            }
-            notifyDataSetChanged();
-        } else
-            notifyItemRangeChanged(internalPosition, mData.size() - position);
-
-    }
-
-
-    /**
-     * 清空所有数据
-     */
-    private void dataClear() {
-        if (!mData.isEmpty()) {
-            mData.clear();
-        }
-    }
-
-    /**
-     * 当数据多条目删除操作/或者数据源变化比较大时
-     * <p>
-     * 必须重写
-     * <p>
-     * {@link #itemsSameCompare}
-     * {@link #contentsSameCompare}
-     *
-     * @param data 删除该删除数据之后的数据
-     *             如果data = null的话，会清空列表
-     */
-    public void showDataDiff(List<T> data) {
-        if (data == null) {
-            data = Collections.emptyList();
-        }
-        if (mData.size() == 0) {
-            mData.addAll(data);
-            notifyItemRangeInserted(0, mData.size());
-        } else {
-            List<T> finalData = data;
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
-                @Override
-                public int getOldListSize() {
-                    return mData.size();
-                }
-
-                @Override
-                public int getNewListSize() {
-                    return finalData.size();
-                }
-
-                //返回值表示新数据传入时这两个位置的数据是否时同一个条目
-                @Override
-                public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
-                    return itemsSameCompare(mData.get(oldItemPosition), finalData.get(newItemPosition));
-                }
-
-                //返回值表示新老位置的数据内容是否相同，这个方法在areItemsTheSame（）返回true时生效
-                //当areItemsTheSame返回为false时，不管areContentsTheSame是否为true，adapter中的条目都会更新
-                @Override
-                public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
-                    return contentsSameCompare(mData.get(oldItemPosition), finalData.get(newItemPosition));
-                }
-            });
-            mData.clear();
-            mData.addAll(data);
-            result.dispatchUpdatesTo(this);
-        }
-    }
-
-    protected boolean itemsSameCompare(T oldItem, T newItem) {
-        return false;
-    }
-
-    protected boolean contentsSameCompare(T oldItem, T newItem) {
-        return false;
     }
 
     /************************************** Set Listener ****************************************/

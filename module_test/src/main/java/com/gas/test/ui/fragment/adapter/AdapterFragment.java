@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.gas.test.R2;
 import com.gas.test.ui.fragment.adapter.di.DaggerAdapterComponent;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterContract;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterPresenter;
+import com.gas.test.widget.RecyclerStickHeaderHelper;
 
 import javax.inject.Inject;
 
@@ -45,10 +47,13 @@ public class AdapterFragment extends BaseFragment<AdapterPresenter> implements A
     RecyclerView mRecyclerView;
     @BindView(R2.id.adapter_refresh)
     SwipeRefreshLayout mRefresh;
+    @BindView(R2.id.flContainer)
+    FrameLayout flContainer;
+
 
 
     @Inject
-    SimpleAdapter mAdapter;
+    SimpleMultiAdapter mAdapter;
     @Inject
     LinearLayoutManager mLayoutManager;
 
@@ -75,6 +80,7 @@ public class AdapterFragment extends BaseFragment<AdapterPresenter> implements A
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+
         mRefresh.setColorSchemeResources(R.color.public_white);
         mRefresh.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
         mRefresh.setOnRefreshListener(this);
@@ -87,12 +93,16 @@ public class AdapterFragment extends BaseFragment<AdapterPresenter> implements A
             mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
             mPresenter.loadData(true);
         });
-        mAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) -> showMessage(data));
+        mAdapter.setOnMultiItemClickListener((viewHolder, data, position, viewType) ->{
+            mAdapter.remove(position);
+            showMessage(data);
+        });
         mRecyclerView.setAdapter(mAdapter);
-
+        new RecyclerStickHeaderHelper(mRecyclerView,flContainer,mAdapter.getHeaderStickType());
         View header = LayoutInflater.from(mContext).inflate(R.layout.test_header_view, null);
         mAdapter.addHeaderView(header);
         mPresenter.initPresent();
+
 
     }
 

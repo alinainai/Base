@@ -11,7 +11,7 @@ import com.gas.test.bean.TestInfoBean;
 /**
  *
  */
-public class HomeAdapter extends SingleAdapter<TestInfoBean> {
+public class HomeAdapter extends SingleAdapter<TestInfoBean>  {
 
 
     public HomeAdapter(Context context) {
@@ -28,5 +28,6 @@ public class HomeAdapter extends SingleAdapter<TestInfoBean> {
     protected int getItemLayoutId() {
         return R.layout.test_item_test_info;
     }
+
 
 }

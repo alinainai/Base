@@ -139,7 +139,7 @@ public abstract class ExpendedRecyclerAdapter<G, C> extends ExtendMultiAdapter<O
             return;
         }
         if (!canExpandAll()) {
-            for (int i = 0; i < getDataCount(); i++) {
+            for (int i = 0; i < getDataSize(); i++) {
                 if (i != position) {
                     int tempPosition = collapseGroup(i);
                     if (tempPosition != -1) {
@@ -156,7 +156,7 @@ public abstract class ExpendedRecyclerAdapter<G, C> extends ExtendMultiAdapter<O
             if (canExpandAll()) {
                 insertAll(tempChildren, position + 1);
             } else {
-                int tempPsi = getItemPositionInData(item);
+                int tempPsi = getItemIndexOfData(item);
                 insertAll(tempChildren, tempPsi + 1);
             }
         }
@@ -203,7 +203,7 @@ public abstract class ExpendedRecyclerAdapter<G, C> extends ExtendMultiAdapter<O
                 data.getGroupItem().getChildData().remove(item);
                 if (data.getGroupItem().getChildData().isEmpty()) {
                     data.getGroupItem().onExpand();
-                    notifyItemChanged(getItemPositionInData(data.getGroupItem()));
+                    notifyItemChanged(getItemIndexOfData(data.getGroupItem()));
                 }
                 break;
             }

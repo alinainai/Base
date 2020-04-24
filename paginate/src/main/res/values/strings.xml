@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">paginate</string>
     <string name="str_base_adapter_end">(*￣ω￣) 数据加载完成</string>
+    <string name="str_base_adapter_empty">数据为空</string>
     <string name="str_base_adapter_normal">上拉/点击加载更多</string>
     <string name="str_base_adapter_loading">数据加载中&#8230;</string>
     <string name="str_base_adapter_network_fail">网络连接失败</string>

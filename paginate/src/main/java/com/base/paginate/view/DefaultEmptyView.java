@@ -67,7 +67,7 @@ public class DefaultEmptyView extends LinearLayout implements EmptyInterface {
                 mTextView.setText(R.string.str_base_adapter_normal);
                 break;
             case STATUS_EMPTY://数据为空
-                mTextView.setText(R.string.str_base_adapter_end);
+                mTextView.setText(R.string.str_base_adapter_empty);
                 break;
             case STATUS_NETWORK_FAIL://网络异常，加载失败
                 mTextView.setText(R.string.str_base_adapter_network_fail);

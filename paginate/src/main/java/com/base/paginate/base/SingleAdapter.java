@@ -2,8 +2,6 @@ package com.base.paginate.base;
 
 import android.content.Context;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.base.paginate.viewholder.PageViewHolder;
 
 /**
@@ -13,7 +11,7 @@ import com.base.paginate.viewholder.PageViewHolder;
 @SuppressWarnings("WeakerAccess")
 public abstract class SingleAdapter<T> extends MultiAdapter<T> {
 
-    private static final int TYPE_COMMON_VIEW = 100001;
+    protected static final int TYPE_COMMON_VIEW = 100001;
 
 
     public SingleAdapter(Context context) {
@@ -24,7 +22,7 @@ public abstract class SingleAdapter<T> extends MultiAdapter<T> {
         this(context, openLoadMore, true);
     }
 
-    public SingleAdapter(Context context,  boolean openLoadMore, boolean openEmpty) {
+    public SingleAdapter(Context context, boolean openLoadMore, boolean openEmpty) {
         super(context, openLoadMore, openEmpty);
     }
 
@@ -40,8 +38,8 @@ public abstract class SingleAdapter<T> extends MultiAdapter<T> {
     }
 
     @Override
-    protected void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType) {
-        convert((PageViewHolder)holder, data, position);
+    protected void convert(PageViewHolder holder, T data, int position, int viewType) {
+        convert(holder, data, position);
     }
 
     protected abstract void convert(PageViewHolder holder, T data, int position);

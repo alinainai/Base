@@ -23,4 +23,9 @@ public class SimpleAdapter extends SingleAdapter<String> {
     protected int getItemLayoutId() {
         return R.layout.test_item_simple_item;
     }
+
+
+
+
+
 }

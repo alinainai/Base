@@ -1,10 +1,17 @@
 package com.base.baseui.dialog;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 
 import androidx.annotation.IntDef;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.baseui.R;
 import com.base.lib.util.Preconditions;
+import com.base.paginate.base.MultiAdapter;
+import com.base.paginate.base.SingleAdapter;
+import com.base.paginate.viewholder.PageViewHolder;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -60,6 +67,9 @@ public class SelectBottomDialog {
     }
 
     public void show(){
+        Preconditions.checkNotNull(mBuilder, "You should call getInstance first");
+        View view = LayoutInflater.from(mContext).inflate(R.layout.public_dialog_bottom_select, null);
+        mBuilder.setCustomView(view);
 
     }
 
@@ -78,6 +88,66 @@ public class SelectBottomDialog {
 
         }
 
+    }
+
+
+    private class ItemAdapter extends MultiAdapter<String> {
+
+        private int mMode;
+
+        public ItemAdapter(Context context,@Mode int mode) {
+            super(context, false, false);
+            this.mMode=mode;
+        }
+
+
+        @Override
+        protected int getItemLayoutId(int viewType) {
+            return 0;
+        }
+
+        @Override
+        protected int getViewType(int position, String data) {
+            return 0;
+//            switch (mMode){
+//                case MODE_CLICK:
+//                    break;
+//                    case MODE_CLICK:
+//                    break; case MODE_CLICK:
+//                    break;
+//            }
+//            return ;
+        }
+
+
+
+        @Override
+        protected void convert(PageViewHolder holder, String data, int position, int viewType) {
+
+        }
+    }
+
+    public static class SelectBottomItem{
+
+        private int mId;
+        private String mName;
+
+        private SelectBottomItem(int id,String name){
+            mId=id;
+           mName =name;
+        }
+
+        public static SelectBottomItem create(int id,String name){
+            return new SelectBottomItem(id,name);
+        }
+
+        public int getId(){
+            return mId;
+        }
+
+        public String getName(){
+            return mName;
+        }
     }
 
 

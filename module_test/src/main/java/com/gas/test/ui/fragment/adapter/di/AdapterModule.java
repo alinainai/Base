@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.lib.di.scope.FragmentScope;
 import com.gas.test.ui.fragment.adapter.SimpleAdapter;
+import com.gas.test.ui.fragment.adapter.SimpleMultiAdapter;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterContract;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterModel;
 
@@ -29,8 +30,8 @@ public abstract class AdapterModule {
 
     @FragmentScope
     @Provides
-    static SimpleAdapter provideSimpleAdapter(AdapterContract.View view) {
-        return new SimpleAdapter(view.getWrapContent());
+    static SimpleMultiAdapter provideSimpleAdapter(AdapterContract.View view) {
+        return new SimpleMultiAdapter(view.getWrapContent());
     }
 
     @FragmentScope

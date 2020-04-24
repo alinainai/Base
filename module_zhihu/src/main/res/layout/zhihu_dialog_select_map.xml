@@ -88,7 +88,7 @@
     <TextView
         android:id="@+id/dialog_cancel"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="50dp"
         android:background="@drawable/public_btn_default_selector"
         android:gravity="center"
         android:text="取消"

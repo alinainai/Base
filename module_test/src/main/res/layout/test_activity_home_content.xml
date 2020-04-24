@@ -18,6 +18,14 @@
         app:layout_constraintBottom_toTopOf="@+id/tmw_top_show"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_recycler"
+        />
 
     <com.base.baseui.view.TitleView
         android:id="@+id/home_title"

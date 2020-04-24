@@ -3,6 +3,8 @@ package com.base.paginate.base;
 import android.content.Context;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.base.paginate.Utils;
 import com.base.paginate.interfaces.OnMultiItemClickListeners;
 import com.base.paginate.viewholder.PageViewHolder;
@@ -24,16 +26,16 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T> {
     protected OnMultiItemClickListeners<T> mItemClickListener;
 
     public MultiAdapter(Context context) {
-        this(context,true);
+        this(context, true);
     }
 
-    public MultiAdapter(Context context,boolean openLoadMore) {
-        this(context,openLoadMore, true);
+    public MultiAdapter(Context context, boolean openLoadMore) {
+        this(context, openLoadMore, true);
     }
 
-    public MultiAdapter(Context context,boolean openLoadMore, boolean openEmpty) {
+    public MultiAdapter(Context context, boolean openLoadMore, boolean openEmpty) {
         super(openLoadMore, openEmpty);
-        mContext=context;
+        mContext = context;
     }
 
     protected abstract int getItemLayoutId(int viewType);
@@ -46,7 +48,7 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T> {
         holder.getConvertView().setOnClickListener(view -> {
 
             final int dataPos = holder.getAdapterPosition() - getHeaderCount();
-            if (mItemClickListener != null && dataPos < mData.size()) {
+            if (mItemClickListener != null && dataPos < mData.size() && dataPos >= 0) {
                 mItemClickListener.onItemClick(holder, mData.get(dataPos), dataPos, viewType);
             }
         });
@@ -54,6 +56,13 @@ public abstract class MultiAdapter<T> extends BaseAdapter<T> {
         return holder;
     }
 
+    @Override
+    protected void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType) {
+        convert((PageViewHolder) holder, data, position, viewType);
+
+    }
+
+    protected abstract void convert(PageViewHolder holder, T data, int position, int viewType);
 
     public void setOnMultiItemClickListener(OnMultiItemClickListeners<T> itemClickListener) {
         mItemClickListener = itemClickListener;
