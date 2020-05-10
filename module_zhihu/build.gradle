@@ -1,4 +1,7 @@
 apply from: "../common_component_build.gradle"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 
 android {
@@ -37,4 +40,5 @@ dependencies {
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
 
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
 }
