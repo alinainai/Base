@@ -6,7 +6,7 @@ import com.base.lib.mvp.BasePresenter
 import com.gas.zhihu.bean.LocationBean
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.utils.MapBeanDbUtils
-import com.lib.commonsdk.utils.GasAppUtils
+import com.lib.commonsdk.utils.AppUtils
 import com.lib.commonsdk.utils.TimeUtils
 import com.lib.commonsdk.utils.Utils
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class ShowPresenter @Inject constructor(model: ShowContract.Model?, rootView: Sh
 
     fun setAddressToCopy() {
         if (mapBeanInfo != null && !TextUtils.isEmpty(mapBeanInfo!!.locationInfo)) {
-            Utils.copyData(GasAppUtils.getApp(), mapBeanInfo!!.locationInfo)
+            Utils.copyData(AppUtils.getApp(), mapBeanInfo!!.locationInfo)
             mView!!.showMessage("复制成功，请去地图软件搜索")
         } else {
             mView!!.showMessage("复制失败，地址信息为空")

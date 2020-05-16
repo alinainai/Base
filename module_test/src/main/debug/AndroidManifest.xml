@@ -22,10 +22,14 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
 
+<!--        android:theme="@style/transparent_activity_style"-->
         <activity android:name=".ui.activity.trans.TransActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/transparent_activity_style"
-            />
+            android:configChanges="orientation|screenSize"
+            >
+
+
+        </activity>
         <activity
             android:name=".ui.activity.lifecycle.SecondActivity"
             android:configChanges="orientation|screenSize"
@@ -46,7 +50,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

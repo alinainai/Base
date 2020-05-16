@@ -24,7 +24,7 @@ import com.gas.zhihu.ui.map.mvp.MapContract
 import com.gas.zhihu.ui.map.mvp.MapPresenter
 import com.gas.zhihu.ui.show.ShowActivity.Companion.launchActivity
 import com.google.android.flexbox.FlexboxLayoutManager
-import com.lib.commonsdk.utils.GasAppUtils
+import com.lib.commonsdk.utils.AppUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observable
@@ -217,7 +217,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
 
     private fun toSearch(search: String, needToSave: Boolean) {
         if (TextUtils.isEmpty(search)) {
-            GasAppUtils.toast("请输入正确的匹配规则")
+            AppUtils.toast("请输入正确的匹配规则")
             return
         }
         if (needToSave) {

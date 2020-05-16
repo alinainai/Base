@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
-import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.AppUtils;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -79,11 +79,11 @@ public final class SPUtils {
     }
 
     private SPUtils(final String spName) {
-        sp = GasAppUtils.getApp().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        sp = AppUtils.getApp().getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 
     private SPUtils(final String spName, final int mode) {
-        sp = GasAppUtils.getApp().getSharedPreferences(spName, mode);
+        sp = AppUtils.getApp().getSharedPreferences(spName, mode);
     }
 
     /**

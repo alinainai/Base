@@ -170,6 +170,12 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
         if (isCommonItemView(viewType)) {
             bindCommonItem(holder, adapterPositionToDataPosition(position), viewType);
         }
+//        if(viewType==TYPE_FOOTER_VIEW){
+//            loadMore(false);
+//        }
+        if (isCommonItemView(viewType)) {
+            bindCommonItem(holder, adapterPositionToDataPosition(position), viewType);
+        }
     }
 
     private void bindCommonItem(RecyclerView.ViewHolder holder, final int position, final int viewType) {

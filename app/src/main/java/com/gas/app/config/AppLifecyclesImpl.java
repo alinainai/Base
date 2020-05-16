@@ -24,7 +24,7 @@ import com.base.lib.base.delegate.AppLifecyclers;
 
 
 import com.gas.app.BuildConfig;
-import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.AppUtils;
 
 
 public class AppLifecyclesImpl implements AppLifecyclers {
@@ -37,7 +37,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
     @Override
     public void onCreate(@NonNull Application application) {
         if (!BuildConfig.IS_BUILD_MODULE) {
-            GasAppUtils.init(application);
+            AppUtils.init(application);
         }
     }
 

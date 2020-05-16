@@ -30,7 +30,7 @@ import com.gas.zhihu.ui.login.mvp.LoginContract;
 import com.gas.zhihu.ui.login.mvp.LoginPresenter;
 import com.gas.zhihu.ui.map.MapActivity;
 import com.gas.zhihu.view.CleanEditText;
-import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.AppUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -179,12 +179,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (TextUtils.isEmpty(userName)) {
-            GasAppUtils.toast("请输入登录账号");
+            AppUtils.toast("请输入登录账号");
             return;
         }
 
         if (TextUtils.isEmpty(passWord)) {
-            GasAppUtils.toast("请输入登录密码");
+            AppUtils.toast("请输入登录密码");
             return;
         }
 
@@ -192,7 +192,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             startActivity(new Intent(mContext, MapActivity.class));
             finish();
         } else {
-            GasAppUtils.toast("请输入正确的用户名和密码");
+            AppUtils.toast("请输入正确的用户名和密码");
         }
 
     }

@@ -2,20 +2,25 @@ package com.lib.commonsdk.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.StringRes;
 
+import com.lib.commonsdk.constants.Constants;
+import com.lib.commonsdk.utils.sp.SPStaticUtils;
+
 import java.lang.reflect.InvocationTargetException;
+import java.util.Locale;
+import java.util.UUID;
 
 
-public class GasAppUtils {
+public class AppUtils {
 
 
     private static Application mApplication;
@@ -44,8 +49,8 @@ public class GasAppUtils {
         Toast.makeText(getApp().getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    public static boolean checkMapAppsIsExist( String packagename) {
-      return   Utils.checkMapAppsIsExist(getApp(),packagename);
+    public static boolean checkMapAppsIsExist(String packagename) {
+        return Utils.checkMapAppsIsExist(getApp(), packagename);
     }
 
     /**
@@ -119,5 +124,31 @@ public class GasAppUtils {
         throw new NullPointerException("u should init first");
     }
 
+    /**
+     * 获取唯一标识符
+     *
+     * @return APP_GUID
+     */
+    public static String getAppGUID() {
+        String id = SPStaticUtils.getString("APP_GUID", "");
+        if (TextUtils.isEmpty(id)) {
+            id = UUID.randomUUID().toString();
+            SPStaticUtils.put("APP_GUID", id);
+        }
+        return id;
+    }
+
+    /**
+     * 是否是简体中文
+     * @return
+     */
+    public static boolean isSimplifiedChinese() {
+        boolean isCH = false;
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equals(Constants.CHINESE_LANG) && locale.getCountry().equals(Constants.CHINA)) {
+            isCH = true;
+        }
+        return isCH;
+    }
 
 }

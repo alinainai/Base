@@ -17,7 +17,7 @@ import com.gas.zhihu.utils.ZhihuUtils;
 import com.google.gson.reflect.TypeToken;
 import com.lib.commonsdk.utils.AssetHelper;
 import com.lib.commonsdk.utils.FileUtils;
-import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.AppUtils;
 import com.lib.commonsdk.utils.GsonUtils;
 import com.lib.commonsdk.utils.Utils;
 import com.lib.commonsdk.utils.ZipUtils;
@@ -74,14 +74,14 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
             @Override
             public void onRequestPermissionSuccess() {
                 //request permission success, do something.
-                if (mModel.getMapDataCount() == 0 || ZhihuUtils.getSpVersionCode() != GasAppUtils.getAppVersionCode()) {
+                if (mModel.getMapDataCount() == 0 || ZhihuUtils.getSpVersionCode() != AppUtils.getAppVersionCode()) {
                     getMapDataFromAsset();
                 }
             }
 
             @Override
             public void onRequestPermissionFailure(List<String> permissions) {
-                GasAppUtils.toast("请开启数据读取权限，否则搜索功能无法读取数据");
+                AppUtils.toast("请开启数据读取权限，否则搜索功能无法读取数据");
             }
 
             @Override

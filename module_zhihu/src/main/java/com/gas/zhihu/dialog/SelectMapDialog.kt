@@ -10,7 +10,7 @@ import com.base.baseui.dialog.CommonBottomDialog
 import com.gas.zhihu.R
 import com.gas.zhihu.utils.LocationUtils
 import com.gas.zhihu.utils.LocationUtils.MapType
-import com.lib.commonsdk.utils.GasAppUtils
+import com.lib.commonsdk.utils.AppUtils
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,33 +36,33 @@ class SelectMapDialog constructor(val context: Context) {
                 .setCustomView(view)
                 .create()
         tv_amap_map.setOnClickListener { v: View? ->
-            if (GasAppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
+            if (AppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
                 if (mapClickListener != null) {
                     dialog.dismiss()
                     mapClickListener.onMapClick(LocationUtils.MAP_AMAP)
                 }
             } else {
-                GasAppUtils.toast("高德地图未安装")
+                AppUtils.toast("高德地图未安装")
             }
         }
         tv_baidu_map.setOnClickListener { v: View? ->
-            if (GasAppUtils.checkMapAppsIsExist(LocationUtils.BAIDU_MAP_PACKAGE)) {
+            if (AppUtils.checkMapAppsIsExist(LocationUtils.BAIDU_MAP_PACKAGE)) {
                 if (mapClickListener != null) {
                     dialog.dismiss()
                     mapClickListener.onMapClick(LocationUtils.MAP_BAIDU)
                 }
             } else {
-                GasAppUtils.toast("百度地图未安装")
+                AppUtils.toast("百度地图未安装")
             }
         }
         tv_tecent_map.setOnClickListener { v: View? ->
-            if (GasAppUtils.checkMapAppsIsExist(LocationUtils.TECENT_MAP_PACKAGE)) {
+            if (AppUtils.checkMapAppsIsExist(LocationUtils.TECENT_MAP_PACKAGE)) {
                 if (mapClickListener != null) {
                     dialog.dismiss()
                     mapClickListener.onMapClick(LocationUtils.MAP_TECENT)
                 }
             } else {
-                GasAppUtils.toast("腾讯地图未安装")
+                AppUtils.toast("腾讯地图未安装")
             }
         }
         dialog_cancel.setOnClickListener { v: View? ->
@@ -74,13 +74,13 @@ class SelectMapDialog constructor(val context: Context) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     viewFadaOut(loading)
-                    if (GasAppUtils.checkMapAppsIsExist(LocationUtils.TECENT_MAP_PACKAGE)) {
+                    if (AppUtils.checkMapAppsIsExist(LocationUtils.TECENT_MAP_PACKAGE)) {
                         viewFadaIn(tv_tecent_map)
                     }
-                    if (GasAppUtils.checkMapAppsIsExist(LocationUtils.BAIDU_MAP_PACKAGE)) {
+                    if (AppUtils.checkMapAppsIsExist(LocationUtils.BAIDU_MAP_PACKAGE)) {
                         viewFadaIn(tv_baidu_map)
                     }
-                    if (GasAppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
+                    if (AppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
                         viewFadaIn(tv_amap_map)
                     }
                     if (tv_tecent_map.visibility == View.GONE && tv_baidu_map.visibility == View.GONE && tv_amap_map.visibility == View.GONE) {

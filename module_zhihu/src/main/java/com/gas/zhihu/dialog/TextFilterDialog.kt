@@ -21,6 +21,7 @@ class TextFilterDialog {
     private var window: PopupWindow? = null
     private var adapter: TextFilterAdapter? = null
     private lateinit var mListener: (String) -> Unit
+    private var isShow = false
 
     fun show(anchor: View, strs: List<String>) {
 
@@ -39,14 +40,18 @@ class TextFilterDialog {
         view.recycler.adapter = adapter
         view.recycler.layoutManager = LinearLayoutManager(anchor.context)
         if (!strs.isNullOrEmpty()) {
+            window?.setOnDismissListener {
+                isShow=false
+            }
             adapter?.submitList(strs)
             window?.showAsDropDown(anchor)
+            isShow=true
         }
     }
 
     fun isShow(): Boolean {
         if (window != null) {
-            return window!!.isShowing
+            return isShow
         }
         return false
     }
@@ -83,7 +88,7 @@ class TextFilterDialog {
 
             if (oldItem != newItem) {
                 val diffBundle = Bundle()
-                diffBundle.putString(NAME_KEY, newItem);
+                diffBundle.putString(NAME_KEY, newItem)
                 return diffBundle;
             }
             return super.getChangePayload(oldItem, newItem)
@@ -92,7 +97,7 @@ class TextFilterDialog {
     }
 
 
-    class TextFilterAdapter(var listener: (String) -> Unit) : ListAdapter<String, RecyclerView.ViewHolder>(TextDiffCallback()) {
+    class TextFilterAdapter( var listener: (String) -> Unit) : ListAdapter<String, RecyclerView.ViewHolder>(TextDiffCallback()) {
 
 
 
@@ -108,7 +113,7 @@ class TextFilterDialog {
                 }
 
             }
-            return holder;
+            return holder
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

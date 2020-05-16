@@ -98,7 +98,7 @@ public final class FileUtils {
         } else {
             try {
                 Uri uri = Uri.parse(filePath);
-                ContentResolver cr = GasAppUtils.getApp().getContentResolver();
+                ContentResolver cr = AppUtils.getApp().getContentResolver();
                 AssetFileDescriptor afd = cr.openAssetFileDescriptor(uri, "r");
                 if (afd == null) return false;
                 try {
@@ -1413,7 +1413,7 @@ public final class FileUtils {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri = Uri.fromFile(file);
         intent.setData(uri);
-        GasAppUtils.getApp().sendBroadcast(intent);
+        AppUtils.getApp().sendBroadcast(intent);
     }
 
     /**

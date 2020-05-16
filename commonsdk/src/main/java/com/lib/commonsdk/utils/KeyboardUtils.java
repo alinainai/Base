@@ -54,7 +54,7 @@ public final class KeyboardUtils {
      */
     public static void hideSoftInput(@NonNull final View view) {
         InputMethodManager imm =
-                (InputMethodManager) GasAppUtils.getApp().getSystemService(Context.INPUT_METHOD_SERVICE);
+                (InputMethodManager) AppUtils.getApp().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm == null) return;
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

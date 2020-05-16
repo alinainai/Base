@@ -1,6 +1,6 @@
 package com.gas.zhihu.utils;
 
-import com.lib.commonsdk.utils.GasAppUtils;
+import com.lib.commonsdk.utils.AppUtils;
 import com.lib.commonsdk.utils.sp.SPUtils;
 
 public class ZhihuUtils {
@@ -15,7 +15,7 @@ public class ZhihuUtils {
     }
 
     public static void setSpVersionCode(){
-        SPUtils.getInstance(ZHIHU_SP).put(APP_VERSION_CODE, GasAppUtils.getAppVersionCode());
+        SPUtils.getInstance(ZHIHU_SP).put(APP_VERSION_CODE, AppUtils.getAppVersionCode());
     }
 
     public static String getSearchRecord(){

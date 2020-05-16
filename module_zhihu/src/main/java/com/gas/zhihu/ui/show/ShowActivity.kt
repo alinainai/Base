@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import butterknife.OnClick
 import com.base.baseui.photoshow.model.IPhotoPathProvider
 import com.base.baseui.photoshow.model.IPhotoProvider
 import com.base.lib.base.BaseActivity
@@ -16,7 +15,6 @@ import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.base.paginate.interfaces.EmptyInterface
 import com.gas.zhihu.R
-import com.gas.zhihu.R2
 import com.gas.zhihu.app.ZhihuConstants.ZHIHU_TEST_IMAGE_FILe_NAME
 import com.gas.zhihu.bean.LocationBean
 import com.gas.zhihu.bean.MapBean
@@ -33,7 +31,7 @@ import com.gas.zhihu.utils.LocationUtils.getAMapMapIntent
 import com.gas.zhihu.utils.LocationUtils.getBaiduMapIntent
 import com.gas.zhihu.utils.LocationUtils.getTecentMapIntent
 import com.lib.commonsdk.glide.ImageConfigImpl
-import com.lib.commonsdk.utils.GasAppUtils
+import com.lib.commonsdk.utils.AppUtils
 import com.lib.commonsdk.utils.KeyboardUtils
 import com.lib.commonsdk.utils.QRCode
 import com.lib.commonsdk.utils.Utils
@@ -173,7 +171,7 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     override fun setDataInfo(data: MapBean?) {
 
         data?.let {
-            tvDataInfo.text = GasAppUtils.getString(R.string.zhihu_map_title_name, data.mapName)
+            tvDataInfo.text = AppUtils.getString(R.string.zhihu_map_title_name, data.mapName)
             tvAddressInfoTrue.text = data.locationInfo
             if(!TextUtils.isEmpty(data.note)){
                 tvRemarkInfoTrue.text = data.note
@@ -226,11 +224,11 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
      */
     private fun showMapDialog(bean: LocationBean?) {
         if (bean == null) {
-            GasAppUtils.toast("数据错误")
+            AppUtils.toast("数据错误")
             return
         }
         if (bean.isInfoError) {
-            GasAppUtils.toast("数据错误")
+            AppUtils.toast("数据错误")
             return
         }
         // 经度：116.44000 纬度： 39.93410
@@ -253,7 +251,7 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         AddCommentDialog().show(this,object :AddCommentDialog.OnCommitClickListener{
             override fun onCommitClick(str: String) {
                if(TextUtils.isEmpty(str)){
-                   GasAppUtils.toast("备注数据为空")
+                   AppUtils.toast("备注数据为空")
                }else{
                    mPresenter!!.addComment(str)
                }
