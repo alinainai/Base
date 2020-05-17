@@ -37,7 +37,11 @@ public class VoltageLevelBean implements ISelectItem {
     public static List<VoltageLevelBean> getVoltageLevelItems(){
 
         List<VoltageLevelBean> items= new ArrayList<>(5);
-        items.add(new VoltageLevelBean(0,""));
+        items.add(new VoltageLevelBean(0,"220KV"));
+        items.add(new VoltageLevelBean(1,"110KV"));
+        items.add(new VoltageLevelBean(2,"35KV"));
+        items.add(new VoltageLevelBean(3,"10KV及6KV"));
+        items.add(new VoltageLevelBean(4,"公用部分"));
         return items;
 
 

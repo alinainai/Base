@@ -2,15 +2,21 @@ package com.gas.zhihu.fragment.option
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.base.baseui.dialog.select.ISelectItem
+import com.base.baseui.dialog.select.OnItemOperateListener
+import com.base.baseui.dialog.select.SelectBottomDialog
+import com.base.baseui.dialog.select.SelectBottomDialog.Companion.MODE_CLICK
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.IPresenter
 import com.base.lib.util.ArmsUtils
 import com.gas.zhihu.R
+import com.gas.zhihu.bean.VoltageLevelBean
 import com.gas.zhihu.fragment.option.di.DaggerOptionComponent
 import com.gas.zhihu.fragment.option.mvp.OptionContract
 import com.gas.zhihu.ui.map.MapActivity
@@ -102,7 +108,16 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
             }
             R.id.btnGraphPager -> {
 
-
+                SelectBottomDialog.getInstance(context!!)
+                        .setCancelable(true)
+                        .setList(VoltageLevelBean.getVoltageLevelItems())
+                        .setMode(MODE_CLICK)
+                        .setOnItemOptionListener(object : OnItemOperateListener{
+                            override fun onItemClickListener(itemId: ISelectItem) {
+                               Log.e("Tag",itemId.name)
+                            }
+                        })
+                        .show()
 
             }
             R.id.btnExperience -> {
