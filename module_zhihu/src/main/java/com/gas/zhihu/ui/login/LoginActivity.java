@@ -18,6 +18,7 @@ import com.alibaba.android.arouter.facade.annotation.Route;
 import com.gas.zhihu.app.ZhihuConstants;
 import com.gas.zhihu.dialog.TipShowDialog;
 import com.gas.zhihu.ui.base.FragmentContainerActivity;
+import com.gas.zhihu.ui.main.MainActivity;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
@@ -189,7 +190,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
 
         if (userName.equals(ZhihuConstants.ZHIHU_USER_NAME) && passWord.equals(ZhihuConstants.ZHIHU_PASSWORD)) {
-            startActivity(new Intent(mContext, MapActivity.class));
+            startActivity(new Intent(mContext, MainActivity.class));
             finish();
         } else {
             AppUtils.toast("请输入正确的用户名和密码");

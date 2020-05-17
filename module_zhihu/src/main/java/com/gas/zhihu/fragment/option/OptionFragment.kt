@@ -5,50 +5,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.IPresenter
 import com.base.lib.util.ArmsUtils
-
+import com.gas.zhihu.R
 import com.gas.zhihu.fragment.option.di.DaggerOptionComponent
 import com.gas.zhihu.fragment.option.mvp.OptionContract
-
-import com.gas.zhihu.R
+import com.gas.zhihu.ui.map.MapActivity
+import kotlinx.android.synthetic.main.zhihu_fragment_option.*
 import javax.inject.Inject
 
 
 /**
  * ================================================
- * Description:
- * <p>
- * Created by GasMvpFragment on 05/10/2020 22:52
+ * desc: 功能选项卡
+ *
+ * created by author ljx
+ * date  2020/5/16
+ * email 569932357@qq.com
+ *
  * ================================================
  */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @FragmentScope(請注意命名空間) class NullObjectPresenterByFragment
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
- */
-
 @FragmentScope
 class NullObjectPresenterByFragment
 @Inject constructor() : IPresenter {
     override fun onStart() {
     }
+
     override fun onDestroy() {
     }
 }
-class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionContract.View {
+
+class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionContract.View, View.OnClickListener {
     companion object {
         fun newInstance(): OptionFragment {
             val fragment = OptionFragment()
@@ -64,11 +54,17 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
                 .build()
                 .inject(this)
     }
+
     override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.zhihu_fragment_option, container, false);
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        btnGuide.setOnClickListener(this)
+        btnGraphPager.setOnClickListener(this)
+        btnExperience.setOnClickListener(this)
+
 
     }
 
@@ -94,6 +90,24 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
     }
 
     override fun killMyself() {
+
+    }
+
+    override fun onClick(v: View?) {
+
+        when (v?.id) {
+
+            R.id.btnGuide -> {
+                startActivity(Intent(activity, MapActivity::class.java))
+            }
+            R.id.btnGraphPager -> {
+
+
+
+            }
+            R.id.btnExperience -> {
+            }
+        }
 
     }
 }

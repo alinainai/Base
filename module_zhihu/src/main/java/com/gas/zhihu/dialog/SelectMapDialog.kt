@@ -122,7 +122,7 @@ class SelectMapDialog constructor(val context: Context) {
                 })
     }
 
-    interface OnMapClickListener : CommonBottomDialog.onDialogClickListener {
+    interface OnMapClickListener : CommonBottomDialog.OnDialogClickListener {
         fun onMapClick(@MapType map: Int)
     }
 }

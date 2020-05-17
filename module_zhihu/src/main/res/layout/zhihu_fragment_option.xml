@@ -9,15 +9,41 @@
 
 
     <com.base.baseui.view.TitleView
-        app:titleText="选项卡"
-        app:backHide="true"
-        app:closeHide="true"
+        android:id="@+id/guideTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:backHide="true"
+        app:closeHide="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        app:titleText="工具选择" />
 
+    <Button
+        android:id="@+id/btnGuide"
+        style="@style/zhihu_option_fragment_option_btn"
+        android:layout_marginTop="50dp"
+        android:text="导航"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideTitle" />
+
+    <Button
+        android:id="@+id/btnGraphPager"
+        style="@style/zhihu_option_fragment_option_btn"
+        android:layout_marginTop="20dp"
+        android:text="图纸"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGuide" />
+
+    <Button
+        android:id="@+id/btnExperience"
+        style="@style/zhihu_option_fragment_option_btn"
+        android:layout_marginTop="20dp"
+        android:text="消缺经验集"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGraphPager" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

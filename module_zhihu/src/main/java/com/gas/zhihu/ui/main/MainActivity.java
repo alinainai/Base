@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -14,10 +15,14 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.gas.zhihu.R;
 import com.gas.zhihu.R2;
+import com.gas.zhihu.fragment.option.OptionFragment;
 import com.gas.zhihu.ui.main.di.DaggerMainComponent;
 import com.gas.zhihu.ui.main.mvp.MainContract;
 import com.gas.zhihu.ui.main.mvp.MainPresenter;
 import com.lib.commonsdk.constants.RouterHub;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.inject.Inject;
 
@@ -31,6 +36,12 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @BindView(R2.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    @BindView(R2.id.fragment_container)
+    SwipeRefreshLayout fragment_container;
+
+
+
+    private  boolean isExit;
     @Inject
     RecyclerView.LayoutManager mLayoutManager;
     @Inject
@@ -63,8 +74,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
-        mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.requestDailyList();
+//        mSwipeRefreshLayout.setRefreshing(true);
+//        mPresenter.requestDailyList();
+
+       FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, OptionFragment.Companion.newInstance()).commit();
 
     }
 
@@ -94,5 +108,30 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void showMessage(@NonNull String message) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitBy2Click(); //调用双击退出函数
+    }
+
+    private void exitBy2Click() {
+        Timer tExit;
+        if (!isExit) {
+            isExit = true; // 准备退出
+            ArmsUtils.snackbarText("再按一次退出程序");
+            tExit =new Timer();
+            tExit.schedule(new TimerTask() {
+
+
+                @Override
+                public void run() {
+                    isExit = false;
+                }
+
+            }, 2000); //如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+        } else {
+            ArmsUtils.exitApp();
+        }
     }
 }

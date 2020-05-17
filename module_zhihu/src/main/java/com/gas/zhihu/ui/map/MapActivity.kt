@@ -230,28 +230,9 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
         launchActivity(mContext, search)
     }
 
-    private fun exitBy2Click() {
-        val tExit: Timer
-        if (!isExit) {
-            isExit = true // 准备退出
-            ArmsUtils.snackbarText("再按一次退出程序")
-            tExit = Timer()
-            tExit.schedule(object : TimerTask() {
-                override fun run() {
-                    isExit = false // 取消退出
-                }
-            }, 2000) //如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-        } else {
-            ArmsUtils.exitApp()
-        }
-    }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            exitBy2Click() //调用双击退出函数
-        }
-        return false
-    }
+
+
 
     override fun showLoading() {
         loadDialog.show()

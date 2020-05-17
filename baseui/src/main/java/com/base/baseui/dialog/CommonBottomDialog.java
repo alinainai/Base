@@ -21,7 +21,7 @@ public class CommonBottomDialog extends Dialog {
     }
 
 
-    public interface onDialogClickListener {
+    public interface OnDialogClickListener {
 
 
         default void onDismiss() {
@@ -36,7 +36,7 @@ public class CommonBottomDialog extends Dialog {
         private Context mContext;
         private View mContentView;
         private boolean mCancelable = true;
-        private onDialogClickListener mDialogClickListener;
+        private OnDialogClickListener mDialogClickListener;
 
 
         public CommonBottomDialog.Builder setCancelable(boolean cancelable) {
@@ -49,7 +49,7 @@ public class CommonBottomDialog extends Dialog {
             return this;
         }
 
-        public CommonBottomDialog.Builder setDialogClickListener(onDialogClickListener listener) {
+        public CommonBottomDialog.Builder setDialogClickListener(OnDialogClickListener listener) {
             mDialogClickListener = listener;
             return this;
         }
