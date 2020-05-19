@@ -15,6 +15,7 @@
  */
 package com.gas.zhihu.ui.main.di;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,8 +27,10 @@ import com.gas.zhihu.app.ZhihuConstants;
 import com.gas.zhihu.ui.main.MainAdapter;
 import com.gas.zhihu.ui.main.mvp.MainContract;
 import com.gas.zhihu.ui.main.mvp.MainModel;
+import com.gas.zhihu.ui.map.mvp.MapContract;
 import com.lib.commonsdk.constants.Constants;
 import com.lib.commonsdk.constants.RouterHub;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import dagger.Binds;
 import dagger.Module;
@@ -88,6 +91,12 @@ public abstract class MainModule {
 
             }
         };
+    }
+
+    @ActivityScope
+    @Provides
+    static RxPermissions provideRxPermissions(MainContract.View view) {
+        return new RxPermissions((FragmentActivity) view.getActivity());
     }
 
     @ActivityScope

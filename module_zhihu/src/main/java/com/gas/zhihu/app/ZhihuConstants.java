@@ -38,8 +38,22 @@ public interface ZhihuConstants {
      */
     String ZHIHU_PASSWORD = "qqqqqq";
 
-    String ZHUHI_IMAGE_ZIP_FILE_NAME = "testimage.zip";
-    String ZHIHU_ASSET_DATA_JSON_PATH = "config" + File.separator + "datajson.json";
-    String ZHIHU_ASSET_IMAGE_ZIP_PATH = "data" + File.separator + ZHUHI_IMAGE_ZIP_FILE_NAME;
+
     String ZHIHU_TEST_IMAGE_FILe_NAME = "testimage";
+
+
+    //json配置信息
+     String DATA_JSON_PATH = "config" + File.separator + "datajson.json";
+
+    //图片
+     String IMAGE_ZIP = "testimage.zip";
+     String IMAGE_ZIP_ASSET = "data" + File.separator + IMAGE_ZIP;
+     String IMAGE_ZIP_FOLDER = "testimage";
+
+    //文件
+     String FILE_ZIP = "tempfile.zip";
+     String FILE_ZIP_FOLDER = "tempfile";
+     String FILE_ZIP_ASSET = "data" + File.separator + FILE_ZIP;
+
+
 }

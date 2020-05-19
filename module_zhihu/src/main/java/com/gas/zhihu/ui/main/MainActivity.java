@@ -20,6 +20,7 @@ import com.gas.zhihu.ui.main.di.DaggerMainComponent;
 import com.gas.zhihu.ui.main.mvp.MainContract;
 import com.gas.zhihu.ui.main.mvp.MainPresenter;
 import com.lib.commonsdk.constants.RouterHub;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -47,6 +48,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Inject
     RecyclerView.Adapter mAdapter;
 
+    @Inject
+    RxPermissions mRxPermissions;
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
@@ -83,6 +86,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
 
+
     @Override
     public void onRefresh() {
         mPresenter.requestDailyList();
@@ -102,6 +106,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void onError() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public RxPermissions getRxPermissions() {
+        return mRxPermissions;
     }
 
 

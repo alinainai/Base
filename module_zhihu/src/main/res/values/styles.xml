@@ -10,11 +10,11 @@
 
     <style name="zhihu_option_fragment_option_btn">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">44dp</item>
         <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:background">@drawable/public_btn_default_selector</item>
-        <item name="android:textColor">@color/public_text_black_deep</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:background">@drawable/public_default_btn_selector_blue_corner</item>
+        <item name="android:textColor">@color/public_white</item>
         <item name="android:textSize">16sp</item>
     </style>
 

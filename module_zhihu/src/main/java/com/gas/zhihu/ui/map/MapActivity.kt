@@ -98,6 +98,8 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
 
     private fun viewInit() {
 
+        title_view.setOnBackListener { finish() }
+
         title_view.setOnRightListener {
 
         }

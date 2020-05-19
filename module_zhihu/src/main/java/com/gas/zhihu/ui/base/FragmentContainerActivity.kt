@@ -42,54 +42,58 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
     }
 
 
-    fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?) {
-        startActivity(context, fragmentClazz, null)
-    }
-
-    fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, vararg intentFlags: Int) {
-        val intent = Intent(context, FragmentContainerActivity::class.java)
-        intent.putExtra("clazz", fragmentClazz)
-        if (args != null) {
-            intent.putExtras(args)
+    companion object{
+        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?) {
+            startActivity(context, fragmentClazz, null)
         }
-        if (intentFlags.isNotEmpty()) {
-            for (flag in intentFlags) {
-                intent.addFlags(flag)
+
+        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, vararg intentFlags: Int) {
+            val intent = Intent(context, FragmentContainerActivity::class.java)
+            intent.putExtra("clazz", fragmentClazz)
+            if (args != null) {
+                intent.putExtras(args)
             }
+            if (intentFlags.isNotEmpty()) {
+                for (flag in intentFlags) {
+                    intent.addFlags(flag)
+                }
+            }
+            context.startActivity(intent)
         }
-        context.startActivity(intent)
+
+        fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int) {
+            startActivityForResult(context, fragmentClazz, requestCode, null)
+        }
+
+        fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int, args: Bundle?) {
+            val intent = Intent(context, FragmentContainerActivity::class.java)
+            intent.putExtra("clazz", fragmentClazz)
+            if (args != null) {
+                intent.putExtras(args)
+            }
+            context.startActivityForResult(intent, requestCode)
+        }
+
+        /**
+         * 转场动画启动
+         * @param activity
+         * @param fragmentClazz
+         * @param args
+         * @param view
+         */
+        fun startSceneTrans(activity: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, view: View) {
+            val intent = Intent(activity, FragmentContainerActivity::class.java)
+            intent.putExtra("clazz", fragmentClazz)
+            if (args != null) {
+                intent.putExtras(args)
+            }
+            val campat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.width / 2, view.height / 2, 0, 0)
+            ActivityCompat.startActivity(activity, intent, campat.toBundle())
+            activity.overridePendingTransition(0, 0)
+        }
     }
 
-    fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int) {
-        startActivityForResult(context, fragmentClazz, requestCode, null)
-    }
 
-    fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int, args: Bundle?) {
-        val intent = Intent(context, FragmentContainerActivity::class.java)
-        intent.putExtra("clazz", fragmentClazz)
-        if (args != null) {
-            intent.putExtras(args)
-        }
-        context.startActivityForResult(intent, requestCode)
-    }
-
-    /**
-     * 转场动画启动
-     * @param activity
-     * @param fragmentClazz
-     * @param args
-     * @param view
-     */
-    fun startSceneTrans(activity: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, view: View) {
-        val intent = Intent(activity, FragmentContainerActivity::class.java)
-        intent.putExtra("clazz", fragmentClazz)
-        if (args != null) {
-            intent.putExtras(args)
-        }
-        val campat = ActivityOptionsCompat.makeScaleUpAnimation(view, view.width / 2, view.height / 2, 0, 0)
-        ActivityCompat.startActivity(activity, intent, campat.toBundle())
-        activity.overridePendingTransition(0, 0)
-    }
 
 
 

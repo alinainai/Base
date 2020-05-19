@@ -8,6 +8,7 @@ import com.base.lib.integration.repository.IRepositoryManager;
 import com.base.lib.mvp.BaseModel;
 import com.gas.zhihu.http.ZhihuService;
 import com.gas.zhihu.bean.DailyListBean;
+import com.gas.zhihu.utils.MapBeanDbUtils;
 
 import javax.inject.Inject;
 
@@ -29,6 +30,10 @@ public class MainModel extends BaseModel implements MainContract.Model {
                 .getDailyList();
     }
 
+    @Override
+    public int getMapDataCount(){
+        return MapBeanDbUtils.getMapDataCount();
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void onPause() {

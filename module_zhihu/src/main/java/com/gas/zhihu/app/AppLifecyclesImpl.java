@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.gas.zhihu.BuildConfig;
 import com.gas.zhihu.db.DbUtils;
+import com.gas.zhihu.utils.OfficeHelper;
 import com.lib.commonsdk.utils.AppUtils;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
@@ -55,6 +56,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
             AppUtils.init(application);
         }
         DbUtils.getInstance().init(application);
+        OfficeHelper.init(application);
     }
 
     @Override

@@ -6,21 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.base.baseui.dialog.select.ISelectItem
-import com.base.baseui.dialog.select.OnItemOperateListener
-import com.base.baseui.dialog.select.SelectBottomDialog
-import com.base.baseui.dialog.select.SelectBottomDialog.Companion.MODE_CLICK
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.IPresenter
 import com.base.lib.util.ArmsUtils
 import com.gas.zhihu.R
-import com.gas.zhihu.bean.VoltageLevelBean
+import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
 import com.gas.zhihu.fragment.option.di.DaggerOptionComponent
 import com.gas.zhihu.fragment.option.mvp.OptionContract
+import com.gas.zhihu.fragment.paper.PagerFragment
+import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.ui.map.MapActivity
+import com.gas.zhihu.utils.OfficeHelper
+import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_option.*
+import java.io.File
 import javax.inject.Inject
 
 
@@ -108,19 +109,26 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
             }
             R.id.btnGraphPager -> {
 
-                SelectBottomDialog.getInstance(context!!)
-                        .setCancelable(true)
-                        .setList(VoltageLevelBean.getVoltageLevelItems())
-                        .setMode(MODE_CLICK)
-                        .setOnItemOptionListener(object : OnItemOperateListener{
-                            override fun onItemClickListener(itemId: ISelectItem) {
-                               Log.e("Tag",itemId.name)
-                            }
-                        })
-                        .show()
+                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(0))
 
+//                SelectBottomDialog.getInstance(context!!)
+//                        .setCancelable(true)
+//                        .setList(VoltageLevelBean.getVoltageLevelItems())
+//                        .setMode(MODE_CLICK)
+//                        .setOnItemOptionListener(object : OnItemOperateListener{
+//                            override fun onItemClickListener(itemId: ISelectItem) {
+//                               Log.e("Tag",itemId.name)
+//                            }
+//                        })
+//                        .show()
+
+
+//                val path= Utils.getExternalFilesDir(activity!!);
+//                val fileFile = File(path.path, FILE_ZIP_FOLDER+File.separator+"kp001.pdf")
+//                OfficeHelper.open(activity!!,fileFile.path,1);
             }
             R.id.btnExperience -> {
+                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(1))
             }
         }
 
