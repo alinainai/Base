@@ -34,13 +34,13 @@ import java.util.Objects;
  * ================================================
  */
 
-public abstract class FilterPopupWindow {
+public abstract class FilterPopupWindow<T extends ISelectItem> {
 
     private PopupWindow mPopupWindow;
     private TagAdapter mTagAdapter;
-    private List<ISelectItem> mData;
+    private List<T> mData;
 
-    public FilterPopupWindow(Context context, List<ISelectItem> data) {
+    public FilterPopupWindow(Context context, List<T> data) {
 
         if (data == null || data.size() == 0)
             throw new RuntimeException("data is not null");
@@ -70,7 +70,7 @@ public abstract class FilterPopupWindow {
 
     }
 
-    public abstract void onPositionClick(ISelectItem item, int position);
+    public abstract void onPositionClick(@NotNull ISelectItem item, int position);
 
     public abstract void onPopDismiss();
 
@@ -80,8 +80,7 @@ public abstract class FilterPopupWindow {
             if (mPopupWindow.isShowing()) {
                 dismiss();
             }
-            int position = getItemPosition(typeId);
-//            mTagAdapter.setSelected(position);
+            mTagAdapter.setSelected(typeId);
             mPopupWindow.showAsDropDown(author, 0, 0);
 
         }

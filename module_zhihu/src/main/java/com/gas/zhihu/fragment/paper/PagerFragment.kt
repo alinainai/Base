@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.base.baseui.dialog.fiterpop.FilterPopupWindow
+import com.base.baseui.dialog.select.ISelectItem
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
@@ -54,8 +56,39 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     @Inject
     lateinit var mLayoutManager: RecyclerView.LayoutManager
 
-
+    /**
+     * 0:图纸
+     * 1:经验集
+     */
     private var mType:Int =0;
+    private var selectVoltageLevel:String ="-1"
+    private var selectMapKey:String ="-1"
+
+
+    private val filterVoltagePop:FilterPopupWindow<VoltageLevelBean> by lazy {
+
+        val selectorModels: MutableList<VoltageLevelBean> = ArrayList<VoltageLevelBean>()
+        selectorModels.add(VoltageLevelBean("-1", "全部"))
+        selectorModels.addAll(VoltageLevelBean.voltageLevelItems)
+
+        object :FilterPopupWindow<VoltageLevelBean>(activity, selectorModels){
+            override fun onPositionClick(item: ISelectItem, position: Int) {
+
+                item.apply {
+                    selectVoltageLevel=id
+                    tvTypeVoltage.text= if(id=="-1")"电压等级" else name
+                }
+                dismiss()
+            }
+
+            override fun onPopDismiss() {
+                tvTypeVoltage.isSelected=false
+                imgTypeVoltage.isSelected=false
+            }
+
+        }
+
+    }
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerPagerComponent //如找不到该类,请编译一下项目
@@ -85,7 +118,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
         }
         llTypeVoltage.setOnClickListener{
-
+            showTypeVoltage()
         }
 
         itemRefresh.isEnabled=false
@@ -96,25 +129,18 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
     }
 
+    private fun showTypeMap() {
+        tvTypeMap.isSelected=true
+        imgTypeMap.isSelected=true
+        filterVoltagePop.showAsDropDown(llTypeVoltage,selectVoltageLevel)
+    }
+
     private fun showTypeVoltage() {
-        val selectorModels: MutableList<VoltageLevelBean> = ArrayList<VoltageLevelBean>()
-        selectorModels.add(VoltageLevelBean("-1", "全部"))
-        selectorModels.addAll(VoltageLevelBean.getVoltageLevelItems())
-//        mTypePop = object : FilterPopupWindow<PagerType?>(_mActivity, selectorModels) {
-//            fun onPositionClick(typeId: Int) {
-//                mPageType = typeId
-//                mTypePop.dismiss()
-//                getRefreshData(true)
-//            }
-//
-//            fun onPopDismiss() {
-//                mDataBinding.tvTypeLasted.setSelected(false)
-//                mDataBinding.imgTypeClass.setSelected(false)
-//            }
-//        }
-//        mTypePop.showAsDropDown(mDataBinding.llTypeClass, mPageType)
-//        mDataBinding.tvTypeLasted.setSelected(true)
-//        mDataBinding.imgTypeClass.setSelected(true)
+
+        tvTypeVoltage.isSelected=true
+        imgTypeVoltage.isSelected=true
+        filterVoltagePop.showAsDropDown(llTypeVoltage,selectVoltageLevel)
+
     }
 
 

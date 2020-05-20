@@ -11,8 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/public_white"
         android:padding="10dp"
-        app:max_select="1"
-        app:tag_gravity="left" />
+         />
 
     <View
         android:layout_width="match_parent"

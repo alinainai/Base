@@ -30,7 +30,7 @@
             <LinearLayout
                 android:id="@+id/llTypeMap"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
@@ -44,15 +44,15 @@
                 <TextView
                     android:id="@+id/tvTypeMap"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:gravity="center"
                     android:text="场站"
                     android:textColor="@color/zhihu_selector_theme_gray_text_color"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/imgTypeMap"
-                    android:layout_width="wrap_content"
+                    android:layout_width="8dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:contentDescription="@null"
@@ -70,7 +70,7 @@
             <LinearLayout
                 android:id="@+id/llTypeVoltage"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
@@ -83,15 +83,15 @@
                 <TextView
                     android:id="@+id/tvTypeVoltage"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="45dp"
                     android:gravity="center"
                     android:text="电压等级"
                     android:textColor="@color/zhihu_selector_theme_gray_text_color"
-                    android:textSize="14sp" />
+                    android:textSize="15sp" />
 
                 <ImageView
                     android:id="@+id/imgTypeVoltage"
-                    android:layout_width="wrap_content"
+                    android:layout_width="8dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:contentDescription="@null"
