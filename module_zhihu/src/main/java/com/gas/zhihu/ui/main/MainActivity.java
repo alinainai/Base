@@ -89,7 +89,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void onRefresh() {
-        mPresenter.requestDailyList();
     }
 
 

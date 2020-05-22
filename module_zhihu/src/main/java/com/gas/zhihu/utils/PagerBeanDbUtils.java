@@ -1,12 +1,8 @@
 package com.gas.zhihu.utils;
 
 import com.gas.zhihu.bean.PaperBean;
-import com.gas.zhihu.bean.MapBean;
-import com.gas.zhihu.bean.PaperBean;
 import com.gas.zhihu.db.DaoSession;
 import com.gas.zhihu.db.DbUtils;
-import com.gas.zhihu.db.ExperienceBeanDao;
-import com.gas.zhihu.db.MapBeanDao;
 import com.gas.zhihu.db.PaperBeanDao;
 
 import org.greenrobot.greendao.query.QueryBuilder;
@@ -18,12 +14,13 @@ import java.util.List;
 public class PagerBeanDbUtils {
 
 
+    @SuppressWarnings("unchecked")
     public static void insertMapBean(PaperBean bean) {
 
         DaoSession daoSession = DbUtils.getInstance().getDaoSession();
         PaperBeanDao dao = daoSession.getPaperBeanDao();
-        QueryBuilder qb = dao.queryBuilder();
-        List list = qb.where(PaperBeanDao.Properties.PathName.eq(bean.getPathName()),
+        QueryBuilder<PaperBean> qb = dao.queryBuilder();
+        List<PaperBean> list =  qb.where(PaperBeanDao.Properties.PathName.eq(bean.getPathName()),
                 PaperBeanDao.Properties.VoltageLevel.eq(bean.getVoltageLevel()),
                 PaperBeanDao.Properties.MapKey.eq(bean.getMapKey()),
                 PaperBeanDao.Properties.FileName.eq(bean.getFileName())).list();
@@ -31,6 +28,19 @@ public class PagerBeanDbUtils {
         } else {
             dao.insert(bean);
         }
+
+    }
+
+    @SuppressWarnings("unchecked")
+    public static PaperBean queryData(PaperBean bean) {
+
+        DaoSession daoSession = DbUtils.getInstance().getDaoSession();
+        PaperBeanDao dao = daoSession.getPaperBeanDao();
+        QueryBuilder qb = dao.queryBuilder();
+       return (PaperBean)qb.where(PaperBeanDao.Properties.PathName.eq(bean.getPathName()),
+                PaperBeanDao.Properties.VoltageLevel.eq(bean.getVoltageLevel()),
+                PaperBeanDao.Properties.MapKey.eq(bean.getMapKey()),
+                PaperBeanDao.Properties.FileName.eq(bean.getFileName())).unique();
 
     }
 
@@ -58,6 +68,8 @@ public class PagerBeanDbUtils {
         }
         return Collections.emptyList();
     }
+
+
 
     @SuppressWarnings("unchecked")
     public static List<PaperBean> queryAllPaperData() {

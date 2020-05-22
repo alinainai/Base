@@ -3,12 +3,10 @@
     package="com.gas.zhihu">
 
     <application>
-        <activity android:name=".ui.office.OfficeActivity"></activity>
-        <activity
-            android:name=".ui.add.AddActivity"
+        <activity android:name=".ui.office.OfficeActivity"
             android:configChanges="orientation|screenSize"
-            android:label="@string/zhihu_activity_details"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.detial.DetailsActivity"
             android:configChanges="orientation|screenSize"

@@ -113,10 +113,12 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
         super.onBackPressed()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager.findFragmentById(R.id.container)
-        fragment?.onActivityResult(requestCode, resultCode, data)
-    }
+
+
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        val fragment = supportFragmentManager.findFragmentById(R.id.container)
+//        fragment?.onActivityResult(requestCode, resultCode, data)
+//    }
 
 }

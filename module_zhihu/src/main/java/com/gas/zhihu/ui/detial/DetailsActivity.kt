@@ -1,5 +1,6 @@
 package com.gas.zhihu.ui.detial
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.ButterKnife
@@ -25,6 +26,7 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun initView(){
         titleView.setOnBackListener{
+            setResult(123, Intent().putExtra("123","data"))
             this.finish()
         }
         Glide.with(this).load(R.mipmap.zhihu_search_rule).into(wrapPhotoView)

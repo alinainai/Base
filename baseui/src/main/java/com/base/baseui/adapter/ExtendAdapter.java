@@ -48,8 +48,8 @@ public abstract class ExtendAdapter<T> extends ExtendMultiAdapter<T> {
     }
 
     @Override
-    protected void convert(RecyclerView.ViewHolder holder, T data, int position, int viewType) {
-        convert((PageViewHolder) holder, data, position);
+    protected void convert(PageViewHolder holder, T data, int position, int viewType) {
+        convert( holder, data, position);
     }
 
     protected abstract void convert(PageViewHolder holder, T data, int position);

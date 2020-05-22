@@ -22,10 +22,7 @@
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ui.add.AddActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/zhihu_activity_details"
-            android:screenOrientation="portrait"/>
+
 
         <activity
             android:name=".ui.show.ShowActivity"
@@ -55,6 +52,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.detial.DetailsActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.base.FragmentContainerActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 

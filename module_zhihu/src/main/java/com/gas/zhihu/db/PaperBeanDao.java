@@ -29,8 +29,9 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
         public final static Property MapKey = new Property(2, String.class, "mapKey", false, "MAP_KEY");
         public final static Property VoltageLevel = new Property(3, int.class, "voltageLevel", false, "VOLTAGE_LEVEL");
         public final static Property FileName = new Property(4, String.class, "fileName", false, "FILE_NAME");
-        public final static Property ExtraStr1 = new Property(5, String.class, "extraStr1", false, "EXTRA_STR1");
-        public final static Property ExtraStr2 = new Property(6, String.class, "extraStr2", false, "EXTRA_STR2");
+        public final static Property Type = new Property(5, int.class, "type", false, "TYPE");
+        public final static Property ExtraStr1 = new Property(6, String.class, "extraStr1", false, "EXTRA_STR1");
+        public final static Property ExtraStr2 = new Property(7, String.class, "extraStr2", false, "EXTRA_STR2");
     }
 
 
@@ -51,8 +52,9 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
                 "\"MAP_KEY\" TEXT," + // 2: mapKey
                 "\"VOLTAGE_LEVEL\" INTEGER NOT NULL ," + // 3: voltageLevel
                 "\"FILE_NAME\" TEXT," + // 4: fileName
-                "\"EXTRA_STR1\" TEXT," + // 5: extraStr1
-                "\"EXTRA_STR2\" TEXT);"); // 6: extraStr2
+                "\"TYPE\" INTEGER NOT NULL ," + // 5: type
+                "\"EXTRA_STR1\" TEXT," + // 6: extraStr1
+                "\"EXTRA_STR2\" TEXT);"); // 7: extraStr2
     }
 
     /** Drops the underlying database table. */
@@ -85,15 +87,16 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
         if (fileName != null) {
             stmt.bindString(5, fileName);
         }
+        stmt.bindLong(6, entity.getType());
  
         String extraStr1 = entity.getExtraStr1();
         if (extraStr1 != null) {
-            stmt.bindString(6, extraStr1);
+            stmt.bindString(7, extraStr1);
         }
  
         String extraStr2 = entity.getExtraStr2();
         if (extraStr2 != null) {
-            stmt.bindString(7, extraStr2);
+            stmt.bindString(8, extraStr2);
         }
     }
 
@@ -121,15 +124,16 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
         if (fileName != null) {
             stmt.bindString(5, fileName);
         }
+        stmt.bindLong(6, entity.getType());
  
         String extraStr1 = entity.getExtraStr1();
         if (extraStr1 != null) {
-            stmt.bindString(6, extraStr1);
+            stmt.bindString(7, extraStr1);
         }
  
         String extraStr2 = entity.getExtraStr2();
         if (extraStr2 != null) {
-            stmt.bindString(7, extraStr2);
+            stmt.bindString(8, extraStr2);
         }
     }
 
@@ -146,8 +150,9 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // mapKey
             cursor.getInt(offset + 3), // voltageLevel
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // fileName
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // extraStr1
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // extraStr2
+            cursor.getInt(offset + 5), // type
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // extraStr1
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // extraStr2
         );
         return entity;
     }
@@ -159,8 +164,9 @@ public class PaperBeanDao extends AbstractDao<PaperBean, Long> {
         entity.setMapKey(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setVoltageLevel(cursor.getInt(offset + 3));
         entity.setFileName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setExtraStr1(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setExtraStr2(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setType(cursor.getInt(offset + 5));
+        entity.setExtraStr1(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setExtraStr2(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

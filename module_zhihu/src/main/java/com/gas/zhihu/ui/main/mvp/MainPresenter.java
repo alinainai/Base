@@ -11,7 +11,9 @@ import com.base.lib.di.scope.ActivityScope;
 import com.base.lib.mvp.BasePresenter;
 import com.base.lib.util.PermissionUtil;
 import com.gas.zhihu.bean.MapBean;
+import com.gas.zhihu.bean.PaperBean;
 import com.gas.zhihu.utils.MapBeanDbUtils;
+import com.gas.zhihu.utils.PagerBeanDbUtils;
 import com.gas.zhihu.utils.ZhihuUtils;
 import com.google.gson.reflect.TypeToken;
 import com.lib.commonsdk.utils.AppUtils;
@@ -39,21 +41,16 @@ import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 
 import static com.gas.zhihu.app.ZhihuConstants.DATA_JSON_PATH;
-
+import static com.gas.zhihu.app.ZhihuConstants.EXPERIENCE_JSON_PATH;
+import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP;
+import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_ASSET;
+import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER;
 import static com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP;
 import static com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP_ASSET;
 import static com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP_FOLDER;
 
-import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP;
-import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_ASSET;
-import static com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER;
-
 @ActivityScope
 public class MainPresenter extends BasePresenter<MainContract.Model, MainContract.View> {
-
-
-
-
 
     private Disposable mDispose;
 
@@ -63,24 +60,18 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
     @Inject
     Application mApplication;
 
-
     @Inject
     RecyclerView.Adapter mAdapter;
-
 
     @Inject
     public MainPresenter(MainContract.Model model, MainContract.View rootView) {
         super(model, rootView);
     }
+
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     void onCreate() {
         requestStoragePermission();
     }
-
-    public void requestDailyList() {
-//
-    }
-
 
     public void requestStoragePermission() {
         //请求外部存储权限用于适配android6.0的权限管理机制
@@ -133,7 +124,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                     return Observable.just(stringBuilder.toString());
                 })
                 .subscribeOn(Schedulers.io())
-                .flatMap((Function<String, ObservableSource<Boolean>>) s -> {
+                .flatMap((Function<String, ObservableSource<String>>) s -> {
                     MapBeanDbUtils.deleteAll();
                     Type type = new TypeToken<List<MapBean>>() {
                     }.getType();
@@ -146,6 +137,38 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                         } else {
                             dbBean.updateInfo(bean);
                             MapBeanDbUtils.updateBean(dbBean);
+                        }
+                    }
+                    return Observable.just(EXPERIENCE_JSON_PATH);
+                })
+                .flatMap((Function<String, ObservableSource<String>>) s -> {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    //获取assets资源管理器
+                    AssetManager assetManager = mView.getActivity().getApplicationContext().getAssets();
+                    //通过管理器打开文件并读取
+                    InputStreamReader reader = new InputStreamReader(assetManager.open(s));
+                    BufferedReader bf = new BufferedReader(reader);
+                    String line;
+                    while ((line = bf.readLine()) != null) {
+                        stringBuilder.append(line);
+                    }
+                    reader.close();
+                    bf.close();
+                    return Observable.just(stringBuilder.toString());
+                })
+                .flatMap((Function<String, ObservableSource<Boolean>>) s -> {
+                    PagerBeanDbUtils.deleteAll();
+                    Type type = new TypeToken<List<MapBean>>() {
+                    }.getType();
+                    List<PaperBean> list = GsonUtils.fromJson(s, type);
+                    for (PaperBean bean : list) {
+                        //添加预存数据到数据库
+                        PaperBean dbBean = PagerBeanDbUtils.queryData(bean);
+                        if (dbBean == null) {
+                            PagerBeanDbUtils.insertMapBean(bean);
+                        } else {
+                            dbBean.updateInfo(bean);
+                            PagerBeanDbUtils.updateBean(dbBean);
                         }
                     }
                     return Observable.just(true);

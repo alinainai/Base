@@ -14,16 +14,18 @@ public class PaperBean {
     private String mapKey;
     private int voltageLevel;
     private String fileName= "";
+    private int type;
     private String extraStr1;
     private String extraStr2;
-    @Generated(hash = 379483639)
+    @Generated(hash = 409524175)
     public PaperBean(Long id, String pathName, String mapKey, int voltageLevel,
-            String fileName, String extraStr1, String extraStr2) {
+            String fileName, int type, String extraStr1, String extraStr2) {
         this.id = id;
         this.pathName = pathName;
         this.mapKey = mapKey;
         this.voltageLevel = voltageLevel;
         this.fileName = fileName;
+        this.type = type;
         this.extraStr1 = extraStr1;
         this.extraStr2 = extraStr2;
     }
@@ -60,6 +62,12 @@ public class PaperBean {
     public void setFileName(String fileName) {
         this.fileName = fileName;
     }
+    public int getType() {
+        return this.type;
+    }
+    public void setType(int type) {
+        this.type = type;
+    }
     public String getExtraStr1() {
         return this.extraStr1;
     }
@@ -74,5 +82,12 @@ public class PaperBean {
     }
 
 
+    public void updateInfo(PaperBean bean){
+        this.pathName=bean.getPathName();
+        this.mapKey=bean.getMapKey();
+        this.voltageLevel=bean.getVoltageLevel();
+        this.fileName=bean.getFileName();
+        this.type=bean.getType();
+    }
 
 }

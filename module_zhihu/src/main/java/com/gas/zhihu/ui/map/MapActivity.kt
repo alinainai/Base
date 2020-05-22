@@ -18,6 +18,8 @@ import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.zhihu.R
 import com.gas.zhihu.dialog.TextFilterDialog
+import com.gas.zhihu.fragment.addmap.AddMapFragment
+import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.ui.detial.DetailsActivity
 import com.gas.zhihu.ui.map.di.DaggerMapComponent
 import com.gas.zhihu.ui.map.mvp.MapContract
@@ -101,7 +103,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
         title_view.setOnBackListener { finish() }
 
         title_view.setOnRightListener {
-
+            FragmentContainerActivity.startActivity(this,AddMapFragment::class.java)
         }
         imgDeleteRecord.setOnClickListener {
             showDeleteTipDialog()

@@ -21,7 +21,7 @@ class TagAdapter(private val mList: List<ISelectItem>, private val mListener: On
             val dataPos: Int = holder.adapterPosition
             if (dataPos < mList.size && dataPos >= 0) {
                 mList[dataPos].apply {
-                    id?.let { it -> setSelected(it) }
+                    setSelected(id)
                     mListener.onItemClickListener(mList[dataPos], dataPos)
                 }
             }

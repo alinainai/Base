@@ -2,6 +2,7 @@ package com.gas.zhihu.fragment.paper;
 
 import android.content.Context;
 
+import com.base.baseui.adapter.ExtendAdapter;
 import com.base.paginate.base.SingleAdapter;
 import com.base.paginate.viewholder.PageViewHolder;
 import com.gas.zhihu.R;
@@ -10,7 +11,7 @@ import com.gas.zhihu.bean.IPaperShowBean;
 import com.gas.zhihu.bean.PaperBean;
 
 
-public class PaperAdapter extends SingleAdapter<IPaperShowBean> {
+public class PaperAdapter extends ExtendAdapter<IPaperShowBean> {
 
 
 
@@ -24,6 +25,7 @@ public class PaperAdapter extends SingleAdapter<IPaperShowBean> {
         holder.setText(R.id.itemMap,data.getMapName());
         holder.setText(R.id.itemVoltage,data.getVoltageLevel());
     }
+
 
     @Override
     protected int getItemLayoutId() {

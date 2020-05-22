@@ -44,6 +44,7 @@ public interface ZhihuConstants {
 
     //json配置信息
      String DATA_JSON_PATH = "config" + File.separator + "datajson.json";
+     String EXPERIENCE_JSON_PATH = "config" + File.separator + "paperinit.json";
 
     //图片
      String IMAGE_ZIP = "testimage.zip";
