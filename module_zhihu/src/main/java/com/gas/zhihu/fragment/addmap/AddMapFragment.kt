@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.gas.zhihu.R
+import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP_FOLDER
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.fragment.addmap.di.AddMapModule
@@ -75,7 +76,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
 
     override fun initData(savedInstanceState: Bundle?) {
         titleView.setOnBackListener {
-            activity?.finish()
+           killMyself()
         }
         imgAddress.setOnClickListener {
             requestStoragePermission()
@@ -108,16 +109,13 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
     }
 
     override fun killMyself() {
-
+       activity?.finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         if (resultCode == RESULT_OK) {
-
-
             when (requestCode) {
-
                 REQUEST_PICK_IMAGE -> {
                     data?.data?.apply {
                         val intent = Intent("com.android.camera.action.CROP")
@@ -169,6 +167,12 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             showMessage("键值不能为空")
             return
         }
+
+        if(etKeyName.text.toString()== DEFAULT_TYPE){
+            showMessage("键值格式错误")
+            return
+        }
+
         if (etMapName.text.isBlank()) {
             showMessage("电站名称不能为空")
             return
@@ -195,7 +199,14 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
         if( MapBeanDbUtils.insertMapBean(bean)){
             val file = File("${Utils.getExternalFilesDir(activity!!)}${File.separator}${IMAGE_ZIP_FOLDER}",
                     "${etKeyName.text}.jpg")
-            FileUtils.copy(imageFile,file)
+            if(FileUtils.copy(imageFile,file)){
+                showMessage("场站信息添加成功")
+            }else{
+                showMessage("文件添加失败请重试")
+                MapBeanDbUtils.delete(bean.keyName)
+            }
+
+
         }else{
             showMessage("已经添加过该场站信息...")
         }
@@ -231,10 +242,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                 .error(R.drawable.public_default_image_placeholder)// 异常占位图
                 .transform(CenterCrop())
                 .into(imgAddress);
-
-
     }
-
 
     private fun requestStoragePermission() {
 

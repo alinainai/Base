@@ -40,4 +40,19 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="zhihu_fragment_add_paper_select">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">@drawable/zhihu_public_gray_solid_radius_2dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/public_text_black_light</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:maxLength">20</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
 </resources>

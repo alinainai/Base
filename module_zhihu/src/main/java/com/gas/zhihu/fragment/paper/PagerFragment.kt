@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.base.baseui.dialog.fiterpop.FilterPopupWindow
+import com.base.baseui.dialog.itempop.ItemPopupWindow
 import com.base.baseui.dialog.select.ISelectItem
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
@@ -19,12 +20,16 @@ import com.base.paginate.viewholder.PageViewHolder
 import com.gas.zhihu.R
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
+import com.gas.zhihu.bean.MapBean
+import com.gas.zhihu.bean.MapSelectShowBean
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
+import com.gas.zhihu.fragment.addpaper.AddPaperFragment
 import com.gas.zhihu.fragment.paper.di.DaggerPagerComponent
 import com.gas.zhihu.fragment.paper.di.PagerModule
 import com.gas.zhihu.fragment.paper.mvp.PagerContract
 import com.gas.zhihu.fragment.paper.mvp.PagerPresenter
+import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.utils.OfficeHelper
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_pager.*
@@ -73,6 +78,43 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     private var selectVoltageLevel:String =DEFAULT_TYPE
     private var selectMapKey:String =DEFAULT_TYPE
 
+
+    private val filterMapPopupWindow:ItemPopupWindow<MapSelectShowBean> by lazy {
+
+        val selectorModels: MutableList<MapSelectShowBean> = ArrayList<MapSelectShowBean>()
+
+        mPresenter?.getValidMaps()?.takeIf { it.isNotEmpty() }?.apply {
+            selectorModels.add(MapSelectShowBean(MapBean().apply {
+                mapName="全部"
+                keyName="-1"
+            }))
+            this.forEach{
+                selectorModels.add(MapSelectShowBean(it))
+            }
+        }
+
+        object :ItemPopupWindow<MapSelectShowBean>(activity, selectorModels){
+            override fun onPositionClick(item: ISelectItem, position: Int) {
+
+                item.apply {
+                    if(id!=selectMapKey){
+                        selectMapKey=id
+                        tvTypeMap.text= if(id==DEFAULT_TYPE)"场站" else name
+                        mPresenter?.getFilterData(selectVoltageLevel,selectMapKey)
+                    }
+                }
+                dismiss()
+            }
+
+            override fun onPopDismiss() {
+                tvTypeMap.isSelected=false
+                imgTypeMap.isSelected=false
+            }
+
+        }
+
+
+    }
 
     private val filterVoltagePop:FilterPopupWindow<VoltageLevelBean> by lazy {
 
@@ -126,8 +168,12 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
             activity?.finish()
         }
 
-        llTypeMap.setOnClickListener{
+        guideTitle.setOnRightListener {
+            FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java,AddPaperFragment.setPagerArgs(0))
+        }
 
+        llTypeMap.setOnClickListener{
+            showTypeMap()
         }
         llTypeVoltage.setOnClickListener{
             showTypeVoltage()
@@ -138,7 +184,6 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 data?.let {
                     val path= Utils.getExternalFilesDir(activity!!);
                     val fileFile = File(path.path, FILE_ZIP_FOLDER+File.separator+data.filePath)
-                    Log.e("TAG",fileFile.path)
                     OfficeHelper.open(activity!!,fileFile.path)
                 }
             }
@@ -164,15 +209,13 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     private fun showTypeMap() {
         tvTypeMap.isSelected=true
         imgTypeMap.isSelected=true
-        filterVoltagePop.showAsDropDown(llTypeVoltage,selectVoltageLevel)
+        filterMapPopupWindow.showAsDropDown(llTypeVoltage,selectMapKey)
     }
 
     private fun showTypeVoltage() {
-
         tvTypeVoltage.isSelected=true
         imgTypeVoltage.isSelected=true
         filterVoltagePop.showAsDropDown(llTypeVoltage,selectVoltageLevel)
-
     }
 
 

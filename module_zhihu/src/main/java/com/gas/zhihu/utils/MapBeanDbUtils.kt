@@ -45,24 +45,25 @@ object MapBeanDbUtils {
         } else null
     }
 
-    fun queryAllMapData(): List<MapBean>? {
+    fun queryAllMapData(): List<MapBean>{
         val daoSession = DbUtils.getInstance().daoSession
         val dao = daoSession.mapBeanDao
-        val qb: QueryBuilder<*> = dao.queryBuilder()
-        val list = qb.list() as ArrayList<MapBean>
+        val qb: QueryBuilder<MapBean> = dao.queryBuilder()
+        val list = qb.list()
         return if (list.isNotEmpty()) {
             list
-        } else null
+        } else emptyList()
     }
 
     fun addComment(mapKey: String?, comment: String?): Boolean {
         val daoSession = DbUtils.getInstance().daoSession
         val dao = daoSession.mapBeanDao
         val qb: QueryBuilder<MapBean> = dao.queryBuilder()
-        val bean = qb.where(MapBeanDao.Properties.KeyName.eq(mapKey)).unique() as MapBean
-        if (bean != null) {
-            bean.note = comment
-            dao.update(bean)
+
+        val list = qb.where(MapBeanDao.Properties.KeyName.eq(mapKey)).list()
+        if (list.isNotEmpty()) {
+            list[0].note=comment
+            dao.update(list[0])
             return true
         }
         return false

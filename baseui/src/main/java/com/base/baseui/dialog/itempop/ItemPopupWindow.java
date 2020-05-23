@@ -1,4 +1,4 @@
-package com.base.baseui.dialog.fiterpop;
+package com.base.baseui.dialog.itempop;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.baseui.R;
+import com.base.baseui.dialog.fiterpop.TagAdapter;
 import com.base.baseui.dialog.select.ISelectItem;
 import com.google.android.flexbox.AlignItems;
 import com.google.android.flexbox.FlexDirection;
@@ -34,13 +36,13 @@ import java.util.Objects;
  * ================================================
  */
 
-public abstract class FilterPopupWindow<T extends ISelectItem> {
+public abstract class ItemPopupWindow<T extends ISelectItem> {
 
     private PopupWindow mPopupWindow;
-    private TagAdapter mTagAdapter;
+    private PopItemAdapter mTagAdapter;
     private List<T> mData;
 
-    public FilterPopupWindow(Context context, List<T> data) {
+    public ItemPopupWindow(Context context, List<T> data) {
 
         if (data == null || data.size() == 0)
             throw new RuntimeException("data is not null");
@@ -48,18 +50,13 @@ public abstract class FilterPopupWindow<T extends ISelectItem> {
         mData = data;
 
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.public_dialog_filter_layout, null);
+        View view = inflater.inflate(R.layout.public_dialog_select_pop_layout, null);
         RecyclerView flowLayout = view.findViewById(R.id.recycler);
 
-        mTagAdapter = new TagAdapter(data, this::onPositionClick);
+        mTagAdapter = new PopItemAdapter(data, this::onPositionClick);
 
-        FlexboxLayoutManager flexboxLayoutManager = new FlexboxLayoutManager(context);
-        flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
-        flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
-        flexboxLayoutManager.setAlignItems(AlignItems.STRETCH);
-        flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
-        flowLayout.setLayoutManager(flexboxLayoutManager);
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
+        flowLayout.setLayoutManager(layoutManager);
         flowLayout.setAdapter(mTagAdapter);
 
         mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -75,6 +72,7 @@ public abstract class FilterPopupWindow<T extends ISelectItem> {
     public abstract void onPopDismiss();
 
     public void showAsDropDown(View author, String typeId) {
+
         if(mData.isEmpty())
             return;
         if (mPopupWindow != null) {
@@ -83,9 +81,9 @@ public abstract class FilterPopupWindow<T extends ISelectItem> {
             }
             mTagAdapter.setSelected(typeId);
             mPopupWindow.showAsDropDown(author, 0, 0);
+
         }
     }
-
 
     private int getItemPosition(@NotNull String typeId) {
 
@@ -98,7 +96,6 @@ public abstract class FilterPopupWindow<T extends ISelectItem> {
         return 0;
 
     }
-
 
     public void dismiss() {
         if (mPopupWindow != null) {

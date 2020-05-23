@@ -2,6 +2,7 @@ package com.gas.zhihu.fragment.paper.mvp
 
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.BasePresenter
+import com.gas.zhihu.bean.MapBean
 
 import javax.inject.Inject
 
@@ -28,6 +29,10 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
 
     fun getFilterData( voltage: String, mapKey: String){
         mView.setPaperData(mModel.getPagersByFilter(voltage,mapKey))
+    }
+
+    fun getValidMaps():List<MapBean>{
+        return mModel.getValidMapList()
     }
 
     override fun onDestroy() {
