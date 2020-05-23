@@ -8,6 +8,9 @@ import org.greenrobot.greendao.annotation.Unique;
 @Entity(nameInDb = "paperbean")
 public class PaperBean {
 
+    public static final int TYPE_PAPER=0;
+    public static final int TYPE_EXPERIENCE=1;
+
     @Id(autoincrement = true)
     Long id;
     private String pathName= "";
@@ -80,7 +83,6 @@ public class PaperBean {
     public void setExtraStr2(String extraStr2) {
         this.extraStr2 = extraStr2;
     }
-
 
     public void updateInfo(PaperBean bean){
         this.pathName=bean.getPathName();

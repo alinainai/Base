@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.base.paginate.viewholder.PageViewHolder;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * ================================================
  * desc: BaseAdapter的推展，主要有以下功能
@@ -48,7 +50,7 @@ public abstract class ExtendAdapter<T> extends ExtendMultiAdapter<T> {
     }
 
     @Override
-    protected void convert(PageViewHolder holder, T data, int position, int viewType) {
+    protected void convert(@NotNull PageViewHolder holder, T data, int position, int viewType) {
         convert( holder, data, position);
     }
 

@@ -3,6 +3,7 @@ package com.gas.zhihu.fragment.paper
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,21 @@ import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.paginate.interfaces.EmptyInterface
+import com.base.paginate.interfaces.OnMultiItemClickListeners
+import com.base.paginate.viewholder.PageViewHolder
 import com.gas.zhihu.R
+import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
+import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
+import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
 import com.gas.zhihu.fragment.paper.di.DaggerPagerComponent
 import com.gas.zhihu.fragment.paper.di.PagerModule
 import com.gas.zhihu.fragment.paper.mvp.PagerContract
 import com.gas.zhihu.fragment.paper.mvp.PagerPresenter
+import com.gas.zhihu.utils.OfficeHelper
+import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_pager.*
+import java.io.File
 import java.util.*
 import javax.inject.Inject
 
@@ -61,22 +70,25 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
      * 1:经验集
      */
     private var mType:Int =0;
-    private var selectVoltageLevel:String ="-1"
-    private var selectMapKey:String ="-1"
+    private var selectVoltageLevel:String =DEFAULT_TYPE
+    private var selectMapKey:String =DEFAULT_TYPE
 
 
     private val filterVoltagePop:FilterPopupWindow<VoltageLevelBean> by lazy {
 
         val selectorModels: MutableList<VoltageLevelBean> = ArrayList<VoltageLevelBean>()
-        selectorModels.add(VoltageLevelBean("-1", "全部"))
+        selectorModels.add(VoltageLevelBean(DEFAULT_TYPE, "全部"))
         selectorModels.addAll(VoltageLevelBean.voltageLevelItems)
 
         object :FilterPopupWindow<VoltageLevelBean>(activity, selectorModels){
             override fun onPositionClick(item: ISelectItem, position: Int) {
 
                 item.apply {
-                    selectVoltageLevel=id
-                    tvTypeVoltage.text= if(id=="-1")"电压等级" else name
+                    if(id!=selectVoltageLevel){
+                        selectVoltageLevel=id
+                        tvTypeVoltage.text= if(id==DEFAULT_TYPE)"电压等级" else name
+                        mPresenter?.getFilterData(selectVoltageLevel,selectMapKey)
+                    }
                 }
                 dismiss()
             }
@@ -121,12 +133,32 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
             showTypeVoltage()
         }
 
+        mAdapter.setOnMultiItemClickListener(object :OnMultiItemClickListeners<PaperShowBean?>{
+            override fun onItemClick(viewHolder: PageViewHolder?, data: PaperShowBean?, position: Int, viewType: Int) {
+                data?.let {
+                    val path= Utils.getExternalFilesDir(activity!!);
+                    val fileFile = File(path.path, FILE_ZIP_FOLDER+File.separator+data.filePath)
+                    Log.e("TAG",fileFile.path)
+                    OfficeHelper.open(activity!!,fileFile.path)
+                }
+            }
+        })
         itemRefresh.isEnabled=false
         ArmsUtils.configRecyclerView(itemRecycler,mLayoutManager)
         itemRecycler.adapter=mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+        mPresenter!!.initOriginData(mType)
+        mPresenter!!.getFilterData(selectVoltageLevel,selectMapKey)
 
+    }
 
+    override fun setPaperData(list: List<PaperShowBean>){
+        mAdapter.showDataDiff(list)
+        if(list.isNotEmpty()){
+            mAdapter.loadEnd()
+        }else{
+            mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
+        }
     }
 
     private fun showTypeMap() {

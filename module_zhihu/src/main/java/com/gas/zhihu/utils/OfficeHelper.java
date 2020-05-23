@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.StyleRes;
 
 import com.gas.zhihu.ui.office.OfficeActivity;
 import com.tencent.smtt.sdk.QbSdk;
@@ -50,9 +49,15 @@ public class OfficeHelper {
     }
 
 
-    public static void open(@NonNull Activity activity,  String filePath, int requestCode) {
+    public static void open(@NonNull Activity activity, String filePath, int requestCode) {
         Intent intent = new Intent(activity, OfficeActivity.class);
         intent.putExtra(FILEPATH, filePath);
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    public static void open(@NonNull Activity activity, String filePath) {
+        Intent intent = new Intent(activity, OfficeActivity.class);
+        intent.putExtra(FILEPATH, filePath);
+        activity.startActivity(intent);
     }
 }

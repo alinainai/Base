@@ -39,8 +39,6 @@ dependencies {
 
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
-    implementation 'com.tencent.tbs.tbssdk:sdk:43903'
-
 
     kapt rootProject.ext.dependencies["dagger2-compiler"]
 }

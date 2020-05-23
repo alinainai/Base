@@ -25,6 +25,7 @@ import com.gas.zhihu.BuildConfig;
 import com.gas.zhihu.db.DbUtils;
 import com.gas.zhihu.utils.OfficeHelper;
 import com.lib.commonsdk.utils.AppUtils;
+import com.tencent.smtt.sdk.QbSdk;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 
@@ -56,7 +57,18 @@ public class AppLifecyclesImpl implements AppLifecyclers {
             AppUtils.init(application);
         }
         DbUtils.getInstance().init(application);
-        OfficeHelper.init(application);
+        OfficeHelper.init(application,new  QbSdk.PreInitCallback(){
+
+            @Override
+            public void onCoreInitFinished() {
+                AppUtils.toast("腾讯内核加载完毕");
+            }
+
+            @Override
+            public void onViewInitFinished(boolean b) {
+
+            }
+        });
     }
 
     @Override

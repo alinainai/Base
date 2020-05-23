@@ -21,6 +21,15 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
         BasePresenter<PagerContract.Model, PagerContract.View>(model, rootView) {
 
 
+    fun initOriginData(type:Int){
+        mModel.setType(type)
+        mModel.getValidMapList()
+    }
+
+    fun getFilterData( voltage: String, mapKey: String){
+        mView.setPaperData(mModel.getPagersByFilter(voltage,mapKey))
+    }
+
     override fun onDestroy() {
         super.onDestroy();
     }

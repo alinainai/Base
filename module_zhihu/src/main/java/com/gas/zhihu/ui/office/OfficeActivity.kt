@@ -46,6 +46,7 @@ class OfficeActivity : BaseActivity<OfficePresenter>(), OfficeContract.View {
     override fun initData(savedInstanceState: Bundle?) {
 
 
+        titleView.setOnBackListener { finish() }
 
         intent?.apply {
             fileName= getStringExtra(FILEPATH)?:""
@@ -79,6 +80,11 @@ class OfficeActivity : BaseActivity<OfficePresenter>(), OfficeContract.View {
 
     override fun hideLoading() {
 
+    }
+
+    override fun onDestroy() {
+        tbsReaderView.onStop();
+        super.onDestroy()
     }
 
     override fun showMessage(message: String) {

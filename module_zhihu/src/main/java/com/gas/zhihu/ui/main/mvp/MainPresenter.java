@@ -158,7 +158,7 @@ public class MainPresenter extends BasePresenter<MainContract.Model, MainContrac
                 })
                 .flatMap((Function<String, ObservableSource<Boolean>>) s -> {
                     PagerBeanDbUtils.deleteAll();
-                    Type type = new TypeToken<List<MapBean>>() {
+                    Type type = new TypeToken<List<PaperBean>>() {
                     }.getType();
                     List<PaperBean> list = GsonUtils.fromJson(s, type);
                     for (PaperBean bean : list) {

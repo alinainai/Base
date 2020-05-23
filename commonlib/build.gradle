@@ -123,11 +123,7 @@ dependencies {
     api rootProject.ext.dependencies["rxpermissions2"]
     compileOnly rootProject.ext.dependencies["autolayout"]
     api 'me.jessyan:rxerrorhandler:2.1.1'
-
-
-
-
-
+    api 'com.tencent.tbs.tbssdk:sdk:43903'
 
 
 }
