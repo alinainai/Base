@@ -5,11 +5,13 @@ import com.base.lib.mvp.BaseModel
 
 import com.base.lib.di.scope.FragmentScope;
 import com.gas.zhihu.bean.MapBean
+import com.gas.zhihu.bean.PaperBean
 import com.gas.zhihu.bean.VoltageLevelBean
 import javax.inject.Inject
 
 import com.gas.zhihu.fragment.addpaper.mvp.AddPaperContract
 import com.gas.zhihu.utils.MapBeanDbUtils
+import com.gas.zhihu.utils.PagerBeanDbUtils
 
 
 /**
@@ -36,5 +38,8 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         return VoltageLevelBean.voltageLevelItems
     }
 
+    override fun insertPaperBean(bean:PaperBean):Boolean{
+       return PagerBeanDbUtils.insertMapBean(bean)
+    }
 
 }

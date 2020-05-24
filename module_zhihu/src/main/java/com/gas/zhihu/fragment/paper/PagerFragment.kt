@@ -192,9 +192,14 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         ArmsUtils.configRecyclerView(itemRecycler,mLayoutManager)
         itemRecycler.adapter=mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         mPresenter!!.initOriginData(mType)
         mPresenter!!.getFilterData(selectVoltageLevel,selectMapKey)
-
     }
 
     override fun setPaperData(list: List<PaperShowBean>){

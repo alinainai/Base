@@ -24,6 +24,7 @@ import com.gas.zhihu.R
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP_FOLDER
 import com.gas.zhihu.bean.MapBean
+import com.gas.zhihu.dialog.TipShowDialog
 import com.gas.zhihu.fragment.addmap.di.AddMapModule
 import com.gas.zhihu.fragment.addmap.di.DaggerAddMapComponent
 import com.gas.zhihu.fragment.addmap.mvp.AddMapContract
@@ -137,7 +138,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                             intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
                         }
-                        startActivityForResult(intent, REQUEST_CROP_PHOTO);
+                        activity?.startActivityForResult(intent, REQUEST_CROP_PHOTO);
                     }
                 }
                 REQUEST_CROP_PHOTO -> {
@@ -181,7 +182,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             showMessage("地址信息不能为空")
             return
         }
-        if (etAddressLat.text.isBlank() || tvAddressLon.text.isBlank()) {
+        if (etAddressLat.text.isBlank() || tvFileTitle.text.isBlank()) {
             showMessage("经纬度不能为空")
             return
         }
@@ -200,12 +201,11 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             val file = File("${Utils.getExternalFilesDir(activity!!)}${File.separator}${IMAGE_ZIP_FOLDER}",
                     "${etKeyName.text}.jpg")
             if(FileUtils.copy(imageFile,file)){
-                showMessage("场站信息添加成功")
+                TipShowDialog().show(activity!!, "提示", "保存成功") { killMyself() }
             }else{
                 showMessage("文件添加失败请重试")
                 MapBeanDbUtils.delete(bean.keyName)
             }
-
 
         }else{
             showMessage("已经添加过该场站信息...")
@@ -260,7 +260,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
 
     private fun selectImage() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, REQUEST_PICK_IMAGE)
+        activity?.startActivityForResult(intent, REQUEST_PICK_IMAGE)
     }
 
 

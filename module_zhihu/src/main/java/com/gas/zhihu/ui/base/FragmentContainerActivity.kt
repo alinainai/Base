@@ -62,10 +62,10 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
         }
 
         fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int) {
-            startActivityForResult(context, fragmentClazz, requestCode, null)
+            startActivityForResult(context, fragmentClazz, null,requestCode)
         }
 
-        fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int, args: Bundle?) {
+        fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, requestCode: Int) {
             val intent = Intent(context, FragmentContainerActivity::class.java)
             intent.putExtra("clazz", fragmentClazz)
             if (args != null) {
@@ -115,10 +115,10 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
 
 
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        val fragment = supportFragmentManager.findFragmentById(R.id.container)
-//        fragment?.onActivityResult(requestCode, resultCode, data)
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val fragment = supportFragmentManager.findFragmentById(R.id.container)
+        fragment?.onActivityResult(requestCode, resultCode, data)
+    }
 
 }

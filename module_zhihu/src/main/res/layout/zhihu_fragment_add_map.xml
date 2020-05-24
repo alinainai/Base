@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@id/etAddressInfo" />
 
             <TextView
-                android:id="@+id/tvAddressLon"
+                android:id="@+id/tvFileTitle"
                 style="@style/zhihu_fragment_add_map_subtitle"
                 android:text="地址经度："
                 app:layout_constraintBottom_toBottomOf="@+id/etAddressLon"

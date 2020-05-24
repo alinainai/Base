@@ -57,5 +57,7 @@ public interface ZhihuConstants {
      String FILE_ZIP_FOLDER = "tempfile";
      String FILE_ZIP_ASSET = "data" + File.separator + FILE_ZIP;
 
+     String FILE_TYPE_WORD="word";
+     String FILE_TYPE_PDF="pdf";
 
 }

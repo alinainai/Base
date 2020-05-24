@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.base.baseui.dialog.QMUITipDialog;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -71,6 +72,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
+        loadDialog= new  QMUITipDialog.Builder(this)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord("正在加载")
+                .create();
+
         mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -118,6 +124,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     }
 
+    private QMUITipDialog loadDialog;
+
+
     @Override
     public void onBackPressed() {
         exitBy2Click(); //调用双击退出函数
@@ -141,5 +150,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         } else {
             ArmsUtils.exitApp();
         }
+    }
+
+
+    @Override
+    public void showLoading() {
+        loadDialog.show();
+    }
+    @Override
+    public void hideLoading() {
+        loadDialog.dismiss();
     }
 }

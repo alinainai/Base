@@ -61,7 +61,7 @@ public class AppLifecyclesImpl implements AppLifecyclers {
 
             @Override
             public void onCoreInitFinished() {
-                AppUtils.toast("腾讯内核加载完毕");
+
             }
 
             @Override

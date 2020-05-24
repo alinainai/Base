@@ -4,6 +4,7 @@ import com.base.lib.mvp.IModel
 import com.base.lib.mvp.IView
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.bean.MapSelectShowBean
+import com.gas.zhihu.bean.PaperBean
 import com.gas.zhihu.bean.VoltageLevelBean
 
 
@@ -19,6 +20,7 @@ interface AddPaperContract {
     interface View : IView{
         fun showMapSelectDialog(maps:List<MapSelectShowBean>)
         fun showVolSelectDialog(maps:List<VoltageLevelBean>)
+        fun showCommitSuccess()
     }
 
 
@@ -26,6 +28,7 @@ interface AddPaperContract {
     interface Model : IModel{
         fun getMapList():List<MapBean>
         fun getVoltageList():List<VoltageLevelBean>
+        fun insertPaperBean(bean: PaperBean):Boolean
     }
 
 
