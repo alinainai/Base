@@ -112,8 +112,8 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
 
     override fun showMapSelectDialog(maps: List<MapSelectShowBean>) {
 
-        activity.let {
-            SelectBottomDialog.getInstance(activity!!)
+        activity?.let {
+            SelectBottomDialog.getInstance()
                     .setMode(MODE_CLICK)
                     .setCancelable(true)
                     .setList(maps)
@@ -122,15 +122,15 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                             mapName.text = itemId.name
                             selectMapKey = itemId.id
                         }
-                    }).show()
+                    }).show(it)
         }
 
     }
 
     override fun showVolSelectDialog(maps: List<VoltageLevelBean>) {
 
-        activity.let {
-            SelectBottomDialog.getInstance(activity!!)
+        activity?.let {
+            SelectBottomDialog.getInstance()
                     .setMode(MODE_CLICK)
                     .setCancelable(true)
                     .setList(maps)
@@ -139,7 +139,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                             voltageName.text = itemId.name
                             selectVoltageLevel = itemId.id
                         }
-                    }).show()
+                    }).show(it)
         }
 
     }
@@ -175,7 +175,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         items.add(SelectItem("0", "Word文件"))
         items.add(SelectItem("1", "PDF文件"))
         activity?.let {
-            SelectBottomDialog.getInstance(it)
+            SelectBottomDialog.getInstance()
                     .setMode(MODE_CLICK)
                     .setCancelable(true)
                     .setList(items)
@@ -183,7 +183,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                         override fun onItemClickListener(itemId: ISelectItem) {
                             selectFile(itemId.id)
                         }
-                    }).show()
+                    }).show(it)
         }
     }
 

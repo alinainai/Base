@@ -10,7 +10,7 @@ import com.base.baseui.dialog.CommonBottomDialog
 import com.base.lib.util.Preconditions
 import kotlinx.android.synthetic.main.public_dialog_bottom_select.view.*
 
-class SelectBottomDialog private constructor(private val mContext: Context) {
+class SelectBottomDialog {
     // 自定义一个注解MyState
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(MODE_CLICK, MODE_SELECT, MODE_CHECK)
@@ -41,20 +41,19 @@ class SelectBottomDialog private constructor(private val mContext: Context) {
         return this
     }
 
-    fun show() {
+    fun show(context:Context) {
         if (mList == null || mList!!.isEmpty()) {
             return
         }
-
-        val builder= CommonBottomDialog.Builder(mContext)
+        val builder= CommonBottomDialog.Builder(context)
         builder.setCancelable(cancelable)
         builder.setDialogClickListener(mListener)
-        val view = LayoutInflater.from(mContext).inflate(R.layout.public_dialog_bottom_select, null)
+        val view = LayoutInflater.from(context).inflate(R.layout.public_dialog_bottom_select, null)
         builder.setCustomView(view)
         val dialog = builder.create()
         val recycler: RecyclerView = view.recycler
         view.dialog_cancel.setOnClickListener { dialog.dismiss() }
-        recycler.layoutManager = LinearLayoutManager(mContext)
+        recycler.layoutManager = LinearLayoutManager(context)
         recycler.setHasFixedSize(true)
         val itemListener = object : SelectItemAdapter.OnItemClickListener {
             override fun onItemClickListener(item: ISelectItem, position: Int) {
@@ -89,8 +88,8 @@ class SelectBottomDialog private constructor(private val mContext: Context) {
         const val MODE_CLICK = 1
         const val MODE_SELECT = 2
         const val MODE_CHECK = 3
-        fun getInstance(context: Context): SelectBottomDialog {
-            return SelectBottomDialog(context)
+        fun getInstance(): SelectBottomDialog {
+            return SelectBottomDialog()
         }
     }
 
