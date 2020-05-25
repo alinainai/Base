@@ -16,9 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:closeHide="true"
+            app:dividerHide="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:rightText="添加文档"
             app:titleText="工具选择" />
 
@@ -63,9 +65,8 @@
                 android:id="@+id/guideCenter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintGuide_percent="0.5"
                 android:orientation="vertical"
-                />
+                app:layout_constraintGuide_percent="0.5" />
 
             <LinearLayout
                 android:id="@+id/llTypeVoltage"

@@ -63,7 +63,6 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
             args.putInt(TYPE, type)
             return args
         }
-
     }
 
     override fun setupFragmentComponent(appComponent: AppComponent) {

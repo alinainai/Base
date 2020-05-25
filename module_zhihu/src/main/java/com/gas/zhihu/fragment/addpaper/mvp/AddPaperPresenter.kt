@@ -57,7 +57,7 @@ constructor(model: AddPaperContract.Model, rootView: AddPaperContract.View) :
                     override fun apply(t: PaperBean): Observable<Boolean> {
                         if (mModel.insertPaperBean(t)) {
                             val file = File("${Utils.getExternalFilesDir(AppUtils.getApp())}${File.separator}${ZhihuConstants.FILE_ZIP_FOLDER}",
-                                    "$bean.pathName")
+                                    bean.pathName)
                             if (FileUtils.copy(File(absolutePath), file)) {
                                 return Observable.just(true)
                             }

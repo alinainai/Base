@@ -63,7 +63,9 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
     }
 
-
+    override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.zhihu_fragment_pager, container, false);
+    }
     @Inject
     lateinit var mAdapter: PaperAdapter
 
@@ -74,7 +76,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
      * 0:图纸
      * 1:经验集
      */
-    private var mType:Int =0;
+    private var mType:Int =0
     private var selectVoltageLevel:String =DEFAULT_TYPE
     private var selectMapKey:String =DEFAULT_TYPE
 
@@ -153,9 +155,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 .inject(this)
     }
 
-    override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.zhihu_fragment_pager, container, false);
-    }
+
 
     override fun initData(savedInstanceState: Bundle?) {
 
@@ -169,7 +169,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         }
 
         guideTitle.setOnRightListener {
-            FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java,AddPaperFragment.setPagerArgs(0))
+            FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java,AddPaperFragment.setPagerArgs(mType))
         }
 
         llTypeMap.setOnClickListener{

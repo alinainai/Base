@@ -15,34 +15,28 @@ class SelectBottomDialog private constructor(private val mContext: Context) {
     @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
     @IntDef(MODE_CLICK, MODE_SELECT, MODE_CHECK)
     annotation class Mode
-
-    private val mBuilder: CommonBottomDialog.Builder = CommonBottomDialog.Builder(mContext)
     private var mListener: OnItemOperateListener? = null
 
     @Mode
     private var mMode = MODE_CLICK
     private var mList: List<ISelectItem>? = null
+    private var cancelable =true
     fun setCancelable(isCancelable: Boolean): SelectBottomDialog {
-        Preconditions.checkNotNull(mBuilder, "You should call getInstance first")
-        mBuilder.setCancelable(isCancelable)
+        cancelable=isCancelable
         return this
     }
 
     fun setOnItemOptionListener(listener: OnItemOperateListener?): SelectBottomDialog {
-        Preconditions.checkNotNull(mBuilder, "You should call getInstance first")
-        mBuilder.setDialogClickListener(listener)
         mListener = listener
         return this
     }
 
     fun setMode(@Mode mode: Int): SelectBottomDialog {
-        Preconditions.checkNotNull(mContext, "You should call getInstance first")
         mMode = mode
         return this
     }
 
     fun setList(list: List<ISelectItem>?): SelectBottomDialog {
-        Preconditions.checkNotNull(mContext, "You should call getInstance first")
         mList = list
         return this
     }
@@ -51,10 +45,13 @@ class SelectBottomDialog private constructor(private val mContext: Context) {
         if (mList == null || mList!!.isEmpty()) {
             return
         }
-        Preconditions.checkNotNull(mBuilder, "You should call getInstance first")
+
+        val builder= CommonBottomDialog.Builder(mContext)
+        builder.setCancelable(cancelable)
+        builder.setDialogClickListener(mListener)
         val view = LayoutInflater.from(mContext).inflate(R.layout.public_dialog_bottom_select, null)
-        mBuilder.setCustomView(view)
-        val dialog = mBuilder.create();
+        builder.setCustomView(view)
+        val dialog = builder.create()
         val recycler: RecyclerView = view.recycler
         view.dialog_cancel.setOnClickListener { dialog.dismiss() }
         recycler.layoutManager = LinearLayoutManager(mContext)

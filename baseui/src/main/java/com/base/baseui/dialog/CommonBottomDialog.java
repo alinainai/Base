@@ -20,15 +20,10 @@ public class CommonBottomDialog extends Dialog {
         super(context);
     }
 
-
     public interface OnDialogClickListener {
-
-
         default void onDismiss() {
 
         }
-
-
     }
 
     public static class Builder {
@@ -53,7 +48,6 @@ public class CommonBottomDialog extends Dialog {
             mDialogClickListener = listener;
             return this;
         }
-
 
         public Builder(Context context) {
             mContext = context;
