@@ -53,26 +53,26 @@ constructor(model: AddPaperContract.Model, rootView: AddPaperContract.View) :
         Observable.create(ObservableOnSubscribe<PaperBean> {
             it.onNext(bean)
         })
-                .flatMap(object : Function<PaperBean, Observable<Boolean>> {
-                    override fun apply(t: PaperBean): Observable<Boolean> {
+                .flatMap(object : Function<PaperBean, Observable<Int>> {
+                    override fun apply(t: PaperBean): Observable<Int> {
                         if (mModel.insertPaperBean(t)) {
                             val file = File("${Utils.getExternalFilesDir(AppUtils.getApp())}${File.separator}${ZhihuConstants.FILE_ZIP_FOLDER}",
                                     bean.pathName)
                             if (FileUtils.copy(File(absolutePath), file)) {
-                                return Observable.just(true)
+                                return Observable.just(0)
                             }
-                            return Observable.just(false)
+                            return Observable.just(2)
                         } else {
-                            return Observable.just(false)
+                            return Observable.just(1)
                         }
 
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<Boolean> {
+                .subscribe(object : Observer<Int> {
                     override fun onComplete() {
-                        mView.hideLoading()
+
                     }
 
                     override fun onSubscribe(d: Disposable) {
@@ -80,17 +80,19 @@ constructor(model: AddPaperContract.Model, rootView: AddPaperContract.View) :
                         mDispose = d
                     }
 
-                    override fun onNext(t: Boolean) {
-                        if (t)
-                            mView.showCommitSuccess()
-                        else
-                            mView.showMessage("保存失败请重试")
+                    override fun onNext(t: Int) {
+                        when(t){
+                            0->{mView.showCommitSuccess()}
+                            1->{  mView.showMessage("保存失败，目标已经插入")}
+                            2->{  mView.showMessage("保存失败，文件获取失败")}
+                        }
+                        mView.hideLoading()
                     }
 
                     override fun onError(e: Throwable) {
                         e.printStackTrace()
                         mView.hideLoading()
-                        mView.showMessage("保存失败请重试")
+                        mView.showMessage("保存失败，发生未知异常")
                     }
                 })
     }

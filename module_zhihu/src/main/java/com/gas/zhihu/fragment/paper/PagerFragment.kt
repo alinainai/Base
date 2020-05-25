@@ -155,6 +155,11 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 .inject(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mPresenter!!.initOriginData(mType)
+        mPresenter!!.getFilterData(selectVoltageLevel,selectMapKey)
+    }
 
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -193,22 +198,17 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         itemRecycler.adapter=mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
 
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mPresenter!!.initOriginData(mType)
-        mPresenter!!.getFilterData(selectVoltageLevel,selectMapKey)
     }
 
     override fun setPaperData(list: List<PaperShowBean>){
         mAdapter.showDataDiff(list)
         if(list.isNotEmpty()){
+            itemRecycler.smoothScrollToPosition(0)
             mAdapter.loadEnd()
         }else{
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
         }
+
     }
 
     private fun showTypeMap() {

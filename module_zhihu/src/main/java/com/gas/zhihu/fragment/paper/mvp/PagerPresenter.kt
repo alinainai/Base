@@ -33,6 +33,7 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
     private var mDispose:Disposable?=null
 
     fun initOriginData(type:Int){
+        mModel.resetOriginData()
         mModel.setType(type)
         mModel.getValidMapList()
     }

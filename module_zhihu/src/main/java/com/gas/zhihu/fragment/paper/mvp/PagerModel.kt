@@ -27,24 +27,20 @@ class PagerModel
 @Inject
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), PagerContract.Model {
 
-
     private val originList = mutableListOf<PaperBean>()
     private val originMapBeanMap = mutableMapOf<String,MapBean>()
-
     private var mType: Int = 0
 
     override fun setType(type:Int){
         mType=type
     }
-
     private fun getPapers(): List<PaperBean>{
         if (originList.isNotEmpty()) {
             return originList
         }
         originList.addAll(PagerBeanDbUtils.queryAllPaperDataByType(mType))
-        return originList;
+        return originList
     }
-
 
     override fun getValidMapList(): List<MapBean> {
 
@@ -64,6 +60,10 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         return originMapBeanMap.values.toList()
     }
 
+    override fun resetOriginData(){
+        originList.clear()
+        originMapBeanMap.clear()
+    }
 
     override fun getPagersByFilter(voltage: String, mapKey: String): List<PaperShowBean> {
         if (getPapers().isEmpty())

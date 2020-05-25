@@ -27,6 +27,7 @@ interface PagerContract {
         fun setType(type:Int)
         fun getValidMapList(): List<MapBean>
         fun getPagersByFilter(voltage: String, mapKey: String): List<PaperShowBean>
+        fun resetOriginData()
     }
 
 
