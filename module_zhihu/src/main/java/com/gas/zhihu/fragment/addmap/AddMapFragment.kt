@@ -208,7 +208,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             }
 
         }else{
-            showMessage("已经添加过该场站信息...")
+            showMessage("已经添加过该厂站信息...")
         }
 
     }

@@ -26,7 +26,7 @@
             <TextView
                 android:id="@+id/tvKeyName"
                 style="@style/zhihu_fragment_add_map_subtitle"
-                android:text="场站："
+                android:text="厂站："
                 app:layout_constraintBottom_toBottomOf="@+id/mapName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/mapName" />
@@ -35,7 +35,7 @@
                 android:id="@+id/mapName"
                 style="@style/zhihu_fragment_add_paper_select"
                 android:layout_marginTop="20dp"
-                android:text="点击选择对应场站信息"
+                android:text="点击选择对应厂站信息"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/barrierTv"
                 app:layout_constraintTop_toTopOf="parent" />

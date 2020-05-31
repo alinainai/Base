@@ -195,7 +195,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         }
 
         if (selectMapKey.isBlank()) {
-            showMessage("请选择场站信息")
+            showMessage("请选择厂站信息")
             return
         }
 

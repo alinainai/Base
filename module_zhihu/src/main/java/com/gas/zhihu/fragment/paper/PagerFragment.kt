@@ -101,7 +101,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 item.apply {
                     if(id!=selectMapKey){
                         selectMapKey=id
-                        tvTypeMap.text= if(id==DEFAULT_TYPE)"场站" else name
+                        tvTypeMap.text= if(id==DEFAULT_TYPE)"厂站" else name
                         mPresenter?.getFilterData(selectVoltageLevel,selectMapKey)
                     }
                 }
@@ -112,9 +112,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 tvTypeMap.isSelected=false
                 imgTypeMap.isSelected=false
             }
-
         }
-
 
     }
 

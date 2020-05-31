@@ -20,7 +20,7 @@ class PaperAdapter(context: Context?) : ExtendAdapter<PaperShowBean?>(context) {
         data?.let {
             holder?.apply {
                 setText(R.id.itemTitle, it.fileName)
-                setText(R.id.itemMap,"场站：${it.mapName}" )
+                setText(R.id.itemMap,"厂站：${it.mapName}" )
                 setText(R.id.itemVoltage,"电压等级：${VoltageLevelBean.getVoltageName(it.voltageLevel)}")
                 val img = this.getView<ImageView>(R.id.imgFileType)
                 it.filePath.lastIndexOf('.').takeIf { it > -1 }?.apply {
