@@ -63,7 +63,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
                 columns,
                 select,
                 null,
-                null)
+                 "${MediaStore.Files.FileColumns.DATE_MODIFIED} DESC")
         var columnIndex = 0
         if (cursor != null) {
             columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DATA)

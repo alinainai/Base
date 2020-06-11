@@ -71,6 +71,9 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
         btnGuide.setOnClickListener(this)
         btnGraphPager.setOnClickListener(this)
         btnExperience.setOnClickListener(this)
+        addGraphPager.setOnClickListener(this)
+        addExperience.setOnClickListener(this)
+
 
 
     }
@@ -106,6 +109,12 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
 
             R.id.btnGuide -> {
                 startActivity(Intent(activity, MapActivity::class.java))
+            }
+            R.id.addGraphPager -> {
+                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(0))
+            }
+            R.id.addExperience -> {
+                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(0))
             }
             R.id.btnGraphPager -> {
 

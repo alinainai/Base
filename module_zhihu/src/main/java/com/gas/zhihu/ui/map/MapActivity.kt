@@ -79,6 +79,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
         TextFilterDialog()
     }
 
+    private val isModeSearch = false
 
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerMapComponent //如找不到该类,请编译一下项目
@@ -121,22 +122,23 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
             toSearch(data!!, false)
         }
         rvSearchHistory.layoutManager = mManager
-        rvSearchHistory.adapter = mAdapter
+//        rvSearchHistory.adapter = mAdapter
         val list = mPresenter!!.searchRecord
         if (list == null || list.isEmpty()) {
             vRecord.visibility = View.GONE
         } else {
             mAdapter.setInitData(list)
-            vRecord.visibility = View.VISIBLE
+//            vRecord.visibility = View.VISIBLE
+            vRecord.visibility = View.GONE
         }
         et_input.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (s.toString().trim().isEmpty()) {
-                    startSearch("")
-                } else {
-                    //输入内容非空的时候才开始搜索
-                    startSearch(s.toString())
-                }
+//                if (s.toString().trim().isEmpty()) {
+//                    startSearch("")
+//                } else {
+//                    //输入内容非空的时候才开始搜索
+//                    startSearch(s.toString())
+//                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -226,7 +228,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
         }
         if (needToSave) {
             if (vRecord!!.visibility == View.GONE) {
-                vRecord!!.visibility = View.VISIBLE
+//                vRecord!!.visibility = View.VISIBLE
             }
             mAdapter!!.addItem(search)
             mPresenter!!.searchRecord = mAdapter!!.data
