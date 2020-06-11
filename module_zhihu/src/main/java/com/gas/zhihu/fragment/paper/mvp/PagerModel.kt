@@ -4,6 +4,7 @@ import android.util.Log
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.integration.repository.IRepositoryManager
 import com.base.lib.mvp.BaseModel
+import com.gas.zhihu.app.MapConstants.Companion.PAPER_TYPE_DEFAULT
 import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.bean.MapBean
@@ -28,13 +29,14 @@ class PagerModel
 constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), PagerContract.Model {
 
     private val originList = mutableListOf<PaperBean>()
-    private val originMapBeanMap = mutableMapOf<String,MapBean>()
-    private var mType: Int = 0
+    private val originMapBeanMap = mutableMapOf<String, MapBean>()
+    private var mType: Int = PAPER_TYPE_DEFAULT
 
-    override fun setType(type:Int){
-        mType=type
+    override fun setType(type: Int) {
+        mType = type
     }
-    private fun getPapers(): List<PaperBean>{
+
+    private fun getPapers(): List<PaperBean> {
         if (originList.isNotEmpty()) {
             return originList
         }
@@ -44,7 +46,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
 
     override fun getValidMapList(): List<MapBean> {
 
-        if(originMapBeanMap.isNotEmpty()){
+        if (originMapBeanMap.isNotEmpty()) {
             return originMapBeanMap.values.toList()
         }
 
@@ -60,7 +62,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         return originMapBeanMap.values.toList()
     }
 
-    override fun resetOriginData(){
+    override fun resetOriginData() {
         originList.clear()
         originMapBeanMap.clear()
     }
@@ -71,13 +73,12 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         val ori = getPapers()
         val handleList = mutableListOf<PaperShowBean>()
         ori.filter {
-            if( voltage != DEFAULT_TYPE) it.voltageLevel==voltage.toInt() else true
+            if (voltage != DEFAULT_TYPE) it.voltageLevel == voltage.toInt() else true
         }.filter {
-            if( mapKey != DEFAULT_TYPE) it.mapKey==mapKey else true
-        }.filterNot { it.mapKey.isBlank() }.
-        forEach {
-           val bean= PaperShowBean()
-            bean.paperToShow(it,originMapBeanMap[it.mapKey])
+            if (mapKey != DEFAULT_TYPE) it.mapKey == mapKey else true
+        }.filterNot { it.mapKey.isBlank() }.forEach {
+            val bean = PaperShowBean()
+            bean.paperToShow(it, originMapBeanMap[it.mapKey])
             handleList.add(bean)
         }
         return handleList

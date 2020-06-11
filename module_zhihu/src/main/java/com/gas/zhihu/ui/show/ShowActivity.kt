@@ -61,7 +61,6 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     @Inject
     lateinit var imageLoader: ImageLoader
 
-
     private var mDisposable: Disposable? = null
 
     private var mImagePath: String? = null

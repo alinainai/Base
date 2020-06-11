@@ -26,8 +26,6 @@ import java.io.File;
  */
 public interface ZhihuConstants {
     String DETAIL_ID = "detail_id";
-    String DETAIL_TITLE = "detail_title";
-    String DETAIL_URL = "detail_url";
     String ENCODING = "UTF-8";
     String DEFAULT_TYPE = "-1";
     /**

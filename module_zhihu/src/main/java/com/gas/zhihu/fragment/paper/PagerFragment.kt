@@ -48,14 +48,14 @@ import javax.inject.Inject
 class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     companion object {
 
-       const val TYPE="type"
+        const val TYPE = "type"
 
         fun newInstance(): PagerFragment {
             val fragment = PagerFragment()
             return fragment
         }
 
-        fun setPagerArgs(type:Int): Bundle? {
+        fun setPagerArgs(type: Int): Bundle? {
             val args = Bundle()
             args.putInt(TYPE, type)
             return args
@@ -66,6 +66,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.zhihu_fragment_pager, container, false);
     }
+
     @Inject
     lateinit var mAdapter: PaperAdapter
 
@@ -76,68 +77,68 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
      * 0:图纸
      * 1:经验集
      */
-    private var mType:Int =0
-    private var selectVoltageLevel:String =DEFAULT_TYPE
-    private var selectMapKey:String =DEFAULT_TYPE
+    private var mType: Int = 0
+    private var selectVoltageLevel: String = DEFAULT_TYPE
+    private var selectMapKey: String = DEFAULT_TYPE
 
 
-    private val filterMapPopupWindow:ItemPopupWindow<MapSelectShowBean> by lazy {
+    private val filterMapPopupWindow: ItemPopupWindow<MapSelectShowBean> by lazy {
 
         val selectorModels: MutableList<MapSelectShowBean> = ArrayList<MapSelectShowBean>()
 
         mPresenter?.getValidMaps()?.takeIf { it.isNotEmpty() }?.apply {
             selectorModels.add(MapSelectShowBean(MapBean().apply {
-                mapName="全部"
-                keyName="-1"
+                mapName = "全部"
+                keyName = "-1"
             }))
-            this.forEach{
+            this.forEach {
                 selectorModels.add(MapSelectShowBean(it))
             }
         }
 
-        object :ItemPopupWindow<MapSelectShowBean>(activity, selectorModels){
+        object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
 
                 item.apply {
-                    if(id!=selectMapKey){
-                        selectMapKey=id
-                        tvTypeMap.text= if(id==DEFAULT_TYPE)"厂站" else name
-                        mPresenter?.getFilterData(selectVoltageLevel,selectMapKey)
+                    if (id != selectMapKey) {
+                        selectMapKey = id
+                        tvTypeMap.text = if (id == DEFAULT_TYPE) "厂站" else name
+                        mPresenter?.getFilterData(selectVoltageLevel, selectMapKey)
                     }
                 }
                 dismiss()
             }
 
             override fun onPopDismiss() {
-                tvTypeMap.isSelected=false
-                imgTypeMap.isSelected=false
+                tvTypeMap.isSelected = false
+                imgTypeMap.isSelected = false
             }
         }
 
     }
 
-    private val filterVoltagePop:FilterPopupWindow<VoltageLevelBean> by lazy {
+    private val filterVoltagePop: FilterPopupWindow<VoltageLevelBean> by lazy {
 
         val selectorModels: MutableList<VoltageLevelBean> = ArrayList<VoltageLevelBean>()
         selectorModels.add(VoltageLevelBean(DEFAULT_TYPE, "全部"))
         selectorModels.addAll(VoltageLevelBean.voltageLevelItems)
 
-        object :FilterPopupWindow<VoltageLevelBean>(activity, selectorModels){
+        object : FilterPopupWindow<VoltageLevelBean>(activity, selectorModels) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
 
                 item.apply {
-                    if(id!=selectVoltageLevel){
-                        selectVoltageLevel=id
-                        tvTypeVoltage.text= if(id==DEFAULT_TYPE)"电压等级" else name
-                        mPresenter?.getFilterData(selectVoltageLevel,selectMapKey)
+                    if (id != selectVoltageLevel) {
+                        selectVoltageLevel = id
+                        tvTypeVoltage.text = if (id == DEFAULT_TYPE) "电压等级" else name
+                        mPresenter?.getFilterData(selectVoltageLevel, selectMapKey)
                     }
                 }
                 dismiss()
             }
 
             override fun onPopDismiss() {
-                tvTypeVoltage.isSelected=false
-                imgTypeVoltage.isSelected=false
+                tvTypeVoltage.isSelected = false
+                imgTypeVoltage.isSelected = false
             }
 
         }
@@ -156,69 +157,73 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     override fun onResume() {
         super.onResume()
         mPresenter!!.initOriginData(mType)
-        mPresenter!!.getFilterData(selectVoltageLevel,selectMapKey)
+        mPresenter!!.getFilterData(selectVoltageLevel, selectMapKey)
     }
 
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        mType=activity!!.intent.getIntExtra(TYPE,0)
-        when(mType){
-            0->{guideTitle.titleText="图纸"}
-            1->{guideTitle.titleText="消缺经验集"}
+        mType = activity!!.intent.getIntExtra(TYPE, 0)
+        when (mType) {
+            0 -> {
+                guideTitle.titleText = "图纸"
+            }
+            1 -> {
+                guideTitle.titleText = "消缺经验集"
+            }
         }
         guideTitle.setOnBackListener {
             activity?.finish()
         }
 
         guideTitle.setOnRightListener {
-            FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java,AddPaperFragment.setPagerArgs(mType))
+            FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java, AddPaperFragment.setPagerArgs(mType))
         }
 
-        llTypeMap.setOnClickListener{
+        llTypeMap.setOnClickListener {
             showTypeMap()
         }
-        llTypeVoltage.setOnClickListener{
+        llTypeVoltage.setOnClickListener {
             showTypeVoltage()
         }
 
-        mAdapter.setOnMultiItemClickListener(object :OnMultiItemClickListeners<PaperShowBean?>{
+        mAdapter.setOnMultiItemClickListener(object : OnMultiItemClickListeners<PaperShowBean?> {
             override fun onItemClick(viewHolder: PageViewHolder?, data: PaperShowBean?, position: Int, viewType: Int) {
                 data?.let {
-                    val path= Utils.getExternalFilesDir(activity!!);
-                    val fileFile = File(path.path, FILE_ZIP_FOLDER+File.separator+data.filePath)
-                    OfficeHelper.open(activity!!,fileFile.path)
+                    val path = Utils.getExternalFilesDir(activity!!);
+                    val fileFile = File(path.path, FILE_ZIP_FOLDER + File.separator + data.filePath)
+                    OfficeHelper.open(activity!!, fileFile.path)
                 }
             }
         })
-        itemRefresh.isEnabled=false
-        ArmsUtils.configRecyclerView(itemRecycler,mLayoutManager)
-        itemRecycler.adapter=mAdapter
+        itemRefresh.isEnabled = false
+        ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
+        itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
 
     }
 
-    override fun setPaperData(list: List<PaperShowBean>){
+    override fun setPaperData(list: List<PaperShowBean>) {
         mAdapter.showDataDiff(list)
-        if(list.isNotEmpty()){
+        if (list.isNotEmpty()) {
             itemRecycler.smoothScrollToPosition(0)
             mAdapter.loadEnd()
-        }else{
+        } else {
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
         }
 
     }
 
     private fun showTypeMap() {
-        tvTypeMap.isSelected=true
-        imgTypeMap.isSelected=true
-        filterMapPopupWindow.showAsDropDown(llTypeVoltage,selectMapKey)
+        tvTypeMap.isSelected = true
+        imgTypeMap.isSelected = true
+        filterMapPopupWindow.showAsDropDown(llTypeVoltage, selectMapKey)
     }
 
     private fun showTypeVoltage() {
-        tvTypeVoltage.isSelected=true
-        imgTypeVoltage.isSelected=true
-        filterVoltagePop.showAsDropDown(llTypeVoltage,selectVoltageLevel)
+        tvTypeVoltage.isSelected = true
+        imgTypeVoltage.isSelected = true
+        filterVoltagePop.showAsDropDown(llTypeVoltage, selectVoltageLevel)
     }
 
 
@@ -246,7 +251,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
     }
 
-    override fun getWrapActivity():Activity{
+    override fun getWrapActivity(): Activity {
         return activity!!
     }
 }
