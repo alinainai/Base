@@ -30,18 +30,18 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
         BasePresenter<PagerContract.Model, PagerContract.View>(model, rootView) {
 
 
-    private var mDispose:Disposable?=null
+    private var mDispose: Disposable? = null
 
-    fun initOriginData(type:Int){
+    fun initOriginData(type: Int) {
         mModel.resetOriginData()
         mModel.setType(type)
         mModel.getValidMapList()
     }
 
-    fun getFilterData( voltage: String, mapKey: String){
+    fun getFilterData(voltage: String, mapKey: String) {
 
         Observable.create(ObservableOnSubscribe<List<PaperShowBean>> {
-            it.onNext( mModel.getPagersByFilter(voltage,mapKey))
+            it.onNext(mModel.getPagersByFilter(voltage, mapKey))
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -51,7 +51,7 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
                     }
 
                     override fun onSubscribe(d: Disposable) {
-                        mDispose=d
+                        mDispose = d
                     }
 
                     override fun onNext(t: List<PaperShowBean>) {
@@ -64,7 +64,7 @@ constructor(model: PagerContract.Model, rootView: PagerContract.View) :
                 })
     }
 
-    fun getValidMaps():List<MapBean>{
+    fun getValidMaps(): List<MapBean> {
         return mModel.getValidMapList()
     }
 
