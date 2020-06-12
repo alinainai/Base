@@ -35,7 +35,7 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
     init {
         addDispose(publishSubject.debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
-                .switchMap { t -> Observable.just(mModel.getMapsByFilter(t)) }
+                .switchMap { t -> Observable.just(mModel.getSortBeanWithFilter(t)) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t -> mView.setMapData(t) }, { e -> e.printStackTrace() }))
     }
@@ -52,7 +52,7 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
     fun getFilterData(filter: String) {
         addDispose(Observable.create(
                 ObservableOnSubscribe<List<ISortBean>> {
-                    it.onNext(mModel.getMapsByFilter(filter))
+                    it.onNext(mModel.getSortBeanWithFilter(filter))
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -26,7 +26,7 @@ interface MapShowContract {
     interface Model : IModel {
         fun setType(type: Int)
         fun getValidMapList(): List<MapBean>
-        fun getMapsByFilter(filter: String?): List<ISortBean>
+        fun getSortBeanWithFilter(filter: String?): List<ISortBean>
         fun resetOriginData()
     }
 

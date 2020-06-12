@@ -58,8 +58,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         originMapBeanMap.clear()
     }
 
-    override fun getMapsByFilter(filter: String?): List<ISortBean> {
-        var temp = ""
+    private fun getMapsByFilter(filter: String?): List<MapShowBean> {
         sortCharList.clear()
         return getValidMapList()
                 .asSequence()
@@ -67,22 +66,31 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
                 .map { MapShowBean(it) }
                 .sortedBy { it.mapNameSpell }
                 .filter { bean ->
-                    filter?.let { bean.mapBean.mapName.contains(it, true)||bean.mapNamePinyin.contains(it, true) || bean.mapNameSpell.contains(it, true) }
-                            ?: true
+                    filter?.let {
+                        bean.mapBean.mapName.contains(it, true) ||
+                                bean.mapNamePinyin.contains(it, true) ||
+                                bean.mapNameSpell.contains(it, true)
+                    } ?: true
                 }.toList()
-                .apply {
-                    forEach {
-                        it.showChar.let { tag ->
-                            if (temp != tag) {
-                                val charSort = CharSortBean(tag)
-                                sortCharList.add(charSort)
-                                temp = tag
-                            }
-                        }
-                    }
-                }
+
     }
 
+    override fun getSortBeanWithFilter(filter: String?): List<ISortBean> {
+        var temp = ""
+        val sortMapBeanAndCharTag = mutableListOf<ISortBean>()
+        getMapsByFilter(filter).forEach {
+            it.showChar.let { tag ->
+                if (temp != tag) {
+                    val charSort = CharSortBean(tag)
+                    sortCharList.add(charSort)
+                    sortMapBeanAndCharTag.add(charSort)
+                    temp = tag
+                }
+                sortMapBeanAndCharTag.add(it)
+            }
+        }
+        return sortMapBeanAndCharTag
+    }
 
     override fun onDestroy() {
         super.onDestroy()

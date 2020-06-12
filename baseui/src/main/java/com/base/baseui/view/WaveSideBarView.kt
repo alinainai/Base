@@ -87,10 +87,12 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
             mBallRadius = a.getInt(R.styleable.WaveSideBarView_sidebarBallRadius, 24.dpToPx().toInt())
             a.recycle()
         }
+        //
         mWavePaint = Paint()
         mWavePaint.isAntiAlias = true
         mWavePaint.style = Paint.Style.FILL
         mWavePaint.color = mWaveColor
+        //
         mTextPaint.isAntiAlias = true
         mTextPaint.color = mTextColorChoose
         mTextPaint.style = Paint.Style.FILL
