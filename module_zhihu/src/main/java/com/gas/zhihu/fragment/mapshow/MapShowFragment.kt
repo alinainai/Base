@@ -84,7 +84,6 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     private var mType: Int = PAPER_TYPE_DEFAULT
     private var mOption: Int = MAP_OPTION_DEFAULT
 
-
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMapShowComponent //如找不到该类,请编译一下项目
                 .builder()

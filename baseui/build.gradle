@@ -34,7 +34,6 @@ android {
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies["annotations"]
     api 'com.github.chrisbanes:PhotoView:2.1.3'
@@ -49,11 +48,8 @@ dependencies {
     }
     api rootProject.ext.dependencies["cardview"]
     api rootProject.ext.dependencies["material"]
-
     api project(path: ':paginate')
     api project(path: ':commonsdk')
     api rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
     api 'com.google.android:flexbox:1.0.0'
-
-
 }

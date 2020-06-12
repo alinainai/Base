@@ -1,6 +1,5 @@
 apply plugin: 'com.android.library'
 
-
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
@@ -67,8 +66,6 @@ dependencies {
         exclude module: 'okio'
     }
 
-
-
     api (rootProject.ext.dependencies["okhttp3"]){
         exclude module: 'annotations'
     }
@@ -124,6 +121,5 @@ dependencies {
     compileOnly rootProject.ext.dependencies["autolayout"]
     api 'me.jessyan:rxerrorhandler:2.1.1'
     api 'com.tencent.tbs.tbssdk:sdk:43903'
-
 
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/public_white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/public_white">
 
     <LinearLayout
         android:id="@+id/ly_user_psw"
@@ -31,7 +31,6 @@
             android:id="@+id/etSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="10dp"
             android:layout_marginEnd="15dp"
             android:layout_weight="1"
             android:background="@null"
@@ -39,6 +38,7 @@
             android:gravity="start"
             android:hint="输入汉字或者拼音搜索"
             android:maxLength="18"
+            android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:singleLine="true"
@@ -56,8 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ly_user_psw"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/ly_user_psw">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/itemRecycler"
@@ -69,6 +68,16 @@
             android:scrollbars="none" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+
+    <com.base.baseui.view.WaveSideBarView
+        android:id="@+id/sideBarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/public_title_bar_height"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.base.baseui.view.TitleView
         android:id="@+id/guideTitle"

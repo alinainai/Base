@@ -57,7 +57,7 @@ fun Date.formatDate() = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).form
 fun Date.formatDateToNumber() = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(this)
 
 val Date.isToday: Boolean
-    get() = formatDate().equals(Date().formatDate())
+    get() = formatDate() == Date().formatDate()
 
 fun Date.formatDatetime() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(this)
 
@@ -65,7 +65,7 @@ fun Date.formatDatetime() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDe
 /**
  * [Closeable]的扩展
  */
-fun Closeable.closeQuietely() = apply {
+fun Closeable.closeQuietly() = apply {
     try {
         close()
     } catch (ignored: Throwable) {
