@@ -3,42 +3,37 @@ package com.gas.zhihu.fragment.mapshow
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.paginate.interfaces.EmptyInterface
-import com.base.paginate.interfaces.OnMultiItemClickListeners
-import com.base.paginate.viewholder.PageViewHolder
-
-import com.gas.zhihu.fragment.mapshow.di.DaggerMapShowComponent
-import com.gas.zhihu.fragment.mapshow.di.MapShowModule
-import com.gas.zhihu.fragment.mapshow.mvp.MapShowContract
-import com.gas.zhihu.fragment.mapshow.mvp.MapShowPresenter
-
 import com.gas.zhihu.R
 import com.gas.zhihu.app.MapConstants.Companion.MAP_CONST_KEY
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_DEFAULT
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_SELECT
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_TO_SHOW
 import com.gas.zhihu.app.MapConstants.Companion.PAPER_TYPE_DEFAULT
-import com.gas.zhihu.app.ZhihuConstants
-import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.fragment.mapshow.bean.ISortBean
 import com.gas.zhihu.fragment.mapshow.bean.MapShowBean
-import com.gas.zhihu.utils.OfficeHelper
-import com.lib.commonsdk.utils.Utils
+import com.gas.zhihu.fragment.mapshow.di.DaggerMapShowComponent
+import com.gas.zhihu.fragment.mapshow.di.MapShowModule
+import com.gas.zhihu.fragment.mapshow.mvp.MapShowContract
+import com.gas.zhihu.fragment.mapshow.mvp.MapShowPresenter
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.zhihu_activity_map.*
 import kotlinx.android.synthetic.main.zhihu_fragment_map_show.*
-import kotlinx.android.synthetic.main.zhihu_fragment_map_show.guideTitle
-import kotlinx.android.synthetic.main.zhihu_fragment_map_show.itemRecycler
-import kotlinx.android.synthetic.main.zhihu_fragment_map_show.itemRefresh
-import kotlinx.android.synthetic.main.zhihu_fragment_pager.*
-import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -66,12 +61,14 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     companion object {
         const val TYPE = "type"
         const val OPTION = "option"
+
         fun setPagerArgs(type: Int, option: Int): Bundle? {
             val args = Bundle()
             args.putInt(TYPE, type)
             args.putInt(OPTION, option)
             return args
         }
+
         fun newInstance(): MapShowFragment {
             val fragment = MapShowFragment()
             return fragment
@@ -87,6 +84,7 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     private var mType: Int = PAPER_TYPE_DEFAULT
     private var mOption: Int = MAP_OPTION_DEFAULT
 
+
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMapShowComponent //如找不到该类,请编译一下项目
                 .builder()
@@ -99,13 +97,6 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.zhihu_fragment_map_show, container, false);
     }
-
-    override fun onResume() {
-        super.onResume()
-        mPresenter!!.initOriginData(mType)
-        mPresenter!!.getFilterData("")
-    }
-
 
     override fun initData(savedInstanceState: Bundle?) {
         mType = activity!!.intent.getIntExtra(TYPE, PAPER_TYPE_DEFAULT)
@@ -133,11 +124,22 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
                 }
             }
         }
+        etSearch.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                mPresenter?.startSearch(s?.let { s.toString().trim() } ?: "")
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
         itemRefresh.isEnabled = false
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+        mPresenter!!.initOriginData(mType)
+        mPresenter!!.getFilterData("")
     }
+
 
     override fun setData(data: Any?) {
 

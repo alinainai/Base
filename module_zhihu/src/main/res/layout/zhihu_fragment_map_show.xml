@@ -28,7 +28,7 @@
             android:src="@mipmap/zhihu_search_icon" />
 
         <com.gas.zhihu.view.CleanEditText
-            android:id="@+id/et_input"
+            android:id="@+id/etSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"

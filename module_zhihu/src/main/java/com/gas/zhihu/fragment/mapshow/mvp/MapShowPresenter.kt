@@ -8,8 +8,11 @@ import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -27,40 +30,33 @@ class MapShowPresenter
 constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
         BasePresenter<MapShowContract.Model, MapShowContract.View>(model, rootView) {
 
-    private var mDispose: Disposable? = null
+    private val publishSubject: PublishSubject<String> = PublishSubject.create()
+
+    init {
+        addDispose(publishSubject.debounce(200, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .switchMap { t -> Observable.just(mModel.getMapsByFilter(t)) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t -> mView.setMapData(t) }, { e -> e.printStackTrace() }))
+    }
+
     fun initOriginData(type: Int) {
         mModel.setType(type)
     }
 
-    fun getFilterData(filter: String) {
+    fun startSearch(str: String) {
+        publishSubject.onNext(str)
+    }
 
-        Observable.create(
+
+    fun getFilterData(filter: String) {
+        addDispose(Observable.create(
                 ObservableOnSubscribe<List<ISortBean>> {
                     it.onNext(mModel.getMapsByFilter(filter))
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<List<ISortBean>> {
-                    override fun onComplete() {
-
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        mDispose = d
-                    }
-
-                    override fun onNext(t: List<ISortBean>) {
-                        mView.setMapData(t)
-                    }
-
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
+                .subscribe({ t -> mView.setMapData(t) }, { e -> e.printStackTrace() }))
     }
 
-    override fun onDestroy() {
-        mDispose?.dispose()
-        super.onDestroy();
-    }
 }

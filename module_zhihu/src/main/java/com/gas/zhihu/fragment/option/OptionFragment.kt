@@ -12,7 +12,9 @@ import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.IPresenter
 import com.base.lib.util.ArmsUtils
 import com.gas.zhihu.R
+import com.gas.zhihu.app.MapConstants
 import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
+import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.fragment.option.di.DaggerOptionComponent
 import com.gas.zhihu.fragment.option.mvp.OptionContract
 import com.gas.zhihu.fragment.paper.PagerFragment
@@ -130,14 +132,9 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
 //                            }
 //                        })
 //                        .show()
-
-
-//                val path= Utils.getExternalFilesDir(activity!!);
-//                val fileFile = File(path.path, FILE_ZIP_FOLDER+File.separator+"kp001.pdf")
-//                OfficeHelper.open(activity!!,fileFile.path,1);
             }
             R.id.btnExperience -> {
-                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(1))
+                FragmentContainerActivity.startActivity(activity!!, MapShowFragment::class.java,MapShowFragment.setPagerArgs(MapConstants.PAPER_TYPE_DEFAULT, MapConstants.MAP_OPTION_DEFAULT))
             }
         }
 

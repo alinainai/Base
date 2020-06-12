@@ -67,7 +67,7 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
                 .map { MapShowBean(it) }
                 .sortedBy { it.mapNameSpell }
                 .filter { bean ->
-                    filter?.let { bean.mapNamePinyin.contains(it, true) || bean.mapNameSpell.contains(it, true) }
+                    filter?.let { bean.mapBean.mapName.contains(it, true)||bean.mapNamePinyin.contains(it, true) || bean.mapNameSpell.contains(it, true) }
                             ?: true
                 }.toList()
                 .apply {
