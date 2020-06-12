@@ -19,11 +19,10 @@ class MapShowAdapter(context: Context?) : ExtendMultiAdapter<ISortBean>(context,
         const val TYPE_ITEM = 0xF2
     }
 
-
     override fun getItemLayoutId(viewType: Int): Int {
         R.layout.zhihu_dialog_select_char
         R.layout.zhihu_dialog_select_item
-        return when(viewType){
+        return when (viewType) {
             TYPE_CHAR -> {
                 R.layout.zhihu_dialog_select_char
             }
@@ -42,7 +41,7 @@ class MapShowAdapter(context: Context?) : ExtendMultiAdapter<ISortBean>(context,
     }
 
     override fun convert(holder: PageViewHolder?, data: ISortBean?, position: Int, viewType: Int) {
-        holder?.setText(R.id.tagView,data?.showTitle?:"")
+        holder?.setText(R.id.tagView, data?.showTitle ?: "")
     }
 
 

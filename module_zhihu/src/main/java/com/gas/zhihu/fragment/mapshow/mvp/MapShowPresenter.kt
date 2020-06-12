@@ -27,21 +27,17 @@ class MapShowPresenter
 constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
         BasePresenter<MapShowContract.Model, MapShowContract.View>(model, rootView) {
 
-
     private var mDispose: Disposable? = null
-
     fun initOriginData(type: Int) {
-        mModel.resetOriginData()
         mModel.setType(type)
-        mModel.getValidMapList()
     }
 
     fun getFilterData(filter: String) {
 
         Observable.create(
                 ObservableOnSubscribe<List<ISortBean>> {
-            it.onNext(mModel.getMapsByFilter(filter))
-        })
+                    it.onNext(mModel.getMapsByFilter(filter))
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<List<ISortBean>> {
@@ -62,11 +58,6 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
                     }
                 })
     }
-
-    fun getValidMaps(): List<MapBean> {
-        return mModel.getValidMapList()
-    }
-
 
     override fun onDestroy() {
         mDispose?.dispose()

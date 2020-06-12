@@ -92,16 +92,14 @@ class FileSelectFragment : BaseFragment<FileSelectPresenter>(), FileSelectContra
         titleView.setOnBackListener { killMyself() }
         itemRefresh.isEnabled = false
 
-        mAdapter.setOnMultiItemClickListener(object : OnMultiItemClickListeners<FileItemBean?> {
-            override fun onItemClick(viewHolder: PageViewHolder?, data: FileItemBean?, position: Int, viewType: Int) {
-                data?.let {
-                    val intent=Intent()
-                    intent.putExtra("path",it.filePath)
-                    activity?.setResult(Activity.RESULT_OK,intent)
-                    killMyself()
-                }
+        mAdapter.setOnMultiItemClickListener { _, data, _, _ ->
+            data?.let {
+                val intent=Intent()
+                intent.putExtra("path",it.filePath)
+                activity?.setResult(Activity.RESULT_OK,intent)
+                killMyself()
             }
-        })
+        }
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)

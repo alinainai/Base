@@ -47,9 +47,7 @@ import javax.inject.Inject
  */
 class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     companion object {
-
         const val TYPE = "type"
-
         fun newInstance(): PagerFragment {
             val fragment = PagerFragment()
             return fragment
@@ -60,7 +58,6 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
             args.putInt(TYPE, type)
             return args
         }
-
     }
 
     override fun initView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -81,24 +78,19 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     private var selectVoltageLevel: String = DEFAULT_TYPE
     private var selectMapKey: String = DEFAULT_TYPE
 
-
     private val filterMapPopupWindow: ItemPopupWindow<MapSelectShowBean> by lazy {
-
-        val selectorModels: MutableList<MapSelectShowBean> = ArrayList<MapSelectShowBean>()
-
-        mPresenter?.getValidMaps()?.takeIf { it.isNotEmpty() }?.apply {
-            selectorModels.add(MapSelectShowBean(MapBean().apply {
-                mapName = "全部"
-                keyName = "-1"
-            }))
-            this.forEach {
-                selectorModels.add(MapSelectShowBean(it))
-            }
+        val selectorModels = ArrayList<MapSelectShowBean>()
+        selectorModels.add(MapSelectShowBean(MapBean().apply {
+            mapName = "全部"
+            keyName = "-1"
+        }))
+        mPresenter?.getValidMaps()?.asSequence()?.map {
+            MapSelectShowBean(it)
+        }?.toList()?.apply {
+            selectorModels.addAll(this)
         }
-
         object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
-
                 item.apply {
                     if (id != selectMapKey) {
                         selectMapKey = id

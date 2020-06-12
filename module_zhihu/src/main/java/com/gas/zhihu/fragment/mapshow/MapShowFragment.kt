@@ -22,9 +22,15 @@ import com.gas.zhihu.fragment.mapshow.mvp.MapShowContract
 import com.gas.zhihu.fragment.mapshow.mvp.MapShowPresenter
 
 import com.gas.zhihu.R
+import com.gas.zhihu.app.MapConstants.Companion.MAP_CONST_KEY
+import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_DEFAULT
+import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_SELECT
+import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_TO_SHOW
+import com.gas.zhihu.app.MapConstants.Companion.PAPER_TYPE_DEFAULT
 import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.fragment.mapshow.bean.ISortBean
+import com.gas.zhihu.fragment.mapshow.bean.MapShowBean
 import com.gas.zhihu.utils.OfficeHelper
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_map_show.*
@@ -58,20 +64,18 @@ import javax.inject.Inject
  */
 class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     companion object {
-
-        const val TYPE="type"
-
-        fun setPagerArgs(type:Int): Bundle? {
+        const val TYPE = "type"
+        const val OPTION = "option"
+        fun setPagerArgs(type: Int, option: Int): Bundle? {
             val args = Bundle()
             args.putInt(TYPE, type)
+            args.putInt(OPTION, option)
             return args
         }
-
         fun newInstance(): MapShowFragment {
             val fragment = MapShowFragment()
             return fragment
         }
-
     }
 
     @Inject
@@ -80,7 +84,8 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     @Inject
     lateinit var mLayoutManager: RecyclerView.LayoutManager
 
-    private var mType:Int =0
+    private var mType: Int = PAPER_TYPE_DEFAULT
+    private var mOption: Int = MAP_OPTION_DEFAULT
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMapShowComponent //如找不到该类,请编译一下项目
@@ -103,27 +108,35 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
 
 
     override fun initData(savedInstanceState: Bundle?) {
-
-        mType=activity!!.intent.getIntExtra(TYPE,0)
-        when(mType){
-            0->{}
-            1->{}
-        }
+        mType = activity!!.intent.getIntExtra(TYPE, PAPER_TYPE_DEFAULT)
+        mOption = activity!!.intent.getIntExtra(OPTION, MAP_OPTION_DEFAULT)
         guideTitle.setOnBackListener {
             killMyself()
         }
-        mAdapter.setOnMultiItemClickListener(object : OnMultiItemClickListeners<ISortBean?> {
-            override fun onItemClick(viewHolder: PageViewHolder?, data: ISortBean?, position: Int, viewType: Int) {
-                data?.let {
-                    Log.e("TAG",data.showChar)
+        mAdapter.setOnMultiItemClickListener { _, data, _, _ ->
+            data.let {
+                if (it is MapShowBean) {
+                    when (mOption) {
+                        MAP_OPTION_SELECT -> {
+                            val intent = Intent()
+                            intent.putExtra(MAP_CONST_KEY, it.mapBean.keyName)
+                            activity?.setResult(Activity.RESULT_OK, intent)
+                            killMyself()
+                        }
+                        MAP_OPTION_TO_SHOW -> {
+
+                        }
+                        else -> {
+                            //do nothing. later use
+                        }
+                    }
                 }
             }
-        })
-        itemRefresh.isEnabled=false
-        ArmsUtils.configRecyclerView(itemRecycler,mLayoutManager)
-        itemRecycler.adapter=mAdapter
+        }
+        itemRefresh.isEnabled = false
+        ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
+        itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
-
     }
 
     override fun setData(data: Any?) {
@@ -136,10 +149,10 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
 
     override fun setMapData(t: List<ISortBean>) {
         mAdapter.setNewData(t)
-        if(t.isNotEmpty()){
+        if (t.isNotEmpty()) {
             itemRecycler.smoothScrollToPosition(0)
             mAdapter.loadEnd()
-        }else{
+        } else {
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
         }
     }
