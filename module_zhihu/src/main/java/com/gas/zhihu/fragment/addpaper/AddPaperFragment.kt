@@ -21,6 +21,9 @@ import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.gas.zhihu.R
+import com.gas.zhihu.app.MapConstants
+import com.gas.zhihu.app.MapConstants.Companion.MAP_ID
+import com.gas.zhihu.app.MapConstants.Companion.MAP_NAME
 import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.bean.MapSelectShowBean
 import com.gas.zhihu.bean.PaperBean
@@ -31,6 +34,7 @@ import com.gas.zhihu.fragment.addpaper.di.DaggerAddPaperComponent
 import com.gas.zhihu.fragment.addpaper.mvp.AddPaperContract
 import com.gas.zhihu.fragment.addpaper.mvp.AddPaperPresenter
 import com.gas.zhihu.fragment.fileselect.FileSelectFragment
+import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.lib.commonsdk.utils.FileUtils
 import kotlinx.android.synthetic.main.zhihu_fragment_add_paper.*
@@ -52,6 +56,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         const val TYPE = "type"
         const val REQUEST_PICK_FILE = 101
         const val REQUEST_STORAGE_PERMISSION = 103
+        const val REQUEST_MAP_INFO = 104
 
         fun newInstance(): AddPaperFragment {
             val fragment = AddPaperFragment()
@@ -112,23 +117,25 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
 
     override fun showMapSelectDialog(maps: List<MapSelectShowBean>) {
 
-        activity?.let {
-            SelectBottomDialog.getInstance()
-                    .setMode(MODE_CLICK)
-                    .setCancelable(true)
-                    .setList(maps)
-                    .setOnItemOptionListener(object : OnItemOperateListener {
-                        override fun onItemClickListener(itemId: ISelectItem) {
-                            mapName.text = itemId.name
-                            selectMapKey = itemId.id
-                        }
-                    }).show(it)
-        }
+//        activity?.let {
+//            SelectBottomDialog.getInstance()
+//                    .setMode(MODE_CLICK)
+//                    .setCancelable(true)
+//                    .setList(maps)
+//                    .setOnItemOptionListener(object : OnItemOperateListener {
+//                        override fun onItemClickListener(itemId: ISelectItem) {
+//                            mapName.text = itemId.name
+//                            selectMapKey = itemId.id
+//                        }
+//                    }).show(it)
+//        }
+        FragmentContainerActivity.startActivityForResult(activity!!, MapShowFragment::class.java,
+                MapShowFragment.setPagerArgs(MapConstants.PAPER_TYPE_DEFAULT, MapConstants.MAP_OPTION_SELECT),
+                REQUEST_MAP_INFO)
 
     }
 
     override fun showVolSelectDialog(maps: List<VoltageLevelBean>) {
-
         activity?.let {
             SelectBottomDialog.getInstance()
                     .setMode(MODE_CLICK)
@@ -141,7 +148,6 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                         }
                     }).show(it)
         }
-
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -210,32 +216,30 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         }
         val bean = PaperBean()
         bean.fileName = etAddressLon.text.toString()
-        bean.mapKey=selectMapKey
-        bean.pathName=selectFilePathName
-        bean.type=mType
-        bean.voltageLevel=selectVoltageLevel.toInt()
+        bean.mapKey = selectMapKey
+        bean.pathName = selectFilePathName
+        bean.type = mType
+        bean.voltageLevel = selectVoltageLevel.toInt()
 
-        mPresenter?.addPaperToDatabase(bean,selectFileName)
+        mPresenter?.addPaperToDatabase(bean, selectFileName)
 
     }
 
-    override fun showCommitSuccess(){
+    override fun showCommitSuccess() {
         TipShowDialog().show(activity!!, "提示", "保存成功") { killMyself() }
     }
 
     private fun selectFile(type: String) {
 
-        val typeName: String
-
-        when (type) {
+        val typeName: String = when (type) {
             "0" -> {
-                typeName = ZhihuConstants.FILE_TYPE_WORD
+                ZhihuConstants.FILE_TYPE_WORD
             }
             "1" -> {
-                typeName = ZhihuConstants.FILE_TYPE_PDF
+                ZhihuConstants.FILE_TYPE_PDF
             }
             else -> {
-                typeName = ""
+                ""
             }
         }
         FragmentContainerActivity.startActivityForResult(activity!!,
@@ -265,11 +269,22 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                                 }
                             }
                             val filePath = FileUtils.getFileName(this)
-                            selectFilePathName=filePath
+                            selectFilePathName = filePath
                             etAddressLon.setText(filePath)
                         }
                     }
                 }
+                REQUEST_MAP_INFO -> {
+                    data?.let { intent ->
+                        val name = intent.getStringExtra(MAP_NAME)
+                        val id = intent.getStringExtra(MAP_ID)
+                        if (name.isNullOrBlank() || id.isNullOrBlank())
+                            return
+                        mapName.text = name
+                        selectMapKey = id
+                    }
+                }
+
             }
         }
     }
@@ -280,6 +295,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                 .setTipWord("正在加载")
                 .create()
     }
+
     override fun setData(data: Any?) {
 
     }

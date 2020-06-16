@@ -37,7 +37,10 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
                 .subscribeOn(Schedulers.io())
                 .switchMap { t -> Observable.just(mModel.getSortBeanWithFilter(t)) }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t -> mView.setMapData(t) }, { e -> e.printStackTrace() }))
+                .subscribe({ t ->
+                    mView.setMapData(t)
+                    mView.setSliderBarTxt(mModel.getOrderChars())
+                }, { e -> e.printStackTrace() }))
     }
 
     fun initOriginData(type: Int) {
@@ -55,8 +58,8 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    t -> mView.setMapData(t)
+                .subscribe({ t ->
+                    mView.setMapData(t)
                     mView.setSliderBarTxt(mModel.getOrderChars())
                 }, { e -> e.printStackTrace() }))
     }

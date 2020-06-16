@@ -30,11 +30,11 @@ class SelectMapDialog constructor(val context: Context) {
         val tv_amap_map = view.findViewById<View>(R.id.tv_amap_map)
         val tv_baidu_map = view.findViewById<View>(R.id.tv_baidu_map)
         val tv_tecent_map = view.findViewById<View>(R.id.tv_tecent_map)
-        val dialog = CommonBottomDialog.Builder(context)
+        val dialog = CommonBottomDialog.Builder()
                 .setDialogClickListener(mapClickListener)
                 .setCancelable(true)
                 .setCustomView(view)
-                .create()
+                .create(context)
         tv_amap_map.setOnClickListener { v: View? ->
             if (AppUtils.checkMapAppsIsExist(LocationUtils.AMAP_MAP_PACKAGE)) {
                 if (mapClickListener != null) {

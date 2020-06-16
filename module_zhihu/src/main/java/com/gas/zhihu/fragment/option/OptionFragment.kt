@@ -14,6 +14,7 @@ import com.base.lib.util.ArmsUtils
 import com.gas.zhihu.R
 import com.gas.zhihu.app.MapConstants
 import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
+import com.gas.zhihu.fragment.addpaper.AddPaperFragment
 import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.fragment.option.di.DaggerOptionComponent
 import com.gas.zhihu.fragment.option.mvp.OptionContract
@@ -113,10 +114,10 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
                 startActivity(Intent(activity, MapActivity::class.java))
             }
             R.id.addGraphPager -> {
-                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(0))
+                FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java, AddPaperFragment.setPagerArgs(0))
             }
             R.id.addExperience -> {
-                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(0))
+                FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java, AddPaperFragment.setPagerArgs(1))
             }
             R.id.btnGraphPager -> {
 
@@ -134,7 +135,8 @@ class OptionFragment : BaseFragment<NullObjectPresenterByFragment>(), OptionCont
 //                        .show()
             }
             R.id.btnExperience -> {
-                FragmentContainerActivity.startActivity(activity!!, MapShowFragment::class.java,MapShowFragment.setPagerArgs(MapConstants.PAPER_TYPE_DEFAULT, MapConstants.MAP_OPTION_DEFAULT))
+                FragmentContainerActivity.startActivity(activity!!,PagerFragment::class.java,PagerFragment.setPagerArgs(1))
+//                FragmentContainerActivity.startActivity(activity!!, MapShowFragment::class.java,MapShowFragment.setPagerArgs(MapConstants.PAPER_TYPE_DEFAULT, MapConstants.MAP_OPTION_DEFAULT))
             }
         }
 

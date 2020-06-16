@@ -24,12 +24,7 @@ public class CommonDialog extends Dialog {
         super(context);
     }
 
-
-
-
     public static class Builder {
-
-        private Context mContext;
 
         private String mTitle;
         private String mPositiveBtnText;
@@ -38,12 +33,10 @@ public class CommonDialog extends Dialog {
         private boolean mCancelable = true;
         private onDialogClickListener mDialogClickListener;
 
-
         public CommonDialog.Builder setCancelable(boolean cancelable) {
             mCancelable = cancelable;
             return this;
         }
-
 
         public CommonDialog.Builder setTitle(String title) {
             mTitle = title;
@@ -60,12 +53,6 @@ public class CommonDialog extends Dialog {
             return this;
         }
 
-
-        public CommonDialog.Builder setTitle(int resId) {
-            mTitle = mContext.getString(resId);
-            return this;
-        }
-
         public CommonDialog.Builder setCustomView(View contentView) {
             mContentView = contentView;
             return this;
@@ -77,16 +64,11 @@ public class CommonDialog extends Dialog {
         }
 
 
-        public Builder(Context context) {
-            mContext = context;
-        }
-
-        public CommonDialog create() {
-            CommonDialog dialog = new CommonDialog(mContext, R.style.public_common_dialog);
+        public CommonDialog create(Context context) {
+            CommonDialog dialog = new CommonDialog(context, R.style.public_common_dialog);
             if (mContentView == null) {
-
                 @SuppressLint("InflateParams")
-                View view = LayoutInflater.from(mContext).inflate(R.layout.public_dialog_common, null);
+                View view = LayoutInflater.from(context).inflate(R.layout.public_dialog_common, null);
                 TextView title = view.findViewById(R.id.dialog_title);
                 TextView left_title = view.findViewById(R.id.left_title);
                 TextView right_title = view.findViewById(R.id.right_title);
@@ -120,10 +102,7 @@ public class CommonDialog extends Dialog {
                         mDialogClickListener.onLeftClick();
                     }
                 });
-
                 dialog.setContentView(view);
-
-
             } else {
                 dialog.setContentView(mContentView);
             }

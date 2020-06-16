@@ -28,7 +28,6 @@ public class CommonBottomDialog extends Dialog {
 
     public static class Builder {
 
-        private Context mContext;
         private View mContentView;
         private boolean mCancelable = true;
         private OnDialogClickListener mDialogClickListener;
@@ -49,12 +48,9 @@ public class CommonBottomDialog extends Dialog {
             return this;
         }
 
-        public Builder(Context context) {
-            mContext = context;
-        }
 
-        public CommonBottomDialog create() {
-            CommonBottomDialog dialog = new CommonBottomDialog(mContext, R.style.public_common_dialog);
+        public CommonBottomDialog create(Context context) {
+            CommonBottomDialog dialog = new CommonBottomDialog(context, R.style.public_common_dialog);
             if (mContentView == null) {
                 throw new RuntimeException("mContentView cann't be null");
             } else {

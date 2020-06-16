@@ -13,11 +13,11 @@ class AddCommentDialog {
     fun show(context: Context?, mapClickListener: OnCommitClickListener?) {
         @SuppressLint("InflateParams") val view = LayoutInflater.from(context).inflate(R.layout.zhihu_dialog_add_comment, null)
 
-        val dialog = CommonDialog.Builder(context)
+        val dialog = CommonDialog.Builder()
                 .setDialogClickListener(mapClickListener)
                 .setCancelable(true)
                 .setCustomView(view)
-                .create()
+                .create(context)
 
         view.apply {
             btnCancel.setOnClickListener { v: View? ->

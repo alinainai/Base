@@ -41,11 +41,6 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         when (mType) {
             PAPER_TYPE_DEFAULT -> {
                 originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
-                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
-                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
-                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
-                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
-                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
             }
             else -> {
                 PagerBeanDbUtils.queryAllPaperDataByType(mType)
@@ -69,11 +64,20 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
 
     private fun getMapsByFilter(filter: String?): List<MapShowBean> {
         sortCharList.clear()
+        val c1: Comparator<MapShowBean> = Comparator { o1, o2 ->
+            if (o1.showChar == "#" && o2.showChar != "#" ) {
+                1
+            } else if(o1.showChar != "#" && o2.showChar == "#"){
+                -1
+            } else {
+                o1.mapNameSpell.compareTo(o2.mapNameSpell)
+            }
+        }
         return getValidMapList()
                 .asSequence()
                 .filter { it.mapName.isNotBlank() }
                 .map { MapShowBean(it) }
-                .sortedBy { it.mapNameSpell }
+                .sortedWith(c1)
                 .filter { bean ->
                     filter?.let {
                         bean.mapBean.mapName.contains(it, true) ||

@@ -14,10 +14,10 @@ class TipShowDialog {
         val tvInfo = view.findViewById<TextView>(R.id.dialog_info)
         tvTitle.text = title
         tvInfo.text = info
-        val dialog = CommonDialog.Builder(context)
+        val dialog = CommonDialog.Builder()
                 .setCustomView(view)
                 .setCancelable(true)
-                .create()
+                .create(context)
         view.findViewById<View>(R.id.btn_sure).setOnClickListener {
             dialog.dismiss()
         }
@@ -30,10 +30,10 @@ class TipShowDialog {
         val tvInfo = view.findViewById<TextView>(R.id.dialog_info)
         tvTitle.text = title
         tvInfo.text = info
-        val dialog = CommonDialog.Builder(context)
+        val dialog = CommonDialog.Builder()
                 .setCustomView(view)
                 .setCancelable(true)
-                .create()
+                .create(context)
         view.findViewById<View>(R.id.btn_sure).setOnClickListener {
             action.let { action.invoke() }
             dialog.dismiss()

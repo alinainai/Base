@@ -204,7 +204,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
     }
 
     private fun showDeleteTipDialog() {
-        CommonDialog.Builder(mContext)
+        CommonDialog.Builder()
                 .setTitle("是否删除搜索记录")
                 .setLeftTitle("取消")
                 .setRightTitle("确定")
@@ -215,7 +215,7 @@ class MapActivity : BaseActivity<MapPresenter?>(), MapContract.View {
                         mPresenter?.clearSearchRecord()
                         mAdapter.clearData()
                     }
-                }).create().apply {
+                }).create(mContext).apply {
                     show()
                 }
 

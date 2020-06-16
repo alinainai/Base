@@ -20,6 +20,7 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
 
 
     }
+
     override fun initView(savedInstanceState: Bundle?): Int {
         return R.layout.zhihu_activity_fragment_container
     }
@@ -42,7 +43,7 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
     }
 
 
-    companion object{
+    companion object {
         fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?) {
             startActivity(context, fragmentClazz, null)
         }
@@ -62,7 +63,7 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
         }
 
         fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, requestCode: Int) {
-            startActivityForResult(context, fragmentClazz, null,requestCode)
+            startActivityForResult(context, fragmentClazz, null, requestCode)
         }
 
         fun startActivityForResult(context: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, requestCode: Int) {
@@ -94,9 +95,6 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
     }
 
 
-
-
-
     fun onBackClick(view: View?) {
         onBackPressed()
     }
@@ -112,7 +110,6 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
         }
         super.onBackPressed()
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

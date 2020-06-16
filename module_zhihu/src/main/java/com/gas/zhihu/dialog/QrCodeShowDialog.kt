@@ -17,10 +17,10 @@ class QrCodeShowDialog {
         view.dialog_title.text = title
         view.dialog_info.setImageBitmap(QRCode.createQRCode(info, 800))
 
-        val dialog = CommonDialog.Builder(context)
+        val dialog = CommonDialog.Builder()
                 .setCustomView(view)
                 .setCancelable(true)
-                .create()
+                .create(context)
         view.btn_sure.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }

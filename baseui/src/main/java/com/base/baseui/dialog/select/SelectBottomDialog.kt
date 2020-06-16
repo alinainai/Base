@@ -45,12 +45,12 @@ class SelectBottomDialog {
         if (mList == null || mList!!.isEmpty()) {
             return
         }
-        val builder= CommonBottomDialog.Builder(context)
+        val builder= CommonBottomDialog.Builder()
         builder.setCancelable(cancelable)
         builder.setDialogClickListener(mListener)
         val view = LayoutInflater.from(context).inflate(R.layout.public_dialog_bottom_select, null)
         builder.setCustomView(view)
-        val dialog = builder.create()
+        val dialog = builder.create(context)
         val recycler: RecyclerView = view.recycler
         view.dialog_cancel.setOnClickListener { dialog.dismiss() }
         recycler.layoutManager = LinearLayoutManager(context)

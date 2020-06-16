@@ -23,6 +23,8 @@ import com.base.lib.util.ArmsUtils
 import com.base.paginate.interfaces.EmptyInterface
 import com.gas.zhihu.R
 import com.gas.zhihu.app.MapConstants.Companion.MAP_CONST_KEY
+import com.gas.zhihu.app.MapConstants.Companion.MAP_ID
+import com.gas.zhihu.app.MapConstants.Companion.MAP_NAME
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_DEFAULT
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_SELECT
 import com.gas.zhihu.app.MapConstants.Companion.MAP_OPTION_TO_SHOW
@@ -100,7 +102,8 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
                     when (mOption) {
                         MAP_OPTION_SELECT -> {
                             val intent = Intent()
-                            intent.putExtra(MAP_CONST_KEY, it.mapBean.keyName)
+                            intent.putExtra(MAP_NAME, it.mapBean.mapName)
+                            intent.putExtra(MAP_ID, it.mapBean.keyName)
                             activity?.setResult(Activity.RESULT_OK, intent)
                             killMyself()
                         }
@@ -154,16 +157,16 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
         stickHeader.addOnViewChangedListener(object : RecyclerStickHeaderHelper.OnViewChangedListener {
             override fun onViewChanged() {
-                if (Permission.hasPermissions(activity, Manifest.permission.VIBRATE)) {
-                    if (vibrator.hasVibrator()) {
-                        vibrator.cancel()
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            vibrator.vibrate(VibrationEffect.createOneShot(10L, 100), null)
-                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            vibrator.vibrate(longArrayOf(10L), -1, null)
-                        }
-                    }
-                }
+//                if (Permission.hasPermissions(activity, Manifest.permission.VIBRATE)) {
+//                    if (vibrator.hasVibrator()) {
+//                        vibrator.cancel()
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                            vibrator.vibrate(VibrationEffect.createOneShot(10L, 100), null)
+//                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                            vibrator.vibrate(longArrayOf(10L), -1, null)
+//                        }
+//                    }
+//                }
             }
 
             override fun onTopViewPosition(view: View, pos: Int) {
