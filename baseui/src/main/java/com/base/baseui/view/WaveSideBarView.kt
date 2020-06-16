@@ -9,15 +9,16 @@ import android.view.MotionEvent
 import android.view.View
 import com.base.baseui.R
 import com.lib.commonsdk.kotlin.extension.dpToPx
+import kotlin.math.abs
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  *
  */
 class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : View(context, attrs, defStyle) {
     private var listener: OnTouchLetterChangeListener? = null
-
-    // 渲染字母表
-    private var mLetters: List<String>? = null
+    private var mLetters = mutableListOf<String>() // 渲染字母表
 
     // 当前选中的位置
     private var mChoose = -1
@@ -31,180 +32,146 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
     private val mTextPaint = Paint()
 
     // 波浪画笔
-    private var mWavePaint = Paint()
-    private var mTextSize = 0f
-    private var mLargeTextSize = 0f
+    private var mTipWavePaint = Paint()
+    private var mTipWaveColor = 0
+    private var mTipTextSize = 32.dpToPx()
+    private var mTipBallRadius = 24.dpToPx().toInt() // 圆形半径
+    private val mTipWavePath = Path()  // 波浪路径
+    private val mTipBallPath = Path() // 圆形路径
+
+    private var mTextSize = 10.dpToPx()
     private var mTextColor = 0
-    private var mWaveColor = 0
     private var mTextColorChoose = 0
+
     private var mWidth = 0
     private var mHeight = 0
-    private var mItemHeight = 0
-    private var mPadding = 0
+    private var mItemHeight = 20.dpToPx()
 
-    // 波浪路径
-    private val mWavePath = Path()
-
-    // 圆形路径
-    private val mBallPath = Path()
-
-    // 手指滑动的Y点作为中心点
-    private var mCenterY = 0//中心点Y = 0
-
-    // 贝塞尔曲线的分布半径
-    private var mRadius = 0
-
-    // 圆形半径
-    private var mBallRadius = 0
+    private var mCenterY = 0//中心点Y = 0 // 手指滑动的Y点作为中心点
+    private var mRadius = 20.dpToPx().toInt()  // 贝塞尔曲线的分布半径
+    private val mRatioAnimator: ValueAnimator by lazy {
+        ValueAnimator()
+    }
 
     // 用于过渡效果计算
-    var mRatioAnimator: ValueAnimator? = null
-
-    // 用于绘制贝塞尔曲线的比率
-    private var mRatio = 0f
-
-    // 选中字体的坐标
-    private var mPosX = 0f
-    private var mPosY = 0f
-
-    // 圆形中心点X
-    private var mBallCentreX = 0f
+    private var mRatio = 0F  // 用于绘制贝塞尔曲线的比率
+    private var mPosX = 0F  // 选中字体的坐标
+    private var mPosY = 0F
+    private var mBallCentreX = 0F  // 圆形中心点X
+    private var startDrawLetterPosY = 0F  //绘制letter的起始位置
+    private var endDrawLetterPosY = 0F  //绘制letter的结束位置
+    private var letterBgCircleRadius = 7.dpToPx()
 
     private fun init(attrs: AttributeSet?) {
-        mLetters = listOf(*context.resources.getStringArray(R.array.waveSideBarLetters))
-        mTextColor = Color.parseColor("#969696")
-        mWaveColor = Color.parseColor("#be69be91")
-        mTextColorChoose = context.resources.getColor(android.R.color.white)
-        mPadding = context.resources.getDimensionPixelSize(R.dimen.textSize_sidebar_padding)
         if (attrs != null) {
             val a = context.obtainStyledAttributes(attrs, R.styleable.WaveSideBarView)
-            mTextColor = a.getColor(R.styleable.WaveSideBarView_sidebarTextColor, mTextColor)
-            mTextColorChoose = a.getColor(R.styleable.WaveSideBarView_sidebarChooseTextColor, mTextColorChoose)
-            mTextSize = a.getFloat(R.styleable.WaveSideBarView_sidebarTextSize, 10.dpToPx())
-            mLargeTextSize = a.getFloat(R.styleable.WaveSideBarView_sidebarLargeTextSize, 32.dpToPx())
-            mWaveColor = a.getColor(R.styleable.WaveSideBarView_sidebarBackgroundColor, mWaveColor)
-            mRadius = a.getInt(R.styleable.WaveSideBarView_sidebarRadius, 20.dpToPx().toInt())
-            mBallRadius = a.getInt(R.styleable.WaveSideBarView_sidebarBallRadius, 24.dpToPx().toInt())
+            mTextColor = a.getColor(R.styleable.WaveSideBarView_sidebarTextColor, Color.parseColor("#666666"))
+            mTextColorChoose = a.getColor(R.styleable.WaveSideBarView_sidebarChooseTextColor, Color.parseColor("#FFFFFF"))
+            mTipWaveColor = a.getColor(R.styleable.WaveSideBarView_sidebarBackgroundColor, Color.parseColor("#CC459DF5"))
             a.recycle()
         }
-        //
-        mWavePaint = Paint()
-        mWavePaint.isAntiAlias = true
-        mWavePaint.style = Paint.Style.FILL
-        mWavePaint.color = mWaveColor
-        //
+        mTipWavePaint = Paint()
+        mTipWavePaint.isAntiAlias = true
+        mTipWavePaint.style = Paint.Style.FILL
+        mTipWavePaint.color = mTipWaveColor
+
         mTextPaint.isAntiAlias = true
         mTextPaint.color = mTextColorChoose
         mTextPaint.style = Paint.Style.FILL
-        mTextPaint.textSize = mLargeTextSize
+        mTextPaint.textSize = mTipTextSize
         mTextPaint.textAlign = Paint.Align.CENTER
-    }
 
-    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
-        val y = event.y
-        val x = event.x
-        oldChoose = mChoose
-        newChoose = (y / mHeight * mLetters!!.size).toInt()
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                if (x < mWidth - 2 * mRadius) {
-                    return false
-                }
-                mCenterY = y.toInt()
-                startAnimator(mRatio, 1.0f)
-            }
-            MotionEvent.ACTION_MOVE -> {
-                mCenterY = y.toInt()
-                if (oldChoose != newChoose) {
-                    if (newChoose >= 0 && newChoose < mLetters!!.size) {
-                        mChoose = newChoose
-                        if (listener != null) {
-                            listener!!.onLetterChange(mLetters!![newChoose])
-                        }
-                    }
-                }
-                invalidate()
-            }
-            MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
-                startAnimator(mRatio, 0f)
-                mChoose = -1
-            }
-            else -> {
-            }
-        }
-        return true
+        mLettersPaint.isAntiAlias = true
+        mLettersPaint.textSize = mTextSize
+        mLettersPaint.textAlign = Paint.Align.CENTER
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         mHeight = MeasureSpec.getSize(heightMeasureSpec)
         mWidth = measuredWidth
-        mItemHeight = (mHeight - mPadding) / mLetters!!.size
-        mPosX = mWidth - 1.6f * mTextSize
+        mPosX = mWidth - 1.3f * mTextSize
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        //绘制字母列表
-        drawLetters(canvas)
-
-        //绘制波浪
-        drawWavePath(canvas)
-
-        //绘制圆
-        drawBallPath(canvas)
-
-        //绘制选中的字体
-        drawChooseText(canvas)
+        drawLetters(canvas)  //绘制字母列表
+        drawWavePath(canvas)  //绘制波浪线
+        drawBallPath(canvas)  //绘制选中字母展示的圆形图案
+        drawChooseText(canvas)  //绘制选中的字体
     }
 
     private fun drawLetters(canvas: Canvas) {
-        val rectF = RectF()
-        rectF.left = mPosX - mTextSize
-        rectF.right = mPosX + mTextSize
-        rectF.top = mTextSize / 2
-        rectF.bottom = mHeight - mTextSize / 2
-        mLettersPaint.reset()
-        mLettersPaint.style = Paint.Style.FILL
-        mLettersPaint.color = Color.parseColor("#F9F9F9")
-        mLettersPaint.isAntiAlias = true
-        canvas.drawRoundRect(rectF, mTextSize, mTextSize, mLettersPaint)
-        mLettersPaint.reset()
-        mLettersPaint.style = Paint.Style.STROKE
-        mLettersPaint.color = mTextColor
-        mLettersPaint.isAntiAlias = true
-        canvas.drawRoundRect(rectF, mTextSize, mTextSize, mLettersPaint)
-        for (i in mLetters!!.indices) {
-            mLettersPaint.reset()
-            mLettersPaint.color = mTextColor
-            mLettersPaint.isAntiAlias = true
-            mLettersPaint.textSize = mTextSize
-            mLettersPaint.textAlign = Paint.Align.CENTER
+
+        mLetters.let {
+            startDrawLetterPosY = (mHeight - mItemHeight * it.size) / 2
+            endDrawLetterPosY = startDrawLetterPosY + mItemHeight * it.size
             val fontMetrics = mLettersPaint.fontMetrics
-            val baseline = Math.abs(-fontMetrics.bottom - fontMetrics.top)
-            val posY = mItemHeight * i + baseline / 2 + mPadding
-            if (i == mChoose) {
-                mPosY = posY
-            } else {
-                canvas.drawText(mLetters!![i], mPosX, posY, mLettersPaint)
+            val baseline = abs(-fontMetrics.bottom - fontMetrics.top)
+            it.forEachIndexed { i, s ->
+                val posY = startDrawLetterPosY + mItemHeight / 2 + mItemHeight * i + baseline / 2
+                if (i == mChoose) {
+                    drawLetterSelectBg(canvas, i)
+                    mLettersPaint.color = mTextColorChoose
+                    canvas.drawText(s, mPosX, posY, mLettersPaint)
+                    mPosY = posY
+                } else {
+                    mLettersPaint.color = mTextColor
+                    canvas.drawText(s, mPosX, posY, mLettersPaint)
+                }
             }
         }
     }
 
-    private fun drawChooseText(canvas: Canvas) {
-        if (mChoose != -1) {
-            // 绘制右侧选中字符
-            mLettersPaint.reset()
-            mLettersPaint.color = mTextColorChoose
-            mLettersPaint.textSize = mTextSize
-            mLettersPaint.textAlign = Paint.Align.CENTER
-            canvas.drawText(mLetters!![mChoose], mPosX, mPosY, mLettersPaint)
+    private fun drawLetterSelectBg(canvas: Canvas, i: Int) {
+        canvas.drawCircle(mPosX, startDrawLetterPosY + mItemHeight * i + mItemHeight / 2, letterBgCircleRadius, mTipWavePaint)
+    }
 
+    /**
+     * 绘制波浪
+     */
+    private fun drawWavePath(canvas: Canvas) {
+        mTipWavePath.reset()
+        // 移动到起始点
+        mTipWavePath.moveTo(mWidth.toFloat(), mCenterY - 3 * mRadius.toFloat())
+        //计算上部控制点的Y轴位置
+        val controlTopY = mCenterY - 2 * mRadius
+        //计算上部结束点的坐标
+        val endTopX = (mWidth - mRadius * cos(ANGLE) * mRatio).toInt()
+        val endTopY = (controlTopY + mRadius * sin(ANGLE)).toInt()
+        mTipWavePath.quadTo(mWidth.toFloat(), controlTopY.toFloat(), endTopX.toFloat(), endTopY.toFloat())
+
+        //计算中心控制点的坐标
+        val controlCenterX = (mWidth - 1.8f * mRadius * sin(ANGLE_R) * mRatio).toInt()
+        val controlCenterY = mCenterY
+        //计算下部结束点的坐标
+        val controlBottomY = mCenterY + 2 * mRadius
+        val endBottomY = (controlBottomY - mRadius * cos(ANGLE)).toInt()
+        mTipWavePath.quadTo(controlCenterX.toFloat(), controlCenterY.toFloat(), endTopX.toFloat(), endBottomY.toFloat())
+        mTipWavePath.quadTo(mWidth.toFloat(), controlBottomY.toFloat(), mWidth.toFloat(), controlBottomY + mRadius.toFloat())
+        mTipWavePath.close()
+        canvas.drawPath(mTipWavePath, mTipWavePaint)
+    }
+
+    private fun drawBallPath(canvas: Canvas) {
+        //x轴的移动路径
+        mBallCentreX = mWidth + mTipBallRadius - (2.0f * mRadius + 2.0f * mTipBallRadius) * mRatio
+        mTipBallPath.reset()
+        mTipBallPath.addCircle(mBallCentreX, mCenterY.toFloat(), mTipBallRadius.toFloat(), Path.Direction.CW)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            mTipBallPath.op(mTipWavePath, Path.Op.DIFFERENCE)
+        }
+        mTipBallPath.close()
+        canvas.drawPath(mTipBallPath, mTipWavePaint)
+    }
+
+    private fun drawChooseText(canvas: Canvas) {
+        mChoose.takeIf { it in mLetters.indices }?.let { choose ->
             // 绘制提示字符
-            if (mRatio >= 0.9f) {
-                val target = mLetters!![mChoose]
+            mRatio.takeIf { ratio -> ratio >= 0.9F }?.let {
+                val target = mLetters[choose]
                 val fontMetrics = mTextPaint.fontMetrics
-                val baseline = Math.abs(-fontMetrics.bottom - fontMetrics.top)
+                val baseline = abs(-fontMetrics.bottom - fontMetrics.top)
                 val x = mBallCentreX
                 val y = mCenterY + baseline / 2
                 canvas.drawText(target, x, y, mTextPaint)
@@ -212,82 +179,99 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
         }
     }
 
-    /**
-     * 绘制波浪
-     *
-     * @param canvas
-     */
-    private fun drawWavePath(canvas: Canvas) {
-        mWavePath.reset()
-        // 移动到起始点
-        mWavePath.moveTo(mWidth.toFloat(), mCenterY - 3 * mRadius.toFloat())
-        //计算上部控制点的Y轴位置
-        val controlTopY = mCenterY - 2 * mRadius
-
-        //计算上部结束点的坐标
-        val endTopX = (mWidth - mRadius * Math.cos(ANGLE) * mRatio).toInt()
-        val endTopY = (controlTopY + mRadius * Math.sin(ANGLE)).toInt()
-        mWavePath.quadTo(mWidth.toFloat(), controlTopY.toFloat(), endTopX.toFloat(), endTopY.toFloat())
-
-        //计算中心控制点的坐标
-        val controlCenterX = (mWidth - 1.8f * mRadius * Math.sin(ANGLE_R) * mRatio).toInt()
-        val controlCenterY = mCenterY
-        //计算下部结束点的坐标
-        val controlBottomY = mCenterY + 2 * mRadius
-        val endBottomY = (controlBottomY - mRadius * Math.cos(ANGLE)).toInt()
-        mWavePath.quadTo(controlCenterX.toFloat(), controlCenterY.toFloat(), endTopX.toFloat(), endBottomY.toFloat())
-        mWavePath.quadTo(mWidth.toFloat(), controlBottomY.toFloat(), mWidth.toFloat(), controlBottomY + mRadius.toFloat())
-        mWavePath.close()
-        canvas.drawPath(mWavePath, mWavePaint)
-    }
-
-    private fun drawBallPath(canvas: Canvas) {
-        //x轴的移动路径
-        mBallCentreX = mWidth + mBallRadius - (2.0f * mRadius + 2.0f * mBallRadius) * mRatio
-        mBallPath.reset()
-        mBallPath.addCircle(mBallCentreX, mCenterY.toFloat(), mBallRadius.toFloat(), Path.Direction.CW)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            mBallPath.op(mWavePath, Path.Op.DIFFERENCE)
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        mLetters.size.takeIf { it > 0 }?.let {
+            val y = event.y
+            val x = event.x
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    if (x < mWidth - 2 * mRadius) {
+                        return false
+                    }
+                    if (y < startDrawLetterPosY || y > endDrawLetterPosY) {
+                        return false
+                    }
+                    oldChoose = mChoose
+                    newChoose = ((y - startDrawLetterPosY) / mItemHeight).toInt()
+                    mCenterY = handleCenterY(y.toInt())
+                    startAnimator(mRatio, 1.0f)
+                    listener?.onBarTouchDown()
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    oldChoose = mChoose
+                    newChoose = ((y - startDrawLetterPosY) / mItemHeight).toInt()
+                    mCenterY = handleCenterY(y.toInt())
+                    if (oldChoose != newChoose && newChoose in mLetters.indices) {
+                        mChoose = newChoose
+                        listener?.onLetterChange(mLetters[newChoose])
+                    }
+                    invalidate()
+                    listener?.onBarTouchMove()
+                }
+                MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_UP -> {
+                    startAnimator(mRatio, 0f)
+                    listener?.onBarTouchCancel()
+                }
+                else -> {
+                }
+            }
         }
-        mBallPath.close()
-        canvas.drawPath(mBallPath, mWavePaint)
+        return true
     }
 
     private fun startAnimator(vararg value: Float) {
-        if (mRatioAnimator == null) {
-            mRatioAnimator = ValueAnimator()
-        }
-        mRatioAnimator!!.cancel()
-        mRatioAnimator!!.setFloatValues(*value)
-        mRatioAnimator!!.addUpdateListener { value ->
-            mRatio = value.animatedValue as Float
-            //球弹到位的时候，并且点击的位置变了，即点击的时候显示当前选择位置
-            if (mRatio == 1f && oldChoose != newChoose) {
-                if (newChoose >= 0 && newChoose < mLetters!!.size) {
+        mRatioAnimator.apply {
+            cancel()
+            setFloatValues(*value)
+            addUpdateListener { value ->
+                mRatio = value.animatedValue as Float
+                //球弹到位的时候，并且点击的位置变了，即点击的时候显示当前选择位置
+                if (mRatio == 1F && oldChoose != newChoose && newChoose in mLetters.indices) {
                     mChoose = newChoose
-                    if (listener != null) {
-                        listener!!.onLetterChange(mLetters!![newChoose])
-                    }
+                    listener?.onLetterChange(mLetters[newChoose])
                 }
+                invalidate()
             }
-            invalidate()
+            start()
         }
-        mRatioAnimator!!.start()
     }
 
-    fun setOnTouchLetterChangeListener(listener: OnTouchLetterChangeListener?) {
+    private fun handleCenterY(y: Int): Int {
+        return when {
+            y <= startDrawLetterPosY + mItemHeight / 2 -> {
+                (startDrawLetterPosY + mItemHeight / 2).toInt()
+            }
+            y >= endDrawLetterPosY - mItemHeight / 2 -> {
+                (endDrawLetterPosY - mItemHeight / 2).toInt()
+            }
+            else -> y
+        }
+    }
+
+    fun setOnTouchLetterChangeListener(listener: OnTouchLetterChangeListener) {
         this.listener = listener
     }
 
-    var letters: List<String>?
+    var letters: List<String>
         get() = mLetters
         set(letters) {
-            mLetters = letters
+            mLetters.clear()
+            mLetters.addAll(letters)
             invalidate()
         }
 
+    fun setSelectChar(char: String) {
+        mLetters.indexOfFirst { it == char }.takeIf { it > -1 }?.let {
+            mChoose=it
+            invalidate()
+        }
+    }
+
     interface OnTouchLetterChangeListener {
-        fun onLetterChange(letter: String?)
+        fun onLetterChange(letter: String)
+        fun onBarTouchDown()
+        fun onBarTouchMove()
+        fun onBarTouchCancel()
     }
 
     companion object {

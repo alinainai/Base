@@ -20,6 +20,7 @@ interface MapShowContract {
     interface View : IView {
         fun getWrapActivity(): Activity
         fun setMapData(t: List<ISortBean>)
+        fun setSliderBarTxt(chars:List<String>)
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -28,6 +29,7 @@ interface MapShowContract {
         fun getValidMapList(): List<MapBean>
         fun getSortBeanWithFilter(filter: String?): List<ISortBean>
         fun resetOriginData()
+        fun getOrderChars():List<String>
     }
 
 }

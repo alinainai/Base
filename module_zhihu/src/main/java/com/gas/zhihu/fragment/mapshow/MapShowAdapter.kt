@@ -32,7 +32,7 @@ class MapShowAdapter(context: Context?) : ExtendMultiAdapter<ISortBean>(context,
         }
     }
 
-    override fun getViewType(position: Int, data: ISortBean?): Int {
+    override fun getViewType(position: Int, data: ISortBean): Int {
         return if (data is CharSortBean) {
             TYPE_CHAR
         } else {
@@ -40,9 +40,18 @@ class MapShowAdapter(context: Context?) : ExtendMultiAdapter<ISortBean>(context,
         }
     }
 
-    override fun convert(holder: PageViewHolder?, data: ISortBean?, position: Int, viewType: Int) {
-        holder?.setText(R.id.tagView, data?.showTitle ?: "")
+    override fun convert(holder: PageViewHolder, data: ISortBean, position: Int, viewType: Int) {
+        holder.setText(R.id.tagView, data.showTitle ?: "")
     }
 
+    fun getItem(pos: Int): ISortBean {
+        return mData[pos + headerCount]
+    }
+
+    fun findCharTipPos(char: String): Int {
+        return headerCount + mData.indexOfFirst {
+            it is CharSortBean && it.charName == char
+        }
+    }
 
 }

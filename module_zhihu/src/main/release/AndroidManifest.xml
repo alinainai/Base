@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gas.zhihu">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application>
         <activity android:name=".ui.office.OfficeActivity"
             android:configChanges="orientation|screenSize"

@@ -57,15 +57,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ly_user_psw">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/itemRecycler"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:scrollbars="none" />
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:scrollbars="none" />
+            <!--吸顶布局 -->
+            <FrameLayout
+                android:id="@+id/listStickHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="4dp"
+                android:visibility="visible" />
+        </RelativeLayout>
+
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 

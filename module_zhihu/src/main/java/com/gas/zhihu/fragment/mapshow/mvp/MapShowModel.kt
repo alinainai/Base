@@ -41,6 +41,11 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         when (mType) {
             PAPER_TYPE_DEFAULT -> {
                 originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
+                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
+                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
+                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
+                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
+                originMapBeanMap.addAll(MapBeanDbUtils.queryAllMapData())
             }
             else -> {
                 PagerBeanDbUtils.queryAllPaperDataByType(mType)
@@ -56,6 +61,10 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
 
     override fun resetOriginData() {
         originMapBeanMap.clear()
+    }
+
+    override fun getOrderChars(): List<String> {
+        return sortCharList.map { it.showChar }
     }
 
     private fun getMapsByFilter(filter: String?): List<MapShowBean> {

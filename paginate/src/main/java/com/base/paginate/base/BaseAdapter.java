@@ -100,7 +100,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      */
     private FooterInterface mFooterLayout;
 
-
     /**
      * 是否正在加载更多
      */
@@ -110,7 +109,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      * 失败后重新加载的监听
      */
     private OnReloadListener mReloadListener;
-
 
     /**
      * 返回 ViewType

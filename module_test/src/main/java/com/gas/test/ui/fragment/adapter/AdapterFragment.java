@@ -24,7 +24,6 @@ import com.gas.test.R2;
 import com.gas.test.ui.fragment.adapter.di.DaggerAdapterComponent;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterContract;
 import com.gas.test.ui.fragment.adapter.mvp.AdapterPresenter;
-import com.gas.test.widget.RecyclerStickHeaderHelper;
 
 import javax.inject.Inject;
 
@@ -98,7 +97,6 @@ public class AdapterFragment extends BaseFragment<AdapterPresenter> implements A
             showMessage(data);
         });
         mRecyclerView.setAdapter(mAdapter);
-        new RecyclerStickHeaderHelper(mRecyclerView,flContainer,mAdapter.getHeaderStickType());
         View header = LayoutInflater.from(mContext).inflate(R.layout.test_header_view, null);
         mAdapter.addHeaderView(header);
         mPresenter.initPresent();

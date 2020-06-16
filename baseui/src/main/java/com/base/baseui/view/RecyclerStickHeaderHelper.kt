@@ -1,5 +1,6 @@
-package com.gas.test.widget
+package com.base.baseui.view
 
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import android.widget.FrameLayout
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-
 
 /**
  * ================================================
@@ -29,6 +29,8 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
 
     companion object {
 
+        const val TAG = "RecyclerStick"
+
         //用于在吸顶布局中保存 ViewHolder 的 key。
         const val VIEW_HOLDER_TAG = -101
 
@@ -40,6 +42,9 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
     }
 
     private var mAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+
+    private var listener: OnViewChangedListener? = null
+
     //保存吸顶布局的缓存池。它以列表组头的viewType为key,ViewHolder为value对吸顶布局进行保存和回收复用。
     private val mStickyViews = SparseArray<RecyclerView.ViewHolder>()
     private lateinit var mStickTypes: HashSet<Int>
@@ -100,7 +105,6 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
             mStickTypes.addAll(stickHeadType.asList())
             mAdapter = mRecyclerView.adapter
             mAdapter?.registerAdapterDataObserver(mDataChangeObserver)
-
         }
 
     }
@@ -114,7 +118,6 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
             if (force) {
                 mDockItemViewWrapper.setTag(POSITION_TAG, RecyclerView.NO_POSITION)
             }
-
             if (isItemNeedDockTop(topItemPos)) {
                 showDockForItem(topItemPos)
             } else {
@@ -129,22 +132,15 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
             }
             mDockItemViewWrapper.translationY = calculateOffset(topItemPos)
         }
-
     }
 
-
     private fun showDockForItem(pos: Int) {
-
         mAdapter?.apply {
             if (mDockItemViewWrapper.getTag(POSITION_TAG) != pos) {
-
                 mDockItemViewWrapper.setTag(POSITION_TAG, pos)
-
                 val viewType: Int = getItemViewType(pos)
-
                 //如果当前的吸顶布局的类型和我们需要的一样，就直接获取它的ViewHolder，否则就回收。
                 var holder = recycleStickyView(viewType)
-
                 //标志holder是否是从当前吸顶布局取出来的。
                 val flag = holder != null
                 if (holder == null) { //从缓存池中获取吸顶布局。
@@ -156,14 +152,18 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
                     holder.itemView.setTag(VIEW_TYPE_TAG, viewType)
                     holder.itemView.setTag(VIEW_HOLDER_TAG, holder)
                 }
-
                 //通过RecyclerViewAdapter更新吸顶布局的数据。
                 //这样可以保证吸顶布局的显示效果跟列表中的组头保持一致。
                 onBindViewHolder(holder, pos)
-
+                if (mDockItemViewWrapper.childCount > 0) {
+                    listener?.onViewChanged()
+                }
                 //如果holder不是从当前吸顶布局取出来的，就需要把吸顶布局添加到容器里。
                 if (!flag) {
                     mDockItemViewWrapper.addView(holder.itemView)
+                }
+                if (mDockItemViewWrapper.childCount > 0) {
+                    listener?.onTopViewPosition(holder.itemView, pos)
                 }
 
                 mDockItemViewWrapper.visibility = View.VISIBLE
@@ -176,7 +176,6 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
     }
 
     private fun calculateOffset(firstVisibleItem: Int): Float {
-
         mAdapter?.apply {
             val nextCollapsibleItemPos = findNextNeedDockItemPos(firstVisibleItem)
             if (nextCollapsibleItemPos != -1) {
@@ -197,7 +196,6 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
             }
         }
         return 0F
-
     }
 
     private fun hideDock() {
@@ -263,11 +261,9 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
                 is GridLayoutManager -> {
                     firstVisibleItem = layout.findFirstVisibleItemPosition()
                 }
-
                 is LinearLayoutManager -> {
                     firstVisibleItem = layout.findFirstVisibleItemPosition()
                 }
-
                 is StaggeredGridLayoutManager -> {
                     val firstPositions = IntArray(layout.spanCount)
                     layout.findFirstVisibleItemPositions(firstPositions)
@@ -328,5 +324,13 @@ class RecyclerStickHeaderHelper(private val mRecyclerView: RecyclerView, private
         return RecyclerView.NO_POSITION
     }
 
+    fun addOnViewChangedListener(listener: OnViewChangedListener) {
+        this.listener = listener
+    }
+
+    interface OnViewChangedListener {
+        fun onViewChanged()
+        fun onTopViewPosition(view: View, pos: Int)
+    }
 
 }

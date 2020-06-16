@@ -48,7 +48,6 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
         publishSubject.onNext(str)
     }
 
-
     fun getFilterData(filter: String) {
         addDispose(Observable.create(
                 ObservableOnSubscribe<List<ISortBean>> {
@@ -56,7 +55,10 @@ constructor(model: MapShowContract.Model, rootView: MapShowContract.View) :
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t -> mView.setMapData(t) }, { e -> e.printStackTrace() }))
+                .subscribe({
+                    t -> mView.setMapData(t)
+                    mView.setSliderBarTxt(mModel.getOrderChars())
+                }, { e -> e.printStackTrace() }))
     }
 
 }

@@ -1,14 +1,22 @@
 package com.gas.zhihu.fragment.mapshow
 
+import android.Manifest
 import android.app.Activity
+import android.app.Service
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.base.baseui.view.RecyclerStickHeaderHelper
+import com.base.baseui.view.WaveSideBarView
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
@@ -25,38 +33,10 @@ import com.gas.zhihu.fragment.mapshow.di.DaggerMapShowComponent
 import com.gas.zhihu.fragment.mapshow.di.MapShowModule
 import com.gas.zhihu.fragment.mapshow.mvp.MapShowContract
 import com.gas.zhihu.fragment.mapshow.mvp.MapShowPresenter
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.zhihu_activity_map.*
+import com.lib.commonsdk.utils.Permission
 import kotlinx.android.synthetic.main.zhihu_fragment_map_show.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by GasMvpFragment on 05/31/2020 15:45
- * ================================================
- */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @FragmentScope(請注意命名空間) class NullObjectPresenterByFragment
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
- */
 class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
     companion object {
         const val TYPE = "type"
@@ -80,6 +60,17 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
 
     @Inject
     lateinit var mLayoutManager: RecyclerView.LayoutManager
+
+    private val vibrator: Vibrator by lazy {
+        activity?.getSystemService(Service.VIBRATOR_SERVICE) as Vibrator
+    }
+
+    private var topPos = -1
+    private var touchBar = false
+
+    private val stickHeader: RecyclerStickHeaderHelper by lazy {
+        RecyclerStickHeaderHelper(itemRecycler, listStickHolder, MapShowAdapter.TYPE_CHAR)
+    }
 
     private var mType: Int = PAPER_TYPE_DEFAULT
     private var mOption: Int = MAP_OPTION_DEFAULT
@@ -123,6 +114,32 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
                 }
             }
         }
+        sideBarView.setOnTouchLetterChangeListener(object : WaveSideBarView.OnTouchLetterChangeListener {
+            override fun onLetterChange(letter: String) {
+                if (touchBar) {
+                    mAdapter.findCharTipPos(letter).takeIf { it in 0 until mAdapter.itemCount }?.let { pos ->
+                        itemRecycler.scrollToPosition(pos)
+                        (itemRecycler.layoutManager as? LinearLayoutManager)?.scrollToPositionWithOffset(pos, 0)
+                    }
+                }
+            }
+
+            override fun onBarTouchDown() {
+                touchBar = true
+            }
+
+            override fun onBarTouchMove() {
+            }
+
+            override fun onBarTouchCancel() {
+                touchBar = false
+                topPos.takeIf { it in 0 until mAdapter.itemCount }?.let { pos ->
+                    mAdapter.getItem(pos).showChar.let {
+                        sideBarView.setSelectChar(it)
+                    }
+                }
+            }
+        })
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 mPresenter?.startSearch(s?.let { s.toString().trim() } ?: "")
@@ -135,10 +152,38 @@ class MapShowFragment : BaseFragment<MapShowPresenter>(), MapShowContract.View {
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+        stickHeader.addOnViewChangedListener(object : RecyclerStickHeaderHelper.OnViewChangedListener {
+            override fun onViewChanged() {
+                if (Permission.hasPermissions(activity, Manifest.permission.VIBRATE)) {
+                    if (vibrator.hasVibrator()) {
+                        vibrator.cancel()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            vibrator.vibrate(VibrationEffect.createOneShot(10L, 100), null)
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            vibrator.vibrate(longArrayOf(10L), -1, null)
+                        }
+                    }
+                }
+            }
+
+            override fun onTopViewPosition(view: View, pos: Int) {
+                if (topPos != pos) {
+                    mAdapter.getItem(pos).showChar.let {
+                        if (!touchBar) {
+                            sideBarView.setSelectChar(it)
+                        }
+                    }
+                    topPos=pos
+                }
+            }
+        })
         mPresenter!!.initOriginData(mType)
         mPresenter!!.getFilterData("")
     }
 
+    override fun setSliderBarTxt(chars: List<String>) {
+        sideBarView.letters = chars
+    }
 
     override fun setData(data: Any?) {
 

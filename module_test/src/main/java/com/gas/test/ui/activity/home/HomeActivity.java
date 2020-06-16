@@ -24,7 +24,6 @@ import com.gas.test.ui.activity.home.mvp.HomeContract;
 import com.gas.test.ui.activity.home.mvp.HomePresenter;
 import com.gas.test.ui.activity.show.ShowActivity;
 import com.gas.test.ui.activity.trans.TransActivity;
-import com.gas.test.widget.RecyclerStickHeaderHelper;
 import com.lib.commonsdk.constants.RouterHub;
 
 import java.lang.ref.WeakReference;
@@ -102,7 +101,6 @@ public class HomeActivity extends BaseActivity<HomePresenter> implements HomeCon
 
         mHandler.sendEmptyMessageDelayed(LOADDATA, DELAYTIME);
 
-       new RecyclerStickHeaderHelper(mRecyclerView,flContainer);
     }
 
 
