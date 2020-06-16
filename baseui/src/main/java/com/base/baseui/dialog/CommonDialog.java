@@ -63,7 +63,6 @@ public class CommonDialog extends Dialog {
             return this;
         }
 
-
         public CommonDialog create(Context context) {
             CommonDialog dialog = new CommonDialog(context, R.style.public_common_dialog);
             if (mContentView == null) {

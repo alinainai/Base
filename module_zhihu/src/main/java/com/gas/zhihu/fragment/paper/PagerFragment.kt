@@ -18,6 +18,7 @@ import com.base.paginate.interfaces.EmptyInterface
 import com.base.paginate.interfaces.OnMultiItemClickListeners
 import com.base.paginate.viewholder.PageViewHolder
 import com.gas.zhihu.R
+import com.gas.zhihu.app.MapConstants
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.app.ZhihuConstants.FILE_ZIP_FOLDER
 import com.gas.zhihu.bean.MapBean
@@ -25,13 +26,16 @@ import com.gas.zhihu.bean.MapSelectShowBean
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
 import com.gas.zhihu.fragment.addpaper.AddPaperFragment
+import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.fragment.paper.di.DaggerPagerComponent
 import com.gas.zhihu.fragment.paper.di.PagerModule
 import com.gas.zhihu.fragment.paper.mvp.PagerContract
 import com.gas.zhihu.fragment.paper.mvp.PagerPresenter
 import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.utils.OfficeHelper
+import com.lib.commonsdk.utils.FileUtils
 import com.lib.commonsdk.utils.Utils
+import kotlinx.android.synthetic.main.zhihu_fragment_add_paper.*
 import kotlinx.android.synthetic.main.zhihu_fragment_pager.*
 import java.io.File
 import java.util.*
@@ -48,6 +52,8 @@ import javax.inject.Inject
 class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     companion object {
         const val TYPE = "type"
+        const val REQUEST_MAP_INFO = 104
+
         fun newInstance(): PagerFragment {
             val fragment = PagerFragment()
             return fragment
@@ -89,7 +95,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         }?.toList()?.apply {
             selectorModels.addAll(this)
         }
-        object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels) {
+        object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels,true) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
                 item.apply {
                     if (id != selectMapKey) {
@@ -105,6 +111,13 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 tvTypeMap.isSelected = false
                 imgTypeMap.isSelected = false
             }
+
+            override fun onTipClick() {
+                dismiss()
+                FragmentContainerActivity.startActivityForResult(activity!!, MapShowFragment::class.java,
+                        MapShowFragment.setPagerArgs(mType, MapConstants.MAP_OPTION_SELECT),
+                        AddPaperFragment.REQUEST_MAP_INFO)
+            }
         }
 
     }
@@ -117,7 +130,6 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
         object : FilterPopupWindow<VoltageLevelBean>(activity, selectorModels) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
-
                 item.apply {
                     if (id != selectVoltageLevel) {
                         selectVoltageLevel = id
@@ -127,12 +139,10 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 }
                 dismiss()
             }
-
             override fun onPopDismiss() {
                 tvTypeVoltage.isSelected = false
                 imgTypeVoltage.isSelected = false
             }
-
         }
 
     }
@@ -154,7 +164,6 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
 
 
     override fun initData(savedInstanceState: Bundle?) {
-
         mType = activity!!.intent.getIntExtra(TYPE, 0)
         when (mType) {
             0 -> {
@@ -167,27 +176,22 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         guideTitle.setOnBackListener {
             activity?.finish()
         }
-
         guideTitle.setOnRightListener {
             FragmentContainerActivity.startActivity(activity!!, AddPaperFragment::class.java, AddPaperFragment.setPagerArgs(mType))
         }
-
         llTypeMap.setOnClickListener {
             showTypeMap()
         }
         llTypeVoltage.setOnClickListener {
             showTypeVoltage()
         }
-
-        mAdapter.setOnMultiItemClickListener(object : OnMultiItemClickListeners<PaperShowBean?> {
-            override fun onItemClick(viewHolder: PageViewHolder?, data: PaperShowBean?, position: Int, viewType: Int) {
-                data?.let {
-                    val path = Utils.getExternalFilesDir(activity!!);
-                    val fileFile = File(path.path, FILE_ZIP_FOLDER + File.separator + data.filePath)
-                    OfficeHelper.open(activity!!, fileFile.path)
-                }
+        mAdapter.setOnMultiItemClickListener { _, data, _, _ ->
+            data?.let {
+                val path = Utils.getExternalFilesDir(activity!!);
+                val fileFile = File(path.path, FILE_ZIP_FOLDER + File.separator + data.filePath)
+                OfficeHelper.open(activity!!, fileFile.path)
             }
-        })
+        }
         itemRefresh.isEnabled = false
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
@@ -203,7 +207,6 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         } else {
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
         }
-
     }
 
     private fun showTypeMap() {
@@ -218,6 +221,25 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         filterVoltagePop.showAsDropDown(llTypeVoltage, selectVoltageLevel)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                AddPaperFragment.REQUEST_MAP_INFO -> {
+                    data?.let { intent ->
+                        val name = intent.getStringExtra(MapConstants.MAP_NAME)
+                        val id = intent.getStringExtra(MapConstants.MAP_ID)
+                        if (name.isNullOrBlank() || id.isNullOrBlank())
+                            return
+                        if (id != selectMapKey) {
+                            selectMapKey = id
+                            tvTypeMap.text = if (id == DEFAULT_TYPE) "厂站" else name
+                            mPresenter?.getFilterData(selectVoltageLevel, selectMapKey)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     override fun setData(data: Any?) {
 

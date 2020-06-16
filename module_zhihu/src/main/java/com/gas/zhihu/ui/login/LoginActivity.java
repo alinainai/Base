@@ -35,6 +35,8 @@ import com.lib.commonsdk.utils.AppUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 
 import static com.base.lib.util.Preconditions.checkNotNull;
 
@@ -170,7 +172,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
     private void showForgetTip() {
-      new TipShowDialog().show(this,"提示","登录密码提示");
+       TipShowDialog.INSTANCE.show(this, "提示", "登录密码提示", () -> null);
     }
 
     private void login() {

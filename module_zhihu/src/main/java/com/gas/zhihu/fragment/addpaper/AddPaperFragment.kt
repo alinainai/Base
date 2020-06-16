@@ -163,7 +163,6 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
     }
 
     private fun requestStoragePermission() {
-
         val hasCameraPermission = ContextCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE);
         if (hasCameraPermission == PackageManager.PERMISSION_GRANTED) {
             selectFileDialog()
@@ -173,7 +172,6 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_STORAGE_PERMISSION);
             }
         }
-
     }
 
     private fun selectFileDialog() {
@@ -194,22 +192,18 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
     }
 
     private fun commit() {
-
         if (selectVoltageLevel.isBlank()) {
             showMessage("请选择电压")
             return
         }
-
         if (selectMapKey.isBlank()) {
             showMessage("请选择厂站信息")
             return
         }
-
         if (selectFileName.isBlank()) {
             showMessage("请选择文件")
             return
         }
-
         if (etAddressLon.text.isBlank()) {
             showMessage("文件名不能为空")
             return
@@ -220,27 +214,18 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         bean.pathName = selectFilePathName
         bean.type = mType
         bean.voltageLevel = selectVoltageLevel.toInt()
-
         mPresenter?.addPaperToDatabase(bean, selectFileName)
-
     }
 
     override fun showCommitSuccess() {
-        TipShowDialog().show(activity!!, "提示", "保存成功") { killMyself() }
+        TipShowDialog.show(activity!!, "提示", "保存成功") { killMyself() }
     }
 
     private fun selectFile(type: String) {
-
         val typeName: String = when (type) {
-            "0" -> {
-                ZhihuConstants.FILE_TYPE_WORD
-            }
-            "1" -> {
-                ZhihuConstants.FILE_TYPE_PDF
-            }
-            else -> {
-                ""
-            }
+            "0" -> { ZhihuConstants.FILE_TYPE_WORD }
+            "1" -> { ZhihuConstants.FILE_TYPE_PDF }
+            else -> { "" }
         }
         FragmentContainerActivity.startActivityForResult(activity!!,
                 FileSelectFragment::class.java,

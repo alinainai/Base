@@ -31,6 +31,7 @@ import com.gas.zhihu.fragment.addmap.mvp.AddMapContract
 import com.gas.zhihu.fragment.addmap.mvp.AddMapPresenter
 import com.gas.zhihu.utils.MapBeanDbUtils
 import com.lib.commonsdk.utils.FileUtils
+import com.lib.commonsdk.utils.TimeUtils
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_add_map.*
 import java.io.File
@@ -132,18 +133,18 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                         intent.putExtra("outputY", 400);
                         intent.putExtra("return-data", false);
                         // 创建文件保存裁剪的图片
-                        createImageFile();
-                        imageUri = Uri.fromFile(imageFile);
+                        createImageFile()
+                        imageUri = Uri.fromFile(imageFile)
                         if (imageUri != null) {
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                            intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
+                            activity?.startActivityForResult(intent, REQUEST_CROP_PHOTO)
                         }
-                        activity?.startActivityForResult(intent, REQUEST_CROP_PHOTO);
                     }
                 }
                 REQUEST_CROP_PHOTO -> {
-                    imageUri?.let {
-                        displayImage(it)
+                    imageFile?.let {
+                        displayImage(it.path)
                     }
                 }
             }
@@ -154,7 +155,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
         if (requestCode == REQUEST_STORAGE_PERMISSION) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 用户同意，执行相应操作
-                selectImage();
+                selectImage()
             } else {
                 // 用户不同意，向用户展示该权限作用
                 showMessage("请开启权限，否则图片选择功能不可用")
@@ -163,17 +164,14 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
     }
 
     private fun commitMapInfo() {
-
         if (etKeyName.text.isBlank()) {
             showMessage("键值不能为空")
             return
         }
-
         if(etKeyName.text.toString()== DEFAULT_TYPE){
             showMessage("键值格式错误")
             return
         }
-
         if (etMapName.text.isBlank()) {
             showMessage("电站名称不能为空")
             return
@@ -201,7 +199,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             val file = File("${Utils.getExternalFilesDir(activity!!)}${File.separator}${IMAGE_ZIP_FOLDER}",
                     "${etKeyName.text}.jpg")
             if(FileUtils.copy(imageFile,file)){
-                TipShowDialog().show(activity!!, "提示", "保存成功") { killMyself() }
+                TipShowDialog.show(activity!!, "提示", "保存成功") { killMyself() }
             }else{
                 showMessage("文件添加失败请重试")
                 MapBeanDbUtils.delete(bean.keyName)
@@ -219,6 +217,12 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
     private fun createImageFile() {
 
         try {
+            val folder=Utils.getExternalFilesDir(activity!!, DIRECTORY_PICTURES)
+            if(folder.exists()){
+                FileUtils.deleteAllInDir(folder)
+            }else{
+                folder.mkdirs()
+            }
             imageFile?.let {
                 if (it.exists()) {
                     it.delete()
@@ -226,22 +230,22 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             }
             // 新建文件
             imageFile = File(Utils.getExternalFilesDir(activity!!, DIRECTORY_PICTURES),
-                    "image_map_temp.jpg");
+                    "temp_${TimeUtils.getNow()}.jpg");
         } catch (e: java.lang.Exception) {
             e.printStackTrace();
         }
 
     }
 
-    private fun displayImage(imageUri: Uri) {
+    private fun displayImage(imagePath: String) {
         // glide根据图片的uri加载图片
         Glide.with(this)
-                .load(imageUri)
+                .load(imagePath)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .placeholder(R.drawable.public_default_image_placeholder)// 占位图设置：加载过程中显示的图片
                 .error(R.drawable.public_default_image_placeholder)// 异常占位图
                 .transform(CenterCrop())
-                .into(imgAddress);
+                .into(imgAddress)
     }
 
     private fun requestStoragePermission() {

@@ -43,37 +43,47 @@ public abstract class ItemPopupWindow<T extends ISelectItem> {
     private List<T> mData;
 
     public ItemPopupWindow(Context context, List<T> data) {
+        this(context, data, false);
+    }
 
+    public ItemPopupWindow(Context context, List<T> data, boolean isShowTip) {
         if (data == null || data.size() == 0)
             throw new RuntimeException("data is not null");
-
         mData = data;
-
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.public_dialog_select_pop_layout, null);
         RecyclerView flowLayout = view.findViewById(R.id.recycler);
-
+        View popTipView = view.findViewById(R.id.popTipView);
+        if(isShowTip){
+            popTipView.setVisibility(View.VISIBLE);
+        }else{
+            popTipView.setVisibility(View.GONE);
+        }
+        popTipView.setOnClickListener(v -> {
+            onTipClick();
+        });
         mTagAdapter = new PopItemAdapter(data, this::onPositionClick);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(context);
         flowLayout.setLayoutManager(layoutManager);
         flowLayout.setAdapter(mTagAdapter);
-
         mPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(context.getResources().getColor(android.R.color.transparent)));
         mPopupWindow.setOutsideTouchable(true);//设置outside可点击
         mPopupWindow.setFocusable(true);
         mPopupWindow.setOnDismissListener(this::onPopDismiss);
-
     }
 
     public abstract void onPositionClick(@NotNull ISelectItem item, int position);
 
     public abstract void onPopDismiss();
 
+    public void onTipClick() {
+
+    }
+
     public void showAsDropDown(View author, String typeId) {
 
-        if(mData.isEmpty())
+        if (mData.isEmpty())
             return;
         if (mPopupWindow != null) {
             if (mPopupWindow.isShowing()) {
