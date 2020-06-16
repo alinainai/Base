@@ -68,6 +68,7 @@ public interface RouterHub {
      */
     String ZHIHU_SERVICE_ZHIHUINFOSERVICE = ZHIHU + SERVICE + "/ZhihuInfoService";
     String ZHIHU_HOMEACTIVITY = ZHIHU + "/MainActivity";
+    String ZHIHU_LOGINACTIVITY = ZHIHU + "/LoginActivity";
     String ZHIHU_DETAILACTIVITY = ZHIHU + "/DetailActivity";
 
 

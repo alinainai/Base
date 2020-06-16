@@ -6,5 +6,6 @@ public interface IShowConst {
     String ADAPTERFRAGMENT="adapter_fragment";
     String SHOWFRAGMENTTYPE="show_fragment_type";
     String RETROFITFRAGMENT="retrofit_fragment";
+    String TIMEDOWNFRAGMENT="time_down_fragment";
 
 }

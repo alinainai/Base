@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/public_white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnCommit"
+        android:layout_marginTop="@dimen/public_title_bar_height">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrierTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="tvKeyName,tvMapName,tvFileTitle" />
+
+            <TextView
+                android:id="@+id/tvKeyName"
+                style="@style/zhihu_fragment_add_map_subtitle"
+                android:text="厂站："
+                app:layout_constraintBottom_toBottomOf="@+id/mapName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/mapName" />
+
+            <TextView
+                android:id="@+id/mapName"
+                style="@style/zhihu_fragment_add_paper_select"
+                android:layout_marginTop="20dp"
+                android:text="点击选择对应厂站信息"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierTv"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMapName"
+                style="@style/zhihu_fragment_add_map_subtitle"
+                android:text="电压等级："
+                app:layout_constraintBottom_toBottomOf="@+id/voltageName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/voltageName" />
+
+            <TextView
+                android:id="@+id/voltageName"
+                style="@style/zhihu_fragment_add_paper_select"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="点击选择电压等级"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierTv"
+                app:layout_constraintTop_toBottomOf="@id/mapName" />
+
+            <ImageView
+                android:id="@+id/imgFileHolder"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="centerInside"
+                android:src="@mipmap/zhihu_add_paper_add_file"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/voltageName"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvFilePath"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="点击选择文件"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierTv"
+                app:layout_constraintTop_toTopOf="@+id/imgFileHolder" />
+
+            <TextView
+                android:id="@+id/tvFileTitle"
+                style="@style/zhihu_fragment_add_map_subtitle"
+                android:text="文件标题："
+                app:layout_constraintBottom_toBottomOf="@+id/etAddressLon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAddressLon" />
+
+            <EditText
+                android:id="@+id/etAddressLon"
+                style="@style/zhihu_fragment_add_map_edit"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:digits="1234567890."
+                android:hint="例：xxx站220KV配置信息"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/barrierTv"
+                app:layout_constraintTop_toBottomOf="@id/imgFileHolder" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <com.base.baseui.view.TitleView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:closeHide="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleText="添加" />
+
+    <Button
+        android:id="@+id/btnCommit"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/public_default_btn_selector_blue_corner"
+        android:text="提交"
+        android:textColor="@color/public_white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</RelativeLayout>

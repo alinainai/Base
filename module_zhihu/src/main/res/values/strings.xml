@@ -6,4 +6,8 @@
     <string name="zhihu_url">url</string>
     <string name="zhihu_title_format">"获取的标题是：%s"</string>
     <string name="zhihu_url_format">"获取的url是：%s"</string>
+
+    <string name="zhihu_map_title_name">"名称：%s"</string>
+
+
 </resources>

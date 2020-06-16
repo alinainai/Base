@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--优惠倒计时器 -->
+    <declare-styleable name="TimeDownView" tools:ignore="ResourceName">
+
+        <attr name="timeZoneBackground" format="reference|color" />
+        <attr name="timeZoneTextColor" format="color|reference" />
+        <attr name="timeZoneTextSize" format="dimension"/>
+        <attr name="timeTitleText" format="string"/>
+        <attr name="timeDayUnit" format="string"/>
+
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="ResourceName"
+    tools:parentTag="android.widget.FrameLayout">
+
+    <LinearLayout
+        android:id="@+id/banner_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/public_banner_time_down_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:paddingTop="4dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="4dp">
+
+        <ImageView
+            android:id="@+id/banner_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@null"
+            android:src="@mipmap/drawable_banner_time_down_icon" />
+
+        <TextView
+            android:id="@+id/banner_main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="45"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            tools:text="主标题" />
+
+        <TextView
+            android:id="@+id/banner_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="11dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLength="45"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            tools:ignore="SmallSp"
+            tools:text="副标题" />
+
+
+        <TextView
+            android:id="@+id/banner_time_down"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/public_banner_time_down_text_bg"
+            android:gravity="center"
+            android:lines="1"
+            android:minWidth="20dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="1dp"
+            android:paddingRight="3dp"
+            android:paddingBottom="1dp"
+            android:textColor="#FEE4B1"
+            android:textSize="10sp"
+            tools:ignore="SmallSp"
+            tools:text="10s" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/banner_close"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@null"
+            android:scaleType="centerInside"
+            android:src="@drawable/public_banner_time_down_close" />
+
+    </LinearLayout>
+
+
+</merge>

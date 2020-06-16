@@ -33,5 +33,8 @@
     <color name="public_bg_default_hint">#EBEBEB</color>
     <color name="public_divider_color">#C0C0C0</color>
 
+    <color name="public_blue">#459DF5</color>
+    <color name="public_gray">#eaeaea</color>
+
 
 </resources>

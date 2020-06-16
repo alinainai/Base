@@ -2,21 +2,44 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gas.zhihu">
 
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application>
+        <activity android:name=".ui.office.OfficeActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
         <activity
-            android:name=".detial.DetailsActivity"
+            android:name=".ui.detial.DetailsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_details"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/zhihu_activity_main"
             android:screenOrientation="portrait" />
-        <!-- 在组件集成宿主时, 由于宿主已经声明了 CommonSDK 的公有 ConfigModule, 所以在这里只需要声明业务组件自己的 ConfigModule -->
+        <activity
+            android:name=".ui.map.MapActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.show.ShowActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.base.FragmentContainerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" /> <!-- 在组件集成宿主时, 由于宿主已经声明了 CommonSDK 的公有 ConfigModule, 所以在这里只需要声明业务组件自己的 ConfigModule -->
         <meta-data
             android:name="com.gas.zhihu.app.GlobalConfiguration"
-            android:value="ClientConfigModule"/>
+            android:value="ClientConfigModule" />
     </application>
 
 </manifest>

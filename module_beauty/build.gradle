@@ -1,19 +1,21 @@
 apply from: "../common_component_build.gradle"
 
 android {
+    buildTypes {
+        release {
+            minifyEnabled true
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
     resourcePrefix "gank_" //给 Module 内的资源名增加前缀, 避免资源名冲突
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     androidTestImplementation rootProject.ext.dependencies["android-test-junit"]
     androidTestImplementation rootProject.ext.dependencies["espresso-core"]
     testImplementation rootProject.ext.dependencies["junit"]
-
-
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
 }

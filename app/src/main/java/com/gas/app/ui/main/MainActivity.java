@@ -18,7 +18,7 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
 import com.lib.commonsdk.adapter.AdapterViewPager;
 import com.lib.commonsdk.constants.RouterHub;
-import com.lib.commonsdk.utils.statusbar.StatusBarManager;
+import com.lib.commonsdk.statusbar.StatusBarManager;
 
 import java.util.List;
 import java.util.Timer;

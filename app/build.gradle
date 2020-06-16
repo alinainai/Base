@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-
-
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+apply plugin: 'kotlin-kapt'
+kapt {
+    generateStubs = true
+}
 def static releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
@@ -12,7 +16,7 @@ android {
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "trunk.doi.base"
+        applicationId "com.gas.app"
         minSdkVersion rootProject.ext.android["minSdkVersion"]
         targetSdkVersion rootProject.ext.android["targetSdkVersion"]
         versionCode rootProject.ext.android["versionCode"]
@@ -123,6 +127,9 @@ android {
         disable "ResourceType"
         abortOnError false
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 
 }
 
@@ -131,24 +138,22 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation rootProject.ext.dependencies["android-test-junit"]
     androidTestImplementation rootProject.ext.dependencies["espresso-core"]
-    testImplementation "junit:junit:4.12"
+    testImplementation rootProject.ext.dependencies["junit"]
 
 
 //    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.zhy:okhttputils:2.6.2'
     //tools
-    annotationProcessor rootProject.ext.dependencies["arouter-compiler"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    annotationProcessor(rootProject.ext.dependencies["butterknife-compiler"]) {
+    kapt rootProject.ext.dependencies["arouter-compiler"]
+    kapt(rootProject.ext.dependencies["butterknife-compiler"]) {
         exclude module: 'annotations'
     }
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
 
     implementation rootProject.ext.dependencies["lottie"]
 
-    //leakcanary
+    //leak canary 2.0+
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-    releaseImplementation rootProject.ext.dependencies["canary-release"]
-    testImplementation rootProject.ext.dependencies["canary-release"]
 
 
     if (!isBuildModule.toBoolean()) {
@@ -161,4 +166,5 @@ dependencies {
     }
     implementation project(path: ':baseui')
     implementation project(path: ':componentservice')
+
 }

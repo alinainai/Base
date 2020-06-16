@@ -20,12 +20,8 @@ import com.base.lib.di.component.AppComponent;
  */
 public class AppComponentCallbacks implements ComponentCallbacks2 {
 
-    private Application mApplication;
-    private AppComponent mAppComponent;
 
     public AppComponentCallbacks(Application application, AppComponent appComponent) {
-        this.mApplication = application;
-        this.mAppComponent = appComponent;
     }
 
     /**

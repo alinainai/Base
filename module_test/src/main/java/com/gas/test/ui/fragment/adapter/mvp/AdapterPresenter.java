@@ -11,6 +11,7 @@ import com.base.lib.mvp.BasePresenter;
 import com.base.paginate.interfaces.EmptyInterface;
 import com.gas.test.R;
 import com.gas.test.ui.fragment.adapter.SimpleAdapter;
+import com.gas.test.ui.fragment.adapter.SimpleMultiAdapter;
 
 import java.lang.ref.WeakReference;
 
@@ -29,7 +30,7 @@ public class AdapterPresenter extends BasePresenter<AdapterContract.Model, Adapt
     private boolean showNormal = true;
 
     @Inject
-    SimpleAdapter mAdapter;
+    SimpleMultiAdapter mAdapter;
 
     private DelayHandler mHandler;
 
@@ -57,7 +58,7 @@ public class AdapterPresenter extends BasePresenter<AdapterContract.Model, Adapt
         if(isOne){
             mAdapter.insert(mModel.provideNewItem());
         }else {
-            mAdapter.insert(mModel.provideInsertItems(3));
+            mAdapter.insertAll(mModel.provideInsertItems(3));
         }
 
     }

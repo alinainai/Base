@@ -8,4 +8,61 @@
         <item name="colorAccent">@color/zhihu_colorAccent</item>
     </style>
 
+    <style name="zhihu_option_fragment_option_btn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:background">@drawable/public_default_btn_selector_blue_corner</item>
+        <item name="android:textColor">@color/public_white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="zhihu_fragment_add_map_subtitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:textColor">@color/public_text_black_deep</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="zhihu_fragment_add_map_edit">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">@drawable/public_gray_stroke_bg_radius_2dp</item>
+        <item name="android:gravity">top</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/public_text_black_normal</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="zhihu_fragment_add_paper_select">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:background">@drawable/zhihu_public_gray_solid_radius_2dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@color/public_text_black_light</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:maxLength">20</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="zhihu_main_card_view" >
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">15dp</item>
+        <item name="android:layout_marginEnd">15dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
 </resources>

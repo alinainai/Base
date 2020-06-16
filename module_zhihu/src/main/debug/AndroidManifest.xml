@@ -14,7 +14,7 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@drawable/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher_dpi"
         android:label="@string/zhihu_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
         android:roundIcon="@drawable/public_ic_launcher_round"
@@ -23,34 +23,60 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
 
+
         <activity
-            android:name=".main.MainActivity"
+            android:name=".ui.show.ShowActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".ui.map.MapActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".detial.DetailsActivity"
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.detial.DetailsActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" />
 
-        <!-- 每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule
+        <activity
+            android:name=".ui.base.FragmentContainerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.base.FragmentContainerActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait" />
+
+        <!--
+ 每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule
         CommonSDK 的 ConfigModule 含有有每个组件都可共用的配置信息, 业务组件自己的 ConfigModule 含有自己独有的配置
         信息, 这样即可重用代码, 又可以允许每个组件可自行管理自己独有的配置信息, 如果业务组件没有独有的配置信息则只需要
-        声明 CommonSDK 的 ConfigModule -->
+        声明 CommonSDK 的 ConfigModule
+        -->
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
             android:value="ClientConfigModule" />
         <meta-data
             android:name="com.gas.zhihu.app.GlobalConfiguration"
             android:value="ClientConfigModule" />
-
     </application>
 
 </manifest>
-

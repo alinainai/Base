@@ -14,13 +14,22 @@
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
-        android:icon="@drawable/public_ic_launcher"
+        android:icon="@drawable/public_ic_launcher_dpi"
         android:label="@string/test_app_name"
         android:roundIcon="@drawable/public_ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
+
+<!--        android:theme="@style/transparent_activity_style"-->
+        <activity android:name=".ui.activity.trans.TransActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize"
+            >
+
+
+        </activity>
         <activity
             android:name=".ui.activity.lifecycle.SecondActivity"
             android:configChanges="orientation|screenSize"
@@ -29,11 +38,7 @@
             android:name=".ui.activity.lifecycle.FirstActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".ui.activity.show.ShowActivity"
@@ -43,7 +48,10 @@
             android:name=".ui.activity.home.HomeActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <!--
  每个业务组件需要声明两个 ConfigModule, CommonSDK 的 ConfigModule 和 业务组件自己的 ConfigModule

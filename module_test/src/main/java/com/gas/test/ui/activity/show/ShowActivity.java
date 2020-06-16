@@ -25,6 +25,7 @@ import static com.gas.test.ui.activity.show.IShowConst.ADAPTERFRAGMENT;
 import static com.gas.test.ui.activity.show.IShowConst.RATIOVIEWFRAGMENT;
 import static com.gas.test.ui.activity.show.IShowConst.RETROFITFRAGMENT;
 import static com.gas.test.ui.activity.show.IShowConst.SHOWFRAGMENTTYPE;
+import static com.gas.test.ui.activity.show.IShowConst.TIMEDOWNFRAGMENT;
 
 
 /**
@@ -41,12 +42,18 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
     @Inject
     @Named(RATIOVIEWFRAGMENT)
     Fragment mRatioFragment;
+
     @Inject
     @Named(ADAPTERFRAGMENT)
     Lazy<Fragment> mAdapterFragment;
+
     @Inject
     @Named(RETROFITFRAGMENT)
     Lazy<Fragment> mRetrofitFragment;
+
+    @Inject
+    @Named(TIMEDOWNFRAGMENT)
+    Lazy<Fragment> mTimeDownFragment;
 
 
     @Override
@@ -84,6 +91,9 @@ public class ShowActivity extends BaseActivity<ShowPresenter> implements ShowCon
                 break;
             case RETROFITFRAGMENT:
                 fragment = mRetrofitFragment.get();
+                break;
+            case TIMEDOWNFRAGMENT:
+                fragment = mTimeDownFragment.get();
                 break;
 
         }

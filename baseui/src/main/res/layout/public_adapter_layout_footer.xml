@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="50dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout"
+    tools:ignore="ResourceName">
+
+    <com.base.baseui.view.QMUILoadingView
+        android:id="@+id/loading"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:color="#999999"
+        app:qmui_loading_view_size="16dp" />
+    <TextView
+        android:id="@+id/base_empty_tv"
+        android:layout_marginStart="5dp"
+        android:textSize="14sp"
+        android:textColor="#999999"
+        android:gravity="center_vertical"
+        android:text="@string/str_base_adapter_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"/>
+
+</merge>

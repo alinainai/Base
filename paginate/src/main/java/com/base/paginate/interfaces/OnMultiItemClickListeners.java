@@ -1,7 +1,7 @@
 package com.base.paginate.interfaces;
 
 
-import com.base.paginate.PageViewHolder;
+import com.base.paginate.viewholder.PageViewHolder;
 
 /**
  * 多种布局条目点击事件

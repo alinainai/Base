@@ -18,10 +18,10 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * ================================================
- * desc:
+ * desc: RxJava事件解绑工具类
  *
- * created by author ljx 
- * Date  2020-02-07
+ * created by author ljx
+ * Date  2020/3/14
  * email 569932357@qq.com
  *
  * ================================================

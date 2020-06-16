@@ -2,11 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--************ QMUILoading ***********-->
-    <declare-styleable name="public_QMUILoadingView">
-        <attr name="public_qmui_loading_view_size" format="dimension" />
+    <declare-styleable name="QMUILoadingView" tools:ignore="ResourceName">
+        <attr name="qmui_loading_view_size" format="dimension" />
         <attr name="android:color" />
     </declare-styleable>
-    <attr name="public_QMUILoadingStyle" format="reference" />
+    <attr name="QMUILoadingStyle" format="reference" tools:ignore="ResourceName" />
 
 
     <declare-styleable name="TitleView" tools:ignore="ResourceName">
@@ -20,6 +20,42 @@
         <attr name="dividerHide" format="boolean" />
         <attr name="backHide" format="boolean" />
         <attr name="closeHide" format="boolean" />
+    </declare-styleable>
+
+    <!--上下滚动消息属性-->
+    <declare-styleable name="VerticalScrollView" tools:ignore="ResourceName">
+        <attr name="verticalGap" format="integer" />
+        <attr name="verticalAnimDuration" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="GalleryView" tools:ignore="ResourceName">
+        <attr name="animDuration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="RecyclerViewWithMaxHeight" tools:ignore="ResourceName">
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="WaveView" tools:ignore="ResourceName">
+        <!-- 中心圆颜色-->
+        <attr name="waveCenterColor" format="color"/>
+        <!-- 水波纹颜色-->
+        <attr name="waveColor" format="color"/>
+        <!-- 中心圆半径（起始扩散波纹的起始半径）-->
+        <attr name="waveCenterRadius" format="dimension"/>
+        <!-- 扩散最大半径-->
+        <attr name="waveMaxRadius" format="dimension"/>
+        <!-- 创建新的波纹的间隔时间(毫秒)-->
+        <attr name="waveIntervalTime" format="integer"/>
+        <!-- 一个波纹从创建到消失的持续时间(毫秒)-->
+        <attr name="waveDuration" format="integer"/>
+        <!-- 波纹的宽度-->
+        <attr name="waveWidth" format="dimension"/>
+        <!-- 波纹的样式-->
+        <attr name="waveStyle" format="enum">
+            <enum name="stroke" value="0"/>
+            <enum name="fill" value="1"/>
+        </attr>
     </declare-styleable>
 
 

@@ -3,4 +3,6 @@
     <color name="zhihu_colorPrimary">#008577</color>
     <color name="zhihu_colorPrimaryDark">#00574B</color>
     <color name="zhihu_colorAccent">#D81B60</color>
+    <color name="zhihu_c6293f9">#6293f9</color>
+    <color name="zhihu_ce1e1e1">#e1e1e1</color>
 </resources>

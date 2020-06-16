@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.SpannedString;
@@ -25,6 +26,7 @@ import com.base.lib.di.component.AppComponent;
 import com.base.lib.integration.AppManager;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
@@ -365,8 +367,13 @@ public class ArmsUtils {
     public static String encodeToMD5(String string) {
         byte[] hash = new byte[0];
         try {
-            hash = MessageDigest.getInstance("MD5").digest(
-                    string.getBytes("UTF-8"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                hash = MessageDigest.getInstance("MD5").digest(
+                        string.getBytes(StandardCharsets.UTF_8));
+            } else {
+                hash = MessageDigest.getInstance("MD5").digest(
+                        string.getBytes("UTF-8"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
