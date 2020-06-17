@@ -42,7 +42,6 @@ import butterknife.OnClick;
 public class SplashActivity extends BaseActivity<SplashPresenter> implements SplashContract.View {
 
     public static final String VIDEO_NAME = "welcome_video.mp4";
-    private boolean isRelease = false;
 
     @BindView(R.id.tv_version)
     TextView tv_version;
@@ -56,14 +55,12 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void setupActivityComponent(@NonNull AppComponent appComponent) {
-
         DaggerSplashComponent
                 .builder()
                 .appComponent(appComponent)
                 .view(this)
                 .build()
                 .inject(this);
-
     }
 
     @Override
@@ -73,9 +70,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
         mPresenter.showVersionCode();
-
         try {
             File videoFile = getFileStreamPath(VIDEO_NAME);
             if (!videoFile.exists()) {
@@ -85,20 +80,14 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
         } catch (Exception e) {
             //如果有异常背景变为黑
-
         }
         Objects.requireNonNull(mPresenter).autoTimeDown();
-
     }
-
 
     /**
      * 播放背景动画
-     *
-     * @param videoFile
      */
     private void playVideo(File videoFile) {
-
         mVideoView = new MyVideoView(this.getApplicationContext());
         mVideoView.setLayoutParams(new RelativeLayout.LayoutParams(-1, -1));
         mRlVideo.addView(mVideoView);
@@ -108,7 +97,6 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
             mediaPlayer.start();
         });
         mVideoView.setOnErrorListener((mp, what, extra) -> true);
-
     }
 
     /**
@@ -153,9 +141,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
         if (!videoFile.exists())
             throw new RuntimeException("video file has problem, are you sure you have welcome_video.mp4 in res/raw folder?");
         return videoFile;
-
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -174,34 +160,15 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
 
     }
 
-
     @OnClick(R.id.tv_skip)
     public void onViewClicked() {
         tv_skip.setEnabled(false);
         mPresenter.turnToMainForce();
     }
 
-
     @Override
     public void goMainActivity() {
-
-
-        if (isRelease) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        } else {
-            Utils.navigation(this, RouterHub.ZHIHU_HOMEACTIVITY, new NavCallback() {
-                @Override
-                public void onArrival(Postcard postcard) {
-
-                }
-
-                @Override
-                public void onLost(Postcard postcard) {
-                    super.onLost(postcard);
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                }
-            });
-        }
+        startActivity(new Intent(SplashActivity.this, MainActivity.class));
         finish();
     }
 
