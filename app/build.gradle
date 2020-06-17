@@ -71,7 +71,6 @@ android {
         release {
             v1SigningEnabled true
             v2SigningEnabled true
-            storeFile file("../jks/p2p.keystore")
             storeFile file("../jks/bopai.keystore")
             storePassword "bp5963373"
             keyAlias "bopai.keysotre"
