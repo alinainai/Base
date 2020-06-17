@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.base.baseui.banner.TimeDownPromptBanner;
+import com.base.baseui.view.banner.TimeDownPromptBanner;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -24,7 +24,7 @@ import com.gas.test.widget.TimeDownView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.base.baseui.banner.TimeDownPromptBanner.BannerConfig.ANIM_BOTTOM;
+import static com.base.baseui.view.banner.TimeDownPromptBanner.BannerConfig.ANIM_BOTTOM;
 import static com.base.lib.util.Preconditions.checkNotNull;
 
 

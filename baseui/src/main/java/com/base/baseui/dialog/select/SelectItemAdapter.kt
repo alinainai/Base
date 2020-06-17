@@ -21,9 +21,7 @@ class SelectItemAdapter(private val mList: List<ISelectItem>?, private val mList
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         if (holder is ItemViewHolder) {
-
             mList?.get(position)?.apply {
                 holder.itemTitle.text = name
                 if (position == mList.size) {
@@ -32,9 +30,7 @@ class SelectItemAdapter(private val mList: List<ISelectItem>?, private val mList
                     holder.divider.visibility = View.VISIBLE
                 }
             }
-
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -48,10 +44,7 @@ class SelectItemAdapter(private val mList: List<ISelectItem>?, private val mList
     }
 
     interface OnItemClickListener {
-
         fun onItemClickListener(item: ISelectItem, position: Int)
-
     }
-
 
 }
