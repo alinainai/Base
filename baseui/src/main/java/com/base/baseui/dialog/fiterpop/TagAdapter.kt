@@ -30,21 +30,17 @@ class TagAdapter(private val mList: List<ISelectItem>, private val mListener: On
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-
         if (holder is ItemViewHolder) {
             mList[position].apply {
                 holder.tagView.text = name
                 holder.tagView.isSelected = id == mSelectId
             }
         }
-
     }
 
     fun setSelected(typeId:String){
-
         mSelectId=typeId;
         notifyDataSetChanged()
-
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +50,6 @@ class TagAdapter(private val mList: List<ISelectItem>, private val mListener: On
     private class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tagView: TextView = itemView.findViewById(R.id.tagView)
     }
-
 
     interface OnItemClickListener {
         fun onItemClickListener(item: ISelectItem, position: Int)

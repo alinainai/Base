@@ -82,7 +82,6 @@ public abstract class ItemPopupWindow<T extends ISelectItem> {
     }
 
     public void showAsDropDown(View author, String typeId) {
-
         if (mData.isEmpty())
             return;
         if (mPopupWindow != null) {
@@ -91,12 +90,10 @@ public abstract class ItemPopupWindow<T extends ISelectItem> {
             }
             mTagAdapter.setSelected(typeId);
             mPopupWindow.showAsDropDown(author, 0, 0);
-
         }
     }
 
     private int getItemPosition(@NotNull String typeId) {
-
         for (ISelectItem t : mData) {
             if (t == null)
                 continue;
@@ -104,7 +101,6 @@ public abstract class ItemPopupWindow<T extends ISelectItem> {
                 return mData.indexOf(t);
         }
         return 0;
-
     }
 
     public void dismiss() {
@@ -114,6 +110,5 @@ public abstract class ItemPopupWindow<T extends ISelectItem> {
             }
         }
     }
-
 
 }
