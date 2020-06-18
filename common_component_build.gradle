@@ -7,7 +7,6 @@ if (isBuildModule.toBoolean()) {
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'kotlin-kapt'
 kapt {
     generateStubs = true

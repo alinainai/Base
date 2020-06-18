@@ -49,6 +49,5 @@ dependencies {
     api (rootProject.ext.dependencies["multidex"]){
         exclude module: 'annotations'
     }
-    api rootProject.ext.dependencies["greenDao"]
     api rootProject.ext.dependencies["zxing"]
 }

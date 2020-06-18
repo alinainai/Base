@@ -19,7 +19,6 @@ import android.app.Application
 import android.content.Context
 import com.base.lib.base.delegate.AppLifecyclers
 import com.gas.zhihu.BuildConfig
-import com.gas.zhihu.db.DbUtils
 import com.lib.commonsdk.utils.AppUtils
 
 /**
@@ -41,8 +40,6 @@ class AppLifecyclesImpl : AppLifecyclers {
         if (BuildConfig.IS_BUILD_MODULE) {
             AppUtils.init(application)
         }
-        DbUtils.getInstance().init(application)
-
     }
 
     override fun onTerminate(application: Application) {}
