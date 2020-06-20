@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import com.base.baseui.dialog.CommonDialog
 import com.base.baseui.photoshow.model.IPhotoPathProvider
 import com.base.baseui.photoshow.model.IPhotoProvider
 import com.base.lib.base.BaseActivity
@@ -21,6 +22,9 @@ import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.dialog.AddCommentDialog
 import com.gas.zhihu.dialog.QrCodeShowDialog
 import com.gas.zhihu.dialog.SelectMapDialog
+import com.gas.zhihu.dialog.TipShowDialog.show
+import com.gas.zhihu.fragment.addmap.AddMapFragment
+import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.ui.show.di.DaggerShowComponent
 import com.gas.zhihu.ui.show.mvp.ShowContract
 import com.gas.zhihu.ui.show.mvp.ShowPresenter
@@ -31,6 +35,7 @@ import com.gas.zhihu.utils.LocationUtils.getAMapMapIntent
 import com.gas.zhihu.utils.LocationUtils.getBaiduMapIntent
 import com.gas.zhihu.utils.LocationUtils.getTecentMapIntent
 import com.lib.commonsdk.glide.ImageConfigImpl
+import com.lib.commonsdk.kotlin.extension.visible
 import com.lib.commonsdk.utils.AppUtils
 import com.lib.commonsdk.utils.KeyboardUtils
 import com.lib.commonsdk.utils.QRCode
@@ -83,12 +88,52 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     }
 
     private fun initView() {
-
         mImagePath = File(Utils.getExternalFilesDir(getActivity()).path, ZHIHU_TEST_IMAGE_FILe_NAME).path
+        emptyView.refreshView.setOnClickListener {
+            loadData()
+        }
+        deleteMapInfo.setOnClickListener {
+            showDeleteDialog()
+        }
+        titleView.setOnBackListener { killMyself() }
+        titleView.setOnRightListener {
+            mPresenter?.mapBeanInfo?.keyName?.let {
+                FragmentContainerActivity.startActivityForResult(this,
+                        AddMapFragment::class.java,
+                        AddMapFragment.setStartArgs(1, it),
+                        REQUEST_MODIFY_MAP_INFO)
+            }
 
-        emptyView.refreshView.setOnClickListener { v: View? -> loadData() }
-       viewClickInit()
+        }
+        imageAddress.setOnClickListener {
+            mPresenter?.mapBeanInfo?.pathName?.let {
+                val list = mutableListOf(IPhotoPathProvider.PhotoPathProvider(File(mImagePath, it).path))
+                @Suppress("UNCHECKED_CAST")
+                galleryView.showPhotoGallery(0, list as List<IPhotoProvider<Any>>?, imageAddress)
+            }
+        }
+        tvAddressCopy.setOnClickListener { mPresenter!!.setAddressToCopy() }
+        tvAddressInfoTrue.setOnClickListener { showMapDialog(mPresenter!!.locationInfo) }
+        imageCode.setOnClickListener {
+            mPresenter!!.qrCodeInfo?.let { QrCodeShowDialog().show(this, "签到二维码", it) }
+        }
+        tv_remark_modify.setOnClickListener {
+            showAddCommentDialog();
+        }
         loadData()
+    }
+
+    private fun showDeleteDialog() {
+        CommonDialog.Builder()
+                .setLeftTitle("确认删除")
+                .setRightTitle("取消")
+                .setCancelable(true)
+                .setTitle("确定要删除吗？删除后不可以恢复")
+                .setDialogClickListener(object : CommonDialog.onDialogClickListener {
+                    override fun onLeftClick() {
+                        mPresenter?.deleteMapInfo()
+                    }
+                }).create(this).show()
     }
 
     private fun loadData() {
@@ -131,6 +176,21 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_MODIFY_MAP_INFO -> {
+                    data?.let {d->
+                        d.getIntExtra("modify", 0).takeIf { it==1 }?.let {
+                            loadData()
+                        }
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     override fun showMessage(message: String) {
         Preconditions.checkNotNull(message)
         ArmsUtils.snackbarText(message)
@@ -145,40 +205,15 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         finish()
     }
 
-
-    private fun viewClickInit() {
-
-        titleView.setOnBackListener {  killMyself() }
-        imageAddress.setOnClickListener {
-            mPresenter?.mapBeanInfo?.pathName?.let {
-                val list= mutableListOf(IPhotoPathProvider.PhotoPathProvider(File(mImagePath, it).path))
-                @Suppress("UNCHECKED_CAST")
-                galleryView.showPhotoGallery(0, list as List<IPhotoProvider<Any>>?, imageAddress)
-            }
-        }
-        tvAddressCopy.setOnClickListener {  mPresenter!!.setAddressToCopy()}
-        tvAddressInfoTrue.setOnClickListener {  showMapDialog(mPresenter!!.locationInfo) }
-        imageCode.setOnClickListener {
-            mPresenter!!.qrCodeInfo?.let { QrCodeShowDialog().show(this, "签到二维码", it) }
-        }
-        tv_remark_modify.setOnClickListener {
-            showAddCommentDialog();
-        }
-
-    }
-
     override fun setDataInfo(data: MapBean?) {
-
         data?.let {
             tvDataInfo.text = AppUtils.getString(R.string.zhihu_map_title_name, data.mapName)
             tvAddressInfoTrue.text = data.locationInfo
-            if(!TextUtils.isEmpty(data.note)){
+            if (!TextUtils.isEmpty(data.note)) {
                 tvRemarkInfoTrue.text = data.note
-            }else{
-                tvRemarkInfoTrue.text="暂无评论数据"
+            } else {
+                tvRemarkInfoTrue.text = "暂无评论数据"
             }
-
-
             imageLoader.loadImage(this,
                     ImageConfigImpl
                             .builder()
@@ -187,16 +222,65 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
                             .build())
 
         }
-
-
     }
 
     override fun setQrCode(data: String?) {
         imageCode!!.setImageBitmap(QRCode.createQRCode(data, 200))
     }
 
+
+    /**
+     * 显示地图选择弹框
+     */
+    private fun showMapDialog(bean: LocationBean?) {
+        if (bean == null) {
+            AppUtils.toast("数据错误")
+            return
+        }
+        if (bean.isInfoError) {
+            AppUtils.toast("数据错误")
+            return
+        }
+        // 经度：116.44000 纬度： 39.93410
+        SelectMapDialog(this).show(object : SelectMapDialog.OnMapClickListener {
+            override fun onMapClick(map: Int) {
+                when (map) {
+                    MAP_AMAP -> startActivity(getAMapMapIntent(bean))
+                    MAP_BAIDU -> startActivity(getBaiduMapIntent(bean))
+                    MAP_TECENT -> startActivity(getTecentMapIntent(bean))
+                    else -> {
+                    }
+                }
+            }
+
+        })
+    }
+
+    private fun showAddCommentDialog() {
+
+        AddCommentDialog().show(this, object : AddCommentDialog.OnCommitClickListener {
+            override fun onCommitClick(str: String) {
+                if (TextUtils.isEmpty(str)) {
+                    AppUtils.toast("备注数据为空")
+                } else {
+                    mPresenter!!.addComment(str)
+                }
+                KeyboardUtils.hideSoftInput(this@ShowActivity)
+            }
+
+            override fun onDismiss() {
+                super.onDismiss()
+                KeyboardUtils.hideSoftInput(this@ShowActivity)
+            }
+
+        })
+
+
+    }
+
     override fun successView() {
         emptyView!!.visibility = View.GONE
+        deleteMapInfo.visible()
     }
 
     override fun showLoading() {
@@ -214,61 +298,17 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         emptyView!!.visibility = View.VISIBLE
     }
 
+    override fun showDeleteSuccessTip() {
+        show(this, "提示", "删除成功", { killMyself() })
+    }
+
     override fun getActivity(): Activity {
         return this
     }
 
-    /**
-     * 显示地图选择弹框
-     */
-    private fun showMapDialog(bean: LocationBean?) {
-        if (bean == null) {
-            AppUtils.toast("数据错误")
-            return
-        }
-        if (bean.isInfoError) {
-            AppUtils.toast("数据错误")
-            return
-        }
-        // 经度：116.44000 纬度： 39.93410
-        SelectMapDialog(this).show( object : SelectMapDialog.OnMapClickListener {
-            override fun onMapClick(map: Int) {
-                when (map) {
-                    MAP_AMAP -> startActivity(getAMapMapIntent(bean))
-                    MAP_BAIDU -> startActivity(getBaiduMapIntent(bean))
-                    MAP_TECENT -> startActivity(getTecentMapIntent(bean))
-                    else -> {
-                    }
-                }
-            }
-
-        })
-    }
-
-    private fun showAddCommentDialog(){
-
-        AddCommentDialog().show(this,object :AddCommentDialog.OnCommitClickListener{
-            override fun onCommitClick(str: String) {
-               if(TextUtils.isEmpty(str)){
-                   AppUtils.toast("备注数据为空")
-               }else{
-                   mPresenter!!.addComment(str)
-               }
-                KeyboardUtils.hideSoftInput(this@ShowActivity)
-            }
-
-            override fun onDismiss() {
-                super.onDismiss()
-                KeyboardUtils.hideSoftInput(this@ShowActivity)
-            }
-
-        })
-
-
-    }
-
     companion object {
         private const val MAP_KEY_ARG = "map_key_arg"
+        private const val REQUEST_MODIFY_MAP_INFO = 0xF1
         fun launchActivity(context: Context?, key: String?) {
             val intent = Intent(context, ShowActivity::class.java)
             intent.putExtra(MAP_KEY_ARG, key)

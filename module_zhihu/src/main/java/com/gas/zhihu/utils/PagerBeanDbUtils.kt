@@ -2,6 +2,7 @@ package com.gas.zhihu.utils
 
 import com.gas.zhihu.bean.PaperBean
 import com.gas.zhihu.db.DbUtils
+import com.gas.zhihu.db.MapBeanDao
 import com.gas.zhihu.db.PaperBeanDao
 import org.greenrobot.greendao.query.QueryBuilder
 import java.util.*
@@ -78,6 +79,18 @@ object PagerBeanDbUtils {
         val dao = daoSession.paperBeanDao
         val qb: QueryBuilder<PaperBean> = dao.queryBuilder()
         val list: List<PaperBean> = qb.where(PaperBeanDao.Properties.Type.eq(type)).list()
+        return if (list.isNotEmpty()) {
+            list
+        } else emptyList()
+    }
+
+    @JvmStatic
+    fun queryAllPaperDataByTypeAndStr(type: Int,key:String): List<PaperBean> {
+        val daoSession = DbUtils.getInstance().daoSession
+        val dao = daoSession.paperBeanDao
+        val qb: QueryBuilder<PaperBean> = dao.queryBuilder()
+
+        val list: List<PaperBean> = qb.where(PaperBeanDao.Properties.Type.eq(type), PaperBeanDao.Properties.FileName.like("%$key%")).list()
         return if (list.isNotEmpty()) {
             list
         } else emptyList()

@@ -1,7 +1,6 @@
 package com.gas.zhihu.fragment.paper
 
 import android.content.Context
-import android.util.Log
 import android.widget.ImageView
 import com.base.baseui.adapter.ExtendAdapter
 import com.base.paginate.viewholder.PageViewHolder
@@ -9,7 +8,7 @@ import com.gas.zhihu.R
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
 
-class PaperAdapter(context: Context?) : ExtendAdapter<PaperShowBean?>(context) {
+class PaperAdapter(context: Context?,openLoadMore: Boolean = true ,openEmpty: Boolean = true) : ExtendAdapter<PaperShowBean?>(context, openLoadMore, openEmpty) {
 
     override fun getItemLayoutId(): Int {
         return R.layout.zhihu_item_pager

@@ -58,7 +58,12 @@ class ShowPresenter @Inject constructor(model: ShowContract.Model?, rootView: Sh
             LocationBean()
         } else mapBeanInfo!!.locationBean
 
-
+    fun deleteMapInfo(){
+        mapBeanInfo?.let {
+            mModel?.deleteMapInfo(it.keyName)
+        }
+        mView?.showDeleteSuccessTip()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

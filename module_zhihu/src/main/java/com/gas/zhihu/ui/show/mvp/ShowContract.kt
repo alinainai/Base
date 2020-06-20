@@ -21,6 +21,7 @@ interface ShowContract {
         fun successView()
         fun emptyView()
         fun errorView()
+        fun showDeleteSuccessTip()
         fun getActivity():Activity
     }
 
@@ -28,5 +29,6 @@ interface ShowContract {
     interface Model : IModel {
         fun getMapInfo(key: String?): MapBean?
         val defaultMapInfo: MapBean?
+        fun deleteMapInfo(key:String?)
     }
 }

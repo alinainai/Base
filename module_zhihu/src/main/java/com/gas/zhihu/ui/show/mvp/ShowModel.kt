@@ -25,6 +25,15 @@ class ShowModel @Inject constructor(repositoryManager: IRepositoryManager?) : Ba
         return MapBeanDbUtils.queryData(key)
     }
 
+    override fun deleteMapInfo(key: String?){
+
+        key?.let {
+            MapBeanDbUtils.delete(key)
+        }
+    }
+
     override val defaultMapInfo: MapBean
         get() = MapBean()
+
+
 }

@@ -204,7 +204,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:rightText="修改信息"
         app:titleText="搜索结果" />
+
+    <TextView
+        android:id="@+id/deleteMapInfo"
+        android:textSize="@dimen/public_font_14sp"
+        android:background="#f9f9f9"
+        android:textColor="#FF0000"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="删除该场站信息"
+        />
+
 
     <com.base.baseui.photoshow.view.GalleryView
         android:id="@+id/galleryView"

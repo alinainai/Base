@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         }
     }
     private void showForgetTip() {
-       TipShowDialog.INSTANCE.show(this, "提示", "登录密码提示", () -> null);
+       TipShowDialog.INSTANCE.show(this, "提示", "登录密码提示", () -> null,true);
     }
 
     private void login() {

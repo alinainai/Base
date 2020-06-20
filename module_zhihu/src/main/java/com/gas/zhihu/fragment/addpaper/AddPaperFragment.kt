@@ -218,7 +218,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
     }
 
     override fun showCommitSuccess() {
-        TipShowDialog.show(activity!!, "提示", "保存成功") { killMyself() }
+        TipShowDialog.show(activity!!, "提示", "保存成功",{ killMyself() })
     }
 
     private fun selectFile(type: String) {

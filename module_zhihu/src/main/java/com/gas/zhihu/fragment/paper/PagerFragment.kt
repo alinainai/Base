@@ -25,13 +25,16 @@ import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.bean.MapSelectShowBean
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
+import com.gas.zhihu.fragment.addmap.AddMapFragment
 import com.gas.zhihu.fragment.addpaper.AddPaperFragment
 import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.fragment.paper.di.DaggerPagerComponent
 import com.gas.zhihu.fragment.paper.di.PagerModule
 import com.gas.zhihu.fragment.paper.mvp.PagerContract
 import com.gas.zhihu.fragment.paper.mvp.PagerPresenter
+import com.gas.zhihu.fragment.papersearch.PaperSearchFragment
 import com.gas.zhihu.ui.base.FragmentContainerActivity
+import com.gas.zhihu.ui.show.ShowActivity
 import com.gas.zhihu.utils.OfficeHelper
 import com.lib.commonsdk.utils.FileUtils
 import com.lib.commonsdk.utils.Utils
@@ -172,6 +175,11 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
             1 -> {
                 guideTitle.titleText = "消缺经验集"
             }
+        }
+        fuzzySearch.setOnClickListener {
+            FragmentContainerActivity.startActivity(activity!!,
+                    PaperSearchFragment::class.java,
+                    PaperSearchFragment.setStartArgs(mType))
         }
         guideTitle.setOnBackListener {
             activity?.finish()

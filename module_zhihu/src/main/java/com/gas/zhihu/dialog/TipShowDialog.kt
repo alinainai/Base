@@ -9,7 +9,7 @@ import com.gas.zhihu.R
 
 object TipShowDialog {
 
-    fun show(context: Context?, title: String, info: String, action: () -> Unit = {}) {
+    fun show(context: Context?, title: String, info: String, action: () -> Unit = {}, isCancel: Boolean = true) {
         val view = LayoutInflater.from(context).inflate(R.layout.zhihu_dialog_forget_pwd, null)
         val tvTitle = view.findViewById<TextView>(R.id.dialog_title)
         val tvInfo = view.findViewById<TextView>(R.id.dialog_info)
@@ -17,7 +17,7 @@ object TipShowDialog {
         tvInfo.text = info
         val dialog = CommonDialog.Builder()
                 .setCustomView(view)
-                .setCancelable(true)
+                .setCancelable(isCancel)
                 .create(context)
         view.findViewById<View>(R.id.btn_sure).setOnClickListener {
             dialog.dismiss()
