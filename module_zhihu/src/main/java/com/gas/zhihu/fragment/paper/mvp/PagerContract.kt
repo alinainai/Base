@@ -19,6 +19,7 @@ interface PagerContract {
     interface View : IView {
         fun getWrapActivity(): Activity
         fun setPaperData(list: List<PaperShowBean>)
+        fun updateData()
     }
 
 
@@ -28,6 +29,7 @@ interface PagerContract {
         fun getValidMapList(): List<MapBean>
         fun getPagersByFilter(voltage: String, mapKey: String): List<PaperShowBean>
         fun resetOriginData()
+        fun deletePaperInfo(key:String)
     }
 
 

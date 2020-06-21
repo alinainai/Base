@@ -58,6 +58,12 @@
         </attr>
     </declare-styleable>
 
+    <declare-styleable name="SwipeMenuLayout" tools:ignore="ResourceName">
+        <attr name="swipeEnable" format="boolean"/>
+        <attr name="ios" format="boolean"/>
+        <attr name="leftSwipe" format="boolean"/>
+    </declare-styleable>
+
 
 
 </resources>

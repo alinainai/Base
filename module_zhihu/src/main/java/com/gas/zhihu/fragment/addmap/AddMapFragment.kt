@@ -112,7 +112,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
             }
             1 -> {
                 titleView.titleText = "修改场站信息"
-                var key = activity!!.intent.getStringExtra(MODIFY_MAP_KEY)
+                val key = activity!!.intent.getStringExtra(MODIFY_MAP_KEY)
                 if (key.isNullOrBlank()) {
                     killMyself()
                     return

@@ -97,6 +97,10 @@ constructor(model: AddPaperContract.Model, rootView: AddPaperContract.View) :
                 })
     }
 
+    fun updatePaperInfo(bean: PaperBean):Boolean {
+      return mModel?.updatePaperInfo(bean)?:false
+    }
+
     override fun onDestroy() {
         mDispose?.let {
             if (it.isDisposed)

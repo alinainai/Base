@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,8 +35,12 @@ import com.gas.zhihu.fragment.addpaper.mvp.AddPaperPresenter
 import com.gas.zhihu.fragment.fileselect.FileSelectFragment
 import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.ui.base.FragmentContainerActivity
+import com.gas.zhihu.utils.MapBeanDbUtils
+import com.gas.zhihu.utils.PagerBeanDbUtils
 import com.lib.commonsdk.utils.FileUtils
+import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_add_paper.*
+import java.io.File
 
 
 /**
@@ -57,15 +60,17 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         const val REQUEST_PICK_FILE = 101
         const val REQUEST_STORAGE_PERMISSION = 103
         const val REQUEST_MAP_INFO = 104
+        const val PAPER_MODIFY_ID = "paper_modify_id"
 
         fun newInstance(): AddPaperFragment {
             val fragment = AddPaperFragment()
             return fragment
         }
 
-        fun setPagerArgs(type: Int): Bundle? {
+        fun setPagerArgs(type: Int, paperId: Int = -1): Bundle? {
             val args = Bundle()
             args.putInt(TYPE, type)
+            args.putInt(PAPER_MODIFY_ID, paperId)
             return args
         }
     }
@@ -87,21 +92,43 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
      * 0:图纸
      * 1:经验集
      */
-    private var mType: Int = 0;
+    private var mType: Int = 0
+    private var mPaperId: Int = -1
     private var selectVoltageLevel: String = ""
     private var selectMapKey: String = ""
     private var selectFileName: String = ""
     private var selectFilePathName: String = ""
+    private var mPaperBean: PaperBean? = null
 
     override fun initData(savedInstanceState: Bundle?) {
-
         mType = activity!!.intent.getIntExtra(TYPE, 0)
+        mPaperId = activity!!.intent.getIntExtra(PAPER_MODIFY_ID, -1)
         when (mType) {
             0 -> {
-                titleView.titleText = "添加图纸"
+                if (mPaperId == -1) {
+                    titleView.titleText = "添加图纸"
+                } else {
+                    titleView.titleText = "修改图纸信息"
+                    mPaperBean = PagerBeanDbUtils.queryDataById(mPaperId)
+                    if (mPaperBean == null) {
+                        killMyself()
+                        return
+                    }
+                    updateView(mPaperBean)
+                }
             }
             1 -> {
-                titleView.titleText = "添加消缺经验集"
+                if (mPaperId == -1) {
+                    titleView.titleText = "添加消缺经验集"
+                } else {
+                    titleView.titleText = "修改消缺经验集"
+                    mPaperBean = PagerBeanDbUtils.queryDataById(mPaperId)
+                    if (mPaperBean == null) {
+                        killMyself()
+                        return
+                    }
+                    updateView(mPaperBean)
+                }
             }
         }
         titleView.setOnBackListener { killMyself() }
@@ -110,9 +137,18 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
         //选择文件
         imgFileHolder.setOnClickListener { requestStoragePermission() }
         tvFilePath.setOnClickListener { requestStoragePermission() }
-
         btnCommit.setOnClickListener { commit() }
+    }
 
+    private fun updateView(bean: PaperBean?) {
+        bean?.let {
+            etAddressLon.setText(it.fileName)
+            mapName.text = MapBeanDbUtils.queryData(it.mapKey)?.mapName ?: ""
+            voltageName.text = VoltageLevelBean.getVoltageName(it.voltageLevel.toString())
+            val path = Utils.getExternalFilesDir(activity!!);
+            val fileFile = File(path.path, ZhihuConstants.FILE_ZIP_FOLDER + File.separator + it.pathName)
+            tvFilePath.text = fileFile.path
+        }
     }
 
     override fun showMapSelectDialog(maps: List<MapSelectShowBean>) {
@@ -192,40 +228,102 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
     }
 
     private fun commit() {
-        if (selectVoltageLevel.isBlank()) {
-            showMessage("请选择电压")
-            return
+        if (mPaperBean == null) {
+            if (selectVoltageLevel.isBlank()) {
+                showMessage("请选择电压")
+                return
+            }
+            if (selectMapKey.isBlank()) {
+                showMessage("请选择厂站信息")
+                return
+            }
+            if (selectFileName.isBlank()) {
+                showMessage("请选择文件")
+                return
+            }
+            if (etAddressLon.text.isBlank()) {
+                showMessage("文件名不能为空")
+                return
+            }
+            val bean = PaperBean()
+            bean.fileName = etAddressLon.text.toString()
+            bean.mapKey = selectMapKey
+            bean.pathName = selectFilePathName
+            bean.type = mType
+            bean.voltageLevel = selectVoltageLevel.toInt()
+            mPresenter?.addPaperToDatabase(bean, selectFileName)
+        } else {
+
+
+            if (etAddressLon.text.isNullOrBlank()) {
+                showMessage("请选择电压")
+                return
+            }
+            if (mapName.text.isNullOrBlank()) {
+                showMessage("请选择厂站信息")
+                return
+            }
+
+            var modify = false
+            if (etAddressLon.text.toString() != mPaperBean!!.fileName) {
+                modify = true
+                mPaperBean?.fileName = etAddressLon.text.toString()
+            }
+
+            if (mapName.text.toString() != MapBeanDbUtils.queryData(mPaperBean?.mapKey)?.mapName ?: "") {
+                modify = true
+                mPaperBean?.mapKey = selectMapKey
+            }
+
+            if (voltageName.text.toString() != VoltageLevelBean.getVoltageName(mPaperBean?.voltageLevel.toString())) {
+                modify = true
+                mPaperBean?.voltageLevel = selectVoltageLevel.toInt()
+            }
+
+            if (selectFilePathName.isNotBlank()) {
+                modify = true
+                mPaperBean?.pathName = selectFilePathName
+            }
+            if (modify) {
+                if (selectFilePathName.isNotBlank()) {
+                    mPresenter?.addPaperToDatabase(mPaperBean!!, selectFileName)
+                } else {
+                   if(mPresenter?.updatePaperInfo(mPaperBean!!) == true) {
+                       showCommitSuccess()
+                   }else{
+                       showMessage("保存失败")
+                   }
+
+                }
+            } else {
+                showMessage("信息未修改")
+            }
+
+
         }
-        if (selectMapKey.isBlank()) {
-            showMessage("请选择厂站信息")
-            return
-        }
-        if (selectFileName.isBlank()) {
-            showMessage("请选择文件")
-            return
-        }
-        if (etAddressLon.text.isBlank()) {
-            showMessage("文件名不能为空")
-            return
-        }
-        val bean = PaperBean()
-        bean.fileName = etAddressLon.text.toString()
-        bean.mapKey = selectMapKey
-        bean.pathName = selectFilePathName
-        bean.type = mType
-        bean.voltageLevel = selectVoltageLevel.toInt()
-        mPresenter?.addPaperToDatabase(bean, selectFileName)
     }
 
     override fun showCommitSuccess() {
-        TipShowDialog.show(activity!!, "提示", "保存成功",{ killMyself() })
+        TipShowDialog.show(activity!!, "提示", "保存成功", {
+            mPaperBean?.let {
+                val intent = Intent()
+                intent.putExtra("modify", 1)
+                activity?.setResult(RESULT_OK, intent)
+            }
+            killMyself() })
     }
 
     private fun selectFile(type: String) {
         val typeName: String = when (type) {
-            "0" -> { ZhihuConstants.FILE_TYPE_WORD }
-            "1" -> { ZhihuConstants.FILE_TYPE_PDF }
-            else -> { "" }
+            "0" -> {
+                ZhihuConstants.FILE_TYPE_WORD
+            }
+            "1" -> {
+                ZhihuConstants.FILE_TYPE_PDF
+            }
+            else -> {
+                ""
+            }
         }
         FragmentContainerActivity.startActivityForResult(activity!!,
                 FileSelectFragment::class.java,

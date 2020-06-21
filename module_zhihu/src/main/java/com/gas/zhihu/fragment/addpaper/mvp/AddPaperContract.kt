@@ -29,6 +29,7 @@ interface AddPaperContract {
         fun getMapList():List<MapBean>
         fun getVoltageList():List<VoltageLevelBean>
         fun insertPaperBean(bean: PaperBean):Boolean
+        fun updatePaperInfo(bean: PaperBean):Boolean
     }
 
 

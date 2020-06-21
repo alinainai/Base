@@ -1,17 +1,14 @@
 package com.gas.zhihu.fragment.addpaper.mvp
 
+import com.base.lib.di.scope.FragmentScope
 import com.base.lib.integration.repository.IRepositoryManager
 import com.base.lib.mvp.BaseModel
-
-import com.base.lib.di.scope.FragmentScope;
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.bean.PaperBean
 import com.gas.zhihu.bean.VoltageLevelBean
-import javax.inject.Inject
-
-import com.gas.zhihu.fragment.addpaper.mvp.AddPaperContract
 import com.gas.zhihu.utils.MapBeanDbUtils
 import com.gas.zhihu.utils.PagerBeanDbUtils
+import javax.inject.Inject
 
 
 /**
@@ -30,16 +27,26 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
         super.onDestroy();
     }
 
-    override fun getMapList():List<MapBean>{
+    override fun getMapList(): List<MapBean> {
         return MapBeanDbUtils.queryAllMapData()
     }
 
-    override fun getVoltageList():List<VoltageLevelBean>{
+    override fun getVoltageList(): List<VoltageLevelBean> {
         return VoltageLevelBean.voltageLevelItems
     }
 
-    override fun insertPaperBean(bean:PaperBean):Boolean{
-       return PagerBeanDbUtils.insertMapBean(bean)
+    override fun insertPaperBean(bean: PaperBean): Boolean {
+        if (bean.id != null && bean.id > 0L) {
+            return PagerBeanDbUtils.updateMapBean(bean)
+        }
+        return PagerBeanDbUtils.insertMapBean(bean)
+    }
+
+    override fun updatePaperInfo(bean: PaperBean): Boolean {
+        if (bean.id != null && bean.id > 0L) {
+            return PagerBeanDbUtils.updateMapBean(bean)
+        }
+        return false
     }
 
 }

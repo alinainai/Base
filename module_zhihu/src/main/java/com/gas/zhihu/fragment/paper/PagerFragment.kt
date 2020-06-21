@@ -3,11 +3,11 @@ package com.gas.zhihu.fragment.paper
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.base.baseui.dialog.CommonDialog
 import com.base.baseui.dialog.fiterpop.FilterPopupWindow
 import com.base.baseui.dialog.itempop.ItemPopupWindow
 import com.base.baseui.dialog.select.ISelectItem
@@ -15,8 +15,6 @@ import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.paginate.interfaces.EmptyInterface
-import com.base.paginate.interfaces.OnMultiItemClickListeners
-import com.base.paginate.viewholder.PageViewHolder
 import com.gas.zhihu.R
 import com.gas.zhihu.app.MapConstants
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
@@ -25,7 +23,6 @@ import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.bean.MapSelectShowBean
 import com.gas.zhihu.bean.PaperShowBean
 import com.gas.zhihu.bean.VoltageLevelBean
-import com.gas.zhihu.fragment.addmap.AddMapFragment
 import com.gas.zhihu.fragment.addpaper.AddPaperFragment
 import com.gas.zhihu.fragment.mapshow.MapShowFragment
 import com.gas.zhihu.fragment.paper.di.DaggerPagerComponent
@@ -34,11 +31,8 @@ import com.gas.zhihu.fragment.paper.mvp.PagerContract
 import com.gas.zhihu.fragment.paper.mvp.PagerPresenter
 import com.gas.zhihu.fragment.papersearch.PaperSearchFragment
 import com.gas.zhihu.ui.base.FragmentContainerActivity
-import com.gas.zhihu.ui.show.ShowActivity
 import com.gas.zhihu.utils.OfficeHelper
-import com.lib.commonsdk.utils.FileUtils
 import com.lib.commonsdk.utils.Utils
-import kotlinx.android.synthetic.main.zhihu_fragment_add_paper.*
 import kotlinx.android.synthetic.main.zhihu_fragment_pager.*
 import java.io.File
 import java.util.*
@@ -56,6 +50,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     companion object {
         const val TYPE = "type"
         const val REQUEST_MAP_INFO = 104
+        const val REQUEST_MODIFY_PAPER_INFO = 105
 
         fun newInstance(): PagerFragment {
             val fragment = PagerFragment()
@@ -98,7 +93,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         }?.toList()?.apply {
             selectorModels.addAll(this)
         }
-        object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels,true) {
+        object : ItemPopupWindow<MapSelectShowBean>(activity, selectorModels, true) {
             override fun onPositionClick(item: ISelectItem, position: Int) {
                 item.apply {
                     if (id != selectMapKey) {
@@ -142,6 +137,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                 }
                 dismiss()
             }
+
             override fun onPopDismiss() {
                 tvTypeVoltage.isSelected = false
                 imgTypeVoltage.isSelected = false
@@ -162,8 +158,10 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     override fun onResume() {
         super.onResume()
         mPresenter!!.initOriginData(mType)
-        mPresenter!!.getFilterData(selectVoltageLevel, selectMapKey)
+        updateData()
     }
+
+
 
 
     override fun initData(savedInstanceState: Bundle?) {
@@ -193,19 +191,45 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         llTypeVoltage.setOnClickListener {
             showTypeVoltage()
         }
-        mAdapter.setOnMultiItemClickListener { _, data, _, _ ->
-            data?.let {
-                val path = Utils.getExternalFilesDir(activity!!);
-                val fileFile = File(path.path, FILE_ZIP_FOLDER + File.separator + data.filePath)
-                OfficeHelper.open(activity!!, fileFile.path)
+        mAdapter.setOnPaperOptionListener(object : PaperAdapter.OnPaperOptionListener {
+            override fun itemClick(data: PaperShowBean, position: Int) {
+                data.let {
+                    val path = Utils.getExternalFilesDir(activity!!);
+                    val fileFile = File(path.path, FILE_ZIP_FOLDER + File.separator + data.filePath)
+                    OfficeHelper.open(activity!!, fileFile.path)
+                }
             }
-        }
+
+            override fun itemModify(data: PaperShowBean, position: Int) {
+                FragmentContainerActivity.startActivityForResult(activity!!,
+                        AddPaperFragment::class.java,
+                        AddPaperFragment.setPagerArgs(mType, data.paperKey.toInt()),
+                        REQUEST_MODIFY_PAPER_INFO)
+
+            }
+
+            override fun itemDelete(data: PaperShowBean, position: Int) {
+                CommonDialog.Builder()
+                        .setLeftTitle("确认删除")
+                        .setRightTitle("取消")
+                        .setCancelable(true)
+                        .setTitle("确定要删除吗？删除后不可以恢复")
+                        .setDialogClickListener(object : CommonDialog.onDialogClickListener {
+                            override fun onLeftClick() {
+                                mPresenter?.deletePaperInfo(data.paperKey)
+                            }
+                        }).create(activity).show()
+            }
+
+        })
+
         itemRefresh.isEnabled = false
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
         mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
 
     }
+
 
     override fun setPaperData(list: List<PaperShowBean>) {
         mAdapter.showDataDiff(list)
@@ -215,6 +239,10 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
         } else {
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)
         }
+    }
+
+    override fun updateData() {
+        mPresenter?.getFilterData(selectVoltageLevel, selectMapKey)
     }
 
     private fun showTypeMap() {
@@ -241,7 +269,14 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
                         if (id != selectMapKey) {
                             selectMapKey = id
                             tvTypeMap.text = if (id == DEFAULT_TYPE) "厂站" else name
-                            mPresenter?.getFilterData(selectVoltageLevel, selectMapKey)
+                            updateData()
+                        }
+                    }
+                }
+                REQUEST_MODIFY_PAPER_INFO->{
+                    data?.let {d->
+                        d.getIntExtra("modify", 0).takeIf { it==1 }?.let {
+
                         }
                     }
                 }

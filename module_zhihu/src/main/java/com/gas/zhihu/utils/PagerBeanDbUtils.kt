@@ -2,7 +2,6 @@ package com.gas.zhihu.utils
 
 import com.gas.zhihu.bean.PaperBean
 import com.gas.zhihu.db.DbUtils
-import com.gas.zhihu.db.MapBeanDao
 import com.gas.zhihu.db.PaperBeanDao
 import org.greenrobot.greendao.query.QueryBuilder
 import java.util.*
@@ -26,6 +25,20 @@ object PagerBeanDbUtils {
     }
 
     @JvmStatic
+    fun updateMapBean(bean: PaperBean): Boolean {
+        val daoSession = DbUtils.getInstance().daoSession
+        val dao = daoSession.paperBeanDao
+        val qb = dao.queryBuilder()
+        val list = qb.where(PaperBeanDao.Properties.Id.eq(bean.id)).list()
+        return if (list.size > 0) {
+            dao.update(bean)
+            true
+        } else {
+            false
+        }
+    }
+
+    @JvmStatic
     fun queryData(bean: PaperBean): PaperBean? {
         val daoSession = DbUtils.getInstance().daoSession
         val dao = daoSession.paperBeanDao
@@ -38,6 +51,30 @@ object PagerBeanDbUtils {
             list[0]
         } else null
 
+    }
+
+    @JvmStatic
+    fun queryDataById(id: Int): PaperBean? {
+        val daoSession = DbUtils.getInstance().daoSession
+        val dao = daoSession.paperBeanDao
+        val qb: QueryBuilder<PaperBean> = dao.queryBuilder()
+        val list: List<PaperBean> = qb.where(PaperBeanDao.Properties.Id.eq(id)).list()
+        return if (list.isNotEmpty()) {
+            list[0]
+        } else null
+    }
+
+    @JvmStatic
+    fun deletePaperById(id: Int): Boolean {
+        val daoSession = DbUtils.getInstance().daoSession
+        val dao = daoSession.paperBeanDao
+        val qb: QueryBuilder<PaperBean> = dao.queryBuilder()
+        val list: List<PaperBean> = qb.where(PaperBeanDao.Properties.Id.eq(id)).list() as ArrayList<PaperBean>
+        if (list.isNotEmpty()) {
+            dao.delete(list[0])
+            return true
+        }
+        return false
     }
 
     @JvmStatic
@@ -85,7 +122,7 @@ object PagerBeanDbUtils {
     }
 
     @JvmStatic
-    fun queryAllPaperDataByTypeAndStr(type: Int,key:String): List<PaperBean> {
+    fun queryAllPaperDataByTypeAndStr(type: Int, key: String): List<PaperBean> {
         val daoSession = DbUtils.getInstance().daoSession
         val dao = daoSession.paperBeanDao
         val qb: QueryBuilder<PaperBean> = dao.queryBuilder()

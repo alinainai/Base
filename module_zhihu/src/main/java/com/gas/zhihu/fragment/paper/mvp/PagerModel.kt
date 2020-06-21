@@ -1,11 +1,9 @@
 package com.gas.zhihu.fragment.paper.mvp
 
-import android.util.Log
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.integration.repository.IRepositoryManager
 import com.base.lib.mvp.BaseModel
 import com.gas.zhihu.app.MapConstants.Companion.PAPER_TYPE_DEFAULT
-import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.bean.PaperBean
@@ -65,6 +63,17 @@ constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager
     override fun resetOriginData() {
         originList.clear()
         originMapBeanMap.clear()
+    }
+
+    override fun deletePaperInfo(key: String) {
+        if (key.isBlank()) {
+            return
+        }
+        if (PagerBeanDbUtils.deletePaperById(key.toInt())) {
+            originList.firstOrNull { it.id == key.toLong() }?.let { bean ->
+                originList.remove(bean)
+            }
+        }
     }
 
     override fun getPagersByFilter(voltage: String, mapKey: String): List<PaperShowBean> {
