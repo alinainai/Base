@@ -16,8 +16,7 @@ class AddCommentDialog {
         val dialog = CommonDialog.Builder()
                 .setDialogClickListener(mapClickListener)
                 .setCancelable(true)
-                .setCustomView(view)
-                .create(context)
+                .create(context,view)
 
         view.apply {
             btnCancel.setOnClickListener { v: View? ->

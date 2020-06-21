@@ -7,7 +7,7 @@ import android.widget.TextView
 import com.base.baseui.dialog.CommonDialog
 import com.gas.zhihu.R
 
-object TipShowDialog {
+class TipShowDialog {
 
     fun show(context: Context?, title: String, info: String, action: () -> Unit = {}, isCancel: Boolean = true) {
         val view = LayoutInflater.from(context).inflate(R.layout.zhihu_dialog_forget_pwd, null)
@@ -16,9 +16,8 @@ object TipShowDialog {
         tvTitle.text = title
         tvInfo.text = info
         val dialog = CommonDialog.Builder()
-                .setCustomView(view)
                 .setCancelable(isCancel)
-                .create(context)
+                .create(context,view)
         view.findViewById<View>(R.id.btn_sure).setOnClickListener {
             dialog.dismiss()
             action.invoke()

@@ -304,7 +304,7 @@ class AddPaperFragment : BaseFragment<AddPaperPresenter>(), AddPaperContract.Vie
     }
 
     override fun showCommitSuccess() {
-        TipShowDialog.show(activity!!, "提示", "保存成功", {
+        TipShowDialog().show(activity!!, "提示", "保存成功", {
             mPaperBean?.let {
                 val intent = Intent()
                 intent.putExtra("modify", 1)

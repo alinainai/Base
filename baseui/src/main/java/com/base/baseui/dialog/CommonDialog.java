@@ -29,7 +29,6 @@ public class CommonDialog extends Dialog {
         private String mTitle;
         private String mPositiveBtnText;
         private String mNegativeBtnText;
-        private View mContentView;
         private boolean mCancelable = true;
         private onDialogClickListener mDialogClickListener;
 
@@ -53,10 +52,6 @@ public class CommonDialog extends Dialog {
             return this;
         }
 
-        public CommonDialog.Builder setCustomView(View contentView) {
-            mContentView = contentView;
-            return this;
-        }
 
         public CommonDialog.Builder setDialogClickListener(onDialogClickListener listener) {
             mDialogClickListener = listener;
@@ -64,8 +59,12 @@ public class CommonDialog extends Dialog {
         }
 
         public CommonDialog create(Context context) {
+            return create(context, null);
+        }
+
+        public CommonDialog create(Context context, View contentView) {
             CommonDialog dialog = new CommonDialog(context, R.style.public_common_dialog);
-            if (mContentView == null) {
+            if (contentView == null) {
                 @SuppressLint("InflateParams")
                 View view = LayoutInflater.from(context).inflate(R.layout.public_dialog_common, null);
                 TextView title = view.findViewById(R.id.dialog_title);
@@ -103,7 +102,7 @@ public class CommonDialog extends Dialog {
                 });
                 dialog.setContentView(view);
             } else {
-                dialog.setContentView(mContentView);
+                dialog.setContentView(contentView);
             }
 
             dialog.setOnDismissListener(dialogInterface -> {
@@ -141,7 +140,7 @@ public class CommonDialog extends Dialog {
 
         }
 
-        default void onRightClick(){
+        default void onRightClick() {
 
         }
 

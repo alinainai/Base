@@ -267,7 +267,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                 val file = File("${Utils.getExternalFilesDir(activity!!)}${File.separator}${IMAGE_ZIP_FOLDER}",
                         "${etKeyName.text}.jpg")
                 if (FileUtils.copy(imageFile, file)) {
-                    TipShowDialog.show(activity!!, "提示", "保存成功", { killMyself() })
+                    TipShowDialog().show(activity!!, "提示", "保存成功", { killMyself() })
                 } else {
                     showMessage("文件添加失败请重试")
                     MapBeanDbUtils.delete(bean.keyName)
@@ -312,7 +312,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                     if (FileUtils.copy(imageFile, file)) {
                         modifyMapBean!!.pathName =fileName
                         updateBean(modifyMapBean!!)
-                        TipShowDialog.show(activity!!, "提示", "修改成功", {
+                        TipShowDialog().show(activity!!, "提示", "修改成功", {
                             val intent = Intent()
                             intent.putExtra("modify", 1)
                             activity?.setResult(RESULT_OK, intent)
@@ -323,7 +323,7 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
                     }
                 } else {
                     updateBean(modifyMapBean!!)
-                    TipShowDialog.show(activity!!, "提示", "修改成功", {
+                    TipShowDialog().show(activity!!, "提示", "修改成功", {
                         val intent = Intent()
                         intent.putExtra("modify", 1)
                         activity?.setResult(RESULT_OK, intent)

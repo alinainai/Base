@@ -22,7 +22,7 @@ import com.gas.zhihu.bean.MapBean
 import com.gas.zhihu.dialog.AddCommentDialog
 import com.gas.zhihu.dialog.QrCodeShowDialog
 import com.gas.zhihu.dialog.SelectMapDialog
-import com.gas.zhihu.dialog.TipShowDialog.show
+import com.gas.zhihu.dialog.TipShowDialog
 import com.gas.zhihu.fragment.addmap.AddMapFragment
 import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.ui.show.di.DaggerShowComponent
@@ -299,7 +299,7 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     }
 
     override fun showDeleteSuccessTip() {
-        show(this, "提示", "删除成功", { killMyself() })
+        TipShowDialog().show(this, "提示", "删除成功", { killMyself() })
     }
 
     override fun getActivity(): Activity {
