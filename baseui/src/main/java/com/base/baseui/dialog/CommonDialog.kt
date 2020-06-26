@@ -3,7 +3,6 @@ package com.base.baseui.dialog
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -13,14 +12,13 @@ import android.widget.TextView
 import com.base.baseui.R
 
 class CommonDialog : Dialog {
-    constructor(context: Context?, theme: Int) : super(context!!, theme) {}
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context, theme: Int) : super(context, theme) {}
+    constructor(context: Context) : super(context) {}
 
     class Builder {
         private var mTitle: String? = null
         private var mPositiveBtnText: String? = null
         private var mNegativeBtnText: String? = null
-        private var mContentView: View? = null
         private var mCancelable = true
         private var mDialogClickListener: OnDialogClickListener? = null
         fun setCancelable(cancelable: Boolean): Builder {
@@ -43,36 +41,31 @@ class CommonDialog : Dialog {
             return this
         }
 
-        fun setCustomView(contentView: View?): Builder {
-            mContentView = contentView
-            return this
-        }
-
         fun setDialogClickListener(listener: OnDialogClickListener?): Builder {
             mDialogClickListener = listener
             return this
         }
 
-        fun create(context: Context?): CommonDialog {
+        fun create(context: Context,contentView: View?): CommonDialog {
             val dialog = CommonDialog(context, R.style.public_common_dialog)
-            if (mContentView == null) {
+            if (contentView == null) {
                 @SuppressLint("InflateParams") val view = LayoutInflater.from(context).inflate(R.layout.public_dialog_common, null)
                 val title = view.findViewById<TextView>(R.id.dialog_title)
-                val left_title = view.findViewById<TextView>(R.id.left_title)
-                val right_title = view.findViewById<TextView>(R.id.right_title)
+                val leftTitle = view.findViewById<TextView>(R.id.left_title)
+                val rightTitle = view.findViewById<TextView>(R.id.right_title)
                 if (!TextUtils.isEmpty(mTitle)) {
                     title.text = mTitle
                 }
                 if (!TextUtils.isEmpty(mPositiveBtnText)) {
-                    left_title.visibility = View.VISIBLE
-                    left_title.text = mPositiveBtnText
+                    leftTitle.visibility = View.VISIBLE
+                    leftTitle.text = mPositiveBtnText
                 } else {
-                    left_title.visibility = View.GONE
+                    leftTitle.visibility = View.GONE
                 }
                 if (!TextUtils.isEmpty(mNegativeBtnText)) {
-                    right_title.text = mNegativeBtnText
+                    rightTitle.text = mNegativeBtnText
                 }
-                right_title.setOnClickListener { view12: View? ->
+                rightTitle.setOnClickListener {
                     if (dialog.isShowing) {
                         dialog.dismiss()
                     }
@@ -80,7 +73,7 @@ class CommonDialog : Dialog {
                         mDialogClickListener!!.onRightClick()
                     }
                 }
-                left_title.setOnClickListener { view1: View? ->
+                leftTitle.setOnClickListener {
                     if (dialog.isShowing) {
                         dialog.dismiss()
                     }
@@ -90,9 +83,9 @@ class CommonDialog : Dialog {
                 }
                 dialog.setContentView(view)
             } else {
-                dialog.setContentView(mContentView!!)
+                dialog.setContentView(contentView)
             }
-            dialog.setOnDismissListener { dialogInterface: DialogInterface? ->
+            dialog.setOnDismissListener {
                 if (mDialogClickListener != null) {
                     mDialogClickListener!!.onDismiss()
                 }

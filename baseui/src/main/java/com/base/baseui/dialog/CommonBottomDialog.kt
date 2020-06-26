@@ -9,15 +9,14 @@ import android.view.WindowManager
 import com.base.baseui.R
 
 class CommonBottomDialog : Dialog {
-    constructor(context: Context?, theme: Int) : super(context!!, theme) {}
-    constructor(context: Context?) : super(context!!) {}
+    constructor(context: Context, theme: Int) : super(context!!, theme) {}
+    constructor(context: Context) : super(context) {}
 
     interface OnDialogClickListener {
         fun onDismiss() {}
     }
 
     class Builder {
-        private var mContentView: View? = null
         private var mCancelable = true
         private var mDialogClickListener: OnDialogClickListener? = null
         fun setCancelable(cancelable: Boolean): Builder {
@@ -25,24 +24,15 @@ class CommonBottomDialog : Dialog {
             return this
         }
 
-        fun setCustomView(contentView: View?): Builder {
-            mContentView = contentView
-            return this
-        }
-
-        fun setDialogClickListener(listener: OnDialogClickListener?): Builder {
+        fun setDialogClickListener(listener: OnDialogClickListener): Builder {
             mDialogClickListener = listener
             return this
         }
 
-        fun create(context: Context?): CommonBottomDialog {
+        fun create(context: Context,view :View): CommonBottomDialog {
             val dialog = CommonBottomDialog(context, R.style.public_common_dialog)
-            if (mContentView == null) {
-                throw RuntimeException("mContentView cann't be null")
-            } else {
-                dialog.setContentView(mContentView!!)
-            }
-            dialog.setOnDismissListener { dialogInterface: DialogInterface? ->
+            dialog.setContentView(view)
+            dialog.setOnDismissListener {
                 if (mDialogClickListener != null) {
                     mDialogClickListener!!.onDismiss()
                 }
