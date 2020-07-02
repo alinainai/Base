@@ -1,10 +1,11 @@
-package com.gas.app.ui.activity.calendar
+package com.gas.app.learn.calendarviewV2.data
 
+import com.gas.app.learn.calendarviewV2.TOTAL_COUNT
 import org.joda.time.LocalDate
 import java.util.*
 
 /**
- * Created on 8/25/17.
+ * 日期数据仓库
  */
 class CalendarDataRepo {
     /**
@@ -41,7 +42,4 @@ class CalendarDataRepo {
         return result
     }
 
-    companion object {
-        const val TOTAL_COUNT = 6 * 7
-    }
 }

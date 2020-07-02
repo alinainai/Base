@@ -14,6 +14,28 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+
+    <string name="smart_home_camera_month_name_1">1月</string>
+    <string name="smart_home_camera_month_name_2">2月</string>
+    <string name="smart_home_camera_month_name_3">3月</string>
+    <string name="smart_home_camera_month_name_4">4月</string>
+    <string name="smart_home_camera_month_name_5">5月</string>
+    <string name="smart_home_camera_month_name_6">6月</string>
+    <string name="smart_home_camera_month_name_7">7月</string>
+    <string name="smart_home_camera_month_name_8">8月</string>
+    <string name="smart_home_camera_month_name_9">9月</string>
+    <string name="smart_home_camera_month_name_10">10月</string>
+    <string name="smart_home_camera_month_name_11">11月</string>
+    <string name="smart_home_camera_month_name_12">12月</string>
+
+    <string name="smart_home_camera_week_day_name_1">一</string>
+    <string name="smart_home_camera_week_day_name_2">二</string>
+    <string name="smart_home_camera_week_day_name_3">三</string>
+    <string name="smart_home_camera_week_day_name_4">四</string>
+    <string name="smart_home_camera_week_day_name_5">五</string>
+    <string name="smart_home_camera_week_day_name_6">六</string>
+    <string name="smart_home_camera_week_day_name_7">日</string>
+
 </resources>
 
 

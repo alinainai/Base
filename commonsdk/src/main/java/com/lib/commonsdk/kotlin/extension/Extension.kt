@@ -49,18 +49,6 @@ var <T : Drawable> T.boundSize: Int
         setBounds(0, 0, v, v)
     }
 
-/**
- * Date的扩展函数
- */
-fun Date.formatDate() = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(this)
-
-fun Date.formatDateToNumber() = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(this)
-
-val Date.isToday: Boolean
-    get() = formatDate() == Date().formatDate()
-
-fun Date.formatDatetime() = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(this)
-
 
 /**
  * [Closeable]的扩展

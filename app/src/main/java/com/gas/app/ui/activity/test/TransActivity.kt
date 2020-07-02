@@ -82,15 +82,15 @@ class TransActivity : AppCompatActivity() {
 //                DateTimeConstants.FRIDAY -> println("星期五")
 //                DateTimeConstants.SATURDAY -> println("星期六")
 //            }
-
-            val dt = DateTime()
-            //转换成java.util.Date对象
-            val d1 = Date(dt.millis)
-            val d2: Date = dt.toDate()
-            //转换成java.util.Calendar对象
-            val c1 = Calendar.getInstance(TimeZone.getDefault())
-            c1.timeInMillis = dt.millis
-            val c2: Calendar = dt.toCalendar(Locale.getDefault())
+//
+//            val dt = DateTime()
+//            //转换成java.util.Date对象
+//            val d1 = Date(dt.millis)
+//            val d2: Date = dt.toDate()
+//            //转换成java.util.Calendar对象
+//            val c1 = Calendar.getInstance(TimeZone.getDefault())
+//            c1.timeInMillis = dt.millis
+//            val c2: Calendar = dt.toCalendar(Locale.getDefault())
         }
     }
 
