@@ -65,13 +65,23 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+<!--        <activity-->
+<!--            android:name=".ui.activity.splash.SplashActivity"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@style/public_app_theme_noBar">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+<!--        </activity> -->
         <activity
-            android:name=".ui.activity.splash.SplashActivity"
+            android:name=".ui.activity.test.TransActivity"
             android:screenOrientation="portrait"
             android:theme="@style/public_app_theme_noBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 

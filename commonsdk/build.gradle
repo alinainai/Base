@@ -50,4 +50,5 @@ dependencies {
         exclude module: 'annotations'
     }
     api rootProject.ext.dependencies["zxing"]
+    api 'net.danlew:android.joda:2.10.6'
 }
