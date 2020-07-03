@@ -41,11 +41,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    //解决kotlin添加过程中出现的Error: Program type already present: org.intellij.lang.annotations.Identifier问题
-    configurations {
-        cleanedAnnotations
-        compile.exclude group: 'org.jetbrains', module: 'annotations'
-    }
     configurations.all {
         resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
     }
@@ -137,9 +132,6 @@ dependencies {
     androidTestImplementation rootProject.ext.dependencies["android-test-junit"]
     androidTestImplementation rootProject.ext.dependencies["espresso-core"]
     testImplementation rootProject.ext.dependencies["junit"]
-
-
-//    implementation 'com.github.chrisbanes.photoview:library:1.2.4'
     implementation 'com.zhy:okhttputils:2.6.2'
     //tools
     kapt rootProject.ext.dependencies["arouter-compiler"]
@@ -147,22 +139,17 @@ dependencies {
         exclude module: 'annotations'
     }
     kapt rootProject.ext.dependencies["dagger2-compiler"]
-
     implementation rootProject.ext.dependencies["lottie"]
-
     //leak canary 2.0+
     debugImplementation rootProject.ext.dependencies["canary-debug"]
-
-
+    implementation project(path: ':baseui')
+    implementation project(path: ':componentservice')
     if (!isBuildModule.toBoolean()) {
         //在宿主 App 中使用 implementation 依赖业务组件, 业务组件的代码就会完全暴露给宿主 App, 不利于代码的隔离
         //使用 runtimeOnly 依赖业务组件, 可实现业务组件的代码在编译时对宿主 App 不可见, 仅在运行时对宿主 App 可见
         runtimeOnly project(":module_zhihu")
         runtimeOnly project(":module_beauty")
         runtimeOnly project(":module_test")
-
     }
-    implementation project(path: ':baseui')
-    implementation project(path: ':componentservice')
 
 }
