@@ -1,13 +1,16 @@
 package com.gas.app.ui.activity.test
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.gas.app.R
+import com.gas.app.learn.calendarviewV2.data.CalendarMonthModel
 import com.lib.commonsdk.constants.RouterHub
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_trans.*
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import java.util.*
 
 
@@ -91,6 +94,21 @@ class TransActivity : AppCompatActivity() {
 //            val c1 = Calendar.getInstance(TimeZone.getDefault())
 //            c1.timeInMillis = dt.millis
 //            val c2: Calendar = dt.toCalendar(Locale.getDefault())
+
+            val timeStamp = System.currentTimeMillis()
+            val m1 = CalendarMonthModel(timeStamp, 0)
+            val m2 = CalendarMonthModel(timeStamp, -1)
+            val m3 = CalendarMonthModel(timeStamp, -2)
+            val m4 = CalendarMonthModel(timeStamp, -3)
+//            Log.e("TAG", "m1 print")
+//            m1.dayList.forEach {model->
+//                Log.e("TAG", "model=${model.monthNum}/${model.dayOfMonth} enable = ${model.isEnabled}")
+//            }
+            m2.setSelect(LocalDate(2020,6,6))
+            Log.e("TAG", "m1 print")
+            m2.dayList.forEach {model->
+                Log.e("TAG", "model=${model.monthNum}/${model.dayOfMonth} enable = ${model.isEnabled}/select = ${model.isSelected}")
+            }
         }
     }
 

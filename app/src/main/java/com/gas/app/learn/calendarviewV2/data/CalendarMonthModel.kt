@@ -34,4 +34,10 @@ class CalendarMonthModel(var timeStamp: Long, private val offsetNow: Int) {
         }
     }
 
+    fun setSelect(selectDay:LocalDate){
+        dayList.forEach { dayModel ->
+            dayModel.isSelected = dayModel.localDate == selectDay
+        }
+    }
+
 }

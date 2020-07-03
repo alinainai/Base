@@ -11,7 +11,7 @@ class CalendarDayModel(private val timeStamp: LocalDate) {
     var isSelected = false
     var isEnabled = false
     val dayOfMonth: Int = timeStamp.dayOfMonth
-    val monthNum: Int = timeStamp.monthOfYear - 1
+    val monthNum: Int = timeStamp.monthOfYear
     val isToday: Boolean
         get() = timeStamp.toDate().isToday
     val localDate: LocalDate
