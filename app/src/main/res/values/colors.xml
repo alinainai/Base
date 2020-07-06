@@ -15,6 +15,14 @@
 
     <color name="app_splash_icon_color">#E37C9A</color>
 
+    <color name="cloud_record_dialog_text_color">#4C3F32</color>
+    <color name="cloud_record_filter_text_color_nor">#FF2F3032</color>
+    <color name="cloud_record_filter_text_color_pre">#802F3032</color>
+    <color name="cloud_record_filter_text_color_light">#CACACA</color>
+    <color name="sort_finish_text_color">#2177FF</color>
+    <color name="calendar_item_view_text_color_vip">#DBA451</color>
+    <color name="smart_home_calendar_view_default_theme">#397BFF</color>
+
 
 
 
