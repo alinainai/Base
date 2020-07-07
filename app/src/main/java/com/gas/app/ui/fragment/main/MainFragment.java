@@ -19,6 +19,10 @@ import com.base.componentservice.zhihu.service.ZhihuInfoService;
 import com.base.lib.base.BaseFragment;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
+import com.gas.app.learn.calendarviewV2.CalendarTheme;
+import com.gas.app.learn.calendarviewV2.data.CalendarDayModel;
+import com.gas.app.learn.calendarviewV2.itemlist.CalendarListAdapter;
+import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialog;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.Utils;
 
@@ -32,6 +36,9 @@ import com.gas.app.ui.fragment.main.di.DaggerMainComponent;
 import static com.base.lib.util.Preconditions.checkNotNull;
 
 import com.gas.app.R;
+
+import org.jetbrains.annotations.NotNull;
+import org.joda.time.LocalDate;
 
 
 /**
@@ -153,6 +160,16 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
                 Utils.navigation(getActivity(), RouterHub.TEST_HOMEACTIVITY);
                 break;
             case R.id.btn_plugin_one://插件一
+
+                CalendarSelectDialog  dialog=new CalendarSelectDialog(getActivity(),  CalendarTheme.Gold.INSTANCE, new CalendarListAdapter.OnDayClickListener() {
+                    @Override
+                    public void onDayItemClick(@NotNull CalendarDayModel date) {
+
+                    }
+                });
+
+            dialog.showSelect(LocalDate.now());
+
                 break;
             case R.id.btn_plugin_two://插件二
                 break;

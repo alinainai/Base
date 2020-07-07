@@ -47,11 +47,11 @@
         android:icon="@drawable/zhihu_ic_launcher"
         android:label="@string/main_app_name"
         android:networkSecurityConfig="@xml/public_network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/public_app_theme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
-        android:requestLegacyExternalStorage="true"
         tools:targetApi="n">
 
         <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->
@@ -65,31 +65,28 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-<!--        <activity-->
-<!--            android:name=".ui.activity.splash.SplashActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/public_app_theme_noBar">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <!--        <activity-->
+        <!--            android:name=".ui.activity.splash.SplashActivity"-->
+        <!--            android:screenOrientation="portrait"-->
+        <!--            android:theme="@style/public_app_theme_noBar">-->
+        <!--            <intent-filter>-->
+        <!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+        <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+        <!--            </intent-filter>-->
 
-<!--        </activity> -->
+        <!--        </activity> -->
+       
+
         <activity
-            android:name=".ui.activity.test.TransActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/public_app_theme_noBar">
+            android:name=".ui.main.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />

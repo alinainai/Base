@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
  */
 class CalendarMonthModel(var timeStamp: Long, private val offsetNow: Int) {
 
-    val calendar = CalendarDataRepo()
+    private val calendar = CalendarDataRepo()
     val dayList = mutableListOf<CalendarDayModel>()
 
     init {
@@ -31,12 +31,6 @@ class CalendarMonthModel(var timeStamp: Long, private val offsetNow: Int) {
             } else {
                 dayModel.isEnabled = !dayModel.localDate.isAfter(toDay)
             }
-        }
-    }
-
-    fun setSelect(selectDay:LocalDate){
-        dayList.forEach { dayModel ->
-            dayModel.isSelected = dayModel.localDate == selectDay
         }
     }
 

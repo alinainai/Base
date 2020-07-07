@@ -22,7 +22,7 @@ class DayItemViewHolder(parent: ViewGroup,private val theme: CalendarTheme) : Re
     fun bind(model: CalendarDayModel) {
         if (model.dayOfMonth == 1) {//1号显示月份
             tvMonthNum.visible()
-            tvMonthNum.setText(MONTH_NAMES_RES_ID[model.monthNum])
+            tvMonthNum.setText(MONTH_NAMES_RES_ID[model.monthNum-1])
         } else {
             tvMonthNum.gone()
         }
@@ -59,8 +59,6 @@ class DayItemViewHolder(parent: ViewGroup,private val theme: CalendarTheme) : Re
                 tvDayNum.setTextColor(itemView.context.resources.getColorStateList(R.color.v4_cloud_text_color_selector_blue))
             }
         }
-
     }
-
 
 }

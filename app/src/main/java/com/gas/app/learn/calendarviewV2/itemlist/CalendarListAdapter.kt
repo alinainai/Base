@@ -10,12 +10,13 @@ import org.joda.time.LocalDate
 /**
  * 日历adapter
  */
-class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val data: MutableList<CalendarDayModel>, val theme: CalendarTheme) : RecyclerView.Adapter<DayItemViewHolder>() {
+class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val data: MutableList<CalendarDayModel>, private val theme: CalendarTheme) : RecyclerView.Adapter<DayItemViewHolder>() {
 
-    var mSelectDate: LocalDate? = null
 
     fun showData(select: LocalDate) {
-        mSelectDate = select
+        data.forEach { dayModel ->
+            dayModel?.isSelected = dayModel?.localDate == select
+        }
         notifyDataSetChanged()
     }
 
@@ -26,21 +27,25 @@ class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val da
             holder.adapterPosition.takeIf { pos ->
                 pos < data.size && pos >= 0
             }?.let { pos ->
-                onDayItemClick.onDayItemClick(data[pos])
+                data[pos]?.let{model->
+                    onDayItemClick.onDayItemClick(model)
+                }
             }
         }
         return holder
     }
 
     override fun onBindViewHolder(holder: DayItemViewHolder, position: Int) {
-
+        data[position]?.let {
+            holder.bind(it)
+        }
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
 
-    fun getItem(pos: Int): CalendarDayModel {
+    fun getItem(pos: Int): CalendarDayModel? {
         return data[pos]
     }
 
