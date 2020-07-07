@@ -28,6 +28,7 @@ import com.lib.commonsdk.utils.Utils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
 import com.gas.app.ui.fragment.main.mvp.MainContract;
 import com.gas.app.ui.fragment.main.mvp.MainPresenter;
 import com.gas.app.R2;
@@ -73,6 +74,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
     TestInfoService mTestInfoService;
 
 
+    private CalendarSelectDialog dialog;
+    private LocalDate mLocalDate = LocalDate.now();
 
 
     public static MainFragment newInstance() {
@@ -100,6 +103,12 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
         ARouter.getInstance().inject(this);
         loadModuleInfo();
+        dialog = new CalendarSelectDialog(getActivity(), CalendarTheme.Gold.INSTANCE, new CalendarSelectDialog.OnDayClickCallBack() {
+            @Override
+            public void onDayItemClick(@NotNull CalendarDayModel date) {
+                mLocalDate = date.getLocalDate();
+            }
+        });
 
     }
 
@@ -161,14 +170,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
                 break;
             case R.id.btn_plugin_one://插件一
 
-                CalendarSelectDialog  dialog=new CalendarSelectDialog(getActivity(),  CalendarTheme.Gold.INSTANCE, new CalendarListAdapter.OnDayClickListener() {
-                    @Override
-                    public void onDayItemClick(@NotNull CalendarDayModel date) {
 
-                    }
-                });
-
-            dialog.showSelect(LocalDate.now());
+                dialog.showSelect(mLocalDate);
 
                 break;
             case R.id.btn_plugin_two://插件二

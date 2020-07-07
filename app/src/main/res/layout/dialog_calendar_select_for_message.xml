@@ -13,9 +13,10 @@
 
         <ImageView
             android:id="@+id/btnPreMonth"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
+            android:scaleType="fitStart"
             android:src="@drawable/dialog_calendar_select_pre_arrow"
             app:layout_constraintBottom_toBottomOf="@+id/tvMonthNum"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,9 +36,10 @@
 
         <ImageView
             android:id="@+id/btnNextMonth"
-            android:layout_width="30dp"
+            android:layout_width="50dp"
             android:layout_height="30dp"
             android:layout_marginEnd="10dp"
+            android:scaleType="fitEnd"
             android:src="@drawable/dialog_calendar_select_next_arrow"
             app:layout_constraintBottom_toBottomOf="@+id/tvMonthNum"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,8 +86,8 @@
                 android:text="@string/smart_home_camera_week_day_name_6" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/monthModeListView"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/listContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="35:24"
@@ -100,7 +102,7 @@
             android:background="#F5F6F8"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/monthModeListView" />
+            app:layout_constraintTop_toBottomOf="@+id/listContainer" />
 
         <TextView
             android:id="@+id/tvDialogClose"

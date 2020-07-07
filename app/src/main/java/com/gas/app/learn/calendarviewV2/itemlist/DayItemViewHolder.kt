@@ -12,7 +12,7 @@ import com.lib.commonsdk.kotlin.extension.visible
 import kotlinx.android.synthetic.main.v4_camera_calendar_selcet_day_item_layout.view.*
 
 
-class DayItemViewHolder(parent: ViewGroup,private val theme: CalendarTheme) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
+class DayItemViewHolder(parent: ViewGroup, private val theme: CalendarTheme) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
         .inflate(R.layout.v4_camera_calendar_selcet_day_item_layout, parent, false)) {
     private val tvMonthNum = itemView.tvMonthNum
     private val tvDayNum = itemView.tvDayNum
@@ -22,7 +22,7 @@ class DayItemViewHolder(parent: ViewGroup,private val theme: CalendarTheme) : Re
     fun bind(model: CalendarDayModel) {
         if (model.dayOfMonth == 1) {//1号显示月份
             tvMonthNum.visible()
-            tvMonthNum.setText(MONTH_NAMES_RES_ID[model.monthNum-1])
+            tvMonthNum.setText(MONTH_NAMES_RES_ID[model.monthNum - 1])
         } else {
             tvMonthNum.gone()
         }
@@ -39,8 +39,8 @@ class DayItemViewHolder(parent: ViewGroup,private val theme: CalendarTheme) : Re
             }
         }
         //选中
-        if(model.isSelected)  selectBg.visible() else selectBg.gone()
-        tvDayNum.isSelected = model.isSelected
+        if (model.isSelected && model.isEnabled) selectBg.visible() else selectBg.gone()
+        tvDayNum.isSelected = model.isSelected && model.isEnabled
         //是否可选
         tvDayNum.isEnabled = model.isEnabled
         itemView.isEnabled = model.isEnabled

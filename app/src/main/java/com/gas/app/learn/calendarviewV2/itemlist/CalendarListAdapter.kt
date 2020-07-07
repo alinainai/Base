@@ -15,7 +15,7 @@ class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val da
 
     fun showData(select: LocalDate) {
         data.forEach { dayModel ->
-            dayModel?.isSelected = dayModel?.localDate == select
+            dayModel.isSelected = dayModel.localDate == select
         }
         notifyDataSetChanged()
     }
@@ -27,7 +27,7 @@ class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val da
             holder.adapterPosition.takeIf { pos ->
                 pos < data.size && pos >= 0
             }?.let { pos ->
-                data[pos]?.let{model->
+                data[pos].let{model->
                     onDayItemClick.onDayItemClick(model)
                 }
             }
@@ -36,7 +36,7 @@ class CalendarListAdapter(private val onDayItemClick: OnDayClickListener, val da
     }
 
     override fun onBindViewHolder(holder: DayItemViewHolder, position: Int) {
-        data[position]?.let {
+        data[position].let {
             holder.bind(it)
         }
     }
