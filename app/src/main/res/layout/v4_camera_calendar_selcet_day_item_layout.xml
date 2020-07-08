@@ -3,82 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:layout_height="80dp"
-    tools:layout_width="100dp">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/selectBg"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:src="@drawable/home_smart_calendar_select_gold_circle"
+        app:layout_constraintBottom_toBottomOf="@+id/tvDayNum"
+        app:layout_constraintEnd_toEndOf="@+id/tvDayNum"
+        app:layout_constraintStart_toStartOf="@+id/tvDayNum"
+        app:layout_constraintTop_toTopOf="@+id/tvDayNum" />
+
+    <TextView
+        android:id="@+id/tvDayNum"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/v4_cloud_text_color_selector"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="5:4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tvMonthNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:textColor="#CACACA"
-            android:textSize="8sp"
-            android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="1月"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/selectBg"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:src="@mipmap/v4_calendar_play_day_selector"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/tvDayNum"
-            app:layout_constraintEnd_toEndOf="@+id/tvDayNum"
-            app:layout_constraintStart_toStartOf="@+id/tvDayNum"
-            app:layout_constraintTop_toTopOf="@+id/tvDayNum"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tvDayNum"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@color/v4_cloud_text_color_selector"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="31" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="31" />
 
 
-        <ImageView
-            android:id="@+id/infoView"
-            android:layout_width="8dp"
-            android:layout_height="8dp"
-            android:src="@mipmap/v4_calendar_event_icon"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/tvDayNum"
-            app:layout_constraintStart_toStartOf="@+id/tvDayNum"
-            app:layout_constraintTop_toBottomOf="@+id/tvDayNum" />
-
-        <TextView
-            android:id="@+id/tvTodayTag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="今天"
-            android:textColor="@color/calendar_item_view_text_color_vip"
-            android:textSize="8sp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/tvDayNum"
-            app:layout_constraintStart_toStartOf="@+id/tvDayNum"
-            app:layout_constraintTop_toBottomOf="@+id/tvDayNum"
-            tools:visibility="visible" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

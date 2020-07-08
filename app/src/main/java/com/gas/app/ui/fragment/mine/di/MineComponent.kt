@@ -13,39 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.app.ui.fragment.mine.di;
+package com.gas.app.ui.fragment.mine.di
 
-import com.base.lib.di.component.AppComponent;
-import com.base.lib.di.scope.FragmentScope;
-
-import dagger.BindsInstance;
-import dagger.Component;
-import com.gas.app.ui.fragment.mine.mvp.MineContract;
-import com.gas.app.ui.fragment.mine.MineFragment;
+import com.base.lib.di.component.AppComponent
+import com.base.lib.di.scope.FragmentScope
+import com.gas.app.ui.fragment.mine.MineFragment
+import com.gas.app.ui.fragment.mine.mvp.MineContract
+import dagger.BindsInstance
+import dagger.Component
 
 /**
  * ================================================
  * 展示 Component 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.6">Component wiki 官方文档</a>
+ * @see [Component wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.6)
  * Created by JessYan on 09/04/2016 11:17
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @FragmentScope
-@Component(modules = MineModule.class, dependencies = AppComponent.class)
-public interface MineComponent {
-
-    void inject(MineFragment fragment);
+@Component(modules = [MineModule::class], dependencies = [AppComponent::class])
+interface MineComponent {
+    fun inject(fragment: MineFragment?)
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        MineComponent.Builder view(MineContract.View view);
-
-        MineComponent.Builder appComponent(AppComponent appComponent);
-
-        MineComponent build();
+        fun view(view: MineContract.View): Builder
+        fun appComponent(appComponent: AppComponent?): Builder
+        fun build(): MineComponent
     }
 }

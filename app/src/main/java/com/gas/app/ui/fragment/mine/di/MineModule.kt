@@ -13,28 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.app.ui.fragment.mine.di;
+package com.gas.app.ui.fragment.mine.di
 
-import dagger.Binds;
-import dagger.Module;
-import com.gas.app.ui.fragment.mine.mvp.MineContract;
-import com.gas.app.ui.fragment.mine.mvp.MineModle;
+import com.gas.app.ui.fragment.mine.mvp.MineContract
+import com.gas.app.ui.fragment.mine.mvp.MineModle
+import dagger.Binds
+import dagger.Module
 
 /**
  * ================================================
  * 展示 Module 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
+ * @see [Module wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.5)
  * Created by JessYan on 09/04/2016 11:10
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @Module
-public abstract class MineModule {
-
+abstract class MineModule {
     @Binds
-    abstract MineContract.Model bindClassifModel(MineModle model);
-
-
+    abstract fun bindClassifModel(model: MineModle): MineContract.Model
 }

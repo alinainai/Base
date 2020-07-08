@@ -14,18 +14,11 @@ import kotlinx.android.synthetic.main.v4_camera_calendar_selcet_day_item_layout.
 
 class DayItemViewHolder(parent: ViewGroup, private val theme: CalendarTheme) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context)
         .inflate(R.layout.v4_camera_calendar_selcet_day_item_layout, parent, false)) {
-    private val tvMonthNum = itemView.tvMonthNum
     private val tvDayNum = itemView.tvDayNum
-    private val tvTodayTag = itemView.tvTodayTag
     private val selectBg = itemView.selectBg
 
     fun bind(model: CalendarDayModel) {
-        if (model.dayOfMonth == 1) {//1号显示月份
-            tvMonthNum.visible()
-            tvMonthNum.setText(MONTH_NAMES_RES_ID[model.monthNum - 1])
-        } else {
-            tvMonthNum.gone()
-        }
+
         tvDayNum.text = model.dayOfMonth.toString()
         if (model.isToday) {
             when (theme) {
@@ -39,8 +32,9 @@ class DayItemViewHolder(parent: ViewGroup, private val theme: CalendarTheme) : R
             }
         }
         //选中
-        if (model.isSelected && model.isEnabled) selectBg.visible() else selectBg.gone()
         tvDayNum.isSelected = model.isSelected && model.isEnabled
+        if (model.isSelected && model.isEnabled) selectBg.visible() else selectBg.gone()
+
         //是否可选
         tvDayNum.isEnabled = model.isEnabled
         itemView.isEnabled = model.isEnabled
@@ -49,13 +43,11 @@ class DayItemViewHolder(parent: ViewGroup, private val theme: CalendarTheme) : R
     init {
         when (theme) {
             CalendarTheme.Gold -> {
-                selectBg.setImageResource(R.mipmap.v4_calendar_play_day_selector)
-                tvTodayTag.setTextColor(itemView.context.resources.getColor(R.color.calendar_item_view_text_color_vip))
+                selectBg.setImageResource(R.drawable.home_smart_calendar_select_gold_circle)
                 tvDayNum.setTextColor(itemView.context.resources.getColorStateList(R.color.v4_cloud_text_color_selector))
             }
             CalendarTheme.Blue -> {
                 selectBg.setImageResource(R.drawable.home_smart_calendar_select_blue_circle)
-                tvTodayTag.setTextColor(itemView.context.resources.getColor(R.color.smart_home_calendar_view_default_theme))
                 tvDayNum.setTextColor(itemView.context.resources.getColorStateList(R.color.v4_cloud_text_color_selector_blue))
             }
         }
