@@ -17,5 +17,24 @@
 
     <item name="viewpager_inner" type="id"/>
 
+    <item name="btnPreMonth" type="id" />
+    <item name="tvMonthNum" type="id" />
+    <item name="btnNextMonth" type="id" />
+    <item name="weekDaysBanner" type="id" />
+    <item name="listContainer" type="id" />
+    <item name="divider" type="id" />
+    <item name="tvDialogClose" type="id" />
+
+    <item name="calendarWeekSun" type="id" />
+    <item name="calendarWeekMon" type="id" />
+    <item name="calendarWeekTue" type="id" />
+    <item name="calendarWeekWed" type="id" />
+    <item name="calendarWeekThur" type="id" />
+    <item name="calendarWeekFri" type="id" />
+    <item name="calendarWeekSat" type="id" />
+
+    <item name="monthModeListView" type="id" />
+    <item name="selectBg" type="id" />
+    <item name="tvDayNum" type="id" />
 
 </resources>

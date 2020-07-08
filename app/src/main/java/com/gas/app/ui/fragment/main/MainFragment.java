@@ -23,6 +23,8 @@ import com.gas.app.learn.calendarviewV2.CalendarTheme;
 import com.gas.app.learn.calendarviewV2.data.CalendarDayModel;
 import com.gas.app.learn.calendarviewV2.itemlist.CalendarListAdapter;
 import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialog;
+import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV2;
+import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV3;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.utils.Utils;
 
@@ -75,6 +77,8 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
 
     private CalendarSelectDialog dialog;
+    private CalendarSelectDialogV2 dialogV2;
+    private CalendarSelectDialogV3 dialogV3;
     private LocalDate mLocalDate = LocalDate.now();
 
 
@@ -109,7 +113,16 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
                 mLocalDate = date.getLocalDate();
             }
         });
+        dialogV2 = new CalendarSelectDialogV2(CalendarTheme.Gold.INSTANCE);
+        dialogV2.setCanceledOnTouchOutside(true);
 
+        dialogV3 = new CalendarSelectDialogV3(getActivity(), CalendarTheme.Gold.INSTANCE);
+        dialogV3.setOnDayClickCallBack(new CalendarSelectDialogV3.OnDayClickCallBack() {
+            @Override
+            public void onDayItemClick(@NotNull CalendarDayModel date) {
+                mLocalDate = date.getLocalDate();
+            }
+        });
     }
 
 
@@ -175,6 +188,11 @@ public class MainFragment extends BaseFragment<MainPresenter> implements MainCon
 
                 break;
             case R.id.btn_plugin_two://插件二
+
+//                dialogV2.showDialog(getChildFragmentManager());
+                dialogV3.showSelect(mLocalDate);
+
+
                 break;
         }
     }

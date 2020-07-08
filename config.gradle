@@ -48,8 +48,7 @@ ext {
             rxandroidVersion               : '2.1.1',
 
             greenDaoVersion                : '3.2.2',
-
-
+            ankoVersion                    : '0.10.8',
 
 
     ]
@@ -91,7 +90,9 @@ ext {
             "vlayout"                   : "com.alibaba.android:vlayout:1.1.0@aar",
             "lottie"                    : "com.airbnb.android:lottie:3.2.2",
             "autolayout"                : "com.zhy:autolayout:1.4.5",
-
+            "flexbox"                   : "com.google.android:flexbox:1.0.0",
+            "viewpager2"                : "androidx.viewpager2:viewpager2:1.0.0",
+            "anko"                      : "org.jetbrains.anko:anko:${version["ankoVersion"]}",
 
             //rx2
             "rxandroid2"                : "io.reactivex.rxjava2:rxandroid:${version["rxandroidVersion"]}",

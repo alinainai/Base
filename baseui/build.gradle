@@ -51,8 +51,16 @@ dependencies {
     api project(path: ':paginate')
     api project(path: ':commonsdk')
     api rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
-    api 'com.google.android:flexbox:1.0.0'
-    api 'androidx.viewpager2:viewpager2:1.0.0'
-    api 'org.jetbrains.anko:anko-sdk25:0.10.7'
-    api 'org.jetbrains.anko:anko-appcompat-v7:0.10.7'
+    api rootProject.ext.dependencies["flexbox"]
+    api rootProject.ext.dependencies["viewpager2"]
+
+    api "org.jetbrains.anko:anko-commons:0.10.8"
+    api "org.jetbrains.anko:anko-sdk25:0.10.8" // sdk15, sdk19, sdk21, sdk23 are also available
+    api "org.jetbrains.anko:anko-appcompat-v7:0.10.8"
+    api "org.jetbrains.anko:anko-constraint-layout:0.10.8"
+    // Coroutine listeners for Anko Layouts
+    api "org.jetbrains.anko:anko-sdk25-coroutines:0.10.8"
+    api "org.jetbrains.anko:anko-appcompat-v7-coroutines:0.10.8"
+    api "org.jetbrains.anko:anko-recyclerview-v7:0.10.8"
+
 }

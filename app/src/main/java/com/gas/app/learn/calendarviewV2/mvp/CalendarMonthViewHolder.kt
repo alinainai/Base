@@ -9,6 +9,7 @@ import com.gas.app.learn.calendarviewV2.COLUMN_COUNT
 import com.gas.app.learn.calendarviewV2.CalendarTheme
 import com.gas.app.learn.calendarviewV2.data.CalendarMonthModel
 import com.gas.app.learn.calendarviewV2.itemlist.CalendarListAdapter
+import org.jetbrains.anko.find
 import org.joda.time.LocalDate
 
 class CalendarMonthViewHolder(private val view: View, private val model: CalendarMonthModel, onDayItemClick: CalendarListAdapter.OnDayClickListener, theme: CalendarTheme) {
@@ -16,7 +17,7 @@ class CalendarMonthViewHolder(private val view: View, private val model: Calenda
     private var adapter: CalendarListAdapter
 
     init {
-        val thirdRV = view.findViewById<RecyclerView>(R.id.monthModeListView)
+        val thirdRV = view.find<RecyclerView>(R.id.monthModeListView)
         thirdRV.setHasFixedSize(true)
         val gridLayoutManager = GridLayoutManager(view.context, COLUMN_COUNT)
         thirdRV.layoutManager = gridLayoutManager;

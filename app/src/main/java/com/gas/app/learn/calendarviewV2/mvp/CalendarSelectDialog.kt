@@ -2,6 +2,7 @@ package com.gas.app.learn.calendarviewV2.mvp
 
 import android.app.Dialog
 import android.content.Context
+import android.provider.Contacts
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -16,8 +17,8 @@ import com.gas.app.learn.calendarviewV2.data.CalendarDayModel
 import com.gas.app.learn.calendarviewV2.data.CalendarMonthModel
 import com.gas.app.learn.calendarviewV2.itemlist.CalendarListAdapter
 import com.gas.app.learn.calendarviewV2.itemlist.CalendarPagerAdapter
+import org.jetbrains.anko.AnkoContext
 import org.joda.time.LocalDate
-
 
 class CalendarSelectDialog(val context: Context, private val theme: CalendarTheme, private val onDayItemClick: OnDayClickCallBack) : CalendarListAdapter.OnDayClickListener {
 
@@ -30,7 +31,10 @@ class CalendarSelectDialog(val context: Context, private val theme: CalendarThem
 
     init {
         initTimeStamp = System.currentTimeMillis()
+        dialog = Dialog(context, R.style.dialogFullscreen)
+
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_calendar_select_for_message, null)
+
         tvMonthNum = view.findViewById(R.id.tvMonthNum)
         val btnPreMonth = view.findViewById<ImageView>(R.id.btnPreMonth)
         val btnNextMonth = view.findViewById<ImageView>(R.id.btnNextMonth)
@@ -63,7 +67,6 @@ class CalendarSelectDialog(val context: Context, private val theme: CalendarThem
             }
         })
         initPagers()
-        dialog = Dialog(context, R.style.dialogFullscreen)
         dialog.setContentView(view)
         dialog.setCanceledOnTouchOutside(true)
         //点击back键可以取消dialog
