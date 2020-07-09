@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn_load"
+        android:id="@+id/btnModule1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -28,36 +28,24 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_componentify" />
 
     <Button
-        android:id="@+id/btn_etr"
+        android:id="@+id/btnModule2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="组件二"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_load" />
-
-
-    <Button
-
-        android:id="@+id/btn_etr2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="组件二"
-        app:layout_constraintStart_toEndOf="@+id/btn_etr"
-        app:layout_constraintTop_toTopOf="@+id/btn_etr" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnModule1" />
 
     <Button
-        android:id="@+id/btn_thr"
+        android:id="@+id/btnModule3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="组件三"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_etr" />
+        app:layout_constraintTop_toBottomOf="@+id/btnModule2" />
 
 
     <TextView
@@ -69,10 +57,10 @@
         android:text="插件化"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_thr" />
+        app:layout_constraintTop_toBottomOf="@+id/btnModule3" />
 
     <Button
-        android:id="@+id/btn_plugin_one"
+        android:id="@+id/btnPlugin1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -82,13 +70,13 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_show" />
 
     <Button
-        android:id="@+id/btn_plugin_two"
+        android:id="@+id/btnPlugin2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="插件二"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_plugin_one" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPlugin1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
