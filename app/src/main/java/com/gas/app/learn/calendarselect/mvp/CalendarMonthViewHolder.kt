@@ -1,0 +1,50 @@
+package com.gas.app.learn.calendarselect.mvp
+
+import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.gas.app.R
+import com.gas.app.learn.calendarselect.CalendarTheme
+import com.gas.app.learn.calendarselect.data.CalendarMonthModel
+import com.gas.app.learn.calendarselect.itemlist.CalendarListAdapter
+import com.gas.app.learn.calendarviewV2.COLUMN_COUNT
+
+import org.jetbrains.anko.find
+import org.joda.time.LocalDate
+
+class CalendarMonthViewHolder(private val view: View, private val model: CalendarMonthModel, onDayItemClick: CalendarListAdapter.OnDayClickListener, theme: CalendarTheme) {
+
+    private var adapter: CalendarListAdapter
+
+    init {
+        val thirdRV = view.find<RecyclerView>(R.id.monthModeListView)
+        thirdRV.setHasFixedSize(true)
+        val gridLayoutManager = GridLayoutManager(view.context, COLUMN_COUNT)
+        thirdRV.layoutManager = gridLayoutManager;
+        adapter = CalendarListAdapter(onDayItemClick, model.dayList, theme)
+        thirdRV.adapter = adapter
+    }
+
+    fun getItemView(): View {
+        return view
+    }
+
+    fun getMonthNum(): Int {
+        return model.monthNum
+    }
+
+    fun getMonthTitle(): String {
+        return model.yyyyMM
+    }
+
+    fun showSelect(select: LocalDate) {
+        adapter.showData(select)
+    }
+
+    fun updateDate() {
+        adapter.notifyDataSetChanged()
+    }
+
+
+}

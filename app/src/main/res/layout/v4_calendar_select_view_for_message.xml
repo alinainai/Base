@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendarBg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#50000000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/calendarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_cloud_record_select_list_dialog">
+
+        <ImageView
+            android:id="@+id/btnPreMonth"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/dialog_calendar_select_pre_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMonthNum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvMonthNum" />
+
+        <TextView
+            android:id="@+id/tvMonthNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="#4C3F32"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12月" />
+
+        <ImageView
+            android:id="@+id/btnNextMonth"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/dialog_calendar_select_next_arrow"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMonthNum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvMonthNum" />
+
+        <LinearLayout
+            android:id="@+id/weekDaysBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#FBF6F2"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMonthNum">
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_7" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_1" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_2" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_3" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_4" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_5" />
+
+            <TextView
+                style="@style/cloud_date_week_style"
+                android:text="@string/smart_home_camera_week_day_name_6" />
+        </LinearLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/listContainer"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weekDaysBanner" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F5F6F8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/listContainer" />
+
+        <TextView
+            android:id="@+id/tvDialogClose"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/public_white"
+            android:gravity="center"
+            android:text="@string/common_cancel"
+            android:textColor="#999999"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
+
+
+
+
