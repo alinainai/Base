@@ -747,8 +747,6 @@
     <dimen name="text_size_90_px">45.0sp</dimen>
     <dimen name="text_size_110_px">55.0sp</dimen>
 
-    <dimen name="mcv_arrow_padding">4dp</dimen>
-    <dimen name="mcv_arrow_margin">4dp</dimen>
 
 
 </resources>

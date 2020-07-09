@@ -25,17 +25,19 @@ import com.gas.app.learn.calendarviewV2.data.CalendarDayModel
 import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialog
 import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV2
 import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV3
-import com.gas.app.learn.materialcalendarview.CalendarDay
-import com.gas.app.learn.materialcalendarview.MaterialCalendarView
-import com.gas.app.learn.materialcalendarview.OnDateSelectedListener
+
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
+import com.gasview.metrialcalendar.CalendarDay
+import com.gasview.metrialcalendar.MaterialCalendarView
+import com.gasview.metrialcalendar.OnDateSelectedListener
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.joda.time.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+
 
 /**
  * ================================================
@@ -165,9 +167,9 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         }
 
        override fun onDateSelected(
-                @NonNull widget: MaterialCalendarView,
-                @NonNull date: CalendarDay,
-                selected: Boolean) {
+               @NonNull widget: MaterialCalendarView,
+               @NonNull date: CalendarDay,
+               selected: Boolean) {
             textView!!.setText(FORMATTER.format(date.getDate()))
         }
     }

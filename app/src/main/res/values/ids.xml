@@ -37,6 +37,4 @@
     <item name="selectBg" type="id" />
     <item name="tvDayNum" type="id" />
 
-
-    <item name="mcv_pager" type="id"/>
 </resources>

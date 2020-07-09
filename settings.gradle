@@ -1,1 +1,2 @@
+include ':view:v_metrialcalendar'
 include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate', ':commonsdk', ':module_zhihu', ':module_beauty', ':module_test'

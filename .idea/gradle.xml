@@ -19,6 +19,8 @@
             <option value="$PROJECT_DIR$/module_test" />
             <option value="$PROJECT_DIR$/module_zhihu" />
             <option value="$PROJECT_DIR$/paginate" />
+            <option value="$PROJECT_DIR$/view" />
+            <option value="$PROJECT_DIR$/view/v_metrialcalendar" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

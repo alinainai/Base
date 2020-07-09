@@ -50,7 +50,7 @@ dependencies {
     api rootProject.ext.dependencies["material"]
     api project(path: ':paginate')
     api project(path: ':commonsdk')
-    api rootProject.ext.dependencies["kotlin-stdlib-jdk7"]
+
     api rootProject.ext.dependencies["flexbox"]
     api rootProject.ext.dependencies["viewpager2"]
 
