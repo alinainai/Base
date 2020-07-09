@@ -20,20 +20,14 @@ import com.base.lib.di.component.AppComponent;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.statusbar.StatusBarManager;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import com.gas.app.bean.CollectionBean;
-import com.gas.app.dialog.MorePopupWindow;
+
 import com.gas.app.gen.DatabaseService;
 import com.gas.app.ui.activity.utils.mvp.WebViewContract;
 import com.gas.app.ui.activity.utils.mvp.WebViewPresenter;
 import com.gas.app.utils.AppMoudleUtil;
-import com.gas.app.utils.ToastUtil;
 import com.gas.app.R;
 import com.gas.app.ui.activity.utils.di.DaggerWebViewComponent;
 
@@ -94,36 +88,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
 
         mainCartTitle.setOnRightListener(v -> {
 
-            new MorePopupWindow(this) {
 
-                @Override
-                public void share() {
-
-                }
-
-                @Override
-                public void collection() {
-
-                    if (null != service.query(url)) {
-                        ToastUtil.show(mContext, "已添加过收藏");
-                    } else {
-
-                        CollectionBean bean = new CollectionBean();
-                        bean.setUrl(url);
-                        bean.setDesc(mTitle);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.CHINA);
-                        bean.setDataTime(sdf.format(new Date()));
-                        service.addInfo(bean);
-                        ToastUtil.show(mContext, "收藏成功");
-                    }
-                }
-
-                @Override
-                public void copyLink() {
-                    AppMoudleUtil.copyData(mContext, url);
-                    ToastUtil.show(mContext, "地址复制成功");
-                }
-            }.showAsDropDown(mainCartTitle.getRightView(), 2, 0);
 
 
         });

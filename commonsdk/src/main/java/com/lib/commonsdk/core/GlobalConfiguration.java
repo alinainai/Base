@@ -30,12 +30,11 @@ import com.base.lib.di.module.ConfigModule;
 import com.base.lib.https.log.RequestInterceptor;
 import com.base.lib.integration.config.ClientConfigModule;
 import com.base.lib.integration.config.ManifestParser;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.lib.commonsdk.BuildConfig;
 import com.lib.commonsdk.glide.GlideImageLoaderStrategy;
 import com.lib.commonsdk.http.Api;
 import com.lib.commonsdk.http.SSLSocketClient;
-
-import net.danlew.android.joda.JodaTimeAndroid;
 
 import java.util.List;
 
@@ -111,7 +110,7 @@ public class GlobalConfiguration implements ClientConfigModule {
                     RetrofitUrlManager.getInstance().setDebug(true);
 
                 }
-                JodaTimeAndroid.init(application);
+                AndroidThreeTen.init(application);
                 ARouter.init(application); // 尽可能早,推荐在Application中初始化
             }
 

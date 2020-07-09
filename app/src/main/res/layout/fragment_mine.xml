@@ -31,6 +31,5 @@
 <!--        app:lottie_fileName="lottie/login_logo_animation.json"-->
 <!--        app:lottie_loop="true" />-->
 
-    <include layout="@layout/v4_calendar_select_view_for_message"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

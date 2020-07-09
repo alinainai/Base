@@ -51,5 +51,6 @@ dependencies {
     }
     api rootProject.ext.dependencies["zxing"]
     api rootProject.ext.dependencies["kotlin-stdlib"]
-    api 'net.danlew:android.joda:2.10.6'
+    api rootProject.ext.dependencies["threetenabp"]
+
 }
