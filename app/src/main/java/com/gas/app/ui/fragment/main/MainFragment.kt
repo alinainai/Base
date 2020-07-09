@@ -49,14 +49,17 @@ import org.threeten.bp.format.DateTimeFormatter
  */
 class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
 
+    @JvmField
     @Autowired(name = RouterHub.ZHIHU_SERVICE_ZHIHUINFOSERVICE)
-    lateinit var mZhihuInfoService: ZhihuInfoService
+    var mZhihuInfoService: ZhihuInfoService? = null
 
+    @JvmField
     @Autowired(name = RouterHub.GANK_SERVICE_GANKINFOSERVICE)
-    lateinit var mGankInfoService: GankInfoService
+    var mGankInfoService: GankInfoService? = null
 
+    @JvmField
     @Autowired(name = RouterHub.TEST_SERVICE_TESTINFOSERVICE)
-    lateinit var mTestInfoService: TestInfoService
+    var mTestInfoService: TestInfoService? = null
 
 
     private var dialog: CalendarSelectDialog? = null
@@ -128,14 +131,14 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
     override fun killMyself() {}
     private fun loadModuleInfo() {
         //当非集成调试阶段, 宿主 App 由于没有依赖其他组件, 所以使用不了对应组件提供的服务
-        if (mZhihuInfoService != null) {
-            btnModule2.text = mZhihuInfoService!!.info.name
+        mZhihuInfoService?.let {
+            btnModule2.text = it.info.name
         }
-        if (mGankInfoService != null) {
-            btnModule2.text = mGankInfoService!!.info.name
+        mGankInfoService?.let {
+            btnModule2.text = it.info.name
         }
-        if (mTestInfoService != null) {
-            btnModule3.text = mTestInfoService!!.info.name
+        mTestInfoService?.let {
+            btnModule3.text = it.info.name
         }
     }
 
@@ -144,13 +147,15 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         fun newInstance(): MainFragment {
             return MainFragment()
         }
+
         val FORMATTER = DateTimeFormatter.ofPattern("EEE, d MMM yyyy")
     }
+
     class SimpleCalendarDialogFragment : AppCompatDialogFragment(), OnDateSelectedListener {
         private var textView: TextView? = null
 
         @NonNull
-       override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
             val inflater: LayoutInflater = activity!!.layoutInflater
 
             //inflate custom layout and get views
@@ -166,10 +171,10 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
                     .create()
         }
 
-       override fun onDateSelected(
-               @NonNull widget: MaterialCalendarView,
-               @NonNull date: CalendarDay,
-               selected: Boolean) {
+        override fun onDateSelected(
+                @NonNull widget: MaterialCalendarView,
+                @NonNull date: CalendarDay,
+                selected: Boolean) {
             textView!!.setText(FORMATTER.format(date.getDate()))
         }
     }
