@@ -23,6 +23,7 @@ android {
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
         multiDexEnabled true
         ndk { abiFilters "armeabi", "x86" }
+        vectorDrawables.useSupportLibrary = true
 
         //ARouter配置
         javaCompileOptions {
@@ -151,5 +152,6 @@ dependencies {
         runtimeOnly project(":module_beauty")
         runtimeOnly project(":module_test")
     }
+
 
 }

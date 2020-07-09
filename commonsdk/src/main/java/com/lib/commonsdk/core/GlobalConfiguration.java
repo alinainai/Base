@@ -30,6 +30,7 @@ import com.base.lib.di.module.ConfigModule;
 import com.base.lib.https.log.RequestInterceptor;
 import com.base.lib.integration.config.ClientConfigModule;
 import com.base.lib.integration.config.ManifestParser;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.lib.commonsdk.BuildConfig;
 import com.lib.commonsdk.glide.GlideImageLoaderStrategy;
 import com.lib.commonsdk.http.Api;
@@ -109,9 +110,10 @@ public class GlobalConfiguration implements ClientConfigModule {
                     ARouter.openLog();     // 打印日志
                     ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
                     RetrofitUrlManager.getInstance().setDebug(true);
-                    JodaTimeAndroid.init(application);
-                }
 
+                }
+                JodaTimeAndroid.init(application);
+                AndroidThreeTen.init(application);
                 ARouter.init(application); // 尽可能早,推荐在Application中初始化
             }
 

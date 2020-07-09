@@ -51,4 +51,5 @@ dependencies {
     }
     api rootProject.ext.dependencies["zxing"]
     api 'net.danlew:android.joda:2.10.6'
+    api 'com.jakewharton.threetenabp:threetenabp:1.1.1'
 }
