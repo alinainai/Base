@@ -9,30 +9,31 @@ import androidx.annotation.FloatRange
 import com.gas.app.R
 import kotlin.math.min
 
-class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(context, attrs) {
-    private lateinit var mArcRect: RectF
+
+class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : View(context, attrs, defStyleAttr) {
+    private var mArcRect = RectF()
     private var mRadius: Float = 0F//总半径 = 0f
     private var mSweepAngle = 0 //总角度 = 0
 
     //刻度
-    private lateinit var mMarkPaint : Paint
+    private var mMarkPaint = Paint()
     private var mMarkCount = 20 // 刻度数
     private var mMarkColor = Color.BLACK //刻度颜色 = 0
     private var mMarkWidth = dipToPx(4F).toFloat()  //刻度长度 = 0f
     private var mMarkDistance = dipToPx(5F).toFloat()//刻度到线的间距 = 0f
 
     //绘制圆弧背景
-    private lateinit var mBgArcPaint: Paint
+    private var mBgArcPaint = Paint()
     private var mBgArcColor = 0
     private var mArcWidth = 0f
 
     //圆弧进度
-    private lateinit var mArcPaint : Paint
+    private var mArcPaint = Paint()
     private var mArcStartColor = 0
     private var mArcEndColor = 0
-    private lateinit var mAnimator: ValueAnimator
-    private var mAnimTime //动画时间
-            : Long = 0
+    private var mAnimator = ValueAnimator()
+    private var mAnimTime: Long = 0
     private var mProgress = 0f
     private var mMarkCanvasRotate = 0
     private var mMarkDividedDegree = 0f
@@ -60,13 +61,6 @@ class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(c
         mArcRect.right = w.toFloat() / 2 + mArcRadius
     }
 
-    private fun init(attrs: AttributeSet) {
-        mAnimator = ValueAnimator()
-        mArcRect = RectF()
-        initAttrs(attrs)
-        initPaint()
-    }
-
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.CloudRecordCircleProgress)
         mSweepAngle = typedArray.getInt(R.styleable.CloudRecordCircleProgress_sweepAngle, 240)
@@ -80,31 +74,33 @@ class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(c
         mArcWidth = typedArray.getDimension(R.styleable.CloudRecordCircleProgress_arcWidth, 15f)
         mAnimTime = typedArray.getInt(R.styleable.CloudRecordCircleProgress_animTime, 700).toLong()
         typedArray.recycle()
-        mMarkCanvasRotate = CIRCLE_DEGREE - mSweepAngle shr 1
-        mMarkDividedDegree = mSweepAngle / (mMarkCount - 1).toFloat()
-        mArcBgStartDegree = RIGHT_ANGLE_DEGREE + (CIRCLE_DEGREE - mSweepAngle shr 1).toFloat()
-        mArcStartDegree = RIGHT_ANGLE_DEGREE - (CIRCLE_DEGREE - mSweepAngle shr 1).toFloat()
     }
 
     private fun initPaint() {
-        mMarkPaint = Paint()
-        mMarkPaint.isAntiAlias = true
-        mMarkPaint.color = mMarkColor
-        mMarkPaint.style = Paint.Style.STROKE
-        mMarkPaint.strokeWidth = dipToPx(1f).toFloat()
-        mMarkPaint.strokeCap = Paint.Cap.ROUND
-        mBgArcPaint = Paint()
-        mBgArcPaint.isAntiAlias = true
-        mBgArcPaint.color = mBgArcColor
-        mBgArcPaint.style = Paint.Style.STROKE
-        mBgArcPaint.setShadowLayer(8f, 0f, 6f, Color.parseColor("#CC000000"))
-        mBgArcPaint.strokeWidth = mArcWidth
-        mBgArcPaint.strokeCap = Paint.Cap.ROUND
-        mArcPaint = Paint()
-        mArcPaint.isAntiAlias = true
-        mArcPaint.style = Paint.Style.STROKE
-        mArcPaint.strokeWidth = mArcWidth
-        mArcPaint.strokeCap = Paint.Cap.ROUND
+        mMarkPaint.apply {
+            isAntiAlias = true
+            color = mMarkColor
+            style = Paint.Style.STROKE
+            strokeWidth = dipToPx(1f).toFloat()
+            strokeCap = Paint.Cap.ROUND
+        }
+
+        mBgArcPaint.apply {
+            isAntiAlias = true
+            color = mBgArcColor
+            style = Paint.Style.STROKE
+            setShadowLayer(8f, 0f, 6f, Color.parseColor("#CC000000"))
+            strokeWidth = mArcWidth
+            strokeCap = Paint.Cap.ROUND
+        }
+
+        mArcPaint.apply {
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeWidth = mArcWidth
+            strokeCap = Paint.Cap.ROUND
+        }
+
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -119,14 +115,17 @@ class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(c
     }
 
     private fun drawMark(canvas: Canvas) {
-        canvas.save()
-        canvas.translate(mRadius, mRadius)
-        canvas.rotate(mMarkCanvasRotate.toFloat())
-        for (i in 0 until mMarkCount) {
-            canvas.drawLine(0f, mRadius, 0f, mRadius - mMarkWidth, mMarkPaint)
-            canvas.rotate(mMarkDividedDegree)
+        canvas.apply {
+            save()
+            translate(mRadius, mRadius)
+            rotate(mMarkCanvasRotate.toFloat())
+            for (i in 0 until mMarkCount) {
+                drawLine(0f, mRadius, 0f, mRadius - mMarkWidth, mMarkPaint)
+                rotate(mMarkDividedDegree)
+            }
+            restore()
         }
-        canvas.restore()
+
     }
 
     private fun drawBgArc(canvas: Canvas) {
@@ -152,14 +151,16 @@ class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(c
     }
 
     private fun startAnimator(start: Float, end: Float, animTime: Long) {
-        mAnimator.cancel()
-        mAnimator.setFloatValues(start, end)
-        mAnimator.duration = animTime
-        mAnimator.addUpdateListener { animation ->
-            mProgress = animation.animatedValue as Float
-            invalidate()
+        mAnimator.apply {
+            cancel()
+            setFloatValues(start, end)
+            duration = animTime
+            addUpdateListener { animation ->
+                mProgress = animation.animatedValue as Float
+                invalidate()
+            }
+            start()
         }
-        mAnimator.start()
     }
 
     fun reset() {
@@ -195,6 +196,13 @@ class CloudRecordCircleProgress(context: Context?, attrs: AttributeSet) : View(c
     }
 
     init {
-        init(attrs)
+        attrs?.let {
+            initAttrs(it)
+        }
+        initPaint()
+        mMarkCanvasRotate = CIRCLE_DEGREE - mSweepAngle shr 1
+        mMarkDividedDegree = mSweepAngle / (mMarkCount - 1).toFloat()
+        mArcBgStartDegree = RIGHT_ANGLE_DEGREE + (CIRCLE_DEGREE - mSweepAngle shr 1).toFloat()
+        mArcStartDegree = RIGHT_ANGLE_DEGREE - (CIRCLE_DEGREE - mSweepAngle shr 1).toFloat()
     }
 }
