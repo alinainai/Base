@@ -13,6 +13,7 @@ import com.gas.app.R
 import com.gas.app.ui.fragment.product.di.DaggerProductComponent
 import com.gas.app.ui.fragment.product.mvp.ProductContract
 import com.gas.app.ui.fragment.product.mvp.ProductPresenter
+import kotlinx.android.synthetic.main.fragment_product.*
 
 /**
  * ================================================
@@ -36,7 +37,13 @@ class ProductFragment : BaseFragment<ProductPresenter>(), ProductContract.View {
         return inflater.inflate(R.layout.fragment_product, container, false)
     }
 
-    override fun initData(savedInstanceState: Bundle?) {}
+    override fun initData(savedInstanceState: Bundle?) {
+
+        productNameText.setOnClickListener {
+            circleProgress.setProgress(70F)
+        }
+
+    }
     override fun setData(data: Any?) {}
     override fun showLoading() {}
     override fun hideLoading() {}

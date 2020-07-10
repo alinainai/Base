@@ -18,4 +18,20 @@
 
 
 
+    <declare-styleable name="CloudRecordCircleProgress">
+        <attr name="sweepAngle" format="integer" />
+        <attr name="animTime" format="integer" />
+        <attr name="arcWidth" format="dimension" />
+        <attr name="bgArcColor" format="color|reference" />
+        <attr name="arcStartColor" format="color|reference" />
+        <attr name="arcEndColor" format="color|reference" />
+        <attr name="markColor" format="color|reference" />
+        <attr name="markWidth" format="dimension" />
+        <attr name="dottedLineCount" format="integer" />
+        <attr name="lineDistance" format="dimension" />
+    </declare-styleable>
+
+
+
+
 </resources>
