@@ -1,47 +1,389 @@
 [
     {
-        "keyName":"cz11-01",
+        "keyName":"chongzhou",
         "latitude":36.656,
         "locationInfo":"邯郸市涉县偏店乡政府沿G234南行约2.5公里处路西",
         "longitude":113.758,
         "mapName":"崇州站",
         "note":"",
-        "pathName":"chongzhouzhan.jpg"
+        "pathName":"chongzhou.jpg"
     },
     {
-        "keyName":"qf05-13",
+        "keyName":"qifang",
         "latitude":36.7401,
         "locationInfo":"邯郸市邱县西七方村东约250米",
         "longitude":115.2768,
         "mapName":"七方站",
         "note":"",
-        "pathName":"qifangzhan.jpg"
+        "pathName":"qifang.jpg"
     },
     {
-        "keyName":"gl11-05",
+        "keyName":"gengle",
         "latitude":36.596,
         "locationInfo":"邯郸市涉县天铁集团炼铁厂西约450米处（从荣兰线拐至图示天铁集团大门，导航可达）",
         "longitude":113.7538,
         "mapName":"更乐站",
         "note":"",
-        "pathName":"genglezhan.jpg"
+        "pathName":"gengle.jpg"
     },
     {
-        "keyName":"bl11-03",
+        "keyName":"bailin",
         "latitude":36.7436,
         "locationInfo":"邯郸市武汉市普阳炼钢厂西约150米处（到普阳炼铁厂西部即可看见，无名小路，地图未显示）",
         "longitude":113.945,
         "mapName":"柏林站",
         "note":"",
-        "pathName":"bolinzhan.jpg"
+        "pathName":"bailin.jpg"
     },
     {
-        "keyName":"sb11-06",
+        "keyName":"suobu",
         "latitude":36.6445,
         "locationInfo":"邯郸市涉县索堡镇西山上，走娲皇宫最外侧观景道可见（如走娲皇大道，行至龙凤阁酒店路口左转，再直行至光明粮贸附近无名小路上山，如图）",
         "longitude":113.5986,
         "mapName":"索堡站",
         "note":"",
-        "pathName":"suobaozhan.jpg"
+        "pathName":"suobu.jpg"
+    },
+    {
+        "keyName":"mubu",
+        "latitude":36.8335,
+        "locationInfo":"G515国道幕堡村路西的东西路上",
+        "longitude":114.8918,
+        "mapName":"幕堡站",
+        "note":"",
+        "pathName":"mubu.jpg"
+    },
+    {
+        "keyName":"yuanshui",
+        "latitude":36.6325,
+        "locationInfo":"红色箭头为无名小路 在此右拐即可看到苑水站",
+        "longitude":114.051,
+        "mapName":"苑水站",
+        "note":"",
+        "pathName":"yuanshui.jpg"
+    },
+    {
+        "keyName":"xiaocheng",
+        "latitude":36.3553,
+        "locationInfo":"位于魏峰公路与武石专线交叉东南角",
+        "longitude":114.5138,
+        "mapName":"肖城站",
+        "note":"",
+        "pathName":"xiaocheng.jpg"
+    },
+    {
+        "keyName":"wuan",
+        "latitude":36.7122,
+        "locationInfo":"位于武安市北环，同安街东",
+        "longitude":114.2248,
+        "mapName":"武安站",
+        "note":"",
+        "pathName":"wuan.jpg"
+    },
+    {
+        "keyName":"lianfeng",
+        "latitude":36.4538,
+        "locationInfo":"",
+        "longitude":114.3789,
+        "mapName":"廉峰站",
+        "note":"",
+        "pathName":"lianfeng.jpg"
+    },
+    {
+        "keyName":"qianning",
+        "latitude":36.551,
+        "locationInfo":"位于馆陶县城西约7公里，在荣兰线南侧麻呼寨村正南南大路上",
+        "longitude":115.196,
+        "mapName":"前宁站",
+        "note":"",
+        "pathName":"qianning.jpg"
+    },
+    {
+        "keyName":"laima",
+        "latitude":36.6466,
+        "locationInfo":"走富顺商务中心南侧小路",
+        "longitude":114.5432,
+        "mapName":"来马站",
+        "note":"",
+        "pathName":"laima.jpg"
+    },
+    {
+        "keyName":"beipo",
+        "latitude":36.549,
+        "locationInfo":"推荐走荣兰线拐刘南线，在刘南线路西",
+        "longitude":114.5765,
+        "mapName":"北泊",
+        "note":"",
+        "pathName":"beipo.jpg"
+    },
+    {
+        "keyName":"mingfu",
+        "latitude":36.3196,
+        "locationInfo":"",
+        "longitude":115.2853,
+        "mapName":"名府站",
+        "note":"",
+        "pathName":"mingfu.jpg"
+    },
+    {
+        "keyName":"yaobu",
+        "latitude":36.4854,
+        "locationInfo":"位于成安县西北正大制管北厂内",
+        "longitude":114.6717,
+        "mapName":"姚堡站",
+        "note":"",
+        "pathName":"yaobu.jpg"
+    },
+    {
+        "keyName":"shenjiazhuang",
+        "latitude":36.351545,
+        "locationInfo":"",
+        "longitude":114.136992,
+        "mapName":"申家庄站",
+        "note":"",
+        "pathName":"shenjiazhuang.jpg"
+    },
+    {
+        "keyName":"luerzhuang",
+        "latitude":36.362809,
+        "locationInfo":"",
+        "longitude":114.601518,
+        "mapName":"炉耳庄站",
+        "note":"",
+        "pathName":"luerzhuang.jpg"
+    },
+    {
+        "keyName":"qicun",
+        "latitude":36.637835,
+        "locationInfo":"",
+        "longitude":114.432935,
+        "mapName":"齐村站",
+        "note":"",
+        "pathName":"qicun.jpg"
+    },
+    {
+        "keyName":"shidong",
+        "latitude":36.3797,
+        "locationInfo":"",
+        "longitude":113.9368,
+        "mapName":"石洞站",
+        "note":"",
+        "pathName":"shidong.jpg"
+    },
+    {
+        "keyName":"tuancheng",
+        "latitude":36.677,
+        "locationInfo":"",
+        "longitude":114.1465,
+        "mapName":"团城站",
+        "note":"",
+        "pathName":"tuancheng.jpg"
+    },
+    {
+        "keyName":"shangbei",
+        "latitude":36.6458,
+        "locationInfo":"",
+        "longitude":114.6016,
+        "mapName":"尚北站",
+        "note":"",
+        "pathName":"shangbei.jpg"
+    },
+    {
+        "keyName":"houzhao",
+        "latitude":36.3545,
+        "locationInfo":"",
+        "longitude":114.4095,
+        "mapName":"侯召站",
+        "note":"",
+        "pathName":"houzhao.jpg"
+    },
+    {
+        "keyName":"lintan",
+        "latitude":36.4634,
+        "locationInfo":"",
+        "longitude":114.3407,
+        "mapName":"林坦站",
+        "note":"",
+        "pathName":"lintan.jpg"
+    },
+    {
+        "keyName":"hequ",
+        "latitude":36.7167,
+        "locationInfo":"",
+        "longitude":114.2388,
+        "mapName":"河渠站",
+        "note":"",
+        "pathName":"hequ.jpg"
+    },
+    {
+        "keyName":"mingguan",
+        "latitude":36.776,
+        "locationInfo":"",
+        "longitude":114.497,
+        "mapName":"洺关站",
+        "note":"",
+        "pathName":"mingguan.jpg"
+    },
+    {
+        "keyName":"xiaopingying",
+        "latitude":36.3651,
+        "locationInfo":"",
+        "longitude":114.582,
+        "mapName":"小平营站",
+        "note":"",
+        "pathName":"xiaopingying.jpg"
+    },
+    {
+        "keyName":"xiazhuang",
+        "latitude":36.5913,
+        "locationInfo":"",
+        "longitude":114.4165,
+        "mapName":"",
+        "note":"",
+        "pathName":"xiazhuang.jpg"
+    },
+    {
+        "keyName":"xiyang",
+        "latitude":36.2693,
+        "locationInfo":"",
+        "longitude":115.1473,
+        "mapName":"西杨站",
+        "note":"",
+        "pathName":"xiyang.jpg"
+    },
+    {
+        "keyName":"dezheng",
+        "latitude":36.3316,
+        "locationInfo":"",
+        "longitude":115.0069,
+        "mapName":"德政站",
+        "note":"",
+        "pathName":"dezheng.jpg"
+    },
+    {
+        "keyName":"daizhao",
+        "latitude":36.5853,
+        "locationInfo":"",
+        "longitude":114.608,
+        "mapName":"代召站",
+        "note":"",
+        "pathName":"daizhao.jpg"
+    },
+    {
+        "keyName":"sundian",
+        "latitude":36.2327,
+        "locationInfo":"",
+        "longitude":115.3309,
+        "mapName":"孙店站",
+        "note":"",
+        "pathName":"sundian.jpg"
+    },
+    {
+        "keyName":"gaobi",
+        "latitude":36.6226,
+        "locationInfo":"",
+        "longitude":114.0998,
+        "mapName":"高壁站",
+        "note":"",
+        "pathName":"gaobi.jpg"
+    },
+    {
+        "keyName":"wangfeng",
+        "latitude":36.4756,
+        "locationInfo":"",
+        "longitude":114.1293,
+        "mapName":"王凤站",
+        "note":"",
+        "pathName":"wangfeng.jpg"
+    },
+    {
+        "keyName":"bianma",
+        "latitude":36.1907,
+        "locationInfo":"",
+        "longitude":115.0451,
+        "mapName":"边马站",
+        "note":"",
+        "pathName":"bianma.jpg"
+    },
+    {
+        "keyName":"bate",
+        "latitude":36.5568,
+        "locationInfo":"",
+        "longitude":114.1126,
+        "mapName":"八特站",
+        "note":"",
+        "pathName":"bate.jpg"
+    },
+    {
+        "keyName":"qiuxian",
+        "latitude":36.8135,
+        "locationInfo":"",
+        "longitude":115.1706,
+        "mapName":"邱县站",
+        "note":"",
+        "pathName":"qiuxian.jpg"
+    },
+    {
+        "keyName":"longtang",
+        "latitude":36.6875,
+        "locationInfo":"",
+        "longitude":115.0352,
+        "mapName":"龙堂站",
+        "note":"",
+        "pathName":"longtang.jpg"
+    },
+    {
+        "keyName":" minghu",
+        "latitude":36.6734,
+        "locationInfo":"",
+        "longitude":114.2437,
+        "mapName":"洺湖站",
+        "note":"",
+        "pathName":"minghu.jpg"
+    },
+    {
+        "keyName":"shentou",
+        "latitude":36.5301,
+        "locationInfo":"",
+        "longitude":113.637,
+        "mapName":"神头站",
+        "note":"",
+        "pathName":"shentou.jpg"
+    },
+    {
+        "keyName":"yulin",
+        "latitude":36.6144,
+        "locationInfo":"",
+        "longitude":113.7548,
+        "mapName":"玉林站",
+        "note":"",
+        "pathName":"yulin.jpg"
+    },
+    {
+        "keyName":"sangde",
+        "latitude":36.117,
+        "locationInfo":"",
+        "longitude":114.963,
+        "mapName":"桑德站",
+        "note":"",
+        "pathName":"shangde.jpg"
+    },
+    {
+        "keyName":"shuangta",
+        "latitude":36.8556,
+        "locationInfo":"",
+        "longitude":114.8223,
+        "mapName":"双塔站",
+        "note":"",
+        "pathName":"shuangta.jpg"
+    },
+    {
+        "keyName": "huaishu",
+        "latitude": 36.37,
+        "locationInfo": "磁县恒泰路路边农村信用社旁边小道",
+        "longitude": 114.3548,
+        "mapName": "槐树站",
+        "note": "",
+        "pathName": "huaishu.jpg"
     }
 ]

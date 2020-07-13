@@ -234,7 +234,7 @@ class PagerFragment : BaseFragment<PagerPresenter>(), PagerContract.View {
     override fun setPaperData(list: List<PaperShowBean>) {
         mAdapter.showDataDiff(list)
         if (list.isNotEmpty()) {
-            itemRecycler.smoothScrollToPosition(0)
+            itemRecycler.scrollToPosition(0)
             mAdapter.loadEnd()
         } else {
             mAdapter.setEmptyView(EmptyInterface.STATUS_EMPTY)

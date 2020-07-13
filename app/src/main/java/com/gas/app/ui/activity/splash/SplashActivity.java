@@ -20,7 +20,7 @@ import com.gas.app.R;
 import com.gas.app.ui.activity.splash.di.DaggerSplashComponent;
 import com.gas.app.ui.activity.splash.mvp.SplashContract;
 import com.gas.app.ui.activity.splash.mvp.SplashPresenter;
-import com.gas.app.ui.main.MainActivity;
+
 import com.gas.app.utils.ToastUtil;
 import com.gas.app.view.MyVideoView;
 import com.lib.commonsdk.constants.Constants;
@@ -186,9 +186,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
     public void goMainActivity() {
 
 
-        if (isRelease) {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-        } else {
+
             Utils.navigation(this, RouterHub.ZHIHU_HOMEACTIVITY, new NavCallback() {
                 @Override
                 public void onArrival(Postcard postcard) {
@@ -198,10 +196,10 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Spl
                 @Override
                 public void onLost(Postcard postcard) {
                     super.onLost(postcard);
-                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+
                 }
             });
-        }
+
         finish();
     }
 
