@@ -1,6 +1,7 @@
 package com.gas.app.ui.fragment.product
 
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.gas.app.ui.fragment.product.di.DaggerProductComponent
 import com.gas.app.ui.fragment.product.mvp.ProductContract
 import com.gas.app.ui.fragment.product.mvp.ProductPresenter
 import kotlinx.android.synthetic.main.fragment_product.*
+import java.io.File
 
 /**
  * ================================================
@@ -38,6 +40,11 @@ class ProductFragment : BaseFragment<ProductPresenter>(), ProductContract.View {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        activity?.application?.assets.let {
+            val typeface = Typeface.createFromAsset(it, "font${File.separator}DINCond-Regular.otf")
+            productNameText.typeface = typeface
+        }
 
         productNameText.setOnClickListener {
             circleProgress.setProgress(70F)
