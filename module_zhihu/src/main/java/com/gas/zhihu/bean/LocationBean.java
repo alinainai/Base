@@ -22,7 +22,7 @@ public class LocationBean {
 
 
     public boolean isInfoError(){
-        return dlon == DEFAULT_NUM || dlat == DEFAULT_NUM || TextUtils.isEmpty(dname);
+        return dlon == DEFAULT_NUM || dlat == DEFAULT_NUM;
     }
 
 

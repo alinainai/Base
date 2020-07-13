@@ -107,9 +107,13 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         }
         imageAddress.setOnClickListener {
             mPresenter?.mapBeanInfo?.pathName?.let {
-                val list = mutableListOf(IPhotoPathProvider.PhotoPathProvider(File(mImagePath, it).path))
-                @Suppress("UNCHECKED_CAST")
-                galleryView.showPhotoGallery(0, list as List<IPhotoProvider<Any>>?, imageAddress)
+                if (File(mImagePath, it).path.isNotBlank()) {
+                    val list = mutableListOf(IPhotoPathProvider.PhotoPathProvider(File(mImagePath, it).path))
+                    @Suppress("UNCHECKED_CAST")
+                    galleryView.showPhotoGallery(0, list as List<IPhotoProvider<Any>>?, imageAddress)
+                } else {
+                    showMessage("图片为空")
+                }
             }
         }
         tvAddressCopy.setOnClickListener { mPresenter!!.setAddressToCopy() }
@@ -180,8 +184,8 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 REQUEST_MODIFY_MAP_INFO -> {
-                    data?.let {d->
-                        d.getIntExtra("modify", 0).takeIf { it==1 }?.let {
+                    data?.let { d ->
+                        d.getIntExtra("modify", 0).takeIf { it == 1 }?.let {
                             loadData()
                         }
                     }
@@ -208,8 +212,12 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
     override fun setDataInfo(data: MapBean?) {
         data?.let {
             tvDataInfo.text = AppUtils.getString(R.string.zhihu_map_title_name, data.mapName)
-            tvAddressInfoTrue.text = data.locationInfo
-            if (!TextUtils.isEmpty(data.note)) {
+            if (data.locationInfo.isNotBlank()) {
+                tvAddressInfoTrue.text = data.locationInfo
+            } else {
+                tvAddressInfoTrue.text = "暂无地址信息"
+            }
+            if (data.note.isNotBlank()) {
                 tvRemarkInfoTrue.text = data.note
             } else {
                 tvRemarkInfoTrue.text = "暂无评论数据"
@@ -218,6 +226,8 @@ class ShowActivity : BaseActivity<ShowPresenter?>(), ShowContract.View {
                     ImageConfigImpl
                             .builder()
                             .url(File(mImagePath, data.pathName).path)
+                            .errorPic(R.drawable.public_default_image_placeholder)
+                            .placeholder(R.drawable.public_default_image_placeholder)
                             .imageView(imageAddress)
                             .build())
 
