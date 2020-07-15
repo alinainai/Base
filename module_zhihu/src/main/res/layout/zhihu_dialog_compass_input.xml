@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/public_default_dialog_shape"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp">
+
+        <TextView
+            android:id="@+id/dialog_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="请按照正确格式输入"
+            android:textColor="@color/public_text_black_deep"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/degreeInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dialog_title">
+
+            <EditText
+                android:id="@+id/etDegree"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/public_gray_stroke_bg_radius_2dp"
+                android:digits="1234567890"
+                android:hint="度数"
+                android:inputType="number"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="°"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etMinute"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/public_gray_stroke_bg_radius_2dp"
+                android:digits="1234567890"
+                android:hint="分数"
+                android:inputType="number"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:text="′"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/etSecond"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/public_gray_stroke_bg_radius_2dp"
+                android:digits="1234567890"
+                android:hint="秒数"
+                android:inputType="number"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="″"
+                android:textColor="@color/public_text_black_normal"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvFormatNum"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/degreeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/public_text_black_normal"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_sure"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/public_default_btn_selector_blue_corner"
+            android:paddingStart="30dp"
+            android:paddingRight="30dp"
+            android:text="确定"
+            android:textColor="@color/public_white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvFormatNum" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

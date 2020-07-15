@@ -26,6 +26,7 @@ import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.app.ZhihuConstants.DEFAULT_TYPE
 import com.gas.zhihu.app.ZhihuConstants.IMAGE_ZIP_FOLDER
 import com.gas.zhihu.bean.MapBean
+import com.gas.zhihu.dialog.CompassInputDialog
 import com.gas.zhihu.dialog.TipShowDialog
 import com.gas.zhihu.fragment.addmap.di.AddMapModule
 import com.gas.zhihu.fragment.addmap.di.DaggerAddMapComponent
@@ -135,6 +136,16 @@ class AddMapFragment : BaseFragment<AddMapPresenter>(), AddMapContract.View {
         }
         btnCommit.setOnClickListener {
             commitMapInfo()
+        }
+        tvAddressLatExtra.setOnClickListener {//纬度
+            CompassInputDialog().show(activity) { num->
+                etAddressLat.setText(num.toString())
+            }
+        }
+        etAddressLonExtra.setOnClickListener {//经度
+            CompassInputDialog().show(activity) { num->
+                etAddressLon.setText(num.toString())
+            }
         }
 
     }

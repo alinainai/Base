@@ -86,16 +86,28 @@
                 app:layout_constraintTop_toTopOf="@+id/etAddressLat" />
 
             <EditText
-                android:inputType="number"
                 android:id="@+id/etAddressLat"
                 style="@style/zhihu_fragment_add_map_edit"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:hint="请输入地址纬度值"
+                android:layout_marginEnd="8dp"
                 android:digits="1234567890."
-                app:layout_constraintEnd_toEndOf="parent"
+                android:hint="请输入地址纬度值"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@+id/tvAddressLatExtra"
                 app:layout_constraintStart_toEndOf="@+id/barrierTv"
                 app:layout_constraintTop_toBottomOf="@id/etAddressInfo" />
+
+            <TextView
+                android:id="@+id/tvAddressLatExtra"
+                style="@style/zhihu_fragment_add_map_subtitle"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/public_btn_default_selector"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="指南针格式输入纬度"
+                app:layout_constraintBottom_toBottomOf="@+id/etAddressLat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAddressLat" />
 
             <TextView
                 android:id="@+id/tvFileTitle"
@@ -110,13 +122,24 @@
                 style="@style/zhihu_fragment_add_map_edit"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:digits="1234567890."
                 android:hint="请输入地址经度制"
                 android:inputType="number"
-                android:digits="1234567890."
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/etAddressLonExtra"
                 app:layout_constraintStart_toEndOf="@+id/barrierTv"
                 app:layout_constraintTop_toBottomOf="@id/etAddressLat" />
 
+            <TextView
+                android:id="@+id/etAddressLonExtra"
+                style="@style/zhihu_fragment_add_map_subtitle"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/public_btn_default_selector"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="指南针格式输入经度"
+                app:layout_constraintBottom_toBottomOf="@+id/etAddressLon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/etAddressLon" />
 
             <TextView
                 android:id="@+id/tvAddressImg"
@@ -133,12 +156,12 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/public_default_image_placeholder"
                 android:text="地址图片信息："
                 android:textColor="@color/public_text_black_deep"
                 android:textSize="@dimen/public_font_16sp"
                 android:textStyle="bold"
-                android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
