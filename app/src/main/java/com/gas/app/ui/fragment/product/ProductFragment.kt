@@ -47,7 +47,7 @@ class ProductFragment : BaseFragment<ProductPresenter>(), ProductContract.View {
         }
 
         productNameText.setOnClickListener {
-            circleProgress.setProgress(70F)
+//            circleProgress.setProgress(70F)
         }
 
     }
