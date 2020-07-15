@@ -54,7 +54,7 @@
         android:scaleType="centerInside"
         android:layout_marginTop="20dp"
         android:contentDescription="@null"
-        android:src="@drawable/public_app_ic_launcher"
+        android:src="@drawable/public_default_app_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

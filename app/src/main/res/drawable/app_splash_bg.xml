@@ -14,7 +14,7 @@
         <!--位置设置成靠下-->
         <bitmap
             android:gravity="bottom"
-            android:src="@drawable/public_app_ic_launcher" />
+            android:src="@drawable/public_default_app_logo" />
     </item>
 
 
