@@ -17,19 +17,19 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
     private var mSweepAngle = 0 //总角度 = 0
 
     //刻度
-    private var mMarkPaint = Paint()
+    private val mMarkPaint = Paint()
     private var mMarkCount = 20 // 刻度数
     private var mMarkColor = Color.BLACK //刻度颜色 = 0
     private var mMarkWidth = dipToPx(4F).toFloat()  //刻度长度 = 0f
     private var mMarkDistance = dipToPx(5F).toFloat()//刻度到线的间距 = 0f
 
     //绘制圆弧背景
-    private var mBgArcPaint = Paint()
+    private val mBgArcPaint = Paint()
     private var mBgArcColor = 0
     private var mArcWidth = 0f
 
     //圆弧进度
-    private var mArcPaint = Paint()
+    private val mArcPaint = Paint()
     private var mArcStartColor = 0
     private var mArcEndColor = 0
     private var mAnimator = ValueAnimator()
@@ -44,8 +44,20 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
         val width = measureView(widthMeasureSpec, dipToPx(200f))
         val height = measureView(heightMeasureSpec, dipToPx(200f))
         //以最小值为正方形的长
-        val defaultSize = Math.min(width, height)
+        val defaultSize = width.coerceAtMost(height)
         setMeasuredDimension(defaultSize, defaultSize)
+    }
+
+    private fun measureView(measureSpec: Int, defaultSize: Int): Int {
+        var result = defaultSize
+        val specMode = MeasureSpec.getMode(measureSpec)
+        val specSize = MeasureSpec.getSize(measureSpec)
+        if (specMode == MeasureSpec.EXACTLY) {
+            result = specSize
+        } else if (specMode == MeasureSpec.AT_MOST) {
+            result = min(result, specSize)
+        }
+        return result
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -54,11 +66,11 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
         val minSize = min(w - paddingLeft - paddingRight,
                 h - paddingTop - paddingBottom)
         mRadius = (minSize shr 1.toFloat().toInt()).toFloat()
-        val mArcRadius = mRadius - mMarkWidth - mMarkDistance - mArcWidth
-        mArcRect.top = h.toFloat() / 2 - mArcRadius
-        mArcRect.left = w.toFloat() / 2 - mArcRadius
-        mArcRect.bottom = h.toFloat() / 2 + mArcRadius
-        mArcRect.right = w.toFloat() / 2 + mArcRadius
+        val arcRadius = mRadius - mMarkWidth - mMarkDistance - mArcWidth
+        mArcRect.top = h.toFloat() / 2 - arcRadius
+        mArcRect.left = w.toFloat() / 2 - arcRadius
+        mArcRect.bottom = h.toFloat() / 2 + arcRadius
+        mArcRect.right = w.toFloat() / 2 + arcRadius
     }
 
     private fun initAttrs(attrs: AttributeSet) {
@@ -77,6 +89,7 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
     }
 
     private fun initPaint() {
+
         mMarkPaint.apply {
             isAntiAlias = true
             color = mMarkColor
@@ -147,7 +160,9 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
         if (value <= 0) {
             endValue = 0F
         }
-        startAnimator(0f, endValue, mAnimTime)
+        if (value != mProgress) {
+            startAnimator(0f, endValue, mAnimTime)
+        }
     }
 
     private fun startAnimator(start: Float, end: Float, animTime: Long) {
@@ -177,17 +192,6 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
         return (dip * density + 0.5f * if (dip >= 0) 1 else -1).toInt()
     }
 
-    private fun measureView(measureSpec: Int, defaultSize: Int): Int {
-        var result = defaultSize
-        val specMode = MeasureSpec.getMode(measureSpec)
-        val specSize = MeasureSpec.getSize(measureSpec)
-        if (specMode == MeasureSpec.EXACTLY) {
-            result = specSize
-        } else if (specMode == MeasureSpec.AT_MOST) {
-            result = min(result, specSize)
-        }
-        return result
-    }
 
     companion object {
         private const val CIRCLE_DEGREE = 360
