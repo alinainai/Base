@@ -86,7 +86,9 @@ class CompassInputDialog {
                 .create(context, view)
         view.findViewById<View>(R.id.btn_sure).setOnClickListener {
             dialog.dismiss()
-            action.invoke(tvFormatNum.text.toString().toDouble())
+            tvFormatNum.text?.toString()?.takeIf { it.isNotBlank() }?.let {
+                action.invoke(it.toDouble())
+            }
         }
         dialog.show()
     }

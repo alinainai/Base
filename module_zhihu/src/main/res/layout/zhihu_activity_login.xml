@@ -172,7 +172,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="40dp"
         android:gravity="center"
-        android:text="国家电网内部使用软件，禁止无关人员登录"
+        android:text="内部使用软件，无关人员禁止登录"
         android:textColor="#999999"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="parent"
