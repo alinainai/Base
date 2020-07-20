@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.base.baseui.dialog.CommonDialog
 
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
@@ -25,8 +26,10 @@ import com.gas.zhihu.fragment.papersearch.mvp.PaperSearchPresenter
 import com.gas.zhihu.R
 import com.gas.zhihu.app.ZhihuConstants
 import com.gas.zhihu.bean.PaperShowBean
+import com.gas.zhihu.fragment.addpaper.AddPaperFragment
 import com.gas.zhihu.fragment.paper.PagerFragment
 import com.gas.zhihu.fragment.paper.PaperAdapter
+import com.gas.zhihu.ui.base.FragmentContainerActivity
 import com.gas.zhihu.utils.OfficeHelper
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.zhihu_fragment_map_show.*
@@ -111,13 +114,26 @@ class PaperSearchFragment : BaseFragment<PaperSearchPresenter>(), PaperSearchCon
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
-        mAdapter.setOnMultiItemClickListener { _, data, _, _ ->
-            data?.let {
-                val path = Utils.getExternalFilesDir(activity!!);
-                val fileFile = File(path.path, ZhihuConstants.FILE_ZIP_FOLDER + File.separator + data.filePath)
-                OfficeHelper.open(activity!!, fileFile.path)
+
+        mAdapter.setOnPaperOptionListener(object : PaperAdapter.OnPaperOptionListener {
+            override fun itemClick(data: PaperShowBean, position: Int) {
+                data.let {
+                    val path = Utils.getExternalFilesDir(activity!!);
+                    val fileFile = File(path.path, ZhihuConstants.FILE_ZIP_FOLDER + File.separator + data.filePath)
+                    OfficeHelper.open(activity!!, fileFile.path)
+                }
             }
-        }
+
+            override fun itemModify(data: PaperShowBean, position: Int) {
+
+            }
+
+            override fun itemDelete(data: PaperShowBean, position: Int) {
+
+            }
+
+        })
+
         itemRefresh.isEnabled = false
         ArmsUtils.configRecyclerView(itemRecycler, mLayoutManager)
         itemRecycler.adapter = mAdapter
