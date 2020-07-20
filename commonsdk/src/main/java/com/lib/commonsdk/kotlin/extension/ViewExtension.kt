@@ -11,6 +11,7 @@ import androidx.core.graphics.drawable.DrawableCompat
 import com.lib.commonsdk.constants.longAnimTime
 import org.simple.eventbus.EventBus
 
+
 /**
  * 对 Android Framework 的 View 做的一些扩展。
  */
@@ -85,16 +86,6 @@ fun <T : View> T.hideSmoothly() = apply {
     alphaAnimator.start()
 }
 
-
-/**
- * 以Pixel为单位设置TextView的字号。
- */
-var <V : TextView> V.textSizePx: Float
-    get() = throw UnsupportedOperationException("cannot get textSizePx for TextView")
-    set(v) {
-        setTextSize(TypedValue.COMPLEX_UNIT_PX, v)
-    }
-
 /**
  * View 被 attached 到 window 的时候做一些事情
  */
@@ -132,3 +123,14 @@ var <V : View> V.eventAware: Boolean
 var <T : Drawable> T.tint: Int
     get() = throw java.lang.UnsupportedOperationException("cannot get tint for Drawable")
     set(v) = DrawableCompat.setTint(this, v)
+
+/**
+ * 以Pixel为单位设置TextView的字号。
+ */
+var <V : TextView> V.textSizePx: Float
+    get() = throw UnsupportedOperationException("cannot get textSizePx for TextView")
+    set(v) {
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, v)
+    }
+
+

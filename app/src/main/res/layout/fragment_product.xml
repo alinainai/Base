@@ -21,26 +21,24 @@
 
 
     <TextView
-        android:textColor="@color/public_white"
+        android:textColor="@color/public_text_black_deep"
         android:id="@+id/productNameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="56sp"
-        android:text="300"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="从左到右"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <TextView
-        android:visibility="gone"
-        android:textColor="@color/public_white"
+        android:textColor="@color/public_text_black_deep"
         android:id="@+id/productNameTextNor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="56sp"
-        android:text="300"
+        android:text="从上到下"
         app:layout_constraintTop_toBottomOf="@+id/productNameText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

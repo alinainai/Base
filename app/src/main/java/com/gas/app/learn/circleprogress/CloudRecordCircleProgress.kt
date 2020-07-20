@@ -66,7 +66,7 @@ class CloudRecordCircleProgress @JvmOverloads constructor(context: Context, attr
         val minSize = min(w - paddingLeft - paddingRight,
                 h - paddingTop - paddingBottom)
         mRadius = (minSize shr 1.toFloat().toInt()).toFloat()
-        val arcRadius = mRadius - mMarkWidth - mMarkDistance - mArcWidth
+        val arcRadius = mRadius - mMarkWidth - mMarkDistance - mArcWidth/2
         mArcRect.top = h.toFloat() / 2 - arcRadius
         mArcRect.left = w.toFloat() / 2 - arcRadius
         mArcRect.bottom = h.toFloat() / 2 + arcRadius
