@@ -51,4 +51,6 @@ dependencies {
     }
     api rootProject.ext.dependencies["greenDao"]
     api rootProject.ext.dependencies["zxing"]
+
+    api 'com.amap.api:location:3.3.0'
 }

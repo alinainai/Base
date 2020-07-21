@@ -81,7 +81,7 @@ public class MapPresenter extends BasePresenter<MapContract.Model, MapContract.V
 
             @Override
             public void onRequestPermissionFailure(List<String> permissions) {
-                AppUtils.toast("请开启数据读取权限，否则搜索功能无法读取数据");
+                AppUtils.toast("请开启数据读取权限并重启App，否则App功能无法使用");
             }
 
             @Override
