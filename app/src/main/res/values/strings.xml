@@ -42,6 +42,7 @@
     <string name="previous">Go to previous</string>
     <string name="next">Go to next</string>
     <string name="calendar">Calendar</string>
+    <string name="v4_camera_time_down">%ds</string>
 
 </resources>
 

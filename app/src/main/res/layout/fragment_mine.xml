@@ -9,28 +9,141 @@
 
 
     <TextView
-        android:padding="20dp"
         android:id="@+id/sampleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MineFragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="300dp"
+        android:padding="20dp"
+        android:text="开始倒计时"
+        android:textColor="@color/public_text_black_deep"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <com.airbnb.lottie.LottieAnimationView-->
-<!--        android:id="@+id/splash_img_icon"-->
-<!--        android:layout_width="57dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_chainStyle="spread"-->
-<!--        app:lottie_autoPlay="true"-->
-<!--        app:lottie_fileName="lottie/login_logo_animation.json"-->
-<!--        app:lottie_loop="true" />-->
+    <TextView
+        android:id="@+id/sampleTextStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="360dp"
+        android:padding="20dp"
+        android:text="停止倒计时"
+        android:textColor="@color/public_text_black_deep"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <include layout="@layout/v4_calendar_select_view_for_message"/>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/splash_img_icon"
+        android:layout_width="57dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="lottie/login_logo_animation.json"
+        app:lottie_loop="true" />
+
+    <com.gas.app.learn.customview.CloudRecordTimeDownView
+        android:id="@+id/timeDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
+
+        <TextView
+            android:id="@+id/topText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="上部"
+            android:textColor="@color/public_text_black_deep" />
+
+        <include layout="@layout/fragment_my_item_cloud_record_time_down" />
+
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:id="@+id/time_down_container"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="45dp"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:background="#FBFCFD">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/img_cloud_record_ad_alert"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="20dp"-->
+        <!--                android:src="@mipmap/cloud_record_time_down_alert"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/cloud_record_ad_title"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginStart="7dp"-->
+        <!--                android:text="限时优惠倒计时："-->
+        <!--                android:textColor="#F84039"-->
+        <!--                android:textSize="13sp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/img_cloud_record_ad_alert"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--            <com.gas.app.learn.customview.CloudRecordTimeDownView-->
+        <!--                android:id="@+id/cloud_record_time_down"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintStart_toEndOf="@+id/cloud_record_ad_title"-->
+        <!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+        <!--            <TextView-->
+        <!--                android:id="@+id/banner_time_down"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_marginLeft="10dp"-->
+        <!--                android:layout_marginEnd="20dp"-->
+        <!--                android:background="@drawable/app_splash_shape_stroke_gray"-->
+        <!--                android:gravity="center"-->
+        <!--                android:lines="1"-->
+        <!--                android:minWidth="20dp"-->
+        <!--                android:paddingLeft="3dp"-->
+        <!--                android:paddingTop="1dp"-->
+        <!--                android:paddingRight="3dp"-->
+        <!--                android:paddingBottom="1dp"-->
+        <!--                android:textColor="#a7afb9"-->
+        <!--                android:textSize="10sp"-->
+        <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--                app:layout_constraintEnd_toEndOf="parent"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                tools:text="10s" />-->
+
+
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <TextView
+            android:id="@+id/bottomText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="下部"
+            android:textColor="@color/public_text_black_deep" />
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

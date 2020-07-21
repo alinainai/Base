@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.base.lib.base.LazyLoadFragment
 import com.base.lib.di.component.AppComponent
+import com.base.lib.util.ArmsUtils
 import com.gas.app.R
-import com.gas.app.learn.calendarselect.CalendarTheme
-import com.gas.app.learn.calendarselect.data.CalendarDayModel
 import com.gas.app.learn.calendarselect.mvp.CalendarSelectViewHolder
+import com.gas.app.learn.customview.MyPageCloudTimeDownViewHolder
 import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
 import kotlinx.android.synthetic.main.fragment_mine.*
-import kotlinx.android.synthetic.main.v4_calendar_select_view_for_message.*
 import org.joda.time.LocalDate
 
 /**
@@ -29,6 +28,9 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     private lateinit var calendar: CalendarSelectViewHolder
 
 
+    private lateinit var holder: MyPageCloudTimeDownViewHolder
+
+
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMineComponent.builder().appComponent(appComponent).view(this).build().inject(this)
     }
@@ -39,12 +41,23 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        calendar = CalendarSelectViewHolder(calendarBg, CalendarTheme.Gold).apply {
-            onCalendarToggle = { isShow -> sampleText.text = if (isShow) "打开" else "关闭" }
-            onDayItemClick = { date -> mLocalDate = date.localDate }
+        timeDown.setTimeDownStamp(24 * 1000 * 60 * 60)
+        view?.let {
+            holder = MyPageCloudTimeDownViewHolder(it.findViewById(R.id.time_down_container))
         }
+
         sampleText.setOnClickListener {
-            calendar.show(mLocalDate)
+            timeDown.startTimeDown()
+            holder.onClickCallback = ({
+                showMessage("点击")
+                holder.hide()
+            })
+            holder.show("优惠活动：", 24 * 1000 * 60 * 60)
+
+        }
+        sampleTextStop.setOnClickListener {
+            timeDown.stopDownTime()
+            holder.hide()
         }
     }
 
@@ -55,7 +68,9 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     override val wrapContext: Context
         get() = context!!
 
-    override fun showMessage(message: String) {}
+    override fun showMessage(message: String) {
+        ArmsUtils.snackbarText(message)
+    }
 
     companion object {
         const val TAG = "MineFragment"

@@ -33,5 +33,17 @@
 
 
 
+    <!--优惠倒计时器 -->
+    <declare-styleable name="CloudRecordTimeDownView">
+        <attr name="TimeZoneBackground" format="reference|color" />
+        <attr name="TimeZoneTextColor" format="color|reference" />
+        <attr name="TimeZoneTextSize" format="dimension"/>
+        <attr name="TimeTitleText" format="string"/>
+        <attr name="TimeDayUnit" format="string"/>
+    </declare-styleable>
+
+
+
+
 
 </resources>
