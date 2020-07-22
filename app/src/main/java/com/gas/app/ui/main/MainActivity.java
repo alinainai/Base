@@ -49,20 +49,20 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @BindView(R.id.main_btn1)
     TextView rBtn1;
-    @BindView(R.id.main_btn2)
+    @BindView(R.id.mainBtn2)
     TextView rBtn2;
-    @BindView(R.id.main_btn3)
+    @BindView(R.id.mainBtn3)
     TextView rBtn3;
-    @BindView(R.id.main_btn4)
+    @BindView(R.id.mainBtn4)
     TextView rBtn4;
 
     @BindView(R.id.main_icon1)
     LottieAnimationView mIcon1;
-    @BindView(R.id.main_icon2)
+    @BindView(R.id.mainIcon2)
     LottieAnimationView mIcon2;
-    @BindView(R.id.main_icon3)
+    @BindView(R.id.mainIcon3)
     LottieAnimationView mIcon3;
-    @BindView(R.id.main_icon4)
+    @BindView(R.id.mainIcon4)
     LottieAnimationView mIcon4;
 
     @Inject
@@ -123,19 +123,19 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         super.onSaveInstanceState(outState);
     }
 
-    @OnClick({R.id.main_btn1, R.id.main_btn2, R.id.main_btn3, R.id.main_btn4})
+    @OnClick({R.id.main_btn1, R.id.mainBtn2, R.id.mainBtn3, R.id.mainBtn4})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_btn1:
                 resetButton(0);
                 break;
-            case R.id.main_btn2:
+            case R.id.mainBtn2:
                 resetButton(1);
                 break;
-            case R.id.main_btn3:
+            case R.id.mainBtn3:
                 resetButton(2);
                 break;
-            case R.id.main_btn4:
+            case R.id.mainBtn4:
                 resetButton(3);
                 break;
         }

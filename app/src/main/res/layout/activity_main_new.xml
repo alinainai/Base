@@ -38,7 +38,7 @@
 
 
         <TextView
-            android:id="@+id/main_btn1"
+            android:id="@+id/mainBtn1"
             style="@style/app_main_bottom_btn"
             android:text="@string/app_str_home_title"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,11 +47,11 @@
 
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/main_icon1"
+            android:id="@+id/mainIcon1"
             style="@style/app_main_bottom_icon"
-            app:layout_constraintEnd_toEndOf="@+id/main_btn1"
-            app:layout_constraintStart_toStartOf="@+id/main_btn1"
-            app:layout_constraintTop_toTopOf="@+id/main_btn1"
+            app:layout_constraintEnd_toEndOf="@+id/mainBtn1"
+            app:layout_constraintStart_toStartOf="@+id/mainBtn1"
+            app:layout_constraintTop_toTopOf="@+id/mainBtn1"
             app:lottie_autoPlay="false"
             app:lottie_fileName="lottie/icon_home.json"
             app:lottie_imageAssetsFolder="images"
@@ -65,7 +65,7 @@
             android:text="@string/app_str_product_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mainBtn3"
-            app:layout_constraintStart_toEndOf="@+id/main_btn1" />
+            app:layout_constraintStart_toEndOf="@+id/mainBtn1" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/mainIcon2"

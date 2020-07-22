@@ -6,6 +6,7 @@ apply plugin: 'kotlin-kapt'
 kapt {
     generateStubs = true
 }
+
 def static releaseTime() {
     return new Date().format("MMddHHmm", TimeZone.getDefault())
 }
