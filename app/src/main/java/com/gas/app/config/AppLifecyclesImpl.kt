@@ -13,38 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.app.config;
+package com.gas.app.config
 
-import android.app.Application;
-import android.content.Context;
+import android.app.Application
+import android.content.Context
+import com.base.lib.base.delegate.AppLifecyclers
+import com.gas.app.BuildConfig
+import com.lib.commonsdk.utils.AppUtils
 
-import androidx.annotation.NonNull;
-
-import com.base.lib.base.delegate.AppLifecyclers;
-
-
-import com.gas.app.BuildConfig;
-import com.lib.commonsdk.utils.AppUtils;
-
-
-public class AppLifecyclesImpl implements AppLifecyclers {
-
-    @Override
-    public void attachBaseContext(@NonNull Context base) {
-
-    }
-
-    @Override
-    public void onCreate(@NonNull Application application) {
+class AppLifecyclesImpl : AppLifecyclers {
+    override fun attachBaseContext(base: Context) {}
+    override fun onCreate(application: Application) {
         if (!BuildConfig.IS_BUILD_MODULE) {
-            AppUtils.init(application);
+            AppUtils.init(application)
         }
     }
 
-    @Override
-    public void onTerminate(@NonNull Application application) {
-
-    }
-
-
+    override fun onTerminate(application: Application) {}
 }

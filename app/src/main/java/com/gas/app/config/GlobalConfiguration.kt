@@ -13,42 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.app.config;
+package com.gas.app.config
 
-import android.app.Application;
-import android.content.Context;
+import android.app.Application.ActivityLifecycleCallbacks
+import android.content.Context
+import androidx.fragment.app.FragmentManager
+import com.base.lib.base.delegate.AppLifecyclers
+import com.base.lib.di.module.ConfigModule
+import com.base.lib.integration.config.ClientConfigModule
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
-
-import com.base.lib.integration.config.ClientConfigModule;
-import com.base.lib.base.delegate.AppLifecyclers;
-import com.base.lib.di.module.ConfigModule;
-
-import java.util.List;
-
-
-public final class GlobalConfiguration implements ClientConfigModule {
-
-    @Override
-    public void applyOptions(@NonNull Context context, @NonNull ConfigModule.Builder builder) {
-
-    }
-
-    @Override
-    public void injectAppLifecycle(@NonNull Context context, @NonNull List<AppLifecyclers> lifecycles) {
+class GlobalConfiguration : ClientConfigModule {
+    override fun applyOptions(context: Context, builder: ConfigModule.Builder) {}
+    override fun injectAppLifecycle(context: Context, lifecycles: MutableList<AppLifecyclers>) {
         //AppLifecycles 中的所有方法都会在基类 Application 的对应生命周期中被调用, 所以在对应的方法中可以扩展一些自己需要的逻辑
         //可以根据不同的逻辑添加多个实现类
-        lifecycles.add(new AppLifecyclesImpl());
+        lifecycles.add(AppLifecyclesImpl())
     }
 
-    @Override
-    public void injectActivityLifecycle(@NonNull Context context, @NonNull List<Application.ActivityLifecycleCallbacks> lifecycles) {
-
-    }
-
-    @Override
-    public void injectFragmentLifecycle(@NonNull Context context, @NonNull List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
+    override fun injectActivityLifecycle(context: Context, lifecycles: List<ActivityLifecycleCallbacks>) {}
+    override fun injectFragmentLifecycle(context: Context, lifecycles: List<FragmentManager.FragmentLifecycleCallbacks>) {
         //FragmentLifecycleCallbacks 中的所有方法都会在 Fragment (包括三方库) 的对应生命周期中被调用, 所以在对应的方法中可以扩展一些自己需要的逻辑
         //可以根据不同的逻辑添加多个实现类
     }
