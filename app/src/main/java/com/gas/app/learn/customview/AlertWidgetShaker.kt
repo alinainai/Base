@@ -13,16 +13,22 @@ import android.view.View
 class AlertWidgetShaker private constructor(private val widget: View) {
 
     private var objectAnimator: ObjectAnimator? = null
+
     // 第一次启动延迟时间，单位 ms
     var startDelay = 500L
+
     // 两次动画的间隔时间，单位 ms
     var repeatInterval = 500L
+
     // 每次动画的持续时间，单位 ms
     var duration = 800L
+
     // 是否循环执行动画
     var repeat = true
+
     // 重复执行动画的次数上限，负数为无限制
     var repeatMaxTimes = -1
+
     // 当前已经执行动画的次数
     private var currentTimes = 0
 
@@ -67,7 +73,7 @@ class AlertWidgetShaker private constructor(private val widget: View) {
                 }
 
                 override fun onAnimationEnd(animation: Animator?) {
-                    currentTimes ++
+                    currentTimes++
                     if (repeat) {
                         // 小于0为无限制
                         val maximumLimitReached = if (repeatMaxTimes >= 0) {

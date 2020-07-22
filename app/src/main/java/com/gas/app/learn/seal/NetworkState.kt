@@ -11,4 +11,7 @@ sealed class NetworkState {
             val message: Int? = null
     ) : NetworkState()
 
+    var optionCallback: ((pos: Int) -> Unit)? = null
+    var optionCallbackNoParam: (() -> Unit)? = null
+
 }

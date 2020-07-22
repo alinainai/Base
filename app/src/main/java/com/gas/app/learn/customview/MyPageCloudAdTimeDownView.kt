@@ -1,21 +1,28 @@
 package com.gas.app.learn.customview
 
+
+import android.content.Context
 import android.os.Handler
 import android.os.Message
+import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.gas.app.R
 import com.lib.commonsdk.kotlin.extension.gone
 import com.lib.commonsdk.utils.AppUtils
+
+
 import java.lang.ref.WeakReference
 
-class MyPageCloudTimeDownViewHolder(val view: View) {
+class MyPageCloudAdTimeDownView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+    : ConstraintLayout(context, attrs, defStyleAttr) {
 
     companion object {
-        private const val SHOW_DURATION_DEFAULT = 10 * 1000.toLong()
+        private const val SHOW_DURATION_DEFAULT = 10000.toLong()
         private const val SHOW_ACTION = 0x02 //显示
         private const val HIDE_ACTION = 0x03 //隐藏
         private const val SHOW_TIME_COUNT_ACTION = 0x04
@@ -27,23 +34,17 @@ class MyPageCloudTimeDownViewHolder(val view: View) {
     private var mHandler: CameraVideoPlayPromptBannerHandler
 
     //view
-    private var imgCloudRecordAdAlert: ImageView = view.findViewById(R.id.img_cloud_record_ad_alert)
-    private var cloudRecordAdTitle: TextView = view.findViewById(R.id.cloud_record_ad_title)
-    private var timeDownView: CloudRecordTimeDownView = view.findViewById(R.id.cloud_record_time_down)
-    private var tvTimeDown: TextView = view.findViewById(R.id.banner_time_down)
-    private var viewContainer: View = view.findViewById(R.id.time_down_container)
+    private val imgCloudRecordAdAlert: ImageView
+    private val cloudRecordAdTitle: TextView
+    private val timeDownView: CloudRecordTimeDownView
+    private val tvTimeDown: TextView
+    private val mRoot: View
+    private val alertShaker: AlertWidgetShaker
 
-    private val alertShaker: AlertWidgetShaker by lazy {
-        AlertWidgetShaker.with(imgCloudRecordAdAlert).apply {
-            repeatMaxTimes = -1
-            repeat = true
-            startDelay = 100L
-            repeatInterval = 1000L
-        }
-    }
+    var hideCallback: (() -> Unit)? = null
+    var showCallback: (() -> Unit)? = null
 
     private fun startAlertShaker() {
-        // 判断今天是否点击过签到按钮，点击过就不再显示动画了
         alertShaker.shake()
     }
 
@@ -51,20 +52,22 @@ class MyPageCloudTimeDownViewHolder(val view: View) {
         alertShaker.cancel()
     }
 
-    var onClickCallback: (() -> Unit)? = null
-
     fun show(tip: String, timeDown: Long) {
+        if (mRoot.visibility == View.VISIBLE)
+            return
         cloudRecordAdTitle.text = tip
+        mCloseTimeDown = mCloseDuration / 1000
+        tvTimeDown.text = AppUtils.getString(R.string.v4_camera_time_down, mCloseTimeDown)
         timeDownView.setTimeDownStamp(timeDown)
         sendMessage(SHOW_ACTION)
     }
 
-    fun hide(){
+    fun hide() {
         sendMessage(HIDE_ACTION)
     }
 
     private fun updateTimeView() {
-        if (viewContainer.visibility != View.GONE && mCloseTimeDown > 0) {
+        if (mRoot.visibility != View.GONE && mCloseTimeDown > 0) {
             mCloseTimeDown--
             tvTimeDown.text = AppUtils.getString(R.string.v4_camera_time_down, mCloseTimeDown)
             sendMessage(SHOW_TIME_COUNT_ACTION, 1000)
@@ -86,14 +89,20 @@ class MyPageCloudTimeDownViewHolder(val view: View) {
         }
     }
 
+    override fun onDetachedFromWindow() {
+        cancelAlertShaker()
+        timeDownView.stopDownTime()
+        mHandler.removeCallbacksAndMessages(null)
+        super.onDetachedFromWindow()
+    }
+
     private fun showView() {
-        viewContainer.clearAnimation()
+        mRoot.clearAnimation()
         sendMessage(HIDE_ACTION, mCloseDuration)
         sendMessage(SHOW_TIME_COUNT_ACTION, 1000)
-        mCloseTimeDown = mCloseDuration / 1000
-        viewContainer.visibility = View.VISIBLE
-        val a =  AlphaAnimation(0.2F, 1F).apply {
-            duration=300
+        mRoot.visibility = View.VISIBLE
+        val a = AlphaAnimation(0.2F, 1F).apply {
+            duration = 300
         }
         a.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
@@ -101,47 +110,55 @@ class MyPageCloudTimeDownViewHolder(val view: View) {
                 //timeDown
                 timeDownView.startTimeDown()
                 startAlertShaker()
+                showCallback?.invoke()
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
         })
-        viewContainer.startAnimation(a)
+        mRoot.startAnimation(a)
     }
 
     fun hideView() {
-        if (viewContainer.visibility == View.GONE) {
+        if (mRoot.visibility == View.GONE) {
             return
         }
-        viewContainer.clearAnimation()
-        val a =  AlphaAnimation(1.0f, 0.2f).apply {
-            duration=300
+        mRoot.clearAnimation()
+        val a = AlphaAnimation(1.0f, 0.2f).apply {
+            duration = 300
         }
-//        val a = AnimationUtils.loadAnimation(AppUtils.getApp(), R.anim.cloud_record_banner_hidded)
         a.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
                 mHandler.removeCallbacksAndMessages(null)
-                viewContainer.gone()
-                timeDownView.stopDownTime()
+                mRoot.gone()
                 cancelAlertShaker()
+                timeDownView.stopDownTime()
+                hideCallback?.invoke()
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
         })
-        viewContainer.startAnimation(a)
-
+        mRoot.startAnimation(a)
     }
 
     init {
+        val view = View.inflate(context, R.layout.fragment_my_item_cloud_record_time_down, this)
+        imgCloudRecordAdAlert = view.findViewById(R.id.img_cloud_record_ad_alert)
+        cloudRecordAdTitle = view.findViewById(R.id.cloud_record_ad_title)
+        timeDownView = view.findViewById(R.id.cloud_record_time_down)
+        tvTimeDown = view.findViewById(R.id.banner_time_down)
         mHandler = CameraVideoPlayPromptBannerHandler(this)
-        viewContainer.gone()
-        viewContainer.setOnClickListener {
-            onClickCallback?.invoke()
+        alertShaker = AlertWidgetShaker.with(imgCloudRecordAdAlert).apply {
+            repeatMaxTimes = -1
+            repeat = true
+            startDelay = 100L
+            repeatInterval = 1000L
         }
+        mRoot = this
     }
 
-    private class CameraVideoPlayPromptBannerHandler internal constructor(view: MyPageCloudTimeDownViewHolder) : Handler() {
-        private val mRef: WeakReference<MyPageCloudTimeDownViewHolder> = WeakReference(view)
+    private class CameraVideoPlayPromptBannerHandler internal constructor(view: MyPageCloudAdTimeDownView) : Handler() {
+        private val mRef: WeakReference<MyPageCloudAdTimeDownView> = WeakReference(view)
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
             when (msg.what) {
@@ -167,5 +184,4 @@ class MyPageCloudTimeDownViewHolder(val view: View) {
             }
         }
     }
-
 }

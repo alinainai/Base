@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/time_down_container"
     android:layout_width="match_parent"
     android:layout_height="45dp"
-    android:background="#FBFCFD">
+    android:background="#FBFCFD"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
     <ImageView
         android:id="@+id/img_cloud_record_ad_alert"
@@ -41,7 +42,7 @@
         android:id="@+id/banner_time_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/app_splash_shape_stroke_gray"
         android:gravity="center"
@@ -58,5 +59,15 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="10s" />
 
+    <View
+        android:id="@+id/halving_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="14.66dp"
+        android:background="#d3d3d3"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</merge>

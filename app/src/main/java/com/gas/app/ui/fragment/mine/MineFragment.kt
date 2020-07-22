@@ -1,5 +1,7 @@
 package com.gas.app.ui.fragment.mine
 
+import android.animation.LayoutTransition
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,12 +12,13 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.gas.app.R
 import com.gas.app.learn.calendarselect.mvp.CalendarSelectViewHolder
-import com.gas.app.learn.customview.MyPageCloudTimeDownViewHolder
+import com.gas.app.learn.customview.MyPageCloudAdTimeDownView
 import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
 import kotlinx.android.synthetic.main.fragment_mine.*
 import org.joda.time.LocalDate
+
 
 /**
  * Author:
@@ -28,7 +31,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     private lateinit var calendar: CalendarSelectViewHolder
 
 
-    private lateinit var holder: MyPageCloudTimeDownViewHolder
+    private  var holder: MyPageCloudAdTimeDownView?=null
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -43,21 +46,31 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
         timeDown.setTimeDownStamp(24 * 1000 * 60 * 60)
         view?.let {
-            holder = MyPageCloudTimeDownViewHolder(it.findViewById(R.id.time_down_container))
+
+        }
+
+        val transition = LayoutTransition()
+        val animOut = ObjectAnimator.ofFloat(null, View.ALPHA, 1.0F,0.2F)
+        transition.setAnimator(LayoutTransition.DISAPPEARING, animOut)
+
+
+
+//        ll_container.layoutTransition=transition
+
+
+        timeDownHolder.setOnClickListener {
+            showMessage("点击")
+            timeDownHolder?.hide()
         }
 
         sampleText.setOnClickListener {
-            timeDown.startTimeDown()
-            holder.onClickCallback = ({
-                showMessage("点击")
-                holder.hide()
-            })
-            holder.show("优惠活动：", 24 * 1000 * 60 * 60)
-
+            timeDownHolder.show("优惠活动：", 24 * 1000 * 60 * 60)
+//            timeDown.startTimeDown()
+//            holder = MyPageCloudTimeDownViewHolder(view!!.findViewById(R.id.time_down_container))
         }
         sampleTextStop.setOnClickListener {
-            timeDown.stopDownTime()
-            holder.hide()
+//            timeDown.stopDownTime()
+            timeDownHolder.hide()
         }
     }
 
