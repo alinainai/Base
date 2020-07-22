@@ -31,7 +31,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     private lateinit var calendar: CalendarSelectViewHolder
 
 
-    private  var holder: MyPageCloudAdTimeDownView?=null
+    private var holder: MyPageCloudAdTimeDownView? = null
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -48,21 +48,14 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         view?.let {
 
         }
-
         val transition = LayoutTransition()
-        val animOut = ObjectAnimator.ofFloat(null, View.ALPHA, 1.0F,0.2F)
+        val animOut = ObjectAnimator.ofFloat(null, View.ALPHA, 1.0F, 0.2F)
         transition.setAnimator(LayoutTransition.DISAPPEARING, animOut)
-
-
-
 //        ll_container.layoutTransition=transition
-
-
         timeDownHolder.setOnClickListener {
             showMessage("点击")
             timeDownHolder?.hide()
         }
-
         sampleText.setOnClickListener {
             timeDownHolder.show("优惠活动：", 24 * 1000 * 60 * 60)
 //            timeDown.startTimeDown()
