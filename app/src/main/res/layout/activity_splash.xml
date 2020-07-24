@@ -25,52 +25,52 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-       >
+        >
 
-    <TextView
-        android:id="@+id/tvSkip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/public_activity_horizontal_margin"
-        android:background="@drawable/app_splash_shape_stroke_gray"
-        android:gravity="center"
-        android:lines="1"
-        android:minWidth="85dp"
-        android:paddingStart="15dp"
-        android:paddingTop="6dp"
-        android:paddingEnd="15dp"
-        android:paddingBottom="6dp"
-        android:textColor="@color/public_text_black_light"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/splash_v_bottom_bg"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/splash_v_bottom_bg"
-        tools:text="@string/app_str_skip_with_time" />
+        <TextView
+            android:id="@+id/tvSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/public_activity_horizontal_margin"
+            android:background="@drawable/app_splash_shape_stroke_gray"
+            android:gravity="center"
+            android:lines="1"
+            android:minWidth="85dp"
+            android:paddingStart="15dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="6dp"
+            android:textColor="@color/public_text_black_light"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/splash_v_bottom_bg"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/splash_v_bottom_bg"
+            tools:text="@string/app_str_skip_with_time" />
 
-    <ImageView
-        android:id="@+id/imgLogoDefault"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:scaleType="centerInside"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@null"
-        android:src="@drawable/public_default_app_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/imgLogoDefault"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:scaleType="centerInside"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/public_default_app_logo"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/tv_version"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/public_text_black_deep"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogoDefault"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="国家电网" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/tv_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/public_text_black_deep"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/imgLogoDefault"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/app_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

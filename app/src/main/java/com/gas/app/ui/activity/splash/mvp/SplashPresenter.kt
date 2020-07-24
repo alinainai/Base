@@ -1,4 +1,4 @@
-package com.gas.app.ui.activity.newsplash.mvp
+package com.gas.app.ui.activity.splash.mvp
 
 import android.app.Application
 import android.content.Context

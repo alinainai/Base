@@ -55,7 +55,7 @@
         tools:targetApi="n">
 
         <activity
-            android:name=".ui.activity.newsplash.SplashActivity"
+            android:name=".ui.activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/public_app_theme_noBar">
             <intent-filter>

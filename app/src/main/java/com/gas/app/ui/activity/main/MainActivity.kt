@@ -21,7 +21,7 @@ import com.gas.app.utils.AppMoudleUtil.stopLottieAnimation
 import com.lib.commonsdk.adapter.AdapterViewPager
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.statusbar.StatusBarManager
-import kotlinx.android.synthetic.main.activity_main_new.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import javax.inject.Inject
 
@@ -60,7 +60,7 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnCl
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
         StatusBarManager.fullTransStatusBar(this)
         StatusBarManager.setStatusBarLightMode(this)
-        return R.layout.activity_main_new
+        return R.layout.activity_main
 
     }
 

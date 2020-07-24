@@ -1,7 +1,6 @@
-package com.gas.app.ui.activity.newsplash
+package com.gas.app.ui.activity.splash
 
 
-import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -12,12 +11,12 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.gas.app.R
 import com.gas.app.ui.activity.main.MainActivity
-import com.gas.app.ui.activity.newsplash.di.DaggerSplashComponent
-import com.gas.app.ui.activity.newsplash.di.SplashModule
-import com.gas.app.ui.activity.newsplash.mvp.SplashContract
-import com.gas.app.ui.activity.newsplash.mvp.SplashPresenter
+import com.gas.app.ui.activity.splash.di.DaggerSplashComponent
+import com.gas.app.ui.activity.splash.di.SplashModule
+import com.gas.app.ui.activity.splash.mvp.SplashContract
+import com.gas.app.ui.activity.splash.mvp.SplashPresenter
 import com.gas.app.view.MyVideoView
-import kotlinx.android.synthetic.main.activity_splash_new.*
+import kotlinx.android.synthetic.main.activity_splash.*
 import java.util.*
 
 class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View, View.OnClickListener {
@@ -35,21 +34,22 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View, Vie
 
     override fun initView(savedInstanceState: Bundle?): Int {
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
-        return R.layout.activity_splash_new
+        return R.layout.activity_splash
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        tvSkip.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
         v?.let {
-            when(it.id){
-                R.id.tvSkip->{
+            when (it.id) {
+                R.id.tvSkip -> {
                     tvSkip.isEnabled = false
                     mPresenter?.forceToMainPage()
                 }
-                else -> {}
+                else -> {
+                }
             }
         }
     }

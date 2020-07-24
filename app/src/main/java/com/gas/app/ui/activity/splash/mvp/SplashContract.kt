@@ -1,4 +1,4 @@
-package com.gas.app.ui.activity.newsplash.mvp
+package com.gas.app.ui.activity.splash.mvp
 
 import com.base.lib.mvp.IModel
 import com.base.lib.mvp.IView

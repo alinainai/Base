@@ -1,11 +1,11 @@
-package com.gas.app.ui.activity.newsplash.di
+package com.gas.app.ui.activity.splash.di
 
 import com.base.lib.di.scope.ActivityScope
 
 import dagger.Module
 import dagger.Provides
-import com.gas.app.ui.activity.newsplash.mvp.SplashContract
-import com.gas.app.ui.activity.newsplash.mvp.SplashModel
+import com.gas.app.ui.activity.splash.mvp.SplashContract
+import com.gas.app.ui.activity.splash.mvp.SplashModel
 
 
 /**

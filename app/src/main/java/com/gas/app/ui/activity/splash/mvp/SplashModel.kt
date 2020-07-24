@@ -1,12 +1,10 @@
-package com.gas.app.ui.activity.newsplash.mvp
+package com.gas.app.ui.activity.splash.mvp
 
 import com.base.lib.integration.repository.IRepositoryManager
 import com.base.lib.mvp.BaseModel
 
 import com.base.lib.di.scope.ActivityScope;
 import javax.inject.Inject
-
-import com.gas.app.ui.activity.newsplash.mvp.SplashContract
 
 
 /**
