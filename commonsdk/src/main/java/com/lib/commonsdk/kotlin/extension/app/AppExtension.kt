@@ -8,12 +8,14 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.lib.commonsdk.BuildConfig
 import com.lib.commonsdk.constants.Constants
 import com.lib.commonsdk.kotlin.utils.AppUtils
 import com.lib.commonsdk.utils.sp.SPStaticUtils
@@ -21,9 +23,7 @@ import timber.log.Timber
 import java.io.File
 import java.util.*
 
-fun error(str: String) {
-    Timber.e(str)
-}
+
 
 val app: Context = AppUtils.app.applicationContext
 
@@ -103,8 +103,6 @@ fun getAppVersionCode(packageName: String = AppUtils.app.packageName): Long {
         -1
     }
 }
-
-
 
 
 /**

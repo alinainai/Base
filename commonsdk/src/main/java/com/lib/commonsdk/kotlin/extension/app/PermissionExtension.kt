@@ -10,22 +10,11 @@ import java.util.ArrayList
 
 /**
  * Check if the calling context has a set of permissions.
- *
- * @param context the calling context.
- * @param perms   one ore more permissions, such as [Manifest.permission.CAMERA].
- * @return true if all permissions are already granted, false if at least one permission is not
- * yet granted.
- * @see Manifest.permission
  */
 fun hasPermissions(context: Context?, vararg perms: String): Boolean {
-    // Always return true for SDK < M, let the system deal with the permissions
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-        // DANGER ZONE!!! Changing this will break the library.
         return true
     }
-
-    // Null context may be passed if we have detected Low API (less than M) so getting
-    // to this point with a null context should not be possible.
     requireNotNull(context) { "Can't check permissions for null context" }
     for (perm in perms) {
         if (ContextCompat.checkSelfPermission(context, perm)

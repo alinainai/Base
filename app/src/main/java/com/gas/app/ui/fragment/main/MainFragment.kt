@@ -20,6 +20,8 @@ import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.lib.commonsdk.constants.RouterHub
+import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.kotlin.extension.app.info
 import com.lib.commonsdk.kotlin.extension.app.navigation
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -75,9 +77,11 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         }
         btnPlugin1.setOnClickListener {
 
+            info("点击")
+
         }
         btnPlugin2.setOnClickListener {
-
+            debug("点击")
         }
         btnPlugin3.setOnClickListener {
 

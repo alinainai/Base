@@ -13,10 +13,6 @@ import java.util.zip.ZipException
 import java.util.zip.ZipFile
 import kotlin.concurrent.withLock
 
-/**
- * 对现有的Java类库里边的类做的扩展
- */
-// ------------------------------
 
 /**
  * 保证一个文件夹已经被创建。如果创建失败抛异常。
@@ -33,34 +29,17 @@ fun File.createIfAbsent() = apply {
     if (!exists() && !createNewFile()) throw IOException("Failed to create file $name")
 }
 
-/**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * 德国版本为避免权利纠纷，不再使用mp3格式的音频文件，德国版本统一使用opus
- * 国过内版本不变，仍然使用mp3，所以在此处增加opus格式音频的校验
- */
+
 fun Array<File>.firstMp3OpusFileOrNull() = firstOrNull { it.isFile && (it.extension == "mp3" || it.extension == "opus") }
 
-/**
- * 德国版本为避免权利纠纷，不再使用mp3格式的音频文件，德国版本统一使用opus
- * 国过内版本不变，仍然使用mp3，所以在此处增加opus格式音频的校验
- */
+
 fun Array<File>.filterMp3OpusFileOrNull() = filter { it.isFile && (it.extension == "mp3" || it.extension == "opus") }
 
-/**
- * 德国版本为避免权利纠纷，不再使用mp3格式的音频文件，德国版本统一使用opus
- * 国过内版本不变，仍然使用mp3，所以在此处增加opus格式音频的校验，即绘本可能又4种格式音频
- */
+
 fun Array<File>.filterBookAudioOrNull() = filter { it.isFile && (it.extension == "mp3" || it.extension == "opus" || it.extension == "aac" || it.extension == "lin") }
 
 /**
  * 返回一个安全的文件夹列表
-=======
- * 返回一个安全的自文件夹列表
->>>>>>> Revert "Merge branch 'feature-ailiyun' into 'feature-ailiyun'"
-=======
- * 返回一个安全的文件夹列表
->>>>>>> Revert "Merge branch 'revert-6ea804a4' into 'feature-ailiyun'"
  */
 fun File.safeListFiles(): Array<File> {
     var files = arrayOf<File>()
@@ -87,18 +66,18 @@ private val imageExtensions = listOf(
 fun File.isImage() = isFile && imageExtensions.contains(extension)
 
 fun File.safeDelete(): Boolean {
-    try {
+    return try {
         if (isDirectory) {
             var result = true
             listFiles()?.forEach { result = result && it.safeDelete() }
             // 最后，需要删除目录本身
-            return result && delete()
+            result && delete()
         } else {
-            return delete()
+            delete()
         }
     } catch (e: SecurityException) {
         e.printStackTrace()
-        return false
+        false
     }
 }
 
