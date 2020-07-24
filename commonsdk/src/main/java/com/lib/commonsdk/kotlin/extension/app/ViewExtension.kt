@@ -1,4 +1,4 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.app
 
 import android.content.res.Resources
 import android.util.DisplayMetrics
@@ -9,11 +9,8 @@ import android.animation.ObjectAnimator
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
-import com.bumptech.glide.Glide
-import java.io.File
 
 /**
  * 对 Android Framework 的 View 做的一些扩展。
@@ -119,6 +116,15 @@ fun <V : View> V.doWhenAttachedToWindow(detached: ((View) -> Unit)? = null, atta
     }
 }
 
+/**
+ * 给一个Drawable设置大小, 用这个方法设置之后Drawable是正方形的。
+ */
+var <T : Drawable> T.boundSize: Int
+    get() = bounds.width()
+    set(v) {
+        setBounds(0, 0, v, v)
+    }
+
 var <T : Drawable> T.tint: Int
     get() = throw java.lang.UnsupportedOperationException("cannot get tint for Drawable")
     set(v) = DrawableCompat.setTint(this, v)
@@ -131,7 +137,6 @@ fun Number.dpToPx(metrics: DisplayMetrics = Resources.getSystem().displayMetrics
 
 @JvmOverloads
 @Dimension(unit = Dimension.DP)
-fun Number.pxToDp(
-        metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
+fun Number.pxToDp(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
     return toFloat() / metrics.density
 }

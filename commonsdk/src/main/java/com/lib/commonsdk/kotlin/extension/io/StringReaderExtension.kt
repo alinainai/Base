@@ -1,4 +1,4 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.io
 
 import java.io.IOException
 import java.io.StringReader

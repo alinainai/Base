@@ -20,6 +20,7 @@ import com.gas.zhihu.app.ZhihuConstants;
 
 import com.gas.zhihu.ui.fragment.mine.MineFragment;
 import com.lib.commonsdk.constants.RouterHub;
+import com.lib.commonsdk.kotlin.extension.app.AppExtensionKt;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
@@ -30,7 +31,6 @@ import com.gas.zhihu.ui.activity.login.di.DaggerLoginComponent;
 import com.gas.zhihu.ui.activity.login.mvp.LoginContract;
 import com.gas.zhihu.ui.activity.login.mvp.LoginPresenter;
 import com.gas.zhihu.view.CleanEditText;
-import com.lib.commonsdk.utils.AppUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -151,12 +151,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (TextUtils.isEmpty(userName)) {
-            AppUtils.toast("请输入登录账号");
+            AppExtensionKt.toast("请输入登录账号");
             return;
         }
 
         if (TextUtils.isEmpty(passWord)) {
-            AppUtils.toast("请输入登录密码");
+            AppExtensionKt.toast("请输入登录密码");
             return;
         }
 
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
             FragmentContainerActivity.Companion.startActivity(this, MineFragment.class);
         } else {
-            AppUtils.toast("请输入正确的用户名和密码");
+            AppExtensionKt.toast("请输入正确的用户名和密码");
         }
 
     }

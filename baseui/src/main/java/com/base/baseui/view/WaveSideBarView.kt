@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.base.baseui.R
-import com.lib.commonsdk.kotlin.extension.dpToPx
+import com.lib.commonsdk.kotlin.extension.app.dpToPx
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin

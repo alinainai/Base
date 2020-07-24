@@ -1,7 +1,7 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.io
 
-import org.apache.commons.codec.binary.Hex
-import org.apache.commons.codec.digest.DigestUtils
+import com.lib.commonsdk.kotlin.extension.file.createIfAbsent
+import com.lib.commonsdk.kotlin.extension.number.toHex
 import java.io.File
 import java.io.IOException
 import java.io.InputStream

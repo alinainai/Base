@@ -1,4 +1,4 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.number
 
 /**
  * [Short]的扩展。

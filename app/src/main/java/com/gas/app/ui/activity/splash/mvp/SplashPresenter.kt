@@ -7,11 +7,10 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.base.lib.di.scope.ActivityScope
 import com.base.lib.mvp.BasePresenter
 import com.gas.app.R
-import com.lib.commonsdk.kotlin.extension.closeQuietly
-import com.lib.commonsdk.kotlin.extension.getAppVersionName
+import com.lib.commonsdk.kotlin.extension.io.closeQuietly
+import com.lib.commonsdk.kotlin.extension.app.getAppVersionName
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.io.FileOutputStream
 import java.io.IOException
@@ -39,19 +38,25 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) :
 
     @Inject
     lateinit var application: Application
-    private val compositeDisposable: CompositeDisposable by lazy {
-        CompositeDisposable()
-    }
+
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreate() {
         copyResourceToSD()
     }
 
+
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        mView.versionCode(getAppVersionName())
+        autoTimeDown()
+    }
+
     private fun copyResourceToSD() {
         val videoFile = application.getFileStreamPath(videoName)
         if (!videoFile.exists()) {
-            compositeDisposable.add(Observable.just(videoName)
+            addDispose(Observable.just(videoName)
                     .flatMap { s ->
                         Observable.just(copyVideoFile(s))
                                 .subscribeOn(Schedulers.io())
@@ -66,33 +71,21 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) :
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
-        mView.versionCode(getAppVersionName())
-        autoTimeDown()
-    }
-
     override fun onDestroy() {
-        if (compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
-        }
         super.onDestroy()
     }
 
     //点击跳转，强制跳转到Main
     fun forceToMainPage() {
-        if (compositeDisposable.isDisposed) {
-            compositeDisposable.dispose()
-        }
         mView.toMainPage()
     }
 
     private fun autoTimeDown() {
-        compositeDisposable.add(Observable.intervalRange(0, timeDownNum, 0, 1, TimeUnit.SECONDS)
+        addDispose(Observable.intervalRange(0, timeDownNum, 0, 1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ l ->
-                    if (l != timeDownNum-1) {
-                        mView.tvTimeDown(timeDownNum-1 - l)
+                    if (l != timeDownNum - 1) {
+                        mView.tvTimeDown(timeDownNum - 1 - l)
                     }
                 }, { e -> e.printStackTrace() }, { mView.toMainPage() }))
     }

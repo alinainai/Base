@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 
-import com.lib.commonsdk.utils.AppUtils;
+import com.lib.commonsdk.kotlin.utils.AppUtils;
 
 import java.util.Collections;
 import java.util.HashMap;

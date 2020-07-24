@@ -22,7 +22,7 @@ import androidx.annotation.NonNull;
 
 import com.base.lib.base.delegate.AppLifecyclers;
 import com.gas.beauty.BuildConfig;
-import com.lib.commonsdk.utils.AppUtils;
+import com.lib.commonsdk.kotlin.utils.AppUtils;
 
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 

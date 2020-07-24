@@ -1,5 +1,9 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.file
 
+import com.lib.commonsdk.kotlin.extension.number.toHex
+import com.lib.commonsdk.kotlin.extension.app.runInTryCatch
+import com.lib.commonsdk.kotlin.extension.sumByLong
+import com.lib.commonsdk.kotlin.extension.io.toFile
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileNotFoundException

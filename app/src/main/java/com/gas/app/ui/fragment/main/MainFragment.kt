@@ -20,7 +20,7 @@ import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.lib.commonsdk.constants.RouterHub
-import com.lib.commonsdk.utils.Utils
+import com.lib.commonsdk.kotlin.extension.app.navigation
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
@@ -65,13 +65,13 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         loadModuleInfo()
 
         btnModule1.setOnClickListener {
-            Utils.navigation(activity, RouterHub.ZHIHU_HOMEACTIVITY)
+            navigation(activity, RouterHub.ZHIHU_HOMEACTIVITY)
         }
         btnModule2.setOnClickListener {
-            Utils.navigation(activity, RouterHub.GANK_MAINACTIVITY)
+            navigation(activity, RouterHub.GANK_MAINACTIVITY)
         }
         btnModule3.setOnClickListener {
-            Utils.navigation(activity, RouterHub.TEST_HOMEACTIVITY)
+            navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
 

@@ -59,7 +59,7 @@ fun <T> List<T>.randomItem(): T {
         throw ArrayIndexOutOfBoundsException("list is empty")
     }
 
-    return get((0..size - 1).random())
+    return get((0 until size).random())
 }
 
 /**

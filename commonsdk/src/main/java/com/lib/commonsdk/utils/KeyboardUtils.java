@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
+import com.lib.commonsdk.kotlin.utils.AppUtils;
+
 /**
  * <pre>
  *     author: Blankj

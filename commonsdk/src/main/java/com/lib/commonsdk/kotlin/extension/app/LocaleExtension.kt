@@ -1,4 +1,4 @@
-package com.lib.commonsdk.kotlin.extension
+package com.lib.commonsdk.kotlin.extension.app
 
 import java.util.Locale
 

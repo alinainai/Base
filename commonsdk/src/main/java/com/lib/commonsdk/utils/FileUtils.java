@@ -6,6 +6,8 @@ import android.content.res.AssetFileDescriptor;
 import android.net.Uri;
 import android.os.Build;
 
+import com.lib.commonsdk.kotlin.utils.AppUtils;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;

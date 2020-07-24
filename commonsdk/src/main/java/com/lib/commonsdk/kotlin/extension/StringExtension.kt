@@ -1,6 +1,7 @@
 package com.lib.commonsdk.kotlin.extension
 
 import android.util.Base64
+import com.lib.commonsdk.kotlin.extension.file.lock
 import java.security.MessageDigest
 import kotlin.concurrent.withLock
 
