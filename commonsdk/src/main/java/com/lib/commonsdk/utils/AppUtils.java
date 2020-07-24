@@ -49,65 +49,6 @@ public class AppUtils {
         Toast.makeText(getApp().getApplicationContext(), text, Toast.LENGTH_SHORT).show();
     }
 
-    public static boolean checkMapAppsIsExist(String packagename) {
-        return Utils.checkMapAppsIsExist(getApp(), packagename);
-    }
-
-    /**
-     * Return the application's version name.
-     *
-     * @return the application's version name
-     */
-    public static String getAppVersionName() {
-        return getAppVersionName(getApp().getPackageName());
-    }
-
-    /**
-     * Return the application's version name.
-     *
-     * @param packageName The name of the package.
-     * @return the application's version name
-     */
-    public static String getAppVersionName(final String packageName) {
-
-        try {
-            PackageManager pm = getApp().getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(packageName, 0);
-            return pi == null ? null : pi.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    /**
-     * Return the application's version code.
-     *
-     * @return the application's version code
-     */
-    public static int getAppVersionCode() {
-        return getAppVersionCode(getApp().getPackageName());
-    }
-
-    /**
-     * Return the application's version code.
-     *
-     * @param packageName The name of the package.
-     * @return the application's version code
-     */
-    public static int getAppVersionCode(final String packageName) {
-
-        try {
-            PackageManager pm = getApp().getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(packageName, 0);
-            return pi == null ? -1 : pi.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-
     private static Application getApplicationByReflect() {
         try {
             @SuppressLint("PrivateApi")
@@ -138,17 +79,5 @@ public class AppUtils {
         return id;
     }
 
-    /**
-     * 是否是简体中文
-     * @return
-     */
-    public static boolean isSimplifiedChinese() {
-        boolean isCH = false;
-        Locale locale = Locale.getDefault();
-        if (locale.getLanguage().equals(Constants.CHINESE_LANG) && locale.getCountry().equals(Constants.CHINA)) {
-            isCH = true;
-        }
-        return isCH;
-    }
 
 }

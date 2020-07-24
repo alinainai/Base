@@ -12,7 +12,7 @@ import java.util.*
  * Description :
  */
 class DatabaseService(context: Context) {
-    private val dbOpenHelper: TrunkSQLiteOpenHelper
+    private val dbOpenHelper: TrunkSQLiteOpenHelper = TrunkSQLiteOpenHelper(context)
     fun dropTable(taleName: String) {
         dbOpenHelper.writableDatabase.execSQL(
                 "DROP TABLE IF EXISTS $taleName")
@@ -181,7 +181,4 @@ class DatabaseService(context: Context) {
         private const val DATABASE_NAME = "collection"
     }
 
-    init {
-        dbOpenHelper = TrunkSQLiteOpenHelper(context)
-    }
 }

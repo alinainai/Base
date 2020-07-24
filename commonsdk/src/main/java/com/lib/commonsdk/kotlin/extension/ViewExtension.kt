@@ -1,15 +1,19 @@
 package com.lib.commonsdk.kotlin.extension
 
+import android.content.res.Resources
+import android.util.DisplayMetrics
+import androidx.annotation.Dimension
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
-import com.lib.commonsdk.constants.longAnimTime
-import org.simple.eventbus.EventBus
+import com.bumptech.glide.Glide
+import java.io.File
 
 /**
  * 对 Android Framework 的 View 做的一些扩展。
@@ -63,7 +67,7 @@ fun <T : View> T.showSmoothly() = apply {
             this@apply.visible()
         }
     })
-    alphaAnimator.duration = longAnimTime
+    alphaAnimator.duration = 300L
     alphaAnimator.start()
 }
 
@@ -81,10 +85,9 @@ fun <T : View> T.hideSmoothly() = apply {
             this@apply.gone()
         }
     })
-    alphaAnimator.duration = longAnimTime
+    alphaAnimator.duration = 300L
     alphaAnimator.start()
 }
-
 
 /**
  * 以Pixel为单位设置TextView的字号。
@@ -116,19 +119,19 @@ fun <V : View> V.doWhenAttachedToWindow(detached: ((View) -> Unit)? = null, atta
     }
 }
 
-/**
- * 设置让一个View可以监听EventBus事件
- */
-var <V : View> V.eventAware: Boolean
-    get() = throw UnsupportedOperationException("get for eventAware is not supported.")
-    set(v) {
-        require(v)
-        doWhenAttachedToWindow(
-                attached = { EventBus.getDefault().register(it) },
-                detached = { EventBus.getDefault().unregister(it) }
-        )
-    }
-
 var <T : Drawable> T.tint: Int
     get() = throw java.lang.UnsupportedOperationException("cannot get tint for Drawable")
     set(v) = DrawableCompat.setTint(this, v)
+
+@JvmOverloads
+@Dimension(unit = Dimension.PX)
+fun Number.dpToPx(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
+    return toFloat() * metrics.density
+}
+
+@JvmOverloads
+@Dimension(unit = Dimension.DP)
+fun Number.pxToDp(
+        metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
+    return toFloat() / metrics.density
+}

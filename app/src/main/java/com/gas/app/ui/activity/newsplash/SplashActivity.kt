@@ -1,44 +1,28 @@
 package com.gas.app.ui.activity.newsplash
 
+
+import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.annotation.NonNull
-import androidx.annotation.Nullable
-
-
+import android.view.View
+import android.widget.RelativeLayout
 import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
-
+import com.gas.app.R
+import com.gas.app.ui.activity.main.MainActivity
 import com.gas.app.ui.activity.newsplash.di.DaggerSplashComponent
 import com.gas.app.ui.activity.newsplash.di.SplashModule
 import com.gas.app.ui.activity.newsplash.mvp.SplashContract
 import com.gas.app.ui.activity.newsplash.mvp.SplashPresenter
+import com.gas.app.view.MyVideoView
+import kotlinx.android.synthetic.main.activity_splash_new.*
+import java.util.*
 
-import com.gas.app.R
+class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View, View.OnClickListener {
 
-
-/**
- * ================================================
- * Description:
- * <p>
- * Created by GasMvpTemplate on 07/22/2020 20:29
- * ================================================
- */
-/**
- * 如果没presenter
- * 你可以这样写
- *
- * @ActivityScope(請注意命名空間) class NullObjectPresenterByActivity
- * @Inject constructor() : IPresenter {
- * override fun onStart() {
- * }
- *
- * override fun onDestroy() {
- * }
- * }
- */
-class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
+    private var mVideoView: MyVideoView? = null
 
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerSplashComponent //如找不到该类,请编译一下项目
@@ -49,18 +33,65 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
                 .inject(this)
     }
 
-
     override fun initView(savedInstanceState: Bundle?): Int {
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
         return R.layout.activity_splash_new
-
     }
-
 
     override fun initData(savedInstanceState: Bundle?) {
 
     }
 
+    override fun onClick(v: View?) {
+        v?.let {
+            when(it.id){
+                R.id.tvSkip->{
+                    tvSkip.isEnabled = false
+                    mPresenter?.forceToMainPage()
+                }
+                else -> {}
+            }
+        }
+    }
+
+    //播放背景动画
+    override fun playVideo(videoFilePath: String) {
+        mVideoView = MyVideoView(this.applicationContext)
+        mVideoView?.apply {
+            layoutParams = RelativeLayout.LayoutParams(-1, -1)
+            rlVideo.addView(mVideoView)
+            setVideoPath(videoFilePath)
+            setOnPreparedListener { mediaPlayer: MediaPlayer ->
+                mediaPlayer.isLooping = true
+                mediaPlayer.start()
+            }
+            setOnErrorListener { _: MediaPlayer?, _: Int, _: Int -> true }
+        }
+    }
+
+    override fun toMainPage() {
+        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+        killMyself()
+    }
+
+    override fun tvTimeDown(time: Long) {
+        tvSkip.text = String.format(Locale.CHINA, "跳过 %d", time)
+    }
+
+    override fun versionCode(code: String?) {
+        tv_version.text = String.format("当前版本 v%s", code)
+    }
+
+    override fun onDestroy() {
+        mVideoView?.let {
+            it.suspend()
+            it.setOnErrorListener(null)
+            it.setOnPreparedListener(null)
+            it.setOnCompletionListener(null)
+            rlVideo.removeAllViews()
+        }
+        super.onDestroy()
+    }
 
     override fun showLoading() {
 
@@ -81,4 +112,5 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View {
     override fun killMyself() {
         finish()
     }
+
 }

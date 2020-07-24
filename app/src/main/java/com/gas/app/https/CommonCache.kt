@@ -34,5 +34,5 @@ import java.util.concurrent.TimeUnit
 interface CommonCache {
     @LifeCache(duration = 2, timeUnit = TimeUnit.DAYS)
     @Encrypt
-    fun getGankItemData(items: Observable<List<GankItemData?>?>?, key: DynamicKey?, evictProvider: EvictProvider?): Observable<Reply<List<GankItemData?>?>?>?
+    fun getGankItemData(items: Observable<List<GankItemData>>, key: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<GankItemData>>>
 }

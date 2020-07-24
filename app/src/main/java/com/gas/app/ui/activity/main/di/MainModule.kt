@@ -26,13 +26,11 @@ import java.util.*
 //构建MainModule时,将View的实现类传进来,这样就可以提供View的实现类给presenter
 class MainModule(private val view: MainContract.View) {
 
-
     @ActivityScope
     @Provides
     fun provideMainView(): MainContract.View {
         return this.view
     }
-
 
     @ActivityScope
     @Provides
@@ -40,23 +38,14 @@ class MainModule(private val view: MainContract.View) {
         return model
     }
 
-//    @ActivityScope
-//    @Provides
-//    fun provideFragments(): MutableList<Fragment> {
-//        val mFragments: MutableList<Fragment> = ArrayList(4)
-//        mFragments.add(MainFragment.newInstance())
-//        mFragments.add(InfoFragment.newInstance())
-//        mFragments.add(ProductFragment.newInstance())
-//        mFragments.add(MineFragment.newInstance())
-//        return mFragments
-//    }
-//
-//    @ActivityScope
-//    @Provides
-//    fun providePagerAdapter(view: MainContract.View, fragments: List<Fragment>): AdapterViewPager {
-//        return AdapterViewPager((view.getWrapContext() as AppCompatActivity).supportFragmentManager, fragments)
-//    }
-
-
+    @ActivityScope
+    @Provides
+    fun providePagerAdapter(): AdapterViewPager {
+        val fragments = listOf<Fragment>(MainFragment.newInstance(),
+                InfoFragment.newInstance(),
+                ProductFragment.newInstance(),
+                MineFragment.newInstance())
+        return AdapterViewPager((view.getWrapContext() as AppCompatActivity).supportFragmentManager, fragments)
+    }
 
 }

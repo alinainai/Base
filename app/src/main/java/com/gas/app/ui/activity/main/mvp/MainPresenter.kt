@@ -17,9 +17,7 @@ import javax.inject.Inject
 @ActivityScope
 class MainPresenter
 @Inject
-constructor(model: MainContract.Model, rootView: MainContract.View) :
-        BasePresenter<MainContract.Model, MainContract.View>(model, rootView) {
-
+constructor(model: MainContract.Model, rootView: MainContract.View) : BasePresenter<MainContract.Model, MainContract.View>(model, rootView) {
 
     override fun onDestroy() {
         super.onDestroy();

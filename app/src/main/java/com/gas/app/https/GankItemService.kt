@@ -12,5 +12,5 @@ import retrofit2.http.Path
  */
 interface GankItemService {
     @GET("{suburl}")
-    fun getGankItemData(@Path("suburl") suburl: String?): Observable<HttpResult<List<GankItemData?>?>?>?
+    fun getGankItemData(@Path("suburl") suburl: String?): Observable<HttpResult<List<GankItemData>>>
 }

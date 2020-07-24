@@ -52,5 +52,6 @@ dependencies {
     api rootProject.ext.dependencies["zxing"]
     api rootProject.ext.dependencies["kotlin-stdlib"]
     api rootProject.ext.dependencies["threetenabp"]
+    api 'apache-codec:commons-codec:1.2'
 
 }

@@ -20,12 +20,7 @@ import com.gas.app.ui.activity.main.mvp.MainContract
  */
 
 @ActivityScope
-@Component(
-        modules = [MainModule::class],
-        dependencies = [AppComponent::class])
+@Component(modules = [MainModule::class], dependencies = [AppComponent::class])
 interface MainComponent {
-
     fun inject(activity: MainActivity)
-
-
 }

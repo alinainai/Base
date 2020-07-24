@@ -17,9 +17,7 @@ import com.gas.app.ui.activity.main.mvp.MainContract
  * ================================================
  */
 @ActivityScope
-class MainModel
-@Inject
-constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), MainContract.Model {
+class MainModel @Inject constructor(repositoryManager: IRepositoryManager) : BaseModel(repositoryManager), MainContract.Model {
 
     override fun onDestroy() {
         super.onDestroy();

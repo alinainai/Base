@@ -39,6 +39,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- android 10 适配 -->
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
 
+    <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->
     <application
         android:name="com.base.lib.base.BaseApplication"
         android:allowBackup="false"
@@ -52,20 +53,9 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup"
         tools:targetApi="n">
-        <activity android:name=".ui.activity.newsplash.SplashActivity"></activity>
-        <activity android:name=".ui.activity.main.MainActivity" /> <!-- android:roundIcon="@drawable/public_ic_launcher_round" -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.gas.app.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
 
         <activity
-            android:name=".ui.activity.splash.SplashActivity"
+            android:name=".ui.activity.newsplash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/public_app_theme_noBar">
             <intent-filter>
@@ -74,16 +64,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity
+            android:name=".ui.activity.main.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
@@ -94,6 +80,16 @@
         <meta-data
             android:name="com.gas.app.config.GlobalConfiguration"
             android:value="ClientConfigModule" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.gas.app.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
