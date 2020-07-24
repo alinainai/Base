@@ -1,6 +1,7 @@
 package com.gas.app.ui.fragment.product
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,9 @@ import com.gas.app.R
 import com.gas.app.ui.fragment.product.di.DaggerProductComponent
 import com.gas.app.ui.fragment.product.mvp.ProductContract
 import com.gas.app.ui.fragment.product.mvp.ProductPresenter
+import com.lib.commonsdk.kotlin.extension.app.getDrawable
+import com.lib.commonsdk.kotlin.utils.QRCodeUtil
+import kotlinx.android.synthetic.main.fragment_exercise.*
 
 /**
  * ================================================
@@ -36,7 +40,9 @@ class ProductFragment : BaseFragment<ProductPresenter>(), ProductContract.View {
         return inflater.inflate(R.layout.fragment_product, container, false)
     }
 
-    override fun initData(savedInstanceState: Bundle?) {}
+    override fun initData(savedInstanceState: Bundle?) {
+
+    }
     override fun setData(data: Any?) {}
     override fun showLoading() {}
     override fun hideLoading() {}

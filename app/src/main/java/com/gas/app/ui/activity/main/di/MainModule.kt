@@ -42,8 +42,8 @@ class MainModule(private val view: MainContract.View) {
     @Provides
     fun providePagerAdapter(): AdapterViewPager {
         val fragments = listOf<Fragment>(MainFragment.newInstance(),
-                InfoFragment.newInstance(),
                 ProductFragment.newInstance(),
+                InfoFragment.newInstance(),
                 MineFragment.newInstance())
         return AdapterViewPager((view.getWrapContext() as AppCompatActivity).supportFragmentManager, fragments)
     }

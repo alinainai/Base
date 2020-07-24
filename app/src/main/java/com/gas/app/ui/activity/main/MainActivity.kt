@@ -39,12 +39,8 @@ import javax.inject.Inject
 @Route(path = RouterHub.APP_MAINACTIVITY)
 class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnClickListener {
 
-
     @Inject
     lateinit var mAdapter: AdapterViewPager
-
-
-
 
     override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerMainComponent //如找不到该类,请编译一下项目

@@ -22,6 +22,7 @@ object QRCodeUtil {
         return try {
             val hints = Hashtable<EncodeHintType, String?>()
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
+            hints[EncodeHintType.MARGIN] = 1.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
             val pixels = IntArray(size * size)
@@ -57,6 +58,7 @@ object QRCodeUtil {
             val hints = Hashtable<EncodeHintType, Any?>()
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
             hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 1.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
 
@@ -96,6 +98,7 @@ object QRCodeUtil {
             val hints = Hashtable<EncodeHintType, Any?>()
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
             hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 1.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
 
@@ -135,6 +138,7 @@ object QRCodeUtil {
             val hints = Hashtable<EncodeHintType, Any?>()
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
             hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 1.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
 
@@ -180,6 +184,7 @@ object QRCodeUtil {
             val hints = Hashtable<EncodeHintType, Any?>()
             hints[EncodeHintType.CHARACTER_SET] = "utf-8"
             hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 1.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
 
@@ -238,7 +243,9 @@ object QRCodeUtil {
             /*
              * 设置容错级别，默认为ErrorCorrectionLevel.L
              * 因为中间加入logo所以建议你把容错级别调至H,否则可能会出现识别不了
-             */hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+             */
+            hints[EncodeHintType.ERROR_CORRECTION] = ErrorCorrectionLevel.H
+            hints[EncodeHintType.MARGIN] = 0.toString()
             val bitMatrix = QRCodeWriter().encode(text,
                     BarcodeFormat.QR_CODE, size, size, hints)
 

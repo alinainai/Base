@@ -77,6 +77,7 @@ constructor(model: SplashContract.Model, rootView: SplashContract.View) :
 
     //点击跳转，强制跳转到Main
     fun forceToMainPage() {
+        unDispose()
         mView.toMainPage()
     }
 
