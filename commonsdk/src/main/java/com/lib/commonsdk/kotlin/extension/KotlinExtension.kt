@@ -1,11 +1,6 @@
 package com.lib.commonsdk.kotlin.extension
 
 /**
- * 对现有的Java类库里边的类做的扩展
- */
-// ------------------------------
-
-/**
  * 不执行任何操作的闭包。
  */
 val nop: Any.() -> Unit = {}
@@ -15,7 +10,7 @@ val nop: Any.() -> Unit = {}
  * (重载掉原来的透明度)
  */
 fun Int.withAlpha(alpha: Float): Int {
-    require(alpha >= 0f && alpha <= 1.0f)
+    require(alpha in 0f..1.0f)
     return ((this shl 8) shr 8) + ((0xff * alpha).toInt() shl 24)
 }
 
@@ -41,7 +36,7 @@ fun <T> Array<T>.randomItem(): T {
         throw ArrayIndexOutOfBoundsException("array is empty")
     }
 
-    return get((0..size - 1).random())
+    return get((0 until size).random())
 }
 
 /**
