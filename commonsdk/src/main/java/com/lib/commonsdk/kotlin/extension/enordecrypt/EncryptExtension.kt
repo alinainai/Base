@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.lib.commonsdk.kotlin.extension.enordecrypt
 
 import android.util.Base64
@@ -9,6 +11,7 @@ import java.security.spec.AlgorithmParameterSpec
 import java.security.spec.InvalidKeySpecException
 import java.security.spec.PKCS8EncodedKeySpec
 import java.security.spec.X509EncodedKeySpec
+import java.util.*
 import javax.crypto.*
 import javax.crypto.spec.DESKeySpec
 import javax.crypto.spec.IvParameterSpec
@@ -1118,8 +1121,8 @@ private fun rsaTemplate(data: ByteArray?,
  * @param key  The key.
  */
 fun rc4(data: ByteArray?, key: ByteArray?): ByteArray? {
-    if (data == null || data.size == 0 || key == null) return null
-    require(!(key.size < 1 || key.size > 256)) { "key must be between 1 and 256 bytes" }
+    if (data == null || data.isEmpty() || key == null) return null
+    require(!(key.isEmpty() || key.size > 256)) { "key must be between 1 and 256 bytes" }
     val iS = ByteArray(256)
     val iK = ByteArray(256)
     val keyLen = key.size
@@ -1147,7 +1150,7 @@ fun rc4(data: ByteArray?, key: ByteArray?): ByteArray? {
         iS[i] = tmp
         t = iS[i] + iS[j] and 0xFF
         k = iS[t].toInt()
-        ret[counter] = (data[counter] xor k) as Byte
+        ret[counter] = (data[counter].toInt() xor k).toByte()
     }
     return ret
 }
@@ -1179,14 +1182,14 @@ private fun bytes2HexString(bytes: ByteArray?): String {
 }
 
 private fun hexString2Bytes(hexString: String): ByteArray? {
-    var hexString = hexString
-    if (isSpace(hexString)) return null
+    var hex = hexString
+    if (isSpace(hex)) return null
     var len = hexString.length
     if (len % 2 != 0) {
-        hexString = "0$hexString"
-        len = len + 1
+        hex = "0$hex"
+        len += 1
     }
-    val hexBytes = hexString.toUpperCase().toCharArray()
+    val hexBytes = hex.toUpperCase(Locale.getDefault()).toCharArray()
     val ret = ByteArray(len shr 1)
     var i = 0
     while (i < len) {
@@ -1197,17 +1200,17 @@ private fun hexString2Bytes(hexString: String): ByteArray? {
 }
 
 private fun hex2Dec(hexChar: Char): Int {
-    return if (hexChar in '0'..'9') {
-        hexChar - '0'
-    } else if (hexChar in 'A'..'F') {
-        hexChar - 'A' + 10
-    } else {
-        throw IllegalArgumentException()
+    return when (hexChar) {
+        in '0'..'9' -> {
+            hexChar - '0'
+        }
+        in 'A'..'F' -> {
+            hexChar - 'A' + 10
+        }
+        else -> {
+            throw IllegalArgumentException()
+        }
     }
-}
-
-fun base64Encode(input: ByteArray?): ByteArray {
-    return Base64.encode(input, Base64.NO_WRAP)
 }
 
 fun base64Decode(input: ByteArray): ByteArray {
