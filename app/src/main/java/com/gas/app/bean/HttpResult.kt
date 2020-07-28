@@ -2,15 +2,11 @@ package com.gas.app.bean
 
 /**
  * 服务器返回值基类
- * Created by Jing on 2016/5/24.
  */
 class HttpResult<T> {
-    var code //结果码
-            = 0
-    var msg //原因
-            : String? = null
-    var results //数据类型
-            : T? = null
+    var code = 0 //结果码
+    var msg: String = ""  //原因
+    var results: T? = null  //数据类型
         private set
 
     fun setResults(results: T) {

@@ -4,8 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 /**
- * Author: Othershe
- * Time: 2016/8/12 14:34
+ *
  */
 class GankItemData : Parcelable {
     private var _id: String? = null

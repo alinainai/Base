@@ -38,6 +38,25 @@ fun <T : View> T.gone() = apply {
     visibility = View.GONE
 }
 
+fun View.visibleOrGone(flag:Boolean) {
+    visibility = if(flag){
+        View.VISIBLE
+    }else{
+        View.GONE
+    }
+}
+
+/**
+ * 根据条件设置view显示隐藏 为true 显示，为false 隐藏
+ */
+fun View.visibleOrInvisible(flag:Boolean) {
+    visibility = if(flag){
+        View.VISIBLE
+    }else{
+        View.INVISIBLE
+    }
+}
+
 /**
  * 切换一个View的可见状态
  * 如果当前可见, 把它设成不可见, 反之设成可见.

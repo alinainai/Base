@@ -1,8 +1,7 @@
 package com.gas.app.bean
 
 /**
- * Author: Othershe
- * Time: 2016/8/12 14:34
+ *
  */
 class CollectionBean {
     private var _id: String? = null

@@ -12,6 +12,7 @@ import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.gas.app.R
+import com.gas.app.bean.CollectionBean
 import com.gas.app.ui.activity.main.di.DaggerMainComponent
 import com.gas.app.ui.activity.main.di.MainModule
 import com.gas.app.ui.activity.main.mvp.MainContract
@@ -20,6 +21,11 @@ import com.gas.app.utils.AppMoudleUtil.startLottieAnimation
 import com.gas.app.utils.AppMoudleUtil.stopLottieAnimation
 import com.lib.commonsdk.adapter.AdapterViewPager
 import com.lib.commonsdk.constants.RouterHub
+import com.lib.commonsdk.kotlin.extension.app.classNameAndHashCode
+import com.lib.commonsdk.kotlin.extension.app.info
+import com.lib.commonsdk.kotlin.extension.app.runInTryCatch
+import com.lib.commonsdk.kotlin.utils.GsonUtils
+import com.lib.commonsdk.kotlin.utils.GsonUtils.gson
 import com.lib.commonsdk.statusbar.StatusBarManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -75,6 +81,10 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnCl
         mainBtn2.setOnClickListener(this)
         mainBtn3.setOnClickListener(this)
         mainBtn4.setOnClickListener(this)
+        runInTryCatch {
+            info(GsonUtils.getListType(CollectionBean::class.java).javaClass.simpleName)
+        }
+
     }
 
     override fun getWrapContext(): Context {
