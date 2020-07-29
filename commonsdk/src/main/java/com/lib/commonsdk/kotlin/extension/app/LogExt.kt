@@ -16,9 +16,9 @@ val lineInfo: String?
  * 推荐使用方法： debug(callStack)
  */
 val callStack: String
-    get() = Thread.currentThread().stackTrace.drop(3).map {
+    get() = Thread.currentThread().stackTrace.drop(3).joinToString(separator = "\n", prefix = "CallStack:\n-----\n", postfix = "\n-----") {
         "    ${it.className}#${it.methodName} (${it.fileName}:${it.lineNumber})"
-    }.joinToString(separator = "\n", prefix = "CallStack:\n-----\n", postfix = "\n-----")
+    }
 
 /**
  * 给所有的Class上加上TAG, 用于Log输出.
@@ -37,7 +37,16 @@ val <T : Any> T.classNameAndHashCode: String
  */
 fun <T : Any> T.verbose(s: Any?) {
     if (BuildConfig.DEBUG) {
-        Timber.tag(TAG).v(s?.toString()?:"[null]")
+        Timber.tag(TAG).v(s?.toString() ?: "[null]")
+    }
+}
+
+/**
+ * 输出verbose信息
+ */
+fun verbose(tag: String, s: Any?) {
+    if (BuildConfig.DEBUG) {
+        Timber.tag(tag).v(s?.toString() ?: "[null]")
     }
 }
 
@@ -46,7 +55,13 @@ fun <T : Any> T.verbose(s: Any?) {
  */
 fun <T : Any> T.info(s: Any?) {
     if (BuildConfig.DEBUG) {
-        Timber.tag(TAG).i(s?.toString()?:"[null]")
+        Timber.tag(TAG).i(s?.toString() ?: "[null]")
+    }
+}
+
+fun info(tag: String, s: Any?) {
+    if (BuildConfig.DEBUG) {
+        Timber.tag(tag).i(s?.toString() ?: "[null]")
     }
 }
 
@@ -55,7 +70,13 @@ fun <T : Any> T.info(s: Any?) {
  */
 fun <T : Any> T.debug(s: Any?) {
     if (BuildConfig.DEBUG) {
-        Timber.tag(TAG).d(s?.toString()?:"[null]")
+        Timber.tag(TAG).d(s?.toString() ?: "[null]")
+    }
+}
+
+fun debug(tag: String, s: Any?) {
+    if (BuildConfig.DEBUG) {
+        Timber.tag(tag).d(s?.toString() ?: "[null]")
     }
 }
 
@@ -64,6 +85,12 @@ fun <T : Any> T.debug(s: Any?) {
  */
 fun <T : Any> T.errorLog(exception: Throwable, message: String? = null) {
     if (!BuildConfig.DEBUG) {
-        Timber.tag(TAG).e(exception,message?:"[null]")
+        Timber.tag(TAG).e(exception, message ?: "[null]")
+    }
+}
+
+fun errorLog(tag: String, exception: Throwable, message: String? = null) {
+    if (!BuildConfig.DEBUG) {
+        Timber.tag(tag).e(exception, message ?: "[null]")
     }
 }

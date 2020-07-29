@@ -5,10 +5,6 @@ import com.lib.commonsdk.kotlin.extension.file.lock
 import java.security.MessageDigest
 import kotlin.concurrent.withLock
 
-/**
- * [String]类的扩展
- */
-// ------------------------------
 
 fun String.decodeBase64() = String(Base64.decode(this.toByteArray(), Base64.DEFAULT))
 
@@ -31,18 +27,16 @@ fun String.safeToInt(default: Int = 0) = try {
     default
 }
 
-/**
- * 从一个网络文件链接中截取后缀
- *
- * 注意: 此处只做url为空处理，不做网络资源链接的检验，需要上层自己做判断
- *       主要是考虑到 写死的文件格式list不可靠，会不断有新的文件格式出现
- */
-fun String.getSuffixFromUrl(): String {
-    return with(this) {
-        if (this.isNotBlank()) {
-            substring(lastIndexOf(".") + 1)
-        } else {
-            throw IllegalStateException("url is blank")
+fun String?.isSpace(): Boolean {
+    if (this == null) return true
+    var i = 0
+    val len = this.length
+    while (i < len) {
+        if (!Character.isWhitespace(this[i])) {
+            return false
         }
+        ++i
     }
+    return true
 }
+

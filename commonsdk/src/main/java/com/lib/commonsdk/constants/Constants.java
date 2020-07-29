@@ -30,7 +30,4 @@ public interface Constants {
     int CODE_REQUEST_PERMISSION = 1001;
     String PUBLIC_URL="url";
     String PUBLIC_TITLE="title";
-    String CHINESE_LANG = "zh";
-    String CHINA = "CN";
-
 }

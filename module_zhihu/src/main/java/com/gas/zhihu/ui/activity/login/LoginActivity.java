@@ -20,7 +20,7 @@ import com.gas.zhihu.app.ZhihuConstants;
 
 import com.gas.zhihu.ui.fragment.mine.MineFragment;
 import com.lib.commonsdk.constants.RouterHub;
-import com.lib.commonsdk.kotlin.extension.app.AppExtensionKt;
+import com.lib.commonsdk.kotlin.extension.app.AppExtKt;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
@@ -151,12 +151,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
 
         if (TextUtils.isEmpty(userName)) {
-            AppExtensionKt.toast("请输入登录账号");
+            AppExtKt.toast("请输入登录账号");
             return;
         }
 
         if (TextUtils.isEmpty(passWord)) {
-            AppExtensionKt.toast("请输入登录密码");
+            AppExtKt.toast("请输入登录密码");
             return;
         }
 
@@ -164,7 +164,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
             FragmentContainerActivity.Companion.startActivity(this, MineFragment.class);
         } else {
-            AppExtensionKt.toast("请输入正确的用户名和密码");
+            AppExtKt.toast("请输入正确的用户名和密码");
         }
 
     }
