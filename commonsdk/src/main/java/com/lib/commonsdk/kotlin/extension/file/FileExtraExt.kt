@@ -16,7 +16,7 @@ fun File.ensureFolder() = apply {
  * 保证一个文件已经存在，便于做后续操作。
  */
 fun File.createIfAbsent() = apply {
-    parentFile?.ensureFolder()
+    parentFile.ensureFolder()
     if (!exists() && !createNewFile()) throw IOException("Failed to create file $name")
 }
 

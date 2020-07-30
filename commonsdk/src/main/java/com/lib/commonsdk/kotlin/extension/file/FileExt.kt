@@ -13,13 +13,15 @@ import kotlin.concurrent.withLock
 
 /**
  * ================================================
+ * kotlin 提供的拓展函数
+ * [extension]                 : 获取文件后缀名
+ * [nameWithoutExtension]      : 获取不带后缀名的文件名
+ * ------------------------------------------------
  * [pathToFile]                : 文件路径转文件
  * [isExists]              : 判断文件是否存在
  * [rename]                   : 重命名文件
- * [isDir]                   : 判断是否是目录
- * [isFile]                    : 判断是否是文件
- * [createDirIfAbsent]         : 判断目录是否存在，不存在则判断是否创建成功
- * [createFileIfAbsent]        : 判断文件是否存在，不存在则判断是否创建成功
+ * [existOrCreateDir]         : 判断目录是否存在，不存在则判断是否创建成功
+ * [existOrCreateFile]        : 判断文件是否存在，不存在则判断是否创建成功
  * [createFileByDeleteOldFile] : 判断文件是否存在，存在则在创建之前删除
  * [copy]                      : 复制文件或目录
  * [move]                      : 移动文件或目录
@@ -31,23 +33,8 @@ import kotlin.concurrent.withLock
  * [getFileCharsetSimple]      : 简单获取文件编码格式
  * ================================================
  */
-private val LINE_SEP = System.getProperty("line.separator")
 
 fun String.pathToFile() = File(this)
-
-fun File.isDir() = exists() && isDirectory
-
-val File.nameNoExt: String
-    get() {
-        name.lastIndexOf('.').takeIf { it != -1 }?.let {
-            return name.substring(0, it)
-        }
-        return name
-    }
-
-fun String.isFile(): Boolean {
-    return pathToFile().isFile
-}
 
 fun String.isExists(): Boolean {
     return if (Build.VERSION.SDK_INT < 29) {
@@ -65,8 +52,11 @@ fun String.isExists(): Boolean {
     }
 }
 
+/**
+ * 文件名要包含后缀
+ */
 fun File.rename(newName: String): Boolean {
-    if (exists() && !newName.isNotBlank()) {
+    if (exists() && newName.isNotBlank()) {
         if (newName == name) return true
         val newFile = File("${parent}${File.separator}${newName}")
         return (!newFile.exists() && renameTo(newFile))
@@ -74,16 +64,16 @@ fun File.rename(newName: String): Boolean {
     return false
 }
 
-fun File.createDirIfAbsent() = if (exists()) isDirectory else mkdirs()
+fun File.existOrCreateDir() = if (exists()) isDirectory else mkdirs()
 
-fun File.createFileIfAbsent(): Boolean {
+fun File.existOrCreateFile(): Boolean {
     if (exists()) return isFile
-    parentFile?.takeIf { createDirIfAbsent() }?.let {
-        try {
+    parentFile?.takeIf { it.existOrCreateDir() }?.let {
+        return try {
             createNewFile()
-            return true
         } catch (e: IOException) {
             e.printStackTrace()
+            false
         }
     }
     return false
@@ -91,11 +81,7 @@ fun File.createFileIfAbsent(): Boolean {
 
 fun File.createFileByDeleteOldFile(): Boolean {
     if (exists() && !delete()) return false
-    return createFileIfAbsent()
-}
-
-fun copy(srcPath: String, destPath: String): Boolean {
-    return copy(srcPath.pathToFile(), destPath.pathToFile())
+    return existOrCreateFile()
 }
 
 fun copy(src: File, dest: File): Boolean {
@@ -110,10 +96,6 @@ private fun copyDir(srcDir: File, destDir: File): Boolean {
 
 private fun copyFile(srcFile: File, destFile: File): Boolean {
     return copyOrMoveFile(srcFile, destFile, false)
-}
-
-fun move(srcPath: String, destPath: String): Boolean {
-    return move(srcPath.pathToFile(), destPath.pathToFile())
 }
 
 fun move(src: File, dest: File): Boolean {
@@ -133,7 +115,7 @@ private fun copyOrMoveDir(srcDir: File, destDir: File, isMove: Boolean): Boolean
     val destPath = "${destDir.path}${File.separator}"
     if (destPath.contains(srcPath)) return false
     if (!srcDir.exists() || !srcDir.isDirectory) return false
-    if (!destDir.createDirIfAbsent()) return false
+    if (!destDir.existOrCreateDir()) return false
     srcDir.listFiles()?.forEach { file ->
         val oneDestFile = File("${destPath}${file.name}")
         if (file.isFile) {
@@ -152,7 +134,7 @@ private fun copyOrMoveFile(srcFile: File, destFile: File, isMove: Boolean): Bool
                 return false
             }
         }
-        destFile.parentFile?.takeIf { it.createDirIfAbsent() }?.let {
+        destFile.parentFile?.takeIf { it.existOrCreateFile() }?.let {
             try {
                 return (srcFile.inputStream().writeToFile(destFile) && !(isMove && !srcFile.safeDelete()))
             } catch (e: FileNotFoundException) {
@@ -216,7 +198,7 @@ fun File.listFilesInDirWithFilter(filter: FileFilter = FileFilter { true }, isRe
 
 private fun listFilesInDirWithFilterInner(dir: File, filter: FileFilter, isRecursive: Boolean): List<File> {
     val list: MutableList<File> = ArrayList()
-    if (!dir.isDir()) return list
+    if (!dir.isDirectory) return list
     dir.listFiles()?.forEach { file ->
         if (filter.accept(file)) {
             list.add(file)

@@ -11,56 +11,54 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import androidx.core.graphics.drawable.DrawableCompat
+import com.lib.commonsdk.kotlin.extension.file.*
 
 /**
- * 对 Android Framework 的 View 做的一些扩展。
- */
-// ------------------------------
-
-/**
- * 把一个View设置成VISIBLE
+ * ================================================
+ * [visible]                    : 设置 View 的 visibility 为 visible
+ * [invisible]                  : 设置 View 的 visibility 为 invisible
+ * [gone]                       : 设置 View 的 visibility 为 gone
+ * [visibleOrGone]              : 根据 flag设置 View 的 visibility true:visible false:gone
+ * [visibleOrInvisible]         : 根据 flag设置 View 的 visibility true:visible false:invisible
+ * [toggleVisibility]           : 在 visible 和 invisible 之间切换
+ * [showSmoothly]               : 渐渐的显示出这个View,而不是突然出现
+ * [hideSmoothly]               : 移动文件或目录
+ * [textSizePx]                    : 删除文件或目录
+ * [deleteAllInDir]             : 删除目录下所有内容
+ * [deleteFilesInDir]           : 删除目录下所有文件
+ * [deleteFilesInDirWithFilter] : 删除目录下所有过滤的文件
+ * [listFilesInDirWithFilter]   : 获取目录下所有过滤的文件
+ * [getFileCharsetSimple]       : 简单获取文件编码格式
+ * ================================================
  */
 fun <T : View> T.visible() = apply {
     visibility = View.VISIBLE
 }
 
-/**
- * 把一个View设置成INVISIBLE
- */
 fun <T : View> T.invisible() = apply {
     visibility = View.INVISIBLE
 }
 
-/**
- * 把一个View设置成GONE
- */
 fun <T : View> T.gone() = apply {
     visibility = View.GONE
 }
 
-fun View.visibleOrGone(flag:Boolean) {
-    visibility = if(flag){
+fun <T : View> T.visibleOrGone(flag: Boolean) = apply {
+    visibility = if (flag) {
         View.VISIBLE
-    }else{
+    } else {
         View.GONE
     }
 }
 
-/**
- * 根据条件设置view显示隐藏 为true 显示，为false 隐藏
- */
-fun View.visibleOrInvisible(flag:Boolean) {
-    visibility = if(flag){
+fun <T : View> T.visibleOrInvisible(flag: Boolean) {
+    visibility = if (flag) {
         View.VISIBLE
-    }else{
+    } else {
         View.INVISIBLE
     }
 }
 
-/**
- * 切换一个View的可见状态
- * 如果当前可见, 把它设成不可见, 反之设成可见.
- */
 fun <T : View> T.toggleVisibility() {
     if (visibility == View.VISIBLE) {
         invisible()
@@ -69,15 +67,11 @@ fun <T : View> T.toggleVisibility() {
     }
 }
 
-/**
- * 渐渐的显示出这个View,而不是突然出现
- */
 fun <T : View> T.showSmoothly() = apply {
     val alphaAnimator = ObjectAnimator.ofFloat(this, View.ALPHA, 1.0F)
     alphaAnimator.addUpdateListener {
         this.alpha = it.animatedValue as Float
     }
-
     alphaAnimator.addListener(object : AnimatorListenerAdapter() {
         override fun onAnimationStart(animation: Animator?) {
             this@apply.visible()
@@ -121,13 +115,11 @@ fun <V : View> V.doWhenAttachedToWindow(detached: ((View) -> Unit)? = null, atta
     if (isAttachedToWindow) {
         attached(this)
     }
-
     if (!isAttachedToWindow || detached != null) {
         addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(view: View) {
                 attached(view)
             }
-
             override fun onViewDetachedFromWindow(view: View) {
                 detached?.let { it(view) }
             }
@@ -148,14 +140,3 @@ var <T : Drawable> T.tint: Int
     get() = throw java.lang.UnsupportedOperationException("cannot get tint for Drawable")
     set(v) = DrawableCompat.setTint(this, v)
 
-@JvmOverloads
-@Dimension(unit = Dimension.PX)
-fun Number.dpToPx(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
-    return toFloat() * metrics.density
-}
-
-@JvmOverloads
-@Dimension(unit = Dimension.DP)
-fun Number.pxToDp(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
-    return toFloat() / metrics.density
-}

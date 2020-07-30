@@ -208,9 +208,9 @@ private fun unzipChildFile(destDir: File, files: MutableList<File>, zip: ZipFile
     val file = File(destDir, name)
     files.add(file)
     if (entry.isDirectory) {
-        return file.createDirIfAbsent()
+        return file.existOrCreateDir()
     } else {
-        if (file.createFileIfAbsent()) return false
+        if (file.existOrCreateFile()) return false
         var input: InputStream? = null
         var out: OutputStream? = null
         try {
