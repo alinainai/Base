@@ -1,5 +1,18 @@
 package com.lib.commonsdk.kotlin.extension
 
+
+/**
+ * 发现好多地方需要 tryCatch 以保证代码安全性
+ * 但是我们又不关心它的运行结果，所以单独写了一个方法
+ * 将需要运行的代码块用 tryCatch 包裹起来
+ */
+fun <T : Any> T.runInTryCatch(block: () -> Unit) {
+    try {
+        block()
+    } catch (e: Throwable) {
+        e.printStackTrace()
+    }
+}
 /**
  * 不执行任何操作的闭包。
  */

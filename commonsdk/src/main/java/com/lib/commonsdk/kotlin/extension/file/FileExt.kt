@@ -1,69 +1,167 @@
 package com.lib.commonsdk.kotlin.extension.file
 
+import android.net.Uri
+import android.os.Build
+import com.lib.commonsdk.kotlin.extension.io.closeQuietly
+import com.lib.commonsdk.kotlin.extension.number.isUtf8
 import com.lib.commonsdk.kotlin.extension.number.toHex
-import com.lib.commonsdk.kotlin.extension.app.runInTryCatch
-import com.lib.commonsdk.kotlin.extension.sumByLong
-import com.lib.commonsdk.kotlin.extension.io.toFile
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.IOException
+import com.lib.commonsdk.kotlin.utils.AppUtils
+import java.io.*
 import java.security.MessageDigest
-import java.util.zip.ZipException
-import java.util.zip.ZipFile
+import java.util.*
 import kotlin.concurrent.withLock
 
-
 /**
- * 保证一个文件夹已经被创建。如果创建失败抛异常。
+ * ================================================
+ * [pathToFile]                : 文件路径转文件
+ * [isExists]              : 判断文件是否存在
+ * [rename]                   : 重命名文件
+ * [isDir]                   : 判断是否是目录
+ * [isFile]                    : 判断是否是文件
+ * [createDirIfAbsent]         : 判断目录是否存在，不存在则判断是否创建成功
+ * [createFileIfAbsent]        : 判断文件是否存在，不存在则判断是否创建成功
+ * [createFileByDeleteOldFile] : 判断文件是否存在，存在则在创建之前删除
+ * [copy]                      : 复制文件或目录
+ * [move]                      : 移动文件或目录
+ * [safeDelete]                    : 删除文件或目录
+ * [deleteAllInDir]            : 删除目录下所有内容
+ * [deleteFilesInDir]          : 删除目录下所有文件
+ * [deleteFilesInDirWithFilter]: 删除目录下所有过滤的文件
+ * [listFilesInDirWithFilter]  : 获取目录下所有过滤的文件
+ * [getFileCharsetSimple]      : 简单获取文件编码格式
+ * ================================================
  */
-fun File.ensureFolder() = apply {
-    if (!exists() && !mkdirs()) throw IOException("Failed to create dir $name")
+private val LINE_SEP = System.getProperty("line.separator")
+
+fun String.pathToFile() = File(this)
+
+fun File.isDir() = exists() && isDirectory
+
+val File.nameNoExt: String
+    get() {
+        name.lastIndexOf('.').takeIf { it != -1 }?.let {
+            return name.substring(0, it)
+        }
+        return name
+    }
+
+fun String.isFile(): Boolean {
+    return pathToFile().isFile
 }
 
-/**
- * 保证一个文件已经存在，便于做后续操作。
- */
-fun File.createIfAbsent() = apply {
-    parentFile.ensureFolder()
-    if (!exists() && !createNewFile()) throw IOException("Failed to create file $name")
+fun String.isExists(): Boolean {
+    return if (Build.VERSION.SDK_INT < 29) {
+        pathToFile().exists()
+    } else {
+        try {
+            val uri = Uri.parse(this)
+            val cr = AppUtils.app.contentResolver
+            val afd = cr.openAssetFileDescriptor(uri, "r") ?: return false
+            afd.closeQuietly()
+        } catch (e: FileNotFoundException) {
+            return false
+        }
+        true
+    }
 }
 
+fun File.rename(newName: String): Boolean {
+    if (exists() && !newName.isNotBlank()) {
+        if (newName == name) return true
+        val newFile = File("${parent}${File.separator}${newName}")
+        return (!newFile.exists() && renameTo(newFile))
+    }
+    return false
+}
 
-fun Array<File>.firstMp3OpusFileOrNull() = firstOrNull { it.isFile && (it.extension == "mp3" || it.extension == "opus") }
+fun File.createDirIfAbsent() = if (exists()) isDirectory else mkdirs()
 
-
-fun Array<File>.filterMp3OpusFileOrNull() = filter { it.isFile && (it.extension == "mp3" || it.extension == "opus") }
-
-
-fun Array<File>.filterBookAudioOrNull() = filter { it.isFile && (it.extension == "mp3" || it.extension == "opus" || it.extension == "aac" || it.extension == "lin") }
-
-/**
- * 返回一个安全的文件夹列表
- */
-fun File.safeListFiles(): Array<File> {
-    var files = arrayOf<File>()
-    runInTryCatch {
-        val list = listFiles()
-        if (list?.isNotEmpty() == true) {
-            files = list
+fun File.createFileIfAbsent(): Boolean {
+    if (exists()) return isFile
+    parentFile?.takeIf { createDirIfAbsent() }?.let {
+        try {
+            createNewFile()
+            return true
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
-    return files
+    return false
 }
 
-fun File.safeList(): Array<String> {
-    return if (exists()) list() else arrayOf()
+fun File.createFileByDeleteOldFile(): Boolean {
+    if (exists() && !delete()) return false
+    return createFileIfAbsent()
 }
 
-private val imageExtensions = listOf(
-        "bmp",
-        "jpg",
-        "jpeg",
-        "png"
-)
+fun copy(srcPath: String, destPath: String): Boolean {
+    return copy(srcPath.pathToFile(), destPath.pathToFile())
+}
 
-fun File.isImage() = isFile && imageExtensions.contains(extension)
+fun copy(src: File, dest: File): Boolean {
+    return if (src.isDirectory) {
+        copyDir(src, dest)
+    } else copyFile(src, dest)
+}
+
+private fun copyDir(srcDir: File, destDir: File): Boolean {
+    return copyOrMoveDir(srcDir, destDir, false)
+}
+
+private fun copyFile(srcFile: File, destFile: File): Boolean {
+    return copyOrMoveFile(srcFile, destFile, false)
+}
+
+fun move(srcPath: String, destPath: String): Boolean {
+    return move(srcPath.pathToFile(), destPath.pathToFile())
+}
+
+fun move(src: File, dest: File): Boolean {
+    return if (src.isDirectory) moveDir(src, dest) else moveFile(src, dest)
+}
+
+fun moveDir(srcDir: File, destDir: File): Boolean {
+    return copyOrMoveDir(srcDir, destDir, true)
+}
+
+fun moveFile(srcFile: File, destFile: File): Boolean {
+    return copyOrMoveFile(srcFile, destFile, true)
+}
+
+private fun copyOrMoveDir(srcDir: File, destDir: File, isMove: Boolean): Boolean {
+    val srcPath = "${srcDir.path}${File.separator}"
+    val destPath = "${destDir.path}${File.separator}"
+    if (destPath.contains(srcPath)) return false
+    if (!srcDir.exists() || !srcDir.isDirectory) return false
+    if (!destDir.createDirIfAbsent()) return false
+    srcDir.listFiles()?.forEach { file ->
+        val oneDestFile = File("${destPath}${file.name}")
+        if (file.isFile) {
+            if (!copyOrMoveFile(file, oneDestFile, isMove)) return false
+        } else if (file.isDirectory) {
+            if (!copyOrMoveDir(file, oneDestFile, isMove)) return false
+        }
+    }
+    return !isMove || srcDir.safeDelete()
+}
+
+private fun copyOrMoveFile(srcFile: File, destFile: File, isMove: Boolean): Boolean {
+    if (srcFile != destFile && srcFile.exists() && srcFile.isFile) {
+        if (destFile.exists()) {
+            if (!destFile.delete()) {
+                return false
+            }
+        }
+        destFile.parentFile?.takeIf { it.createDirIfAbsent() }?.let {
+            try {
+                return (srcFile.inputStream().writeToFile(destFile) && !(isMove && !srcFile.safeDelete()))
+            } catch (e: FileNotFoundException) {
+                e.printStackTrace()
+            }
+        }
+    }
+    return false
+}
 
 fun File.safeDelete(): Boolean {
     return try {
@@ -81,30 +179,89 @@ fun File.safeDelete(): Boolean {
     }
 }
 
-/**
- * 获取文件夹中所有文件大小
- * 如果是文件直接返回文件大小
- *
- * !!! 注意 !!!:
- *     发现这种方式计算文件大小，会产生大量内存占用，
- *     (究其原因是wail()函数每次都会创建一个Sequence<File>)
- *     所以不要放在循环中使用，会造成大量GC
- */
-fun File.getFileSize() = walk().sumByLong(File::length)
+fun File.deleteAllInDir(): Boolean {
+    return deleteFilesInDirWithFilter(FileFilter { true })
+}
+
+fun File.deleteFilesInDir(): Boolean {
+    return deleteFilesInDirWithFilter(FileFilter { pathname -> pathname.isFile })
+}
+
+fun File.deleteFilesInDirWithFilter(filter: FileFilter): Boolean {
+    if (!exists()) return true
+    if (!isDirectory) return false
+    listFiles()?.forEach { file ->
+        if (filter.accept(file)) {
+            if (file.isFile) {
+                if (!file.delete()) return false
+            } else if (file.isDirectory) {
+                if (!file.safeDelete()) return false
+            }
+        }
+    }
+    return true
+}
+
+fun File.listFilesInDir(isRecursive: Boolean, comparator: Comparator<File>? = null): List<File> {
+    return listFilesInDirWithFilter(FileFilter { true }, isRecursive, comparator)
+}
+
+fun File.listFilesInDirWithFilter(filter: FileFilter = FileFilter { true }, isRecursive: Boolean = false, comparator: Comparator<File>? = null): List<File> {
+    val files = listFilesInDirWithFilterInner(this, filter, isRecursive)
+    if (comparator != null) {
+        Collections.sort(files, comparator)
+    }
+    return files
+}
+
+private fun listFilesInDirWithFilterInner(dir: File, filter: FileFilter, isRecursive: Boolean): List<File> {
+    val list: MutableList<File> = ArrayList()
+    if (!dir.isDir()) return list
+    dir.listFiles()?.forEach { file ->
+        if (filter.accept(file)) {
+            list.add(file)
+        }
+        if (isRecursive && file.isDirectory) {
+            list.addAll(listFilesInDirWithFilterInner(file, filter, true))
+        }
+    }
+    return list
+}
+
+fun File.getFileCharsetSimple(): String {
+    if (this.isUtf8()) return "UTF-8"
+    var p = 0
+    inputStream().buffered().use { buffer ->
+        p = (buffer.read() shl 8) + buffer.read()
+    }
+    return when (p) {
+        0xfffe -> "Unicode"
+        0xfeff -> "UTF-16BE"
+        else -> "GBK"
+    }
+}
+
+fun File.isUtf8(): Boolean {
+    inputStream().buffered().use { buffer ->
+        val bytes = ByteArray(24)
+        buffer.read(bytes).takeIf { it != -1 }?.let {
+            val readArr = ByteArray(it)
+            System.arraycopy(bytes, 0, readArr, 0, it)
+            return readArr.isUtf8() == 100
+        }
+    }
+    return false
+}
 
 /**
- * 删除文件夹内最久没有改动的一个子文件
+ * 计算md5值使用的buffer
+ * 经过测试，每次创建buffer会耗费30ms左右的时间
+ * 把buffer共用，可以提升计算多个文件md5值的速度
  */
-fun File.deleteOldestChildFile(): Boolean = getOldestChildFile()?.safeDelete() ?: false
-
-fun File.getOldestChildFile() = listFiles()?.apply { sortBy(File::lastModified) }?.firstOrNull()
+private val md5Buffer = ByteArray(1024 * 1024)
 
 val lock = java.util.concurrent.locks.ReentrantLock()
 
-// 计算md5值使用的buffer
-// 经过测试，每次创建buffer会耗费30ms左右的时间
-// 把buffer共用，可以提升计算多个文件md5值的速度
-private val md5Buffer = ByteArray(1024 * 1024)
 fun File.md5(): String {
     // md5对象是全局共享的，所以说如果同时有两个以上的md5在计算的时候，
     // 会出现问题。所以说这个地方加了一个锁，防止重复进入。
@@ -138,110 +295,32 @@ fun File.md5(): String {
     }
 }
 
-/**
- * 解压缩一个文件
- * @param zipFile 压缩文件
- * @param folderPath 解压缩的目标目录
- * @throws IOException 当解压缩过程出错时抛出
- */
-@Throws(ZipException::class, IOException::class)
-fun File.unzipFile(folderPath: String) {
-    File(folderPath).ensureFolder()
-    val zf = ZipFile(this)
-    val entries = zf.entries()
-    while (entries.hasMoreElements()) {
-        val entry = entries.nextElement()
-        if (entry.isDirectory) {
-            continue
+fun InputStream.writeToFile(file: File): Boolean {
+    var os: OutputStream? = null
+    return try {
+        os = BufferedOutputStream(FileOutputStream(file))
+        val data = ByteArray(8192)
+        var len: Int
+        while (this.read(data, 0, 8192).also { len = it } != -1) {
+            os.write(data, 0, len)
         }
-        zf.getInputStream(entry).toFile(File(folderPath + File.separator + entry.name))
-    }
-}
-
-/**
- * 解压文件时，如果文件解压失败，会删除异常的文件，但仍然向外抛出异常
- * @param zipFile 压缩文件
- * @param folderPath 解压缩的目标目录
- * @throws IOException 当解压缩过程出错时抛出
- */
-@Throws(ZipException::class, IOException::class)
-fun File.unzipAndSafeDelete(folderPath: String) {
-    try {
-        unzipFile(folderPath)
-    } catch (t: Throwable) {
-        throw t
+        true
+    } catch (e: IOException) {
+        e.printStackTrace()
+        false
     } finally {
-        safeDelete()
-    }
-}
-
-/**
- * 清空目录到允许的大小，单位：字节
- * 注意：只会寻找当前目录下的文件或文件夹，不会再寻找子目录中的文件；
- *      删除时以当前目录下的文件和文件夹为单位删除。
- */
-fun File.keepFolderSize(allowSize: Long) {
-    if (!isDirectory) {
-        return
-    }
-
-    var deleteSize = getFileSize() - allowSize
-    if (deleteSize <= 0) {
-        return
-    }
-
-    listFiles()?.apply { sortBy(File::lastModified) }?.forEach {
-        if (deleteSize <= 0) {
-            return
+        try {
+            this.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-        deleteSize -= it.getFileSize()
-        it.safeDelete()
-    }
-}
-
-/**
- * 清空目录下的文件／文件夹到指定数量
- */
-fun File.keepChildFileCount(allowCount: Int) {
-    if (!isDirectory || allowCount <= 0) {
-        return
-    }
-
-    val files = listFiles()?.apply { sortBy(File::lastModified) }
-    val totalCount = files?.count() ?: 0
-    if (totalCount <= allowCount) {
-        return
-    }
-
-    (0..totalCount - allowCount).forEach {
-        files?.get(it)?.safeDelete()
-    }
-}
-
-/**
- * 获取最久未使用的指定数量的子文件/文件夹
- */
-fun File.getOldestChildFilesOrNull(allowCount: Int): MutableList<File>? {
-    if (!isDirectory || allowCount <= 0) {
-        return null
-    }
-    val files = safeListFiles().apply { sortBy(File::lastModified) }
-    val totalCount = files.count()
-    if (totalCount <= allowCount) {
-        return null
-    }
-
-    val oldestFiles = mutableListOf<File>()
-    (0..totalCount - allowCount).forEach {
-        files[it].let { currentFile ->
-            oldestFiles.add(currentFile)
+        try {
+            os?.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
     }
-    return oldestFiles
 }
 
-fun File.copyToIfExists(target: File, overwrite: Boolean = false) {
-    if (exists()) {
-        copyTo(target, overwrite)
-    }
-}
+
+

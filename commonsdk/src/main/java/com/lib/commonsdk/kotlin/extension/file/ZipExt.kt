@@ -1,10 +1,12 @@
 package com.lib.commonsdk.kotlin.extension.file
 
 import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.kotlin.extension.io.toFile
 import com.lib.commonsdk.kotlin.extension.isSpace
 import java.io.*
 import java.util.*
 import java.util.zip.ZipEntry
+import java.util.zip.ZipException
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 
@@ -32,13 +34,12 @@ private const val BUFFER_LEN = 8192
  * @throws IOException if an I/O error has occurred
  */
 @Throws(IOException::class)
-fun zipFiles(srcFilePaths: Collection<String?>?, zipFilePath: String?, comment: String?=null): Boolean {
-    if (srcFilePaths == null || zipFilePath == null) return false
+fun zipFiles(srcFilePaths: Collection<String>, zipFilePath: String, comment: String?=null): Boolean {
     var zos: ZipOutputStream? = null
     return try {
         zos = ZipOutputStream(FileOutputStream(zipFilePath))
         for (srcFile in srcFilePaths) {
-            if (!zipFile(getFileByPath(srcFile), "", zos, comment)) return false
+            if (!zipFile(srcFile.pathToFile(), "", zos, comment)) return false
         }
         true
     } finally {
@@ -59,8 +60,7 @@ fun zipFiles(srcFilePaths: Collection<String?>?, zipFilePath: String?, comment: 
  */
 @JvmOverloads
 @Throws(IOException::class)
-fun zipFiles(srcFiles: Collection<File?>?, zipFile: File?, comment: String? = null): Boolean {
-    if (srcFiles == null || zipFile == null) return false
+fun zipFiles(srcFiles: Collection<File?>, zipFile: File, comment: String? = null): Boolean {
     var zos: ZipOutputStream? = null
     return try {
         zos = ZipOutputStream(FileOutputStream(zipFile))
@@ -86,8 +86,8 @@ fun zipFiles(srcFiles: Collection<File?>?, zipFile: File?, comment: String? = nu
  * @throws IOException if an I/O error has occurred
  */
 @Throws(IOException::class)
-fun zipFile(srcFilePath: String?, zipFilePath: String?, comment: String?=null): Boolean {
-    return zipFile(getFileByPath(srcFilePath), getFileByPath(zipFilePath), comment)
+fun zipFile(srcFilePath: String, zipFilePath: String, comment: String?=null): Boolean {
+    return zipFile(srcFilePath.pathToFile() ,zipFilePath.pathToFile(), comment)
 }
 
 /**
@@ -113,7 +113,7 @@ fun zipFile(srcFile: File?, zipFile: File?, comment: String? = null): Boolean {
 
 @Throws(IOException::class)
 private fun zipFile(srcFile: File?, rootPath: String, zos: ZipOutputStream, comment: String?): Boolean {
-    var rootPathNx = rootPath + (if (rootPath.isSpace()) "" else File.separator) + srcFile!!.name
+    val rootPathNx = rootPath + (if (rootPath.isSpace()) "" else File.separator) + srcFile!!.name
     if (srcFile.isDirectory) {
         val fileList = srcFile.listFiles()
         if (fileList == null || fileList.isEmpty()) {
@@ -156,8 +156,8 @@ private fun zipFile(srcFile: File?, rootPath: String, zos: ZipOutputStream, comm
  * @throws IOException if unzip unsuccessfully
  */
 @Throws(IOException::class)
-fun unzipFileByKeyword(zipFilePath: String?, destDirPath: String?, keyword: String?=null): List<File>? {
-    return unzipFileByKeyword(getFileByPath(zipFilePath), getFileByPath(destDirPath), keyword)
+fun unzipFileByKeyword(zipFilePath: String, destDirPath: String, keyword: String?=null): List<File>? {
+    return unzipFileByKeyword(zipFilePath.pathToFile(), destDirPath.pathToFile(), keyword)
 }
 
 /**
@@ -176,7 +176,7 @@ fun unzipFileByKeyword(zipFile: File?, destDir: File?, keyword: String?=null): L
     val zip = ZipFile(zipFile)
     val entries: Enumeration<*> = zip.entries()
     zip.use { zipClose ->
-        if (keyword.isSpace()) {
+        if (keyword.isNullOrEmpty()||keyword.isSpace()) {
             while (entries.hasMoreElements()) {
                 val entry = entries.nextElement() as ZipEntry
                 val entryName = entry.name.replace("\\", "/")
@@ -194,7 +194,7 @@ fun unzipFileByKeyword(zipFile: File?, destDir: File?, keyword: String?=null): L
                     debug("ZipUtils", "entryName: $entryName is dangerous!")
                     continue
                 }
-                if (entryName.contains(keyword!!)) {
+                if (entryName.contains(keyword)) {
                     if (!unzipChildFile(destDir, files, zipClose, entry, entryName)) return files
                 }
             }
@@ -208,9 +208,9 @@ private fun unzipChildFile(destDir: File, files: MutableList<File>, zip: ZipFile
     val file = File(destDir, name)
     files.add(file)
     if (entry.isDirectory) {
-        return createOrExistsDir(file)
+        return file.createDirIfAbsent()
     } else {
-        if (!createOrExistsFile(file)) return false
+        if (file.createFileIfAbsent()) return false
         var input: InputStream? = null
         var out: OutputStream? = null
         try {
@@ -237,8 +237,8 @@ private fun unzipChildFile(destDir: File, files: MutableList<File>, zip: ZipFile
  * @throws IOException if an I/O error has occurred
  */
 @Throws(IOException::class)
-fun getFilesPath(zipFilePath: String?): List<String>? {
-    return getFilesPath(getFileByPath(zipFilePath))
+fun getFilesPath(zipFilePath: String): List<String>? {
+    return getFilesPath(zipFilePath.pathToFile())
 }
 
 /**
@@ -275,8 +275,8 @@ fun getFilesPath(zipFile: File?): List<String>? {
  * @throws IOException if an I/O error has occurred
  */
 @Throws(IOException::class)
-fun getComments(zipFilePath: String?): List<String>? {
-    return getComments(getFileByPath(zipFilePath))
+fun getComments(zipFilePath: String): List<String>? {
+    return getComments(zipFilePath.pathToFile())
 }
 
 /**
@@ -300,22 +300,44 @@ fun getComments(zipFile: File?): List<String>? {
     return comments
 }
 
-private fun createOrExistsDir(file: File?): Boolean {
-    return file != null && if (file.exists()) file.isDirectory else file.mkdirs()
-}
 
-private fun createOrExistsFile(file: File?): Boolean {
-    if (file == null) return false
-    if (file.exists()) return file.isFile
-    return if (!createOrExistsDir(file.parentFile)) false else try {
-        file.createNewFile()
-    } catch (e: IOException) {
-        e.printStackTrace()
-        false
+
+/**
+ * 解压缩一个文件
+ * @param zipFile 压缩文件
+ * @param folderPath 解压缩的目标目录
+ * @throws IOException 当解压缩过程出错时抛出
+ */
+@Throws(ZipException::class, IOException::class)
+fun File.unzipFile(folderPath: String) {
+    File(folderPath).ensureFolder()
+    val zf = ZipFile(this)
+    val entries = zf.entries()
+    while (entries.hasMoreElements()) {
+        val entry = entries.nextElement()
+        if (entry.isDirectory) {
+            continue
+        }
+        zf.getInputStream(entry).toFile(File(folderPath + File.separator + entry.name))
     }
 }
 
-private fun getFileByPath(filePath: String?): File? {
-    return if (filePath.isSpace()) null else File(filePath)
+/**
+ * 解压文件时，如果文件解压失败，会删除异常的文件，但仍然向外抛出异常
+ * @param zipFile 压缩文件
+ * @param folderPath 解压缩的目标目录
+ * @throws IOException 当解压缩过程出错时抛出
+ */
+@Throws(ZipException::class, IOException::class)
+fun File.unzipAndSafeDelete(folderPath: String) {
+    try {
+        unzipFile(folderPath)
+    } catch (t: Throwable) {
+        throw t
+    } finally {
+        safeDelete()
+    }
 }
+
+
 

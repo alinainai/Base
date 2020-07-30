@@ -1,5 +1,7 @@
 package com.lib.commonsdk.kotlin.extension.number
 
+import kotlin.experimental.and
+
 /**
  * [ByteArray]的扩展
  */
@@ -66,3 +68,63 @@ fun ByteArray.toShortArray(): ShortArray =
         .chunked(2)
         .map { (l, h) -> (l.toInt() + h.toInt().shl(8)).toShort() }
         .toShortArray()
+
+fun ByteArray.isUtf8(): Int {
+    if (size > 3) {
+        if (this[0] == 0xEF.toByte() && this[1] == 0xBB.toByte() && this[2] == 0xBF.toByte()) {
+            return 100
+        }
+    }
+    var utf8 = 0
+    var ascii = 0
+    var child = 0
+    var i = 0
+    while (i < size) {
+        // UTF-8 byte shouldn't be FF and FE
+        if (this[i] and 0xFF.toByte() == 0xFF.toByte() || this[i] and 0xFE.toByte() == 0xFE.toByte()){
+            return 0
+        }
+        if (child == 0) {
+            // ASCII format is 0x0*******
+            if (this[i] and 0x7F.toByte() == this[i] && this[i] != 0.toByte()) {
+                ascii++
+            } else if (this[i] and 0xC0.toByte() == 0xC0.toByte()){
+                // 0x11****** maybe is UTF-8
+                for (bit in 0..7) {
+                    child = if ((0x80 shr bit).toByte() and this[i] == (0x80 shr bit).toByte()) {
+                        bit
+                    } else {
+                        break
+                    }
+                }
+                utf8++
+            }
+            i++
+        } else {
+            child = if (size - i > child) child else size - i
+            var currentNotUtf8 = false
+            for (children in 0 until child) {
+                // format must is 0x10******
+                if (this[i + children] and 0x80.toByte() != 0x80.toByte()) {
+                    if (this[i + children] and 0x7F.toByte() == this[i + children] && this[i] != 0.toByte()) {
+                        // ASCII format is 0x0*******
+                        ascii++
+                    }
+                    currentNotUtf8 = true
+                }
+            }
+            if (currentNotUtf8) {
+                utf8--
+                i++
+            } else {
+                utf8 += child
+                i += child
+            }
+            child = 0
+        }
+    }
+    // UTF-8 contains ASCII
+    return if (ascii == size) {
+        100
+    } else (100 * ((utf8 + ascii).toFloat() / size.toFloat())).toInt()
+}

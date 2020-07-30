@@ -10,15 +10,12 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import com.lib.commonsdk.constants.Constants
 import com.lib.commonsdk.kotlin.utils.AppUtils
 import com.lib.commonsdk.utils.sp.SPStaticUtils
 import java.io.File
 import java.util.*
 
-
 val app: Context = AppUtils.app.applicationContext
-
 
 fun copyToClipboard(str: String, context: Context = app): Boolean {
     return try {
@@ -51,9 +48,6 @@ fun checkAppInstall(pkgName: String?): Boolean {
     return packageInfo != null
 }
 
-
-
-
 fun getAppVersionName(packageName: String = AppUtils.app.packageName): String? {
     return try {
         val pm = AppUtils.app.packageManager
@@ -74,21 +68,6 @@ fun getAppVersionCode(packageName: String = AppUtils.app.packageName): Long {
         e.printStackTrace()
         -1
     }
-}
-
-
-/**
- * 发现好多地方需要 tryCatch 以保证代码安全性
- * 但是我们又不关心它的运行结果，所以单独写了一个方法
- * 将需要运行的代码块用 tryCatch 包裹起来
- */
-fun <T : Any> T.runInTryCatch(block: () -> Unit) {
-    try {
-        block()
-    } catch (e: Throwable) {
-        e.printStackTrace()
-    }
-
 }
 
 fun fixSoftInputLeaks(window: Window) {
@@ -125,4 +104,24 @@ fun getAppGUID(): String {
         SPStaticUtils.put("APP_GUID", id)
     }
     return id
+}
+
+fun byte2FitMemorySize(byteNum: Long): String {
+    return when {
+        byteNum < 0 -> {
+            "shouldn't be less than zero!"
+        }
+        byteNum < 1024 -> {
+            String.format(Locale.getDefault(), "%.0fB", byteNum.toDouble())
+        }
+        byteNum < 1048576 -> {
+            String.format(Locale.getDefault(), "%.0fKB", byteNum.toDouble() / 1024)
+        }
+        byteNum < 1073741824 -> {
+            String.format(Locale.getDefault(), "%.0fMB", byteNum.toDouble() / 1048576)
+        }
+        else -> {
+            String.format(Locale.getDefault(), "%.0fGB", byteNum.toDouble() / 1073741824)
+        }
+    }
 }

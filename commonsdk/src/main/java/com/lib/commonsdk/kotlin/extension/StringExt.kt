@@ -27,8 +27,7 @@ fun String.safeToInt(default: Int = 0) = try {
     default
 }
 
-fun String?.isSpace(): Boolean {
-    if (this == null) return true
+fun String.isSpace(): Boolean {
     var i = 0
     val len = this.length
     while (i < len) {

@@ -11,7 +11,7 @@ import com.alibaba.android.arouter.launcher.ARouter
  *
  * @param path `path`
  */
-fun navigation(path: String?) {
+fun navigation(path: String) {
     ARouter.getInstance().build(path).navigation()
 }
 
@@ -23,10 +23,10 @@ fun navigation(path: String?) {
  * @param context
  * @param path
  */
-fun navigation(context: Context?, path: String?) {
+fun navigation(context: Context?, path: String) {
     ARouter.getInstance().build(path).navigation(context)
 }
 
-fun navigation(context: Context?, path: String?, callback: NavCallback?) {
+fun navigation(context: Context, path: String, callback: NavCallback) {
     ARouter.getInstance().build(path).navigation(context, callback)
 }
