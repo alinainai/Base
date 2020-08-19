@@ -4,6 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +23,17 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.app.R
-import com.gas.app.learn.calendarviewV2.CalendarTheme
-import com.gas.app.learn.calendarviewV2.data.CalendarDayModel
-import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialog
-import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV2
-import com.gas.app.learn.calendarviewV2.mvp.CalendarSelectDialogV3
+import com.gas.app.calendar.CalendarSelectDialogCustom
+import com.gas.app.calendar.sdk.data.CalendarDayModel
+import com.gas.app.calendar.sdk.data.CalendarTheme
+
+import com.gas.app.learn.calendarfinal.calendar.CalendarSelectDialog as CalendarFinalDialog
+import com.gas.app.calendar.sdk.dialog.CalendarSelectDialog as CalendarNewDialog
 
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
+import com.gas.app.utils.AppMoudleUtil
 import com.gasview.metrialcalendar.CalendarDay
 import com.gasview.metrialcalendar.MaterialCalendarView
 import com.gasview.metrialcalendar.OnDateSelectedListener
@@ -61,10 +66,9 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
     @Autowired(name = RouterHub.TEST_SERVICE_TESTINFOSERVICE)
     var mTestInfoService: TestInfoService? = null
 
-
-    private var dialog: CalendarSelectDialog? = null
-    private var dialogV2: CalendarSelectDialogV2? = null
-    private var dialogV3: CalendarSelectDialogV3? = null
+    private var dialogFinal: CalendarFinalDialog? = null
+    private var dialogFinal2: CalendarSelectDialogCustom? = null
+    private var dialogFinal3: CalendarNewDialog? = null
     private var mLocalDate = LocalDate.now()
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMainComponent //如找不到该类,请编译一下项目
@@ -93,28 +97,58 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             Utils.navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-            dialog?.showSelect(mLocalDate)
+
+            if(AppMoudleUtil.isChineseMainLand()) {
+                Log.e("TAG","简体中文")
+            }else if(AppMoudleUtil.isChineseLanguage()){
+                Log.e("TAG","繁体中文")
+            }else{
+                Log.e("TAG","不是中文")
+            }
+
+            Log.e("TAG","isChineseMainLand=${AppMoudleUtil.isChineseMainLand()}")
+            Log.e("TAG","isChineseTradition=${AppMoudleUtil.isChineseTradition()}")
+//            cloudRecordUpgradeTip1.text="fsdfsdgsdfsfsgsdgsdgsdgshsdfgsdgsdhsdfgsdhgsdfsdfsd"
+
         }
         btnPlugin2.setOnClickListener {
-            dialog?.showSelect(mLocalDate)
+            dialogFinal?.showSelect(mLocalDate)
+
         }
         btnPlugin3.setOnClickListener {
-            SimpleCalendarDialogFragment().show(childFragmentManager, "test-simple-calendar")
+//            dialogFinal2?.showSelect()
+            dialogFinal3?.showSelect(mLocalDate)
         }
 
-        dialog = CalendarSelectDialog(activity!!, CalendarTheme.Gold, object : CalendarSelectDialog.OnDayClickCallBack {
-            override fun onDayItemClick(date: CalendarDayModel) {
+        dialogFinal = CalendarFinalDialog(activity!!, com.gas.app.learn.calendarfinal.CalendarTheme.Gold,object :CalendarFinalDialog.OnDayClickCallBack {
+            override fun onDayItemClick(date: com.gas.app.learn.calendarfinal.day.CalendarDayModel) {
                 mLocalDate = date.localDate
             }
         })
-        dialogV2 = CalendarSelectDialogV2(CalendarTheme.Gold)
-        dialogV2!!.setCanceledOnTouchOutside(true)
-        dialogV3 = CalendarSelectDialogV3(activity!!, CalendarTheme.Gold)
-        dialogV3!!.setOnDayClickCallBack(object : CalendarSelectDialogV3.OnDayClickCallBack {
+        dialogFinal3 = CalendarNewDialog(activity!!, CalendarTheme.Gold,object :CalendarNewDialog.OnDayClickCallBack {
             override fun onDayItemClick(date: CalendarDayModel) {
                 mLocalDate = date.localDate
             }
+
         })
+
+        dialogFinal2 = CalendarSelectDialogCustom(activity!!)
+
+        etx.addTextChangedListener(object :TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    cloudRecordUpgradeTip1.text=it
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+        })
+
     }
 
     override fun setData(data: Any?) {}

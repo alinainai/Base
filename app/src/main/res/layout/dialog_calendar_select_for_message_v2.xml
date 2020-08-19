@@ -82,13 +82,23 @@
             android:text="@string/smart_home_camera_week_day_name_6" />
     </LinearLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/listContainer"
-        android:layout_width="0dp"
+    <com.haibin.calendarview.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
         android:layout_height="240dp"
+        android:background="#fff"
+        app:calendar_height="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weekDaysBanner" />
+        app:layout_constraintTop_toBottomOf="@+id/weekDaysBanner"
+        app:month_view="com.gas.app.calendar.SingleMonthView"
+        app:month_view_show_mode="mode_all"
+        app:other_month_text_color="#e1e1e1"
+        app:select_mode="single_mode"
+        app:day_text_size="13sp"
+        app:selected_text_color="#fff"
+        app:selected_theme_color="#108cd4"
+        app:week_bar_height="0dp" />
 
     <View
         android:id="@+id/divider"
@@ -97,7 +107,7 @@
         android:background="#F5F6F8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
 
     <TextView
         android:id="@+id/tvDialogClose"

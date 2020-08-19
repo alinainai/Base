@@ -11,7 +11,36 @@ import android.webkit.WebView;
 import com.airbnb.lottie.LottieAnimationView;
 import com.base.baseui.view.TitleView;
 
+import java.util.Locale;
+
 public class AppMoudleUtil {
+
+    public static boolean isChineseMainLand() {
+        boolean isCH = false;
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equals(SysConfig.CHINESE_LANG) && locale.getCountry().equals(SysConfig.CHINA)) {
+            isCH = true;
+        }
+        return isCH;
+    }
+
+    public static boolean isChineseTradition() {
+        boolean isCH = false;
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equals(SysConfig.CHINESE_LANG) && !locale.getCountry().equals(SysConfig.CHINA)) {
+            isCH = true;
+        }
+        return isCH;
+    }
+
+    public static boolean isChineseLanguage() {
+        boolean isCH = false;
+        Locale locale = Locale.getDefault();
+        if (locale.getLanguage().equals(SysConfig.CHINESE_LANG)) {
+            isCH = true;
+        }
+        return isCH;
+    }
 
     public static void setUrlTitle(TitleView titleView,String title){
 

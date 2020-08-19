@@ -2,6 +2,7 @@ package com.gas.app.ui.fragment.info
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,15 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.app.R
+import com.gas.app.calendar.sdk.data.CalendarDayModel
+import com.gas.app.calendar.sdk.data.CalendarMonthModel
+import com.gas.app.calendar.sdk.data.daysOfMonthOffset
+import com.gas.app.calendar.sdk.utils.CalendarSelectListener
 import com.gas.app.ui.fragment.info.di.DaggerInfoComponent
 import com.gas.app.ui.fragment.info.mvp.InfoContract
 import com.gas.app.ui.fragment.info.mvp.InfoPresenter
+import kotlinx.android.synthetic.main.fragment_info.*
+import org.joda.time.LocalDate
 
 /**
  * ================================================
@@ -23,6 +30,10 @@ import com.gas.app.ui.fragment.info.mvp.InfoPresenter
  * ================================================
  */
 class InfoFragment : BaseFragment<InfoPresenter?>(), InfoContract.View {
+
+
+    private var mLocalDate = LocalDate.now()
+
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerInfoComponent //如找不到该类,请编译一下项目
                 .builder()
@@ -36,9 +47,23 @@ class InfoFragment : BaseFragment<InfoPresenter?>(), InfoContract.View {
         return inflater.inflate(R.layout.fragment_info, container, false)
     }
 
-    override fun initData(savedInstanceState: Bundle?) {}
+    override fun initData(savedInstanceState: Bundle?) {
 
-    override fun setData(data: Any?) {}
+        val model= CalendarMonthModel(System.currentTimeMillis())
+        calendarView.setMonthModel(model)
+        calendarView.setCalendarSelectListener(object :CalendarSelectListener{
+            override fun onCalendarSelect(calendar: CalendarDayModel, select: Boolean) {
+                mLocalDate=calendar.localDate
+                calendarView.setSelectDay(mLocalDate)
+            }
+        })
+        calendarView.setSelectDay(mLocalDate)
+
+    }
+
+    override fun setData(data: Any?) {
+
+    }
     override fun showLoading() {}
     override fun hideLoading() {}
     override fun showMessage(message: String) {
