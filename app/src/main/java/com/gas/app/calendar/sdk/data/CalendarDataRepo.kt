@@ -1,7 +1,6 @@
 package com.gas.app.calendar.sdk.data
 
 import com.gas.app.R
-import com.gas.app.learn.calendarviewV2.TOTAL_COUNT
 import org.joda.time.LocalDate
 import java.util.*
 
@@ -12,6 +11,7 @@ sealed class CalendarTheme {
 const val MONTH_COUNT_NEW=4
 const val ROW_COUNT_NEW = 6
 const val COLUMN_COUNT_NEW = 7
+const val TOTAL_COUNT = 42
 const val TOTAL_COUNT_NEW = ROW_COUNT_NEW * COLUMN_COUNT_NEW
 val MONTH_NAMES_RES_ID_NEW = intArrayOf(R.string.smart_home_camera_month_name_1, R.string.smart_home_camera_month_name_2, R.string.smart_home_camera_month_name_3,
         R.string.smart_home_camera_month_name_4, R.string.smart_home_camera_month_name_5, R.string.smart_home_camera_month_name_6, R.string.smart_home_camera_month_name_7, R.string.smart_home_camera_month_name_8,

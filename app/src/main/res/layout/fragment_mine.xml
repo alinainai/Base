@@ -44,15 +44,7 @@
         app:lottie_fileName="lottie/login_logo_animation.json"
         app:lottie_loop="true" />
 
-    <com.gas.app.learn.customview.CloudRecordTimeDownView
-        android:id="@+id/timeDown"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-<!--    android:animateLayoutChanges="true"-->
+
     <LinearLayout
         android:id="@+id/ll_container"
         android:layout_width="match_parent"
@@ -68,12 +60,6 @@
             android:padding="20dp"
             android:text="上部"
             android:textColor="@color/public_text_black_deep" />
-
-        <com.gas.app.learn.customview.MyPageCloudAdTimeDownView
-            android:id="@+id/timeDownHolder"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="45dp" />
 
         <TextView
             android:id="@+id/bottomText"

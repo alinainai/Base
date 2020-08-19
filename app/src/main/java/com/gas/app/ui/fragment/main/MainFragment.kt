@@ -1,18 +1,11 @@
 package com.gas.app.ui.fragment.main
 
-import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.annotation.NonNull
-import androidx.appcompat.app.AppCompatDialogFragment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.componentservice.gank.service.GankInfoService
@@ -23,25 +16,18 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.app.R
-import com.gas.app.calendar.CalendarSelectDialogCustom
 import com.gas.app.calendar.sdk.data.CalendarDayModel
 import com.gas.app.calendar.sdk.data.CalendarTheme
-
-import com.gas.app.learn.calendarfinal.calendar.CalendarSelectDialog as CalendarFinalDialog
-import com.gas.app.calendar.sdk.dialog.CalendarSelectDialog as CalendarNewDialog
-
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.gas.app.utils.AppMoudleUtil
-import com.gasview.metrialcalendar.CalendarDay
-import com.gasview.metrialcalendar.MaterialCalendarView
-import com.gasview.metrialcalendar.OnDateSelectedListener
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.utils.Utils
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.joda.time.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
+import com.gas.app.calendar.sdk.dialog.CalendarSelectDialog as CalendarNewDialog
 
 
 /**
@@ -66,8 +52,6 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
     @Autowired(name = RouterHub.TEST_SERVICE_TESTINFOSERVICE)
     var mTestInfoService: TestInfoService? = null
 
-    private var dialogFinal: CalendarFinalDialog? = null
-    private var dialogFinal2: CalendarSelectDialogCustom? = null
     private var dialogFinal3: CalendarNewDialog? = null
     private var mLocalDate = LocalDate.now()
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -98,21 +82,20 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         }
         btnPlugin1.setOnClickListener {
 
-            if(AppMoudleUtil.isChineseMainLand()) {
-                Log.e("TAG","简体中文")
-            }else if(AppMoudleUtil.isChineseLanguage()){
-                Log.e("TAG","繁体中文")
-            }else{
-                Log.e("TAG","不是中文")
+            if (AppMoudleUtil.isChineseMainLand()) {
+                Log.e("TAG", "简体中文")
+            } else if (AppMoudleUtil.isChineseLanguage()) {
+                Log.e("TAG", "繁体中文")
+            } else {
+                Log.e("TAG", "不是中文")
             }
 
-            Log.e("TAG","isChineseMainLand=${AppMoudleUtil.isChineseMainLand()}")
-            Log.e("TAG","isChineseTradition=${AppMoudleUtil.isChineseTradition()}")
+            Log.e("TAG", "isChineseMainLand=${AppMoudleUtil.isChineseMainLand()}")
+            Log.e("TAG", "isChineseTradition=${AppMoudleUtil.isChineseTradition()}")
 //            cloudRecordUpgradeTip1.text="fsdfsdgsdfsfsgsdgsdgsdgshsdfgsdgsdhsdfgsdhgsdfsdfsd"
 
         }
         btnPlugin2.setOnClickListener {
-            dialogFinal?.showSelect(mLocalDate)
 
         }
         btnPlugin3.setOnClickListener {
@@ -120,31 +103,10 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             dialogFinal3?.showSelect(mLocalDate)
         }
 
-        dialogFinal = CalendarFinalDialog(activity!!, com.gas.app.learn.calendarfinal.CalendarTheme.Gold,object :CalendarFinalDialog.OnDayClickCallBack {
-            override fun onDayItemClick(date: com.gas.app.learn.calendarfinal.day.CalendarDayModel) {
-                mLocalDate = date.localDate
-            }
-        })
-        dialogFinal3 = CalendarNewDialog(activity!!, CalendarTheme.Gold,object :CalendarNewDialog.OnDayClickCallBack {
+
+        dialogFinal3 = CalendarNewDialog(activity!!, CalendarTheme.Gold, object : CalendarNewDialog.OnDayClickCallBack {
             override fun onDayItemClick(date: CalendarDayModel) {
                 mLocalDate = date.localDate
-            }
-
-        })
-
-        dialogFinal2 = CalendarSelectDialogCustom(activity!!)
-
-        etx.addTextChangedListener(object :TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                s?.let {
-                    cloudRecordUpgradeTip1.text=it
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
         })
@@ -185,31 +147,5 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         val FORMATTER = DateTimeFormatter.ofPattern("EEE, d MMM yyyy")
     }
 
-    class SimpleCalendarDialogFragment : AppCompatDialogFragment(), OnDateSelectedListener {
-        private var textView: TextView? = null
 
-        @NonNull
-        override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-            val inflater: LayoutInflater = activity!!.layoutInflater
-
-            //inflate custom layout and get views
-            //pass null as parent view because will be in dialog layout
-            val view: View = inflater.inflate(R.layout.activity_trans, null)
-            textView = view.findViewById(R.id.textView)
-            val widget: MaterialCalendarView = view.findViewById(R.id.calendarView)
-            widget.setOnDateChangedListener(this)
-            return AlertDialog.Builder(getActivity())
-                    .setTitle("选择日期")
-                    .setView(view)
-                    .setPositiveButton(android.R.string.ok, null)
-                    .create()
-        }
-
-        override fun onDateSelected(
-                @NonNull widget: MaterialCalendarView,
-                @NonNull date: CalendarDay,
-                selected: Boolean) {
-            textView!!.setText(FORMATTER.format(date.getDate()))
-        }
-    }
 }
