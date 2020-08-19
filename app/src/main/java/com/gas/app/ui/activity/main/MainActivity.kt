@@ -23,7 +23,7 @@ import com.lib.commonsdk.adapter.AdapterViewPager
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.kotlin.extension.app.classNameAndHashCode
 import com.lib.commonsdk.kotlin.extension.app.info
-import com.lib.commonsdk.kotlin.extension.app.runInTryCatch
+import com.lib.commonsdk.kotlin.extension.runInTryCatch
 import com.lib.commonsdk.kotlin.utils.GsonUtils
 import com.lib.commonsdk.kotlin.utils.GsonUtils.gson
 import com.lib.commonsdk.statusbar.StatusBarManager
@@ -82,7 +82,7 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnCl
         mainBtn3.setOnClickListener(this)
         mainBtn4.setOnClickListener(this)
         runInTryCatch {
-            info(GsonUtils.getListType(CollectionBean::class.java).javaClass.simpleName)
+
         }
 
     }
