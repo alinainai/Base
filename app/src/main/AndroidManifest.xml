@@ -74,6 +74,11 @@
             android:name=".ui.activity.utils.WebViewActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".utils.RemoteActivity"
+            android:process=":remote"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
             android:value="ClientConfigModule" />

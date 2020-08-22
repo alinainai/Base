@@ -1,7 +1,6 @@
 package com.gas.app.utils
 
-import android.content.ClipData
-import android.content.ClipboardManager
+import android.app.ActivityManager
 import android.content.Context
 import android.text.TextUtils
 import android.view.ViewGroup
@@ -9,7 +8,22 @@ import android.webkit.WebView
 import com.airbnb.lottie.LottieAnimationView
 import com.base.baseui.view.TitleView
 
-object AppMoudleUtil {
+
+/**
+ * @return null may be returned if the specified process not found
+ */
+fun getProcessName(cxt: Context, pid: Int): String? {
+    val am = cxt.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val runningApps = am.runningAppProcesses ?: return null
+    for (procInfo in runningApps) {
+        if (procInfo.pid == pid) {
+            return procInfo.processName
+        }
+    }
+    return null
+}
+
+object AppModuleUtil {
     @JvmStatic
     fun setUrlTitle(titleView: TitleView, title: String) {
         var title = title
@@ -60,4 +74,7 @@ object AppMoudleUtil {
             if (!view.isAnimating) view.postDelayed(Runnable { view.playAnimation() }, 150)
         }
     }
+
+
+
 }

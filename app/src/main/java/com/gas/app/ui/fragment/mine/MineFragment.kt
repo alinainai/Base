@@ -1,7 +1,9 @@
 package com.gas.app.ui.fragment.mine
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Process
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,10 @@ import com.gas.app.R
 import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
+import com.gas.app.utils.RemoteActivity
+import com.gas.app.utils.getProcessName
+import com.lib.commonsdk.kotlin.extension.app.debug
+import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**
  * Author:
@@ -30,6 +36,13 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        btnModule1.setOnClickListener {
+            debug(getProcessName(activity!!.application, Process.myPid()))
+        }
+        btnModule2.setOnClickListener {
+            startActivity(Intent(activity,RemoteActivity::class.java))
+        }
 
     }
 

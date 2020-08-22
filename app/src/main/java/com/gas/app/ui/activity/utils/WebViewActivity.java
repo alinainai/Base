@@ -27,7 +27,7 @@ import butterknife.BindView;
 import com.gas.app.gen.DatabaseService;
 import com.gas.app.ui.activity.utils.mvp.WebViewContract;
 import com.gas.app.ui.activity.utils.mvp.WebViewPresenter;
-import com.gas.app.utils.AppMoudleUtil;
+import com.gas.app.utils.AppModuleUtil;
 import com.gas.app.R;
 import com.gas.app.ui.activity.utils.di.DaggerWebViewComponent;
 
@@ -108,7 +108,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
         mTitle = getIntent().getStringExtra(PUBLIC_TITLE);//标题
 
 
-        AppMoudleUtil.setUrlTitle(mainCartTitle, mTitle);
+        AppModuleUtil.setUrlTitle(mainCartTitle, mTitle);
         mRLWebview.addView(mWebView);
 
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -133,7 +133,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
             public void onReceivedTitle(WebView view, String title) {
                 if (!mContext.isDestroyed()) {
                     if (TextUtils.isEmpty(mTitle)) {
-                        AppMoudleUtil.setUrlTitle(mainCartTitle, mTitle);
+                        AppModuleUtil.setUrlTitle(mainCartTitle, mTitle);
                         mTitle = title;
                     }
                 }
@@ -160,7 +160,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
 
     @Override
     protected void onDestroy() {
-        AppMoudleUtil.removeWebView(mWebView);
+        AppModuleUtil.removeWebView(mWebView);
         StatusBarManager.setStatusBarDarkMode(mContext);
         service.closeDatabase();
         super.onDestroy();
