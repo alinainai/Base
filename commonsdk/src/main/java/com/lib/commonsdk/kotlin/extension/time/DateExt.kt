@@ -6,14 +6,12 @@ import java.util.*
 /**
  * Date的扩展函数
  */
-fun Date.formatDate(): String? = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(this)
+fun Date.formatDate(format:String="yyyy-MM-dd"): String? = SimpleDateFormat(format, Locale.getDefault()).format(this)
 
-fun Date.formatDateToNumber(): String? = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(this)
+fun Date.formatDatetime(): String? = formatDate("yyyy-MM-dd HH:mm:ss")
 
 val Date.isToday: Boolean
     get() = formatDate() == Date().formatDate()
-
-fun Date.formatDatetime(): String? = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(this)
 
 fun Date.isSameDay(date: Date): Boolean {
     val date1 = Calendar.getInstance()

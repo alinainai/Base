@@ -3,8 +3,11 @@ package com.gas.test.ui.activity.trans
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.baseui.ui.base.FragmentContainerActivity
 import com.gas.test.R
+import com.gas.test.utils.fragment.asynclist.AsyncListFragment
 import com.lib.commonsdk.constants.RouterHub
+import kotlinx.android.synthetic.main.test_activity_trans.*
 
 @Route(path = RouterHub.TEST_HOMEACTIVITY)
 class TransActivity : AppCompatActivity() {
@@ -18,6 +21,9 @@ class TransActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.test_activity_trans)
+        addOrAttachFragment1.setOnClickListener {
+            FragmentContainerActivity.startActivity(this, AsyncListFragment::class.java)
+        }
     }
 
     override fun onPause() {

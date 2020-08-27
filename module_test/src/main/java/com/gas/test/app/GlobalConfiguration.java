@@ -18,6 +18,7 @@ package com.gas.test.app;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 
 import com.base.lib.base.delegate.AppLifecyclers;
@@ -44,7 +45,7 @@ import java.util.List;
 public final class GlobalConfiguration implements ClientConfigModule {
 
     @Override
-    public void applyOptions(Context context, ConfigModule.Builder builder) {
+    public void applyOptions(@NonNull Context context, ConfigModule.Builder builder) {
 
     }
 
@@ -64,16 +65,7 @@ public final class GlobalConfiguration implements ClientConfigModule {
     public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
         //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码, 所以不需要再执行
         if (BuildConfig.IS_BUILD_MODULE) {
-//            lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
-//                @Override
-//                public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-//                    ((RefWatcher) ArmsUtils
-//                            .obtainAppComponentFromContext(f.getActivity())
-//                            .extras()
-//                            .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())))
-//                            .watch(f);
-//                }
-//            });
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gas.app.utils.func;
+package com.gas.test.utils;
 
 import com.lib.commonsdk.kotlin.extension.app.LogExtKt;
 

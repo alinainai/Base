@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:ignore="ResourceName">
+    <item android:drawable="@mipmap/v4_op_play_order_reverse_pre" android:state_pressed="true" />
+    <item android:drawable="@mipmap/v4_op_play_order_reverse_nor" />
+</selector>

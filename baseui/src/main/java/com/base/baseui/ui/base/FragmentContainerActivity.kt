@@ -39,11 +39,11 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
     }
 
     companion object {
-        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?) {
+        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment>) {
             startActivity(context, fragmentClazz, null)
         }
 
-        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment?>?, args: Bundle?, vararg intentFlags: Int) {
+        fun startActivity(context: Activity, fragmentClazz: Class<out Fragment>, args: Bundle?, vararg intentFlags: Int) {
             val intent = Intent(context, FragmentContainerActivity::class.java)
             intent.putExtra("clazz", fragmentClazz)
             if (args != null) {
@@ -98,7 +98,7 @@ class FragmentContainerActivity : BaseActivity<IPresenter>() {
         val fragment = supportFragmentManager.findFragmentById(R.id.container)
         if (fragment != null) {
             if (fragment is BackPressCallback) {
-                if (fragment.OnBackPressed()) {
+                if (fragment.onBackPressed()) {
                     return
                 }
             }
