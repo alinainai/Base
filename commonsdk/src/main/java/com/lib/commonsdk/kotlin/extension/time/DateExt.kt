@@ -1,12 +1,17 @@
 package com.lib.commonsdk.kotlin.extension.time
 
+import org.threeten.bp.DateTimeUtils
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.ZoneId
+import org.threeten.bp.format.DateTimeFormatter
 import java.text.SimpleDateFormat
 import java.util.*
 
 /**
  * Date的扩展函数
  */
-fun Date.formatDate(format:String="yyyy-MM-dd"): String? = SimpleDateFormat(format, Locale.getDefault()).format(this)
+fun Date.formatDate(format: String = "yyyy-MM-dd"): String? = SimpleDateFormat(format, Locale.getDefault()).format(this)
 
 fun Date.formatDatetime(): String? = formatDate("yyyy-MM-dd HH:mm:ss")
 
@@ -24,3 +29,18 @@ fun Date.isSameDay(date: Date): Boolean {
 }
 
 fun Date.isNotSameDay(date: Date) = !this.isSameDay(date)
+
+fun Long.toLocalDateTime(): LocalDateTime {
+    return LocalDateTime.ofInstant(Instant.ofEpochMilli(this), ZoneId.systemDefault())
+}
+
+fun Date.toLocalDateTime(): LocalDateTime {
+    return LocalDateTime.ofInstant(DateTimeUtils.toInstant(this),ZoneId.systemDefault())
+}
+
+fun LocalDateTime.format(format:String = "yyyy-MM-dd HH:mm:ss"):String{
+    val df: DateTimeFormatter = DateTimeFormatter.ofPattern(format)
+    return df.format(this)
+}
+
+

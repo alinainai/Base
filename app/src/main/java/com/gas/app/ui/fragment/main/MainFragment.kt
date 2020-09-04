@@ -23,8 +23,10 @@ import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.kotlin.extension.app.debug
 import com.lib.commonsdk.kotlin.extension.app.info
 import com.lib.commonsdk.kotlin.extension.app.navigation
+import com.lib.commonsdk.kotlin.extension.time.format
+import com.lib.commonsdk.kotlin.extension.time.toLocalDateTime
 import kotlinx.android.synthetic.main.fragment_main.*
-
+import java.util.*
 
 
 /**
@@ -76,9 +78,9 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-
-            info("点击")
-
+            val date = Date()
+            info(date.toLocalDateTime().format())
+            info(date.toLocalDateTime().hour)
         }
         btnPlugin2.setOnClickListener {
             debug("点击")

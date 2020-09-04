@@ -24,6 +24,8 @@ class TransActivity : AppCompatActivity() {
         addOrAttachFragment1.setOnClickListener {
             FragmentContainerActivity.startActivity(this, AsyncListFragment::class.java)
         }
+        addOrAttachFragment1.text=getString(R.string.money_unit_special,3.29)
+        addOrAttachFragment2.text=getString(R.string.money_unit_special_dollar,3.29)
     }
 
     override fun onPause() {
