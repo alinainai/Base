@@ -12,4 +12,9 @@
 
     </declare-styleable>
 
+    <declare-styleable name="AnimationPercentPieView" tools:ignore="ResourceName">
+        <attr name="circleWidth" format="dimension"/>
+        <attr name="bgInnerCircleWidth" format="dimension"/>
+    </declare-styleable>
+
 </resources>
