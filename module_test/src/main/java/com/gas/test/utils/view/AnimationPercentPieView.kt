@@ -198,7 +198,7 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
             style = Paint.Style.STROKE
         }
         mAnimalPaint = Paint().apply {
-            strokeWidth = circleWidth
+            strokeWidth = circleWidth+2
             isAntiAlias = true
             style = Paint.Style.STROKE
             color = Color.WHITE
