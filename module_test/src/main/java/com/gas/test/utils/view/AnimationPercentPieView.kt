@@ -6,6 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.core.view.ViewCompat
 import com.gas.test.R
 import kotlin.math.ceil
 
@@ -27,14 +28,12 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
     private var radius = 0f //半径
     private val mRectF: RectF //弧形外接矩形
     private val mBgInnerRectF: RectF //innerBg外接矩形
-    private val mAnimalRectF: RectF
     private var circleWidth = dipToPx(30F).toFloat() //圆圈的宽度
-    private var bgInnerCircleWidth = dipToPx(315F).toFloat() //圆圈的宽度
+    private var bgInnerCircleWidth = dipToPx(15F).toFloat() //圆圈的宽度
     private val mArcPaint: Paint  //扇形画笔
     private val mCirclePaint: Paint //圆圈画笔
-    private val mAnimalPaint: Paint //动画画笔
     private var mAnimator = ValueAnimator()
-    private var mProgress = 0F
+    private var mDrawAngle = 0F
 
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimationPercentPieView)
@@ -72,12 +71,6 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
             right = centerX + radius - circleWidth / 2 - 1
             bottom = centerY + radius - circleWidth / 2 - 1
         }
-        mAnimalRectF.apply {
-            left = centerX - radius + circleWidth / 2
-            top = centerY - radius + circleWidth / 2
-            right = centerX + radius - circleWidth / 2
-            bottom = centerY + radius - circleWidth / 2
-        }
         mBgInnerRectF.apply {
             left = centerX - radius + circleWidth + bgInnerCircleWidth / 2 + 1
             top = centerY - radius + circleWidth + bgInnerCircleWidth / 2 + 1
@@ -90,7 +83,6 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
         super.onDraw(canvas)
         drawArc(canvas)
         drawBgInnerArc(canvas) //中心背景圆弧
-        drawProgressArc(canvas)
     }
 
     private fun drawBgInnerArc(canvas: Canvas) {
@@ -128,7 +120,6 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
         canvas.save()
         canvas.rotate(-90F, centerX.toFloat(), centerY.toFloat())
         if (arcInfoList.isNotEmpty()) {
-            calculateArc()
             arcInfoList.forEach { arc ->
                 var angle = arc.percentAngle
                 //+0.1是为了让每个扇形之间没有间隙
@@ -142,7 +133,12 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
                         arc.startColor,
                         arc.endColor,
                         Shader.TileMode.MIRROR)
-
+                if (arc.startAngle + angle > mDrawAngle) {
+                    angle = mDrawAngle - arc.startAngle
+                    if(angle<=0){
+                        angle=0F
+                    }
+                }
                 canvas.drawArc(mRectF, arc.startAngle, angle, false, mArcPaint)
             }
         }
@@ -152,22 +148,19 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
     fun setData(list: List<ArcInfo>) {
         arcInfoList.clear()
         arcInfoList.addAll(list)
+        calculateArc()
         startAnimator()
-    }
-
-    private fun drawProgressArc(canvas: Canvas) { //mSweepAngle - 50
-        canvas.drawArc(mAnimalRectF, 270F, -(CIRCLE_DEGREE * mProgress / MAX_PROGRESS), false, mAnimalPaint)
     }
 
     private fun startAnimator() {
         mAnimator.apply {
             cancel()
-            setFloatValues(100F, 0F)
+            setFloatValues(0F, 360F)
             duration = ANIMATION_DURATION
             interpolator=AccelerateDecelerateInterpolator()
             addUpdateListener { animation ->
-                mProgress = animation.animatedValue as Float
-                invalidate()
+                mDrawAngle = animation.animatedValue as Float
+                postInvalidateOnAnimation()
             }
             start()
         }
@@ -197,15 +190,8 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
             isAntiAlias = true
             style = Paint.Style.STROKE
         }
-        mAnimalPaint = Paint().apply {
-            strokeWidth = circleWidth+2
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-            color = Color.WHITE
-        }
         mRectF = RectF()
         mBgInnerRectF = RectF()
-        mAnimalRectF = RectF()
     }
 
     data class ArcInfo(val startColor: Int,

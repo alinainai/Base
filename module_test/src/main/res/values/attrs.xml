@@ -42,4 +42,43 @@
         <attr name="bgInnerCircleWidth" format="dimension"/>
     </declare-styleable>
 
+    <!-- xy坐标轴颜色 -->
+    <attr name="xy_line_color" format="color" />
+    <!-- xy坐标轴宽度 -->
+    <attr name="xy_line_width" format="dimension" />
+    <!-- xy坐标轴文字颜色 -->
+    <attr name="xy_text_color" format="color" />
+    <!-- xy坐标轴文字大小 -->
+    <attr name="xy_text_size" format="dimension" />
+    <!-- 折线图中折线的颜色 -->
+    <attr name="line_color" format="color" />
+    <!-- x轴各个坐标点水平间距 -->
+    <attr name="interval" format="dimension" />
+    <!-- 背景颜色 -->
+    <attr name="bg_color" format="color" />
+    <!-- 曲线选中外部颜色 -->
+    <attr name="select_circle_color" format="color" />
+    <!-- 曲线选中内部颜色 -->
+    <attr name="select_reminder_color" format="color" />
+    <!--是否抬手滚动-->
+    <attr name="isScroll" format="boolean" />
+    <declare-styleable name="ChartView">
+        <attr name="xy_line_color" />
+        <attr name="xy_line_width" />
+        <attr name="xy_text_color" />
+        <attr name="xy_text_size" />
+        <attr name="line_color" />
+        <attr name="interval" />
+        <attr name="bg_color" />
+        <attr name="select_circle_color" />
+        <attr name="select_reminder_color" />
+        <attr name="isScroll" />
+        <!--提示框跟滑动显示的位置-->
+        <attr name="show_position">
+            <enum name="first" value="1" />
+            <enum name="middle" value="2" />
+            <enum name="end" value="3" />
+        </attr>
+    </declare-styleable>
+
 </resources>

@@ -16,6 +16,7 @@ import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.utils.view.AnimationPercentPieView
 import com.gas.test.utils.view.linechart.Line
+import com.gas.test.utils.view.linechart.LineChartView
 import com.gas.test.utils.view.linechart.LinePoint
 import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_custom_view.*
@@ -75,9 +76,9 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             sub.strokeWidth = 0f
             chart.setHorizontalGridStyle(main, sub)
             chart.setVerticalGridStyle(main, sub)
-            chart.setVerValuesMarginsDP(8, 30, 8, 8)
-            chart.setHorValuesMarginsDP(0, 8, 8, 0)
-            chart.setViewPortMarginsDP(30F, 30F, 8F, 8F)
+            chart.setVerValuesMargins(8, 30, 8, 8)
+            chart.setHorValuesMargins(0, 8, 8, 0)
+            chart.setViewPortMargins(30F, 30F, 8F, 8F)
 
             val horValPaint = Paint(Paint.ANTI_ALIAS_FLAG)
             horValPaint.color = -0x1
@@ -107,7 +108,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
 
     }
 
-    private fun generateLine(startX: Int, endX: Int, step: Int, minY: Int, maxY: Int): Line? {
+    private fun generateLine(startX: Int, endX: Int, step: Int, minY: Int, maxY: Int): Line {
         val line = Line(activity)
         var i = startX
         while (i <= endX) {
@@ -151,16 +152,20 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             }
             chart.addLine(line3)
 
-            chart.setOnPointClickListener { point, line ->
-                for (p in line.points) {
-                    p.radius = 5F
-                    p.isTextVisible = false
+            chart.setOnPointClickListener(object :LineChartView.OnChartPointClickListener{
+                override fun onPointClick(point: LinePoint, line: Line) {
+//                    for (p in line.points) {
+//                        p.radius = 5F
+//                        p.isTextVisible = false
+//                    }
+//                    point.radius = 10F
+//                    point.isTextVisible = true
+//                    point.text = java.lang.String.valueOf(point.y)
+//                    point.textPaint.color = line.paint.color
                 }
-                point.radius = 10F
-                point.isTextVisible = true
-                point.text = java.lang.String.valueOf(point.y)
-                point.textPaint.color = line.paint.color
-            }
+
+            })
+
         }
 
     }
@@ -202,9 +207,9 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             chart.setViewPort(0F, 0F, 100F, 160F)
             chart.setGridSize(10, 0, 20, 0)
             chart.setHorValuesMargins(16,16,16,16)
-            val line =generateLine(0, 100, 5, 10, 150)!!.setColor(-0x996700).setFilled(false).smoothLine(8)
-            val line2 =generateLine(0, 100, 5, 30, 150)!!.setColor(-0x7800).setFilled(false).smoothLine(8)
-            for (point in line.points) {
+            val line1 =generateLine(0, 100, 5, 10, 150)!!.setColor(-0x996700).setFilled(false)
+            val line2 =generateLine(0, 100, 5, 30, 150)!!.setColor(-0x7800).setFilled(false)
+            for (point in line1.points) {
                 point.isVisible = true
                 point.type = LinePoint.Type.CIRCLE
                 point.strokePaint.color = -0x996700
@@ -214,11 +219,12 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                 point.type = LinePoint.Type.CIRCLE
                 point.strokePaint.color = -0x7800
             }
-            chart.addLine(line)
+            chart.addLine(line1)
             chart.addLine(line2)
-            chart.setOnPointClickListener { point, _ ->
-                debug("point=${point}")
-                for (p in line.points) {
+            chart.setOnPointClickListener(object :LineChartView.OnChartPointClickListener{
+                override fun onPointClick(point: LinePoint, line: Line) {
+                    debug("point=${point}")
+                for (p in line1.points) {
                     p.radius = 5F
                     p.isTextVisible = false
                 }
@@ -230,9 +236,16 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                 point.isTextVisible = true
                 point.text = java.lang.String.valueOf(point.y)
                 point.textPaint.color = line.paint.color
-            }
+                }
+
+            })
+
 
         }
+    }
+
+    private fun lineChart2(){
+//        lineChart2.
     }
 
     override fun setData(data: Any?) {
