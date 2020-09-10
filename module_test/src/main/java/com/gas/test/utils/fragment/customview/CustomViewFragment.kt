@@ -10,11 +10,15 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
-import com.gas.test.utils.view.AnimationPercentPieView
+import com.gas.test.utils.view.AnimPieChartView
+import com.gas.test.utils.view.line.LineChart
+import com.gas.test.utils.view.line.LineData
+import com.gas.test.utils.view.line.OnShowTagCallBack
 import com.gas.test.utils.view.linechart.Line
 import com.gas.test.utils.view.linechart.LineChartView
 import com.gas.test.utils.view.linechart.LinePoint
@@ -23,7 +27,6 @@ import kotlinx.android.synthetic.main.fragment_custom_view.*
 import java.util.*
 
 class CustomViewFragment : BaseFragment<IPresenter>() {
-
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -35,10 +38,10 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        val arcs = listOf(AnimationPercentPieView.ArcInfo(Color.parseColor("#FFFF0000"),Color.parseColor("#FFFF00FF"),0.25F),
-                AnimationPercentPieView.ArcInfo(Color.parseColor("#FF00FF00"),Color.parseColor("#FF00FF00"),0.25F),
-                AnimationPercentPieView.ArcInfo(Color.parseColor("#FF0000FF"),Color.parseColor("#FF0000FF"),0.25F),
-                AnimationPercentPieView.ArcInfo(Color.parseColor("#FF00FFFF"),Color.parseColor("#FF00FFFF"),0.25F)
+        val arcs = listOf(AnimPieChartView.ArcInfo(Color.parseColor("#FFFF0000"), Color.parseColor("#FFFF00FF"), 0.25F),
+                AnimPieChartView.ArcInfo(Color.parseColor("#FF00FF00"), Color.parseColor("#FF00FF00"), 0.25F),
+                AnimPieChartView.ArcInfo(Color.parseColor("#FF0000FF"), Color.parseColor("#FF0000FF"), 0.25F),
+                AnimPieChartView.ArcInfo(Color.parseColor("#FF00FFFF"), Color.parseColor("#FF00FFFF"), 0.25F)
         )
         pieView.setData(arcs)
 //        lineDefaultChar()
@@ -47,9 +50,11 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
 //        multilineChart()
 //        smoothLinesChart()
         guardEventChart()
+        lineChart2()
+        lineChart3()
     }
 
-    private fun lineDefaultChar(){
+    private fun lineDefaultChar() {
         val line = Line(activity)
         var i = 0
         while (i < 300) {
@@ -59,8 +64,8 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
         lineChart.addLine(line)
     }
 
-    private fun gridLineChart(){
-        lineChart.let{chart->
+    private fun gridLineChart() {
+        lineChart.let { chart ->
             chart.addLine(generateLine(0, 12 * 50, 10, 10, 90))
 
             chart.setViewPort(0F, 0F, 100F, 100F)
@@ -118,8 +123,8 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
         return line
     }
 
-    private fun markedPointsChart(){
-        lineChart.let{chart->
+    private fun markedPointsChart() {
+        lineChart.let { chart ->
             chart.setViewPort(0F, 0F, 100F, 160F)
             chart.setGridSize(10, 0, 20, 0)
             // default line
@@ -152,7 +157,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             }
             chart.addLine(line3)
 
-            chart.setOnPointClickListener(object :LineChartView.OnChartPointClickListener{
+            chart.setOnPointClickListener(object : LineChartView.OnChartPointClickListener {
                 override fun onPointClick(point: LinePoint, line: Line) {
 //                    for (p in line.points) {
 //                        p.radius = 5F
@@ -170,8 +175,8 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
 
     }
 
-    private fun multilineChart(){
-        lineChart.let { chart->
+    private fun multilineChart() {
+        lineChart.let { chart ->
 
             chart.setViewPort(0F, 0F, 100F, 150F)
             chart.setGridSize(10, 0, 20, 0)
@@ -192,8 +197,8 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
         }
     }
 
-    private fun smoothLinesChart(){
-        lineChart.let { chart->
+    private fun smoothLinesChart() {
+        lineChart.let { chart ->
             chart.setViewPort(0F, 0F, 100F, 160F)
             chart.setGridSize(10, 0, 20, 0)
             chart.addLine(generateLine(0, 360, 5, 10, 50)!!.setFilled(true).smoothLine(4))
@@ -202,13 +207,13 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
         }
     }
 
-    private fun guardEventChart(){
-        lineChart.let { chart->
+    private fun guardEventChart() {
+        lineChart.let { chart ->
             chart.setViewPort(0F, 0F, 100F, 160F)
             chart.setGridSize(10, 0, 20, 0)
-            chart.setHorValuesMargins(16,16,16,16)
-            val line1 =generateLine(0, 100, 5, 10, 150)!!.setColor(-0x996700).setFilled(false)
-            val line2 =generateLine(0, 100, 5, 30, 150)!!.setColor(-0x7800).setFilled(false)
+            chart.setHorValuesMargins(16, 16, 16, 16)
+            val line1 = generateLine(0, 100, 5, 10, 150)!!.setColor(-0x996700).setFilled(false)
+            val line2 = generateLine(0, 100, 5, 30, 150)!!.setColor(-0x7800).setFilled(false)
             for (point in line1.points) {
                 point.isVisible = true
                 point.type = LinePoint.Type.CIRCLE
@@ -221,21 +226,21 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             }
             chart.addLine(line1)
             chart.addLine(line2)
-            chart.setOnPointClickListener(object :LineChartView.OnChartPointClickListener{
+            chart.setOnPointClickListener(object : LineChartView.OnChartPointClickListener {
                 override fun onPointClick(point: LinePoint, line: Line) {
                     debug("point=${point}")
-                for (p in line1.points) {
-                    p.radius = 5F
-                    p.isTextVisible = false
-                }
-                for (p in line2.points) {
-                    p.radius = 5F
-                    p.isTextVisible = false
-                }
-                point.radius = 10F
-                point.isTextVisible = true
-                point.text = java.lang.String.valueOf(point.y)
-                point.textPaint.color = line.paint.color
+                    for (p in line1.points) {
+                        p.radius = 5F
+                        p.isTextVisible = false
+                    }
+                    for (p in line2.points) {
+                        p.radius = 5F
+                        p.isTextVisible = false
+                    }
+                    point.radius = 10F
+                    point.isTextVisible = true
+                    point.text = java.lang.String.valueOf(point.y)
+                    point.textPaint.color = line.paint.color
                 }
 
             })
@@ -244,8 +249,57 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
         }
     }
 
-    private fun lineChart2(){
-//        lineChart2.
+    private fun lineChart2() {
+        val map = mutableMapOf(Pair("1", 30), Pair("2", 15), Pair("3", 40), Pair("4", 40), Pair("5", 45), Pair("6", 35), Pair("7", 70))
+        val xValue = mutableListOf("1", "2", "3", "4", "5", "6", "7")
+        val yValue = mutableListOf(0, 10, 20, 30, 40, 50, 60, 70, 80)
+        lineChart2.setValue(map, xValue, yValue)
+    }
+
+    private fun lineChart3() {
+        lineChart3.let { line ->
+            line.clearDatas()
+                    .setHorizontalOpen(false) //---是否左右开放,无坐标轴
+                    .setShowHorGraduation(false) //---在setHorizontalOpen(false)的前提下,设置是否按照setDensity(int)显示刻度线
+                    .setSpecialLineNum(60.3f) //---在setHorizontalOpen(false)的前提下,设置特殊刻度(比如合格线)
+                    .setShowTagRectBack(false) //---设置是否显示数字标签的背景,默认true
+                    .setShowAllTag(true) //----设置是否显示全部的数字标签,默认为false
+                    .setCoordinateRectLineWidth(10F) //---设置刻度矩形的线宽
+                    .setSpecialLineWidth(10F) //--设置setSpecialLineNum(float)中特殊线的线宽
+                    .setShowTitleRect(true) //--是否显示底部标题的矩形,默认为false
+                    .setOnShowTagCallBack(object : OnShowTagCallBack {
+                        override fun onShow(num: Float): String {
+                            return if (num < 30) {
+                                "不及格"
+                            } else num.toString() + ""
+                        }
+
+                        override fun onShow(num: Int): String {
+
+                            return if (num < 30) {
+                                "不及格"
+                            } else num.toString() + ""
+                        }
+                    })
+                    .setShowAnimation(false) //设置绘制时是否显示动画
+                    .setDensity(5) //设置刻度密度
+                    .setAllowClickShowTag(true) //设置是否允许点击节点显示当前线的tag
+                    .setLineSmoothness(0f) //设置曲线的平滑系数(0.0f~0.5f),默认0.4
+                    .setCoordinateTextSize(30) //设置刻度文字的大小
+                    .setTagTextSize(40) //设置数字标签的字体大小(px)
+                    .setTitles(arrayOf("语文111", "数学", "英语", "物理", "化学", "ss", "ss")) //底部标题,需与折线数据长度一致
+                    .addData(LineData(floatArrayOf(20.5f, 50f, 0f, 70.9f, 90f, 70f, -100f), -0xd34f8e, -0xe792bb)) //需与title长度一致
+                    .addData(LineData(floatArrayOf(30f, 80f, 50f, 80.5f, 70.8f, 60f, 100f), -0x753a8))
+                    .setOnTitleClickListener(object : LineChart.OnTitleClickListener {
+                        override fun onClick(linechart: LineChart?, title: String?, index: Int) {
+                            Toast.makeText(activity!!, title
+                                    ?: "title==null", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                    .commit()
+        }
+
+
     }
 
     override fun setData(data: Any?) {

@@ -10,6 +10,8 @@ import android.graphics.PathEffect;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
+import com.gas.test.utils.view.ChartView;
+
 /**
  * Class for holding line data for drawing in {@link  LineChartView}
  */
@@ -93,6 +95,127 @@ public class Line {
             mFilledPath.close();
         }
     }
+
+
+    //曲线切率
+    private float mLineSmoothness = 0.18f;
+
+    public Line smoothLineCube(float lineSmoothness) {
+        double[] dataX = new double[mPoints.size()];
+        double[] dataY = new double[mPoints.size()];
+        for (int i = 0; i < mPoints.size(); i++) {
+            dataX[i] = mPoints.get(i).getX();
+            dataY[i] = mPoints.get(i).getY();
+        }
+        mPath.reset();
+        mPath.moveTo(mPoints.get(0).getX(), mPoints.get(0).getY());
+
+
+//        Spline sp = new Spline(dataX, dataY);
+//        for (int i = 0; i < mPoints.size() - 1; i += 1) {
+//            double step = (dataX[i + 1] - dataX[i]) / (subPoints + 1);
+//            for (int j = 1; j <= subPoints; j++) {
+//                double x = dataX[i] + step * j;
+//                mPath.lineTo((float) x, (float) sp.spline_value(x));
+//            }
+//            mPath.lineTo((float) dataX[i + 1], (float) dataY[i + 1]);
+//        }
+        if (isFilled) {
+            mFilledPath = new Path(mPath);
+            mFilledPath.lineTo(mPoints.get(mPoints.size() - 1).getX(), 0);
+            mFilledPath.lineTo(mPoints.get(0).getX(), 0);
+            mFilledPath.close();
+        }
+        return this;
+    }
+
+//    private void cubeLine(){
+//        //绘制折线
+//        Path path = new Path();
+//        float prePreviousPointX = Float.NaN;
+//        float prePreviousPointY = Float.NaN;
+//        float previousPointX = Float.NaN;
+//        float previousPointY = Float.NaN;
+//        float currentPointX = Float.NaN;
+//        float currentPointY = Float.NaN;
+//        float nextPointX;
+//        float nextPointY;
+//        int lineSize = mPoints.size();
+//        for (int i = 0; i < lineSize; i++) {
+//            float x;
+//            float y;
+//            if (Float.isNaN(currentPointX)) {
+//                currentPointX = getSpinnerPoint(i).x;
+//                currentPointY = getSpinnerPoint(i).y;
+//            }
+//            if (Float.isNaN(previousPointX)) {
+//                //是第一个点?
+//                if (i > 0) {
+//                    previousPointX = getSpinnerPoint(i - 1).x;
+//                    previousPointY = getSpinnerPoint(i - 1).y;
+//                } else {
+//                    //用当前点表示上一个点
+//                    previousPointX = currentPointX;
+//                    previousPointY = currentPointY;
+//                }
+//            }
+//
+//            if (Float.isNaN(prePreviousPointX)) {
+//                //是前两个点?
+//                if (i > 1) {
+//                    prePreviousPointX = getSpinnerPoint(i - 2).x;
+//                    prePreviousPointY = getSpinnerPoint(i - 2).y;
+//                } else {
+//                    //当前点表示上上个点
+//                    prePreviousPointX = previousPointX;
+//                    prePreviousPointY = previousPointY;
+//                }
+//            }
+//
+//            // 判断是不是最后一个点了
+//            if (i < lineSize - 1) {
+//                nextPointX = getSpinnerPoint(i + 1).x;
+//                nextPointY = getSpinnerPoint(i + 1).y;
+//            } else {
+//                //用当前点表示下一个点
+//                nextPointX = currentPointX;
+//                nextPointY = currentPointY;
+//            }
+//
+//            if (i == 0) {
+//                // 将Path移动到开始点
+//                path.moveTo(currentPointX, currentPointY);
+//            } else {
+//                // 求出控制点坐标
+//                final float firstDiffX = (currentPointX - prePreviousPointX);
+//                final float firstDiffY = (currentPointY - prePreviousPointY);
+//                final float secondDiffX = (nextPointX - previousPointX);
+//                final float secondDiffY = (nextPointY - previousPointY);
+//                final float firstControlPointX = previousPointX + (mLineSmoothness * firstDiffX);
+//                final float firstControlPointY = previousPointY + (mLineSmoothness * firstDiffY);
+//                final float secondControlPointX = currentPointX - (mLineSmoothness * secondDiffX);
+//                final float secondControlPointY = currentPointY - (mLineSmoothness * secondDiffY);
+//                //画出曲线
+//                path.cubicTo(firstControlPointX, firstControlPointY, secondControlPointX, secondControlPointY,
+//                        currentPointX, currentPointY);
+//            }
+//
+//            // 更新
+//            prePreviousPointX = previousPointX;
+//            prePreviousPointY = previousPointY;
+//            previousPointX = currentPointX;
+//            previousPointY = currentPointY;
+//            currentPointX = nextPointX;
+//            currentPointY = nextPointY;
+//        }
+//    }
+//
+//    //获取绘制折线的点
+//    private ChartView.Point getSpinnerPoint(int valueIndex) {
+//        float x = mXInit + interval * (valueIndex);
+//        float y = mYOri - mYOri * (1 - 0.1f) * mSpinnerValue.get(mXData.get(valueIndex)) / mYData.get(mYData.size() - 1);
+//        return new ChartView.Point(x, y);
+//    }
 
     /**
      * Smooth line with spline interpolation. Don't adds new points to line, just smooth path for drawing.

@@ -1,32 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:ignore="ResourceName">
+    android:layout_height="match_parent">
 
-
-    <com.gas.test.utils.view.AnimationPercentPieView
-        android:id="@+id/pieView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:bgInnerCircleWidth="20dp"
-        app:circleWidth="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.gas.test.utils.view.linechart.LineChartView
-        android:id="@+id/lineChart"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@+id/pieView"/>
+        android:layout_height="match_parent"
+        tools:ignore="ResourceName">
 
-<!--    <com.gas.test.utils.view.ChartView-->
-<!--        android:id="@+id/lineChart2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="200dp"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/lineChart"/>-->
+        <com.gas.test.utils.view.AnimPieChartView
+            android:id="@+id/pieView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            app:bgInnerCircleWidth="20dp"
+            app:circleWidth="40dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <com.gas.test.utils.view.linechart.LineChartView
+            android:id="@+id/lineChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/pieView" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.gas.test.utils.view.ChartView
+            android:id="@+id/lineChart2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart" />
+
+        <com.gas.test.utils.view.line.LineChart
+            android:id="@+id/lineChart3"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            app:allowScroll="true"
+            app:circleClickOffset="12px"
+            app:layout_constraintTop_toBottomOf="@+id/lineChart2"
+            app:lineGradutaionColor="#d2d2d2"
+            app:lineGradutaionWidth="2px"
+            app:lineGradutionTextSize="26px"
+            app:lineMax="100"
+            app:lineMin="0"
+            app:lineTitleColor="#9b9b9b"
+            app:lineTitleTextSize="32px"
+            app:lineWidth="8px"
+            app:linedensity="5"
+            app:maxColnum="5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

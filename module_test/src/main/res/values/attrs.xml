@@ -37,8 +37,12 @@
 
     </declare-styleable>
 
-    <declare-styleable name="AnimationPercentPieView" tools:ignore="ResourceName">
+    <declare-styleable name="AnimLineChartView" tools:ignore="ResourceName">
         <attr name="circleWidth" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="AnimPieChartView" tools:ignore="ResourceName">
+        <attr name="pieCircleWidth" format="dimension"/>
         <attr name="bgInnerCircleWidth" format="dimension"/>
     </declare-styleable>
 
@@ -79,6 +83,23 @@
             <enum name="middle" value="2" />
             <enum name="end" value="3" />
         </attr>
+    </declare-styleable>
+
+    <declare-styleable name="LineChart">
+        <attr name="lineGradutionTextSize" format="dimension" />
+        <attr name="lineGradutaionColor" format="color" />
+        <attr name="lineTitleColor" format="color" />
+        <attr name="lineTitleTextSize" format="dimension" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineGradutaionWidth" format="dimension" />
+        <attr name="linedensity" format="integer" />
+        <attr name="lineMin" format="float" />
+        <attr name="lineMax" format="float" />
+        <attr name="showAnimation" format="boolean" />
+        <attr name="animationduration" format="integer" />
+        <attr name="circleClickOffset" format="dimension" />
+        <attr name="allowScroll" format="boolean" />
+        <attr name="maxColnum" format="integer" />
     </declare-styleable>
 
 </resources>

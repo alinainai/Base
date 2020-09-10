@@ -11,7 +11,7 @@ import com.gas.test.R
 import kotlin.math.ceil
 
 
-class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
+class AnimPieChartView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
     : View(context, attrs, defStyleAttr) {
 
     companion object {
@@ -36,9 +36,9 @@ class AnimationPercentPieView @JvmOverloads constructor(context: Context, attrs:
     private var mDrawAngle = 0F
 
     private fun initAttrs(attrs: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimationPercentPieView)
-        circleWidth = typedArray.getDimension(R.styleable.AnimationPercentPieView_circleWidth, circleWidth)
-        bgInnerCircleWidth = typedArray.getDimension(R.styleable.AnimationPercentPieView_bgInnerCircleWidth, bgInnerCircleWidth)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimPieChartView)
+        circleWidth = typedArray.getDimension(R.styleable.AnimPieChartView_pieCircleWidth, circleWidth)
+        bgInnerCircleWidth = typedArray.getDimension(R.styleable.AnimPieChartView_bgInnerCircleWidth, bgInnerCircleWidth)
         typedArray.recycle()
     }
 

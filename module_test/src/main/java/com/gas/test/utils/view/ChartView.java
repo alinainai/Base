@@ -224,6 +224,17 @@ public class ChartView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         canvas.drawColor(bgColor);
         drawXY(canvas);
@@ -456,6 +467,35 @@ public class ChartView extends View {
                 }
             }
         }
+    }
+
+    private void initContentXY(){
+        //Y轴文本的最大宽度
+        float textYWdith = getTextBounds(mYData.get(getListItemMaxIndex(mYData)) + "", mXYTextPaint).width();
+        for (int i = 0; i < mYData.size(); i++) {//求取y轴文本最大的宽度
+            float temp = getTextBounds(mYData.get(i) + "", mXYTextPaint).width();
+            if (temp > textYWdith)
+                textYWdith = temp;
+        }
+        int dp2 = dpToPx(2);
+        int dp3 = dpToPx(3);
+        mXOri = (int) (dp2 + textYWdith + dp2 + xyLineWidth);
+        //获取x轴的最长文本的宽度所占的矩形
+        xValueRect = getTextBounds(mXData.get(getListItemMaxIndex(mXData)), mXYTextPaint);
+        //X轴文本高度
+        float textXHeight = xValueRect.height();
+        for (int i = 0; i < mXData.size(); i++) {
+            Rect rect = getTextBounds(mXData.get(i) + "", mXYTextPaint);
+            if (rect.height() > textXHeight)
+                textXHeight = rect.height();
+            if (rect.width() > xValueRect.width())
+                xValueRect = rect;
+        }
+        mYOri = (int) (height - dp2 - textXHeight - dp3 - xyLineWidth);
+        mXInit = mXOri + xValueRect.width() / 2 + dpToPx(5);
+        minXInit = width - (width - mXOri) * 0.1f - interval * (mXData.size() - 1);
+        maxXInit = mXInit;
+        selectIndex = getSelectIndexFromShowType(mShowPositionType);
     }
 
     private float startX;
@@ -739,7 +779,7 @@ public class ChartView extends View {
         if (data == null || data.size() < 1) {
             return NULL_INDEX;
         }
-        int max = (data.get(0) + "").length();
+        int max = 0;
         for (int i = 0; i < data.size(); i++) {
             String s = data.get(i) + "";
             if (s.length() > max) {
