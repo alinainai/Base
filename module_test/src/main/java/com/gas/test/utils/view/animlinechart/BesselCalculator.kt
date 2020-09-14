@@ -37,23 +37,27 @@ class BesselCalculator {
      * 计算非单调情况的贝塞尔结点
      */
     private fun computeUnMonotonePoints(i: Int, points: List<Point>, besselPoints: MutableList<Point>) {
-        if (i == 0) {
-            val p1 = points[0]
-            val p2 = points[1]
-            besselPoints.add(p1)
-            besselPoints.add(Point(p1.x + (p2.x - p1.x) * smoothness, p1.y))
-        } else if (i == points.size - 1) {
-            val p0 = points[i - 1]
-            val p1 = points[i]
-            besselPoints.add(Point(p1.x - (p1.x - p0.x) * smoothness, p1.y))
-            besselPoints.add(p1)
-        } else {
-            val p0 = points[i - 1]
-            val p1 = points[i]
-            val p2 = points[i + 1]
-            besselPoints.add(Point(p1.x - (p1.x - p0.x) * smoothness, p1.y))
-            besselPoints.add(p1)
-            besselPoints.add(Point(p1.x + (p2.x - p1.x) * smoothness, p1.y))
+        when (i) {
+            0 -> {
+                val p1 = points[0]
+                val p2 = points[1]
+                besselPoints.add(p1)
+                besselPoints.add(Point(p1.x + (p2.x - p1.x) * smoothness, p1.y))
+            }
+            points.size - 1 -> {
+                val p0 = points[i - 1]
+                val p1 = points[i]
+                besselPoints.add(Point(p1.x - (p1.x - p0.x) * smoothness, p1.y))
+                besselPoints.add(p1)
+            }
+            else -> {
+                val p0 = points[i - 1]
+                val p1 = points[i]
+                val p2 = points[i + 1]
+                besselPoints.add(Point(p1.x - (p1.x - p0.x) * smoothness, p1.y))
+                besselPoints.add(p1)
+                besselPoints.add(Point(p1.x + (p2.x - p1.x) * smoothness, p1.y))
+            }
         }
     }
 

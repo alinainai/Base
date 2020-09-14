@@ -52,21 +52,20 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private var availableWidth = 0f
 
     private val gridLinePaint = Paint()
-    private var gridLineColor = -0x777778
-    private var gridVerTextSize = 30
-    private var gridLineWidth = 1f
-    private val gridOutLineWidth = 0f //矩形刻度线宽
+    private var gridLineColor = Color.parseColor("#F5F6F8")
+    private var gridVerTextSize = dp2Px(10F)
+    private var gridLineWidth = dp2Px(0.5F)
+    private val gridOutLineWidth = dp2Px(0.5F) //矩形刻度线宽
 
     private val linePaint = Paint()
     private var lineStrokeWidth = 8f
     private var innerCircleRadius = lineStrokeWidth
 
     private val titlePaint = Paint()
-    private var titleColor = -0xaaaaab
-    private var titleTextSize = 35
+    private var titleColor = Color.parseColor("#A1AAB4")
+    private var titleTextSize = dp2Px(12F)
 
     private val circlePaint = Paint()
-    private var tagTextSize = 30
     private var leftMargin = 0f
 
     private var tagCircles = mutableListOf<DataPoint>()
@@ -85,24 +84,26 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         interpolator = LinearInterpolator()
     }
 
+    //平滑曲线
+    private var besselCalculator = com.gas.test.utils.view.animlinechart.BesselCalculator()
+
     //圆圈点击
     var circleClickIndex = intArrayOf(-1, -1)
-    var tagCornerRadius = 5f
-    var tagBorderWidth = 5f
-
     private var mDetector: GestureDetectorCompat
-    private var tagpadding = 0
-    private var tagMargin = 0f
+    private var tagPaddingVer = dp2Px(6F)
+    private var tagPaddingHor = dp2Px(7F)
+    private var tagMargin = dp2Px(5F)
+    var tagCornerRadius = dp2Px(2f)
+    var tagBorderWidth = 1f
+    private var tagTextSize = dp2Px(12F)
+    private var tagTextColor = Color.parseColor("#6D7075")
+    private var tagBgColor = Color.parseColor("#ECECEC")
 
     private var peerWidth = 0f
     private val maxColumn = 6
     private var factRectWidth = 0f
     private var factRight = 0f
     private var factRectRight = 0f
-
-    //平滑曲线
-    private var besselCalculator = BesselCalculator()
-
     var allowScroll = false //滑动
     var isFirst = true
     var onLabelClickListener: OnLabelClickListener? = null
@@ -160,18 +161,18 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         //最大 最小刻度
         val graduationTextMaxY = availableTop + peerCoordinateHeight * 0
         val currentGraduationMAx: String = max.toInt().toString()
-        val currentGraduationMaxTextWidth = gridLinePaint.measureText(currentGraduationMAx)
+        val currentGraduationMaxTextWidth = titlePaint.measureText(currentGraduationMAx)
         canvas.drawText(currentGraduationMAx,
                 availableLeft - currentGraduationMaxTextWidth - leftMargin,
                 graduationTextMaxY + gridVerTextSize / 2,
-                gridLinePaint)
+                titlePaint)
         val graduationTextMinY = availableTop + peerCoordinateHeight * density
         val currentGraduationMin: String = min.toInt().toString()
-        val currentGraduationMinTextWidth = gridLinePaint.measureText(currentGraduationMin)
+        val currentGraduationMinTextWidth = titlePaint.measureText(currentGraduationMin)
         canvas.drawText(currentGraduationMin,
                 availableLeft - currentGraduationMinTextWidth - leftMargin,
                 graduationTextMinY + gridVerTextSize / 2,
-                gridLinePaint)
+                titlePaint)
         gridLinePaint.strokeWidth = gridLineWidth
 
         //横向line
@@ -182,15 +183,15 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
         //数字刻度 不包含最大最小
         val peerDiff = (max - min) / density
-        gridLinePaint.style = Paint.Style.FILL
+        titlePaint.style = Paint.Style.FILL
         for (i in 1 until density) {
             val graduationTextY = availableTop + peerCoordinateHeight * i
             val currentGraduation: String = (max - i * peerDiff).toInt().toString()
-            val currentGraduationTextWidth = gridLinePaint.measureText(currentGraduation)
+            val currentGraduationTextWidth = titlePaint.measureText(currentGraduation)
             canvas.drawText(currentGraduation,
                     availableLeft - currentGraduationTextWidth - leftMargin,
                     graduationTextY + gridVerTextSize / 2,
-                    gridLinePaint)
+                    titlePaint)
         }
 
         //竖向line
@@ -208,7 +209,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         //xLabel
         val offset = titleTextSize / 2.toFloat()
         val titleCount = xLabels.size
-        val rectPadding = 8.coerceAtMost(titleTextSize / 2).toFloat()
+        val rectPadding = 8F.coerceAtMost(titleTextSize / 2F)
         if (titleCount == 1) {
             val currentTitleWidth = titlePaint.measureText(xLabels[0].title)
             val titleCenterX = availableLeft + peerWidth
@@ -290,10 +291,8 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     //标签--带背景
     private fun drawTagWithBack(canvas: Canvas) {
-        val tagCircleCount: Int = tagCircles.size
-        if (tagCircleCount == 0) {
+        if (tagCircles.isEmpty())
             return
-        }
         val sanjiaoHeight = getCircleRadius(innerCircleRadius)
         for (point in tagCircles) {
             val currentX = point.x
@@ -308,42 +307,28 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 measureContentString = "000"
             }
             val numMeasureWidth = circlePaint.measureText(measureContentString)
-            val tagWidth = numMeasureWidth + 2 * tagpadding
-            val tagRectHeight = tagTextSize + 2 * (tagpadding / 2).toFloat()
-            circlePaint.alpha = 255
+            val tagWidth = numMeasureWidth + 2 * tagPaddingHor
+            val tagRectHeight = tagTextSize + 2 * (tagPaddingVer / 2)
             //tag矩形
-            circlePaint.color = point.color
             val tagLeft = currentX - tagWidth / 2
-            val tagRight = tagLeft + tagWidth
             val tagRectBottom = currentY - tagMargin - sanjiaoHeight
             val tagRectTop = tagRectBottom - tagRectHeight
-            val path = Path()
-            path.moveTo((tagLeft + tagRight) / 2, tagRectTop) //1
-            path.lineTo(tagRight - tagCornerRadius, tagRectTop) //2
-            path.quadTo(tagRight, tagRectTop, tagRight, tagRectTop + tagCornerRadius) //3
-            path.lineTo(tagRight, tagRectBottom - tagCornerRadius) //4
-            path.quadTo(tagRight, tagRectBottom, tagRight - tagCornerRadius, tagRectBottom) //5
-            path.lineTo(tagRight - tagWidth / 3 + tagCornerRadius, tagRectBottom) //6
-            path.quadTo(tagRight - tagWidth / 3, tagRectBottom, tagRight - tagWidth / 3 - tagCornerRadius / 2, tagRectBottom + tagCornerRadius / 2) //7
-            path.lineTo(currentX, currentY - tagMargin) //8
-            path.lineTo(tagLeft + tagWidth / 3 + tagCornerRadius / 2, tagRectBottom + tagCornerRadius / 2) //9
-            path.quadTo(tagLeft + tagWidth / 3, tagRectBottom, tagLeft + tagWidth / 3 - tagCornerRadius / 2, tagRectBottom) //10
-            path.lineTo(tagLeft + tagCornerRadius, tagRectBottom) //11
-            path.quadTo(tagLeft, tagRectBottom, tagLeft, tagRectBottom - tagCornerRadius) //12
-            path.lineTo(tagLeft, tagRectTop + tagCornerRadius) //13
-            path.quadTo(tagLeft, tagRectTop, tagLeft + tagCornerRadius, tagRectTop)
-            path.close()
-            canvas.drawPath(path, circlePaint)
-            circlePaint.style = Paint.Style.STROKE
+            val tagRight = tagLeft + tagWidth
+            circlePaint.alpha = 255
+            circlePaint.style = Paint.Style.FILL
             circlePaint.strokeWidth = tagBorderWidth
-            circlePaint.color = point.color
-            canvas.drawPath(path, circlePaint)
+            circlePaint.color = tagBgColor
+            canvas.drawRoundRect(RectF().apply {
+                set(tagLeft, tagRectTop, tagRight, tagRectBottom)
+            }, tagCornerRadius, tagCornerRadius, circlePaint)
 
             //num
             circlePaint.style = Paint.Style.FILL
-            circlePaint.alpha = 255
-            circlePaint.color = -0x1
-            canvas.drawText(tagString, currentX - numTrueWidth / 2, tagRectBottom - tagpadding / 2 - (circlePaint.descent() - circlePaint.ascent() - circlePaint.textSize).toInt(), circlePaint)
+            circlePaint.color = tagTextColor
+            canvas.drawText(tagString,
+                    currentX - numTrueWidth / 2,
+                    tagRectBottom - tagPaddingVer / 2 - (circlePaint.descent() - circlePaint.ascent() - circlePaint.textSize).toInt(),
+                    circlePaint)
         }
     }
 
@@ -352,13 +337,11 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             return
         }
         scrollTo(0, 0)
-        tagpadding = gridVerTextSize
-        tagMargin = getCircleRadius(innerCircleRadius) + gridVerTextSize / 3
         availableLeft = getLeftWidth()
-        availableTop = tagMargin + getCircleRadius(innerCircleRadius) + gridVerTextSize + tagpadding + 10 //10为上方空隙,可为0,getCircleRadius为drawTag中三角形高度
+        availableTop = tagMargin + getCircleRadius(innerCircleRadius) + gridVerTextSize + tagPaddingVer + 10 //10为上方空隙,可为0,getCircleRadius为drawTag中三角形高度
         val rightPadding = (titlePaint.measureText(xLabels[xLabels.size - 1].title) / 2)
-                .coerceAtLeast((circlePaint.measureText("$max.0") / 2 + tagpadding)
-                        .coerceAtLeast(circlePaint.measureText("$min.0")) / 2 + tagpadding)
+                .coerceAtLeast((circlePaint.measureText("$max.0") / 2 + tagPaddingHor)
+                        .coerceAtLeast(circlePaint.measureText("$min.0")) / 2 + tagPaddingHor)
         availableRight = width - rightPadding
         availableBottom = (height - titleTextSize * 2.5).toFloat()
         availableHeight = availableBottom - availableTop
@@ -460,7 +443,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 }
             }
             val path = Path()
-            if(titleCount > 1){
+            if (titleCount > 1) {
                 //贝塞尔曲线
                 val besselPoints = besselCalculator.computeBesselPoints(points)
                 var j = 0
@@ -716,7 +699,6 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 isScrolling = false
                 lastX = 0f
                 lastY = 0f
-                //                viewGroup.requestDisallowInterceptTouchEvent(false);
                 requestDisallowIntercept(false)
             }
         }
@@ -855,9 +837,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     data class Point(var x: Float = 0f, var y: Float = 0f)
 
-    private fun dipToPx(dip: Float): Int {
+    private fun dp2Px(dip: Float): Float {
         val density = context.applicationContext.resources.displayMetrics.density
-        return (dip * density + 0.5f * if (dip >= 0) 1 else -1).toInt()
+        return dip * density + 0.5f * if (dip >= 0) 1 else -1
     }
 
 }
