@@ -6,6 +6,4 @@ package com.gas.test.utils.view.line;
 
 public interface OnShowTagCallBack {
     String onShow(float num);
-
-    String onShow(int num);
 }

@@ -446,10 +446,7 @@ public class LineChart extends View {
                 int length = nums.length;
                 String[] tags = new String[nums.length];
                 for (int i = 0; i < length; i++) {
-                    if (nums[i] == (int) nums[i]) {
-                        tags[i] = onShowTagCallBack.onShow((int) nums[i]);
-                    } else
-                        tags[i] = onShowTagCallBack.onShow(nums[i]);
+                    tags[i] = onShowTagCallBack.onShow(nums[i]);
                 }
                 data.setTagString(tags);
             }
@@ -846,14 +843,18 @@ public class LineChart extends View {
 
             circlePaint.setAlpha(255);
             canvas.drawCircle(point.getX(), point.getY(), outRadius, circlePaint);
-            if (isShowAllTag) {//显示所有的绘制点
-                tagCircles.add(new CirclePoint(lineColor, tagBorderColor, point));
-            } else if (isDrawTag) {
+//            if (isShowAllTag) {//显示所有的绘制点
+//                tagCircles.add(new CirclePoint(lineColor, tagBorderColor, point));
+//            } else if (isDrawTag) {
+//                tagCircles.add(new CirclePoint(lineColor, tagBorderColor, point));
+//            }
+            if(circleClickIndex[1] == i && isDrawTag){
                 tagCircles.add(new CirclePoint(lineColor, tagBorderColor, point));
             }
             if (!(circleClickIndex[1] == i && isDrawTag)) {
                 circlePaint.setAlpha(255);
                 circlePaint.setColor(0xffffffff);
+
                 canvas.drawCircle(point.getX(), point.getY(), innerRadius, circlePaint);
             }
         }
