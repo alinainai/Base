@@ -18,13 +18,13 @@ import android.view.animation.LinearInterpolator
 import android.widget.Scroller
 import androidx.core.view.GestureDetectorCompat
 import com.gas.test.R
-import com.gas.test.utils.view.animlinechart.bean.CirclePoint
-import com.gas.test.utils.view.animlinechart.bean.LineAndCircle
-import com.gas.test.utils.view.animlinechart.bean.LineData
-import com.gas.test.utils.view.animlinechart.bean.TitleClickRegionData
-import com.gas.test.utils.view.animlinechart.callback.OnTitleClickListener
+import com.gas.test.utils.view.animlinechart.bean.DataPoint
+import com.gas.test.utils.view.animlinechart.bean.LineInChart
+import com.gas.test.utils.view.animlinechart.bean.XLabel
+import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.lib.commonsdk.kotlin.extension.app.debug
-import java.util.*
+import org.jetbrains.anko.collections.forEachWithIndex
+import kotlin.math.abs
 
 
 class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -32,9 +32,14 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     companion object {
         val ANIMATOR_MIN_AND_MAX = intArrayOf(0, 100)
-        const val DURATION = 3000
+        const val DURATION = 800L
         const val SCROLL_DURATION = 500
         const val DATA_CLICK_OFFSET = 20
+        val INIT_X_LABELS = listOf(XLabel("0", ""),
+                XLabel("1", ""),
+                XLabel("2", ""),
+                XLabel("3", ""),
+                XLabel("4", ""))
     }
 
     private var widthInit = 0
@@ -64,21 +69,19 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private var tagTextSize = 30
     private var leftMargin = 0f
 
-    private var min = 0f
-    private var max = 100f
-    private var density = 5
-
-    private var titles = arrayOf("", "", "", "", "", "")
-    var list = mutableListOf<LineData>()
-    var titleRegionData = mutableListOf<TitleClickRegionData>()
-    var tagCircles = mutableListOf<CirclePoint>()
-    var dataLines = mutableListOf<LineAndCircle>()
+    private var tagCircles = mutableListOf<DataPoint>()
+    private var dataLines = mutableListOf<LineInChart>()
+    private var validDataLines = mutableListOf<LineInChart>()
+    private var xLabels = mutableListOf<XLabel>().apply {
+        addAll(INIT_X_LABELS)
+    }
+    private var animatorLineAndCircleList = mutableListOf<LineInChart>()
 
     //animator
-    var isShowAnimation = false
+    var showAnimation = false
     private var animationEnd = false
     private val animator: ValueAnimator = ValueAnimator.ofFloat(ANIMATOR_MIN_AND_MAX[0].toFloat(), ANIMATOR_MIN_AND_MAX[1].toFloat()).apply {
-        duration = DURATION.toLong()
+        duration = DURATION
         interpolator = LinearInterpolator()
     }
 
@@ -91,9 +94,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private var tagpadding = 0
     private var tagMargin = 0f
 
-    //滑动
     private var peerWidth = 0f
-    private var isAllowScroll = false
     private val maxColumn = 6
     private var factRectWidth = 0f
     private var factRight = 0f
@@ -102,191 +103,160 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     //平滑曲线
     private var besselCalculator = BesselCalculator()
 
+    var allowScroll = false //滑动
+    var isFirst = true
+    var onLabelClickListener: OnLabelClickListener? = null
+    var isScrolling = false
+    var min = 0f
+    var max = 100f
+    var density = 5
+
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimLineChartView)
         typedArray.recycle()
     }
 
-    private fun getCircleRadius(innerCircleRadius: Float): Float {
-        return lineStrokeWidth + innerCircleRadius
-    }
-
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         widthInit = w
         heightInit = h
-        setAvaiable()
+        setAvailable()
         computeLines()
         super.onSizeChanged(w, h, oldw, oldh)
     }
 
-    private fun setAvaiable() {
-        if (width <= 0 || height <= 0 || titles.size == 0) {
-            return
-        }
-        scrollTo(0, 0)
-        tagpadding = gridVerTextSize
-        tagMargin = getCircleRadius(innerCircleRadius) + gridVerTextSize / 3
-        val leftWidth = getLeftWidth()
-        availableLeft = leftWidth
-        availableTop = tagMargin + getCircleRadius(innerCircleRadius) + gridVerTextSize + tagpadding + 10 //10为上方空隙,可为0,getCircleRadius为drawTag中三角形高度
-        val rightPadding = Math.max(titlePaint.measureText(titles[titles.size - 1]) / 2,
-                Math.max(circlePaint.measureText("$max.0") / 2 + tagpadding, circlePaint.measureText("$min.0")) / 2 + tagpadding)
-        availableRight = width - rightPadding
-        availableBottom = (height - titleTextSize * 2.5).toFloat()
-        availableHeight = availableBottom - availableTop
-        availableWidth = availableRight - availableLeft
-        val titleCount = titles.size
-        if (titleCount == 1) {
-            peerWidth = availableWidth / 2
-            factRectWidth = availableWidth
-            factRectRight = availableLeft + factRectWidth
-            factRight = factRectRight + rightPadding
-        } else {
-            if (!isAllowScroll) {
-                peerWidth = availableWidth / (titleCount - 1)
-                factRectWidth = availableWidth
-                factRight = availableRight + rightPadding
-                factRectRight = availableLeft + factRectWidth
-            } else {
-                var counmeCunt = if (maxColumn < titleCount - 1) maxColumn else titleCount - 1
-                peerWidth = availableWidth / counmeCunt
-                //避免title文字相互遮挡
-                val maxTwoTitleLength = getMaxTwoTitleLenth()
-                while (maxTwoTitleLength > peerWidth && peerWidth > 0) {
-                    counmeCunt -= 1
-                    peerWidth = availableWidth / counmeCunt
-                }
-                factRectWidth = peerWidth * (titleCount - 1)
-                factRectRight = availableLeft + factRectWidth
-                factRight = factRectRight + rightPadding
-            }
-        }
-    }
-
-    private fun getMaxTwoTitleLenth(): Float {
-        val count = titles.size
-        if (count == 0) {
-            return 0f
-        }
-        var result = 0f
-        for (i in 0 until count - 1) {
-            val temp = titlePaint.measureText(titles[i]) / 2 + titlePaint.measureText(titles[i + 1]) / 2
-            if (temp > result) {
-                result = temp
-            }
-        }
-        return result
-    }
-
-    private fun computeLines() {
-        if (width <= 0 || height <= 0) {
-            return
-        }
-        dataLines.clear()
-        //circle click
-        val dataCount = list.size
-        if (dataCount <= 0) return
-        val titleCount = titles.size
-        val points: MutableList<Point> = ArrayList()
-        //1列的情况
-        if (titleCount == 1) {
-            for (i in 0 until dataCount) {
-                val data: LineData = list[i]
-                val lineColor = data.lineColor
-                val nums = data.nums
-                val tagString = data.nums
-                val numsCount = nums.size
-                require(numsCount == titles.size) { "the data num's lengh must be " + titles.size + "!" }
-                val circlePoints: MutableList<CirclePoint> = ArrayList()
-                circlePoints.clear()
-                val currentX = availableLeft + peerWidth
-                var trueNum = nums[0]
-                if (trueNum >= max) trueNum = max
-                if (trueNum <= min) trueNum = min
-                val currentY = availableBottom - (trueNum - min) * (availableBottom - availableTop) / (max - min)
-                points.add(Point(currentX, currentY))
-                //外圆
-                circlePoints.add(CirclePoint(tagString[0], currentX, currentY))
-                dataLines.add(LineAndCircle(lineColor, Path(), circlePoints))
-            }
-            return
-        }
-
-        //>=2列的情况
-        for (i in 0 until dataCount) {
-            val path = Path()
-            val data: LineData = list[i]
-            val lineColor = data.lineColor
-            val tagBorderColor = data.tagBorderColor
-            val nums = data.nums
-            val numsCount = nums.size
-            require(numsCount == titles.size) { "the data num's lengh must be " + titles.size + "!" }
-            points.clear()
-            val circlePoints: MutableList<CirclePoint> = ArrayList()
-            circlePoints.clear()
-            for (j in 0 until numsCount) {
-                val currentX = availableLeft + j * peerWidth
-                var trueNum = nums[j]
-                if (trueNum >= max) trueNum = max
-                if (trueNum <= min) trueNum = min
-                val currentY = availableBottom - (trueNum - min) * (availableBottom - availableTop) / (max - min)
-                points.add(Point(currentX, currentY))
-                //外圆
-                circlePoints.add(CirclePoint(currentX, currentY, trueNum, lineStrokeWidth + innerCircleRadius + DATA_CLICK_OFFSET))
-            }
-            //贝塞尔曲线
-            val besselPoints = besselCalculator.computeBesselPoints(points)
-            var j = 0
-            while (j < besselPoints.size) {
-                if (j == 0) {
-                    path.moveTo(besselPoints[j].x, besselPoints[j].y)
-                } else path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
-                j = j + 3
-            }
-            dataLines.add(LineAndCircle(lineColor, path, circlePoints))
-        }
-    }
-
-    var isFirst = true
-
     override fun onDraw(canvas: Canvas?) {
-        if (width <= 0 || height <= 0 || titles.size == 0) {
+        if (width <= 0 || height <= 0 || xLabels.isEmpty()) {
             return
         }
         super.onDraw(canvas)
         if (isFirst) {
             isFirst = false
-            if (isShowAnimation) {
+            if (showAnimation) {
                 initAnimation()
                 animator.start()
             } else {
                 animatorLineAndCircleList.clear()
-                animatorLineAndCircleList.addAll(dataLines)
+                animatorLineAndCircleList.addAll(validDataLines)
             }
         }
         tagCircles.clear()
-        drawCoordinate(canvas!!) //绘制刻度
-        drawLineAndPoints(canvas) //绘制折线
-        drawTagWithBack(canvas) //标签
+        canvas?.let {
+            drawCoordinate(it) //绘制刻度
+            drawLineAndPoints(it) //绘制折线
+            drawTagWithBack(it) //标签
+        }
+    }
+
+    // 绘制刻度,包括:网格线,数字标尺,底部title
+    private fun drawCoordinate(canvas: Canvas) {
+        val peerCoordinateHeight = availableHeight / density
+        gridLinePaint.style = Paint.Style.FILL
+        gridLinePaint.strokeWidth = gridOutLineWidth
+        canvas.drawLine(availableLeft, availableTop, factRectRight, availableTop, gridLinePaint) //上
+        canvas.drawLine(availableLeft, availableBottom, factRectRight, availableBottom, gridLinePaint) //下
+        canvas.drawLine(availableLeft, availableTop, availableLeft, availableBottom, gridLinePaint) //左
+        canvas.drawLine(factRectRight, availableTop, factRectRight, availableBottom, gridLinePaint) //右
+
+        //最大 最小刻度
+        val graduationTextMaxY = availableTop + peerCoordinateHeight * 0
+        val currentGraduationMAx: String = max.toInt().toString()
+        val currentGraduationMaxTextWidth = gridLinePaint.measureText(currentGraduationMAx)
+        canvas.drawText(currentGraduationMAx,
+                availableLeft - currentGraduationMaxTextWidth - leftMargin,
+                graduationTextMaxY + gridVerTextSize / 2,
+                gridLinePaint)
+        val graduationTextMinY = availableTop + peerCoordinateHeight * density
+        val currentGraduationMin: String = min.toInt().toString()
+        val currentGraduationMinTextWidth = gridLinePaint.measureText(currentGraduationMin)
+        canvas.drawText(currentGraduationMin,
+                availableLeft - currentGraduationMinTextWidth - leftMargin,
+                graduationTextMinY + gridVerTextSize / 2,
+                gridLinePaint)
+        gridLinePaint.strokeWidth = gridLineWidth
+
+        //横向line
+        for (i in 0 until density) {
+            val currentY = availableTop + i * peerCoordinateHeight
+            canvas.drawLine(availableLeft, currentY, factRectRight, currentY, gridLinePaint)
+        }
+
+        //数字刻度 不包含最大最小
+        val peerDiff = (max - min) / density
+        gridLinePaint.style = Paint.Style.FILL
+        for (i in 1 until density) {
+            val graduationTextY = availableTop + peerCoordinateHeight * i
+            val currentGraduation: String = (max - i * peerDiff).toInt().toString()
+            val currentGraduationTextWidth = gridLinePaint.measureText(currentGraduation)
+            canvas.drawText(currentGraduation,
+                    availableLeft - currentGraduationTextWidth - leftMargin,
+                    graduationTextY + gridVerTextSize / 2,
+                    gridLinePaint)
+        }
+
+        //竖向line
+        var verLineNum = xLabels.size - 2
+        if (xLabels.size == 1) {
+            verLineNum = 1
+        }
+        if (verLineNum > 0) {
+            for (i in 1..verLineNum) {
+                val currentX = availableLeft + i * peerWidth
+                canvas.drawLine(currentX, availableTop, currentX, availableBottom, gridLinePaint)
+            }
+        }
+
+        //xLabel
+        val offset = titleTextSize / 2.toFloat()
+        val titleCount = xLabels.size
+        val rectPadding = 8.coerceAtMost(titleTextSize / 2).toFloat()
+        if (titleCount == 1) {
+            val currentTitleWidth = titlePaint.measureText(xLabels[0].title)
+            val titleCenterX = availableLeft + peerWidth
+            val currentX = titleCenterX - currentTitleWidth / 2
+            val currentY = height - rectPadding //  availableBottom + titleTextSize + getCircleRadius(innerCircleRadius);
+
+            canvas.drawText(xLabels[0].title, currentX, currentY, titlePaint)
+            val region = Region(
+                    (currentX - offset).toInt(),
+                    (currentY - titleTextSize).toInt(),
+                    (currentX + currentTitleWidth + offset).toInt(),
+                    (currentY + 2 * offset).toInt()
+            )
+            xLabels[0].region = region
+            return
+        }
+        for (i in 0 until titleCount) {
+            val currentTitleWidth = titlePaint.measureText(xLabels[i].title)
+            val titleCenterX = availableLeft + i * peerWidth
+            val currentX = titleCenterX - currentTitleWidth / 2
+            val currentY = height - rectPadding // availableBottom + titleTextSize + getCircleRadius(innerCircleRadius);
+            canvas.drawText(xLabels[i].title, currentX, currentY, titlePaint)
+            //add region
+            val region = Region(
+                    (currentX - offset).toInt(),
+                    (currentY - titleTextSize).toInt(),
+                    (currentX + currentTitleWidth + offset).toInt(),
+                    (currentY + 2 * offset).toInt()
+            )
+            xLabels[i].region = region
+        }
     }
 
     // 绘制折线
     private fun drawLineAndPoints(canvas: Canvas) {
         val lineSize = animatorLineAndCircleList.size
         for (i in 0 until lineSize) {
-            val lineAndCircle: LineAndCircle = animatorLineAndCircleList[i]
+            val lineAndCircle = animatorLineAndCircleList[i]
             linePaint.color = lineAndCircle.lineColor
-            if (titles.size == 1) {
+            if (xLabels.size == 1) {
                 drawCircleRing(i, lineAndCircle.circlePoints, lineAndCircle.lineColor, canvas)
             } else {
-                if (!isShowAnimation) {
+                if (!showAnimation) {
                     canvas.drawPath(lineAndCircle.path, linePaint)
-                    //drawShadow(canvas, lineAndCircle);
                     drawCircleRing(i, lineAndCircle.circlePoints, lineAndCircle.lineColor, canvas)
                 } else {
                     canvas.drawPath(lineAndCircle.path, linePaint)
                     if (animationEnd) {
-                        //drawShadow(canvas, lineAndCircle);
                         drawCircleRing(i, lineAndCircle.circlePoints, lineAndCircle.lineColor, canvas)
                     }
                 }
@@ -295,7 +265,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     // 绘制点
-    private fun drawCircleRing(lineIndex: Int, list: List<CirclePoint>, lineColor: Int, canvas: Canvas) {
+    private fun drawCircleRing(lineIndex: Int, list: List<DataPoint>, lineColor: Int, canvas: Canvas) {
         val isDrawTag = lineIndex == circleClickIndex[0]
         val circlrCount = list.size
         for (i in 0 until circlrCount) {
@@ -377,98 +347,157 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         }
     }
 
-    // 绘制刻度,包括:网格线,数字标尺,底部title
-    private fun drawCoordinate(canvas: Canvas) {
-        val peerCoordinateHeight = availableHeight / density
-        gridLinePaint.style = Paint.Style.FILL
-        gridLinePaint.strokeWidth = gridOutLineWidth
-        canvas.drawLine(availableLeft, availableTop, factRectRight, availableTop, gridLinePaint) //上
-        canvas.drawLine(availableLeft, availableBottom, factRectRight, availableBottom, gridLinePaint) //下
-        canvas.drawLine(availableLeft, availableTop, availableLeft, availableBottom, gridLinePaint) //左
-        canvas.drawLine(factRectRight, availableTop, factRectRight, availableBottom, gridLinePaint) //右
-
-        //最大 最小刻度
-        val graduationTextMaxY = availableTop + peerCoordinateHeight * 0
-        val currentGraduationMAx: String = max.toInt().toString()
-        val currentGraduationMaxTextWidth = gridLinePaint.measureText(currentGraduationMAx)
-        canvas.drawText(currentGraduationMAx,
-                availableLeft - currentGraduationMaxTextWidth - leftMargin, graduationTextMaxY + gridVerTextSize / 2,
-                gridLinePaint)
-        val graduationTextMinY = availableTop + peerCoordinateHeight * density
-        val currentGraduationMin: String = min.toInt().toString()
-        val currentGraduationMinTextWidth = gridLinePaint.measureText(currentGraduationMin)
-        canvas.drawText(currentGraduationMin,
-                availableLeft - currentGraduationMinTextWidth - leftMargin, graduationTextMinY + gridVerTextSize / 2,
-                gridLinePaint)
-        gridLinePaint.strokeWidth = gridLineWidth
-        //canvas.drawRect(availableLeft, availableTop, factRectRight, availableBottom, coordinatePaint);
-        //横向line
-        for (i in 0 until density) {
-            val currentY = availableTop + i * peerCoordinateHeight
-            canvas.drawLine(availableLeft, currentY, factRectRight, currentY, gridLinePaint)
-        }
-        //数字刻度 不包含最大最小
-        val totalDiff = max - min
-        val peerDiff = totalDiff / density
-        gridLinePaint.style = Paint.Style.FILL
-        for (i in 1 until density) {
-            val graduationTextY = availableTop + peerCoordinateHeight * i
-            val currentGraduation: String = (max - i * peerDiff).toInt().toString()
-            val currentGraduationTextWidth = gridLinePaint.measureText(currentGraduation)
-            canvas.drawText(currentGraduation,
-                    availableLeft - currentGraduationTextWidth - leftMargin, graduationTextY + gridVerTextSize / 2,
-                    gridLinePaint)
-        }
-
-
-        //竖向line
-        var verLineNum = titles.size - 2
-        if (titles.size == 1) {
-            verLineNum = 1
-        }
-        if (verLineNum > 0) {
-            for (i in 1..verLineNum) {
-                val currentX = availableLeft + i * peerWidth
-                canvas.drawLine(currentX, availableTop, currentX, availableBottom, gridLinePaint)
-            }
-        }
-
-        //title
-        val offset = titleTextSize / 2.toFloat()
-        titleRegionData.clear()
-        val titleCount = titles.size
-        val rectPadding = Math.min(8, titleTextSize / 2).toFloat()
-        if (titleCount == 1) {
-            val currentTitleWidth = titlePaint.measureText(titles[0])
-            val titleCenterX = availableLeft + peerWidth
-            val currentX = titleCenterX - currentTitleWidth / 2
-            val currentY = height - rectPadding //  availableBottom + titleTextSize + getCircleRadius(innerCircleRadius);
-
-            canvas.drawText(titles[0], currentX, currentY, titlePaint)
-            val region = Region(
-                    (currentX - offset).toInt(),
-                    (currentY - titleTextSize).toInt(),
-                    (currentX + currentTitleWidth + offset).toInt(),
-                    (currentY + 2 * offset).toInt()
-            )
-            titleRegionData.add(TitleClickRegionData(region, 0, titles[0]))
+    private fun setAvailable() {
+        if (width <= 0 || height <= 0 || xLabels.isEmpty()) {
             return
         }
-        for (i in 0 until titleCount) {
-            val currentTitleWidth = titlePaint.measureText(titles[i])
-            val titleCenterX = availableLeft + i * peerWidth
-            val currentX = titleCenterX - currentTitleWidth / 2
-            val currentY = height - rectPadding // availableBottom + titleTextSize + getCircleRadius(innerCircleRadius);
-            canvas.drawText(titles[i], currentX, currentY, titlePaint)
-            //add region
-            val region = Region(
-                    (currentX - offset).toInt(),
-                    (currentY - titleTextSize).toInt(),
-                    (currentX + currentTitleWidth + offset).toInt(),
-                    (currentY + 2 * offset).toInt()
-            )
-            titleRegionData.add(TitleClickRegionData(region, i, titles[i]))
+        scrollTo(0, 0)
+        tagpadding = gridVerTextSize
+        tagMargin = getCircleRadius(innerCircleRadius) + gridVerTextSize / 3
+        availableLeft = getLeftWidth()
+        availableTop = tagMargin + getCircleRadius(innerCircleRadius) + gridVerTextSize + tagpadding + 10 //10为上方空隙,可为0,getCircleRadius为drawTag中三角形高度
+        val rightPadding = (titlePaint.measureText(xLabels[xLabels.size - 1].title) / 2)
+                .coerceAtLeast((circlePaint.measureText("$max.0") / 2 + tagpadding)
+                        .coerceAtLeast(circlePaint.measureText("$min.0")) / 2 + tagpadding)
+        availableRight = width - rightPadding
+        availableBottom = (height - titleTextSize * 2.5).toFloat()
+        availableHeight = availableBottom - availableTop
+        availableWidth = availableRight - availableLeft
+        val titleCount = xLabels.size
+        when (xLabels.size) {
+            1 -> {
+                peerWidth = availableWidth / 2
+                factRectWidth = availableWidth
+                factRectRight = availableLeft + factRectWidth
+                factRight = factRectRight + rightPadding
+            }
+            else -> {
+                if (!allowScroll) {
+                    peerWidth = availableWidth / (titleCount - 1)
+                    factRectWidth = availableWidth
+                    factRight = availableRight + rightPadding
+                    factRectRight = availableLeft + factRectWidth
+                } else {
+                    var counmeCunt = if (maxColumn < titleCount - 1) maxColumn else titleCount - 1
+                    peerWidth = availableWidth / counmeCunt
+                    //避免title文字相互遮挡
+                    val maxTwoTitleLength = getMaxTwoXLabelLength()
+                    while (maxTwoTitleLength > peerWidth && peerWidth > 0) {
+                        counmeCunt -= 1
+                        peerWidth = availableWidth / counmeCunt
+                    }
+                    factRectWidth = peerWidth * (titleCount - 1)
+                    factRectRight = availableLeft + factRectWidth
+                    factRight = factRectRight + rightPadding
+                }
+            }
         }
+    }
+
+    private fun computeLines() {
+        if (width <= 0 || height <= 0 || dataLines.isEmpty()) {
+            return
+        }
+        //circle click
+        val titleCount = xLabels.size
+        val points = mutableListOf<Point>()
+        //1列的情况
+        if (titleCount == 1) {
+            dataLines.forEach { line ->
+                val lineColor = line.lineColor
+                val circlePoints = mutableListOf<DataPoint>()
+                val currentX = availableLeft + peerWidth
+                val keyPoint = line.circlePoints.firstOrNull { point ->
+                    point.key == xLabels.first().key
+                }
+                if (keyPoint != null) {
+                    var trueNum = keyPoint.value
+                    trueNum = validValueInRange(trueNum)
+                    val currentY = availableBottom - (trueNum - min) * (availableBottom - availableTop) / (max - min)
+                    points.add(Point(currentX, currentY))
+                    //外圆
+                    val clickOffset = lineStrokeWidth + innerCircleRadius + DATA_CLICK_OFFSET
+                    keyPoint.x = currentX
+                    keyPoint.y = currentY
+                    keyPoint.region = Region().apply {
+                        set((keyPoint.x - clickOffset).toInt(),
+                                (keyPoint.y - clickOffset).toInt(),
+                                (keyPoint.x + clickOffset).toInt(),
+                                (keyPoint.y + clickOffset).toInt())
+                    }
+                    circlePoints.add(keyPoint)
+                }
+                validDataLines.add(LineInChart(circlePoints, lineColor))
+            }
+            return
+        }
+
+        //>=2列的情况
+        dataLines.forEach { line ->
+            points.clear()
+            val lineColor = line.lineColor
+            val circlePoints = mutableListOf<DataPoint>()
+            xLabels.forEachWithIndex { index, label ->
+                val currentX = availableLeft + index * peerWidth
+                val keyPoint = line.circlePoints.firstOrNull { point ->
+                    point.key == label.key
+                }
+                if (keyPoint != null) {
+                    val trueNum = validValueInRange(keyPoint.value)
+                    val currentY = availableBottom - (trueNum - min) * (availableBottom - availableTop) / (max - min)
+                    points.add(Point(currentX, currentY))
+                    //外圆
+                    val clickOffset = lineStrokeWidth + innerCircleRadius + DATA_CLICK_OFFSET
+                    keyPoint.x = currentX
+                    keyPoint.y = currentY
+                    keyPoint.region = Region().apply {
+                        set((keyPoint.x - clickOffset).toInt(),
+                                (keyPoint.y - clickOffset).toInt(),
+                                (keyPoint.x + clickOffset).toInt(),
+                                (keyPoint.y + clickOffset).toInt())
+                    }
+                    circlePoints.add(keyPoint)
+                }
+            }
+            val path = Path()
+            if(titleCount > 1){
+                //贝塞尔曲线
+                val besselPoints = besselCalculator.computeBesselPoints(points)
+                var j = 0
+                while (j < besselPoints.size) {
+                    if (j == 0) {
+                        path.moveTo(besselPoints[j].x, besselPoints[j].y)
+                    } else path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
+                    j += 3
+                }
+            }
+            validDataLines.add(LineInChart(circlePoints, lineColor).apply { this.path = path })
+        }
+    }
+
+    private fun getCircleRadius(innerCircleRadius: Float): Float {
+        return lineStrokeWidth + innerCircleRadius
+    }
+
+    private fun validValueInRange(value: Float): Float {
+        if (value >= max) return max
+        if (value <= min) return min
+        return value
+    }
+
+    private fun getMaxTwoXLabelLength(): Float {
+        val count = xLabels.size
+        if (count == 0) {
+            return 0f
+        }
+        var result = 0f
+        for (i in 0 until count - 1) {
+            val temp = titlePaint.measureText(xLabels[i].title) / 2 + titlePaint.measureText(xLabels[i + 1].title) / 2
+            if (temp > result) {
+                result = temp
+            }
+        }
+        return result
     }
 
     fun setLineSmoothness(smoothness: Float) {
@@ -479,58 +508,28 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         besselCalculator.setSmoothness(0.4f)
     }
 
-    fun setMin(min: Float) {
-        this.min = min
+    fun setTitles(titles: List<XLabel>) {
+        xLabels.clear()
+        xLabels.addAll(titles)
     }
 
-    fun setMax(max: Float) {
-        this.max = max
-    }
-
-    fun setMinAndMax(min: Float, max: Float) {
-        this.min = min
-        this.max = max
-    }
-
-    private fun dipToPx(dip: Float): Int {
-        val density = context.applicationContext.resources.displayMetrics.density
-        return (dip * density + 0.5f * if (dip >= 0) 1 else -1).toInt()
-    }
-
-    fun setDensity(density: Int) {
-        this.density = density
-    }
-
-    fun setTitles(titles: Array<String>) {
-        this.titles = titles
-    }
-
-    fun addData(data: LineData) {
-        list.add(data)
+    fun addData(data: LineInChart) {
+        dataLines.add(data)
     }
 
     fun clearData() {
-        list.clear()
-        titles = arrayOf("", "", "", "", "")
+        dataLines.clear()
     }
 
-    fun setAllowScroll(allowScroll: Boolean) {
-        isAllowScroll = allowScroll
-    }
-
-    fun startAnimation() {
-        isShowAnimation = true
+    private fun startAnimation() {
+        showAnimation = true
         initAnimation()
-        if (dataLines.size == 0) {
+        if (validDataLines.isEmpty()) {
             invalidate()
         }
-        if (animator != null) {
-            animator.cancel()
-            animator.start()
-        }
+        animator.cancel()
+        animator.start()
     }
-
-    private var animatorLineAndCircleList: MutableList<LineAndCircle> = ArrayList()
 
     private fun initAnimation() {
         animationEnd = false
@@ -549,20 +548,17 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             }
         })
         animator.removeAllUpdateListeners()
-        for (peer in dataLines) {
-            val lineAndCircle = LineAndCircle()
+        for (peer in validDataLines) {
+            val lineAndCircle = LineInChart(peer.circlePoints, peer.lineColor)
             lineAndCircle.path.moveTo(peer.circlePoints[0].x, peer.circlePoints[0].y)
             val start = floatArrayOf(0.0f)
             val pathMeasure = PathMeasure(peer.path, false)
             animator.addUpdateListener(AnimatorUpdateListener { animation ->
                 val animatorValue = animation.animatedValue as Float / (ANIMATOR_MIN_AND_MAX[1] - ANIMATOR_MIN_AND_MAX[0]) * pathMeasure.length
-                //硬件加速 你妈逼
                 pathMeasure.getSegment(start[0], animatorValue, lineAndCircle.path, false)
                 start[0] = animatorValue
                 invalidate()
             })
-            lineAndCircle.lineColor = peer.lineColor
-            lineAndCircle.circlePoints.addAll(peer.circlePoints)
             animatorLineAndCircleList.add(lineAndCircle)
         }
     }
@@ -570,13 +566,13 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     fun commit() {
         setPaint()
         circleClickIndex = intArrayOf(-1, -1)
-        setAvaiable()
+        setAvailable()
         computeLines()
-        if (titles.size == 1) {
+        if (xLabels.size == 1) {
             showDataLine()
             return
         }
-        if (isShowAnimation) {
+        if (showAnimation) {
             startAnimation()
         } else {
             showDataLine()
@@ -597,12 +593,13 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     private fun getLeftWidth(): Float {
         val graduationTextWidth = measureGraduationTextWidth()
-        leftMargin = Math.max(graduationTextWidth / 4, getCircleRadius(innerCircleRadius))
+        leftMargin = (graduationTextWidth / 4).coerceAtLeast(getCircleRadius(innerCircleRadius))
         val availableLeftmargin = graduationTextWidth + leftMargin
-        if (titles[0] == null) {
-            titles[0] = ""
+        var xLabelLeftLength = ""
+        if (xLabels.isNotEmpty()) {
+            xLabelLeftLength = xLabels[0].title
         }
-        return Math.max(availableLeftmargin, titlePaint.measureText(titles[0]) / 2)
+        return Math.max(availableLeftmargin, titlePaint.measureText(xLabelLeftLength) / 2)
     }
 
     private fun measureGraduationTextWidth(): Float {
@@ -679,7 +676,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 debug("move--$isScrolling")
                 debug("distanceX$distanceX--distanceY$distanceY")
                 if (!isScrolling) {
-                    if (Math.abs(distanceX) < Math.abs(distanceY)) {
+                    if (kotlin.math.abs(distanceX) < kotlin.math.abs(distanceY)) {
                         requestDisallowIntercept(false)
                         return false //竖向滑动
                     }
@@ -701,7 +698,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 debug("move--$isScrolling")
                 debug("distanceX$distanceX--distanceY$distanceY")
                 if (!isScrolling) {
-                    if (Math.abs(distanceX) < Math.abs(distanceY)) {
+                    if (abs(distanceX) < abs(distanceY)) {
                         requestDisallowIntercept(false)
                         return false
                     }
@@ -723,7 +720,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 requestDisallowIntercept(false)
             }
         }
-        return if (mDetector!!.onTouchEvent(event)) true else {
+        return if (mDetector.onTouchEvent(event)) true else {
             if (event.action == MotionEvent.ACTION_UP) {
                 isScrolling = false
                 if (scrollX < 0) { //头部滑动超出边界,回退
@@ -744,21 +741,15 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         }
     }
 
-    private var onTitleClickListener: OnTitleClickListener? = null
-
-    fun setOnTitleClickListener(onTitleClickListener: OnTitleClickListener) {
-        this.onTitleClickListener = onTitleClickListener
-    }
-
     fun getPressTitleIndex(x: Int, y: Int): Int {
         var xNew = x
-        val size: Int = titleRegionData.size
+        val size: Int = xLabels.size
         if (size < 1) {
             return -1
         }
         xNew += scrollX
         for (i in 0 until size) {
-            val region: Region = titleRegionData[i].region
+            val region: Region = xLabels[i].region
             if (region.contains(xNew, y)) {
                 return i
             }
@@ -772,11 +763,11 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         var index = intArrayOf(-1, -1)
         val lineCount = animatorLineAndCircleList.size
         for (i in 0 until lineCount) {
-            val dataline: LineAndCircle = animatorLineAndCircleList[i]
+            val dataline = animatorLineAndCircleList[i]
             val circleCount = dataline.circlePoints.size
             for (j in 0 until circleCount) {
                 val circlePoint = dataline.circlePoints[j]
-                if (circlePoint.clickRegion.contains(xNew, y)) {
+                if (circlePoint.region.contains(xNew, y)) {
                     index = intArrayOf(i, j)
                     return index
                 }
@@ -785,7 +776,6 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         return index
     }
 
-    var isScrolling = false
 
     inner class MyGestureListener : SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean {
@@ -797,8 +787,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             val y = e.y.toInt()
             val pressTitleIndex: Int = getPressTitleIndex(x, y)
             if (pressTitleIndex != -1) {
-                onTitleClickListener?.onClick(titleRegionData[pressTitleIndex].title
-                        ?: "", pressTitleIndex)
+                onLabelClickListener?.onClick(xLabels[pressTitleIndex].title, pressTitleIndex)
                 return true
             }
             val pressCircleIndex: IntArray = getPressCircleIndex(x, y)
@@ -814,49 +803,49 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         }
 
         override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float): Boolean {
-            if (!isAllowScroll) {
+            if (!allowScroll) {
                 return false
             }
             isScrolling = true
             requestDisallowIntercept(true)
             if (distanceX < 0) {
-                if (getScrollX() + distanceX <= 0) {
+                if (scrollX + distanceX <= 0) {
                     scrollTo(0, 0)
                 } else scrollBy(distanceX.toInt(), 0)
             }
-            val offset: Int = width + getScrollX() - factRight as Int
+            val offset: Int = width + scrollX - factRight.toInt()
             if (distanceX > 0) {
                 if (offset + distanceX >= 0) {
-                    scrollTo(factRight as Int - width, 0)
+                    scrollTo(factRight.toInt() - width, 0)
                 } else scrollBy(distanceX.toInt(), 0)
             }
             return false
         }
 
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
-            if (!isAllowScroll) {
+            if (!allowScroll) {
                 return false
             }
-            if (Math.abs(velocityX) > Math.abs(velocityY)) {
-                if (Math.abs(velocityX) < 1000) {
+            if (abs(velocityX) > abs(velocityY)) {
+                if (abs(velocityX) < 1000) {
                     return true
                 }
-                var distanceX = (Math.abs(velocityX) / 1000 * 150).toInt()
+                var distanceX = (abs(velocityX) / 1000 * 150).toInt()
                 if (velocityX < 0) { //左滑-->滑动至尾部
-                    val leftWidth: Int = factRight as Int - Math.abs(getScrollX()) - width
-                    if (Math.abs(distanceX) > leftWidth) {
+                    val leftWidth: Int = factRight.toInt() - abs(scrollX) - width
+                    if (abs(distanceX) > leftWidth) {
                         distanceX = leftWidth
                     }
                 } else { //右滑-->滑动至头部
-                    if (Math.abs(distanceX) > Math.abs(getScrollX())) {
-                        distanceX = Math.abs(getScrollX())
+                    if (abs(distanceX) > abs(getScrollX())) {
+                        distanceX = abs(getScrollX())
                     }
                     distanceX = -distanceX
                 }
-                if (getScrollX() < 0) { //头部超出边界
-                    distanceX = -getScrollX()
+                if (scrollX < 0) { //头部超出边界
+                    distanceX = -scrollX
                 }
-                scroller.startScroll(getScrollX(), 0, distanceX, 0, SCROLL_DURATION)
+                scroller.startScroll(scrollX, 0, distanceX, 0, SCROLL_DURATION)
                 invalidate()
                 return true
             }
@@ -865,5 +854,10 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     data class Point(var x: Float = 0f, var y: Float = 0f)
+
+    private fun dipToPx(dip: Float): Int {
+        val density = context.applicationContext.resources.displayMetrics.density
+        return (dip * density + 0.5f * if (dip >= 0) 1 else -1).toInt()
+    }
 
 }

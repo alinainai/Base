@@ -11,6 +11,10 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.utils.view.AnimPieChartView
+import com.gas.test.utils.view.animlinechart.bean.DataPoint
+import com.gas.test.utils.view.animlinechart.bean.LineInChart
+import com.gas.test.utils.view.animlinechart.bean.XLabel
+import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.gas.test.utils.view.line.LineChart
 import com.gas.test.utils.view.line.LineData
 import com.gas.test.utils.view.line.OnShowTagCallBack
@@ -288,11 +292,57 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
     private fun lineChart4() {
         lineChart4.apply {
             setLineSmoothness(0.4F)
-            setAllowScroll(false)
-            setDensity(5) //设置刻度密度
-            setTitles(arrayOf("语文111", "数学", "英语", "物理", "化学", "ss", "ss")) //底部标题,需与折线数据长度一致
-            addData(com.gas.test.utils.view.animlinechart.bean.LineData(floatArrayOf(20.5f, 50f, 0f, 70.9f, 90f, 70f, -100f), -0xd34f8e)) //需与title长度一致
-            addData(com.gas.test.utils.view.animlinechart.bean.LineData(floatArrayOf(30f, 80f, 50f, 80.5f, 70.8f, 60f, 100f), -0x753a8))
+            allowScroll=false
+            min=0F
+            max=100F
+            density=5
+            showAnimation =true
+            val title = listOf(XLabel("0", ""),
+                    XLabel("0.5", ""),
+                    XLabel("1", "1"),
+                    XLabel("1.5", ""),
+                    XLabel("2", "2"),
+                    XLabel("2.5", ""),
+                    XLabel("3", "3"),
+                    XLabel("3.5", ""),
+                    XLabel("4", "4"),
+                    XLabel("4.5", ""),
+                    XLabel("5", "5"),
+                    XLabel("5.5", ""),
+                    XLabel("6", "6"),
+                    XLabel("6.5", ""),
+                    XLabel("7", "7"),
+                    XLabel("7.5", "")
+            )
+            setTitles(title) //底部标题,需与折线数据长度一致
+            onLabelClickListener =object :OnLabelClickListener {
+                override fun onClick(title: String, index: Int) {
+                    Toast.makeText(activity!!, title, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val linePoint1 = listOf(DataPoint("0", 20.5f),
+                    DataPoint("1", 50f),
+                    DataPoint("2", 0f),
+                    DataPoint("3", 70.9f),
+                    DataPoint("4", 90f),
+                    DataPoint("5", 70f),
+                    DataPoint("6", 5F),
+                    DataPoint("7", 80f)
+            )
+
+            val linePoint2 = listOf(DataPoint("0", 30f),
+                    DataPoint("1", 80f),
+                    DataPoint("2", 50f),
+                    DataPoint("3", 80.5f),
+                    DataPoint("4",  70.8f),
+                    DataPoint("5", 60f),
+                    DataPoint("6", 85f),
+                    DataPoint("7", 90f)
+            )
+
+            addData(LineInChart(linePoint1, -0xd34f8e)) //需与title长度一致
+            addData(LineInChart(linePoint2, -0x753a8))
             commit()
         }
     }

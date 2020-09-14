@@ -1,7 +1,6 @@
 package com.gas.test.utils.view.animlinechart.callback
 
-import com.gas.test.utils.view.line.LineChart
 
-interface OnTitleClickListener {
+interface OnLabelClickListener {
     fun onClick(title: String, index: Int)
 }
