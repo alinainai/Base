@@ -112,6 +112,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     var min = 0f
     var max = 100f
     var density = 5
+    var valueToTag:(Float)->String = {value->value.toInt().toString()}
 
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimLineChartView)
@@ -295,7 +296,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         for (point in tagCircles) {
             val currentX = point.x
             val currentY = point.y
-            val tagString = point.value.toString()
+            val tagString = valueToTag(point.value)
             if (TextUtils.isEmpty(tagString)) {
                 continue
             }
@@ -830,6 +831,13 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 return true
             }
             return false
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        if(animator.isRunning){
+            animator.cancel()
         }
     }
 

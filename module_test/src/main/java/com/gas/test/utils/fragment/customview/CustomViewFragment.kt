@@ -297,7 +297,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             max=100F
             density=5
             showAnimation =true
-            val title = listOf(XLabel("0", ""),
+            val title = listOf(XLabel("0", "0"),
                     XLabel("0.5", ""),
                     XLabel("1", "1"),
                     XLabel("1.5", ""),
@@ -341,6 +341,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                     DataPoint("7", 90f)
             )
 
+            valueToTag={value->"${value.toInt()}条"}
             setLineSmoothness(0.38F)
             addData(LineInChart(linePoint1, Color.parseColor("#6DD400"))) //需与title长度一致
             addData(LineInChart(linePoint2, Color.parseColor("#2177FF")))
