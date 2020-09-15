@@ -23,6 +23,7 @@ import com.gas.test.utils.view.animlinechart.bean.LineInChart
 import com.gas.test.utils.view.animlinechart.bean.XLabel
 import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.kotlin.extension.withAlpha
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlin.math.abs
 
@@ -58,7 +59,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private val gridOutLineWidth = dp2Px(0.5F) //矩形刻度线宽
 
     private val linePaint = Paint()
-    private var lineStrokeWidth = 8f
+    private var lineStrokeWidth = dp2Px(2F)
     private var innerCircleRadius = lineStrokeWidth
 
     private val titlePaint = Paint()
@@ -68,9 +69,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private val circlePaint = Paint()
     private var leftMargin = 0f
 
-    private var tagCircles = mutableListOf<DataPoint>()
-    private var dataLines = mutableListOf<LineInChart>()
-    private var validDataLines = mutableListOf<LineInChart>()
+    private var tagCircles = mutableListOf<DataPoint>() //需要显示 tag 的 dataPoint
+    private var dataLines = mutableListOf<LineInChart>() //初始数据的 LineInChart 集合
+    private var validDataLines = mutableListOf<LineInChart>() //针对 xLabels 处理过的 LineInChart 集合
     private var xLabels = mutableListOf<XLabel>().apply {
         addAll(INIT_X_LABELS)
     }
@@ -249,7 +250,8 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         for (i in 0 until lineSize) {
             val lineAndCircle = animatorLineAndCircleList[i]
             linePaint.color = lineAndCircle.lineColor
-            if (xLabels.size == 1) {
+            linePaint.setShadowLayer(dp2Px(10F), 0f, dp2Px(6F), lineAndCircle.lineColor.transformAlpha(0.5F))
+            if (xLabels.size == 1) {//只有一个
                 drawCircleRing(i, lineAndCircle.circlePoints, lineAndCircle.lineColor, canvas)
             } else {
                 if (!showAnimation) {
@@ -268,22 +270,18 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     // 绘制点
     private fun drawCircleRing(lineIndex: Int, list: List<DataPoint>, lineColor: Int, canvas: Canvas) {
         val isDrawTag = lineIndex == circleClickIndex[0]
-        val circlrCount = list.size
-        for (i in 0 until circlrCount) {
+        val circleCount = list.size
+        for (i in 0 until circleCount) {
             val point = list[i]
-            circlePaint.color = lineColor
-            val outRadius = getCircleRadius(innerCircleRadius)
-            val innerRadius = innerCircleRadius
-            circlePaint.alpha = 255
-            canvas.drawCircle(point.x, point.y, outRadius, circlePaint)
-
+            //当前选中的 dataPoint 显示tag
             if (circleClickIndex[1] == i && isDrawTag) {
+                circlePaint.color = lineColor
+                val outRadius = getCircleRadius(innerCircleRadius)
+                val innerRadius = innerCircleRadius
                 point.color = lineColor
                 tagCircles.add(point)
-            }
-            if (!(circleClickIndex[1] == i && isDrawTag)) {
-                circlePaint.alpha = 255
-                circlePaint.color = -0x1
+                canvas.drawCircle(point.x, point.y, outRadius, circlePaint)
+                circlePaint.color = Color.parseColor("#FFFFFFFF")
                 canvas.drawCircle(point.x, point.y, innerRadius, circlePaint)
             }
         }
@@ -309,12 +307,12 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             val numMeasureWidth = circlePaint.measureText(measureContentString)
             val tagWidth = numMeasureWidth + 2 * tagPaddingHor
             val tagRectHeight = tagTextSize + 2 * (tagPaddingVer / 2)
+
             //tag矩形
             val tagLeft = currentX - tagWidth / 2
             val tagRectBottom = currentY - tagMargin - sanjiaoHeight
             val tagRectTop = tagRectBottom - tagRectHeight
             val tagRight = tagLeft + tagWidth
-            circlePaint.alpha = 255
             circlePaint.style = Paint.Style.FILL
             circlePaint.strokeWidth = tagBorderWidth
             circlePaint.color = tagBgColor
@@ -840,6 +838,11 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private fun dp2Px(dip: Float): Float {
         val density = context.applicationContext.resources.displayMetrics.density
         return dip * density + 0.5f * if (dip >= 0) 1 else -1
+    }
+
+    fun Int.transformAlpha(alpha: Float): Int {
+        require(alpha in 0f..1.0f)
+        return ((this shl 8) shr 8) + ((0xff * alpha).toInt() shl 24)
     }
 
 }

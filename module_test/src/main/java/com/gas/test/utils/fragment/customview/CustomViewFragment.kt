@@ -250,44 +250,44 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
 //        val yValue = mutableListOf(0, 10, 20, 30, 40, 50, 60, 70, 80)
 //        lineChart2.setValue(map, xValue, yValue)
 //    }
-
-    private fun lineChart3() {
-        lineChart3.let { line ->
-            line.clearDatas()
-                    .setHorizontalOpen(false) //---是否左右开放,无坐标轴
-                    .setShowHorGraduation(true) //---在setHorizontalOpen(false)的前提下,设置是否按照setDensity(int)显示刻度线
-                    .setShowTagRectBack(true) //---设置是否显示数字标签的背景,默认true
-                    .setShowAllTag(false) //----设置是否显示全部的数字标签,默认为false
-                    .setCoordinateRectLineWidth(2F) //---设置刻度矩形的线宽
-                    .setShowTitleRect(false) //--是否显示底部标题的矩形,默认为false
-                    .setLineSmoothness(0.4F)
-                    .setAllowScroll(false)
-                    .setOnShowTagCallBack(object : OnShowTagCallBack {
-                        override fun onShow(num: Float): String {
-                            return if (num < 30) {
-                                "不及格"
-                            } else num.toString() + ""
-                        }
-                    })
-                    .setShowAnimation(false) //设置绘制时是否显示动画
-                    .setDensity(5) //设置刻度密度
-                    .setAllowClickShowTag(true) //设置是否允许点击节点显示当前线的tag
-                    .setCoordinateTextSize(30) //设置刻度文字的大小
-                    .setTagTextSize(40) //设置数字标签的字体大小(px)
-                    .setTitles(arrayOf("语文111", "数学", "英语", "物理", "化学", "ss", "ss")) //底部标题,需与折线数据长度一致
-                    .addData(LineData(floatArrayOf(20.5f, 50f, 0f, 70.9f, 90f, 70f, -100f), -0xd34f8e, -0xe792bb)) //需与title长度一致
-                    .addData(LineData(floatArrayOf(30f, 80f, 50f, 80.5f, 70.8f, 60f, 100f), -0x753a8))
-                    .setOnTitleClickListener(object : LineChart.OnTitleClickListener {
-                        override fun onClick(linechart: LineChart?, title: String?, index: Int) {
-                            Toast.makeText(activity!!, title
-                                    ?: "title==null", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                    .commit()
-        }
-
-
-    }
+//
+//    private fun lineChart3() {
+//        lineChart3.let { line ->
+//            line.clearDatas()
+//                    .setHorizontalOpen(false) //---是否左右开放,无坐标轴
+//                    .setShowHorGraduation(true) //---在setHorizontalOpen(false)的前提下,设置是否按照setDensity(int)显示刻度线
+//                    .setShowTagRectBack(true) //---设置是否显示数字标签的背景,默认true
+//                    .setShowAllTag(false) //----设置是否显示全部的数字标签,默认为false
+//                    .setCoordinateRectLineWidth(2F) //---设置刻度矩形的线宽
+//                    .setShowTitleRect(false) //--是否显示底部标题的矩形,默认为false
+//                    .setLineSmoothness(0.4F)
+//                    .setAllowScroll(false)
+//                    .setOnShowTagCallBack(object : OnShowTagCallBack {
+//                        override fun onShow(num: Float): String {
+//                            return if (num < 30) {
+//                                "不及格"
+//                            } else num.toString() + ""
+//                        }
+//                    })
+//                    .setShowAnimation(false) //设置绘制时是否显示动画
+//                    .setDensity(5) //设置刻度密度
+//                    .setAllowClickShowTag(true) //设置是否允许点击节点显示当前线的tag
+//                    .setCoordinateTextSize(30) //设置刻度文字的大小
+//                    .setTagTextSize(40) //设置数字标签的字体大小(px)
+//                    .setTitles(arrayOf("语文111", "数学", "英语", "物理", "化学", "ss", "ss")) //底部标题,需与折线数据长度一致
+//                    .addData(LineData(floatArrayOf(20.5f, 50f, 0f, 70.9f, 90f, 70f, -100f), -0xd34f8e, -0xe792bb)) //需与title长度一致
+//                    .addData(LineData(floatArrayOf(30f, 80f, 50f, 80.5f, 70.8f, 60f, 100f), -0x753a8))
+//                    .setOnTitleClickListener(object : LineChart.OnTitleClickListener {
+//                        override fun onClick(linechart: LineChart?, title: String?, index: Int) {
+//                            Toast.makeText(activity!!, title
+//                                    ?: "title==null", Toast.LENGTH_SHORT).show()
+//                        }
+//                    })
+//                    .commit()
+//        }
+//
+//
+//    }
 
     private fun lineChart4() {
         lineChart4.apply {
@@ -321,7 +321,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                 }
             }
 
-            val linePoint1 = listOf(DataPoint("0", 20.5f),
+            val linePoint1 = listOf(
                     DataPoint("1", 50f),
                     DataPoint("2", 0f),
                     DataPoint("3", 70.9f),
@@ -331,7 +331,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                     DataPoint("7", 80f)
             )
 
-            val linePoint2 = listOf(DataPoint("0", 30f),
+            val linePoint2 = listOf(
                     DataPoint("1", 80f),
                     DataPoint("2", 50f),
                     DataPoint("3", 80.5f),
@@ -341,8 +341,9 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                     DataPoint("7", 90f)
             )
 
-            addData(LineInChart(linePoint1, -0xd34f8e)) //需与title长度一致
-            addData(LineInChart(linePoint2, -0x753a8))
+            setLineSmoothness(0.38F)
+            addData(LineInChart(linePoint1, Color.parseColor("#6DD400"))) //需与title长度一致
+            addData(LineInChart(linePoint2, Color.parseColor("#2177FF")))
             commit()
         }
     }

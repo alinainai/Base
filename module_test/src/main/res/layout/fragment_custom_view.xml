@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/public_white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/public_white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,39 +20,39 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--        <com.gas.test.utils.view.linechart.LineChartView-->
-<!--            android:id="@+id/lineChart"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/pieView" />-->
+        <!--        <com.gas.test.utils.view.linechart.LineChartView-->
+        <!--            android:id="@+id/lineChart"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/pieView" />-->
 
-<!--        <com.gas.test.utils.view.ChartView-->
-<!--            android:id="@+id/lineChart2"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="200dp"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/lineChart" />-->
+        <!--        <com.gas.test.utils.view.ChartView-->
+        <!--            android:id="@+id/lineChart2"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/lineChart" />-->
 
-        <com.gas.test.utils.view.line.LineChart
-            android:id="@+id/lineChart3"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:circleClickOffset="12px"
-            app:layout_constraintTop_toBottomOf="@+id/pieView"
-            app:lineGradutaionColor="#d2d2d2"
-            app:lineGradutaionWidth="2px"
-            app:lineGradutionTextSize="26px"
-            app:lineMax="100"
-            app:lineMin="0"
-            app:lineTitleColor="#9b9b9b"
-            app:lineTitleTextSize="32px"
-            app:lineWidth="8px"
-            app:linedensity="5"
-            app:maxColnum="5" />
+        <!--        <com.gas.test.utils.view.line.LineChart-->
+        <!--            android:id="@+id/lineChart3"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="200dp"-->
+        <!--            app:circleClickOffset="12px"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/pieView"-->
+        <!--            app:lineGradutaionColor="#d2d2d2"-->
+        <!--            app:lineGradutaionWidth="2px"-->
+        <!--            app:lineGradutionTextSize="26px"-->
+        <!--            app:lineMax="100"-->
+        <!--            app:lineMin="0"-->
+        <!--            app:lineTitleColor="#9b9b9b"-->
+        <!--            app:lineTitleTextSize="32px"-->
+        <!--            app:lineWidth="8px"-->
+        <!--            app:linedensity="5"-->
+        <!--            app:maxColnum="5" />-->
         <com.gas.test.utils.view.animlinechart.AnimLineChartView
-            app:layout_constraintTop_toBottomOf="@+id/lineChart3"
             android:id="@+id/lineChart4"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            app:layout_constraintTop_toBottomOf="@+id/pieView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
