@@ -848,7 +848,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         return dip * density + 0.5f * if (dip >= 0) 1 else -1
     }
 
-    fun Int.transformAlpha(alpha: Float): Int {
+    private fun Int.transformAlpha(alpha: Float): Int {
         require(alpha in 0f..1.0f)
         return ((this shl 8) shr 8) + ((0xff * alpha).toInt() shl 24)
     }

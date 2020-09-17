@@ -72,7 +72,7 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.ZHIHU_HOMEACTIVITY)
         }
         btnModule2.setOnClickListener {
-            navigation(activity, RouterHub.GANK_MAINACTIVITY)
+            navigation(activity, RouterHub.GANK_HOMEACTIVITY)
         }
         btnModule3.setOnClickListener {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)

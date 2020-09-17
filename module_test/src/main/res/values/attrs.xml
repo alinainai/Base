@@ -102,4 +102,44 @@
         <attr name="maxColnum" format="integer" />
     </declare-styleable>
 
+    <declare-styleable name="QMUITextAppearance">
+        <attr name="android:textSize"/>
+        <attr name="android:textColor"/>
+        <attr name="android:textColorHint"/>
+        <attr name="android:textStyle"/>
+        <attr name="android:typeface"/>
+        <attr name="textAllCaps"/>
+        <attr name="android:shadowColor"/>
+        <attr name="android:shadowDy"/>
+        <attr name="android:shadowDx"/>
+        <attr name="android:shadowRadius"/>
+    </declare-styleable>
+
+    <attr name="QMUITabSegmentStyle" format="reference"/>
+
+    <declare-styleable name="QMUITabSegment">
+        <attr name="qmui_tab_indicator_height" format="dimension"/>
+        <attr name="qmui_tab_has_indicator" format="boolean"/>
+        <attr name="qmui_tab_indicator_top" format="boolean"/>
+        <attr name="qmui_tab_indicator_with_follow_content" format="boolean"/>
+        <attr name="android:textSize"/>
+        <attr name="qmui_tab_normal_text_size" format="dimension"/>
+        <attr name="qmui_tab_selected_text_size" format="dimension"/>
+        <attr name="qmui_tab_mode" format="enum">
+            <enum name="scrollable" value="0"/>
+            <enum name="fixed" value="1"/>
+        </attr>
+        <attr name="qmui_tab_space" format="dimension"/>
+        <attr name="qmui_tab_icon_position" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="top" value="1"/>
+            <enum name="right" value="2"/>
+            <enum name="bottom" value="3"/>
+        </attr>
+        <attr name="qmui_tab_select_no_animation" format="boolean" />
+    </declare-styleable>
+
+    <attr name="qmui_skin_support_tab_normal_color" format="color|reference"/>
+    <attr name="qmui_skin_support_tab_selected_color" format="color|reference"/>
+
 </resources>

@@ -16,18 +16,33 @@
             app:closeHide="true"
             app:dividerHide="true"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:titleText="干货列表" />
+            app:titleText="懒加载" />
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/magic_indicator"
+            android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/public_tab_height"
+            android:layout_height="50dp"
             android:background="@color/public_white"
             app:tabIndicatorColor="@color/public_black"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/public_blue"
-            app:tabTextAppearance="@style/public_style_tab_text_size"
-            app:tabTextColor="@color/public_black" />
+            app:tabSelectedTextColor="@color/public_black"
+
+            app:tabTextColor="@color/public_text_black_deep" />
+<!--        app:tabTextAppearance="@style/public_style_tab_text_size"-->
+
+<!--        <com.gas.test.utils.view.tablayout.QMUITabSegment2-->
+<!--            android:id="@+id/tabSegment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@color/public_white"-->
+<!--            />-->
+
+        <com.gas.test.utils.view.tablayoutkt.QMUITabSegment2
+            android:id="@+id/tabSegment"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/public_white"
+            />
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -38,8 +53,8 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +69,7 @@
             android:background="@drawable/public_title_shape_shadow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/viewpager" />
+            app:layout_constraintTop_toTopOf="@+id/viewPager" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -31,10 +31,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies["annotations"]
     annotationProcessor rootProject.ext.dependencies["annotations"]
-    //support
-    api(rootProject.ext.dependencies["support-v4"]) {
-        exclude module: 'annotations'
-    }
     api(rootProject.ext.dependencies["appcompat"]) {
         exclude module: 'annotations'
     }

@@ -30,9 +30,6 @@ dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.annotation:annotation:1.1.0'
-    implementation(rootProject.ext.dependencies["support-v4"]) {
-        exclude module: 'sannotations'
-    }
     implementation(rootProject.ext.dependencies["appcompat"]) {
         exclude module: 'annotations'
     }

@@ -52,7 +52,7 @@ class CircleImageView : AppCompatImageView {
     private var mBorderOverlay = false
     private var mDisableCircularTransformation = false
 
-    constructor(context: Context?) : super(context) {
+    constructor(context: Context) : super(context) {
         init()
     }
 

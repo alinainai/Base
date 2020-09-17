@@ -7,7 +7,9 @@ import com.base.baseui.ui.base.FragmentContainerActivity
 import com.gas.test.R
 import com.gas.test.utils.fragment.asynclist.AsyncListFragment
 import com.gas.test.utils.fragment.customview.CustomViewFragment
+import com.gas.test.utils.fragment.lazyload.LazyLoadParentFragment
 import com.lib.commonsdk.constants.RouterHub
+import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.test_activity_trans.*
 
 @Route(path = RouterHub.TEST_HOMEACTIVITY)
@@ -25,6 +27,11 @@ class TransActivity : AppCompatActivity() {
         addOrAttachFragment1.setOnClickListener {
 //            FragmentContainerActivity.startActivity(this, AsyncListFragment::class.java)
             FragmentContainerActivity.startActivity(this, CustomViewFragment::class.java)
+        }
+        addOrAttachFragment2.setOnClickListener {
+            debug("addOrAttachFragment2 click")
+//            FragmentContainerActivity.startActivity(this, AsyncListFragment::class.java)
+            FragmentContainerActivity.startActivity(this, LazyLoadParentFragment::class.java)
         }
         addOrAttachFragment1.text=getString(R.string.money_unit_special,3.29)
         addOrAttachFragment2.text=getString(R.string.money_unit_special_dollar,3.29)
