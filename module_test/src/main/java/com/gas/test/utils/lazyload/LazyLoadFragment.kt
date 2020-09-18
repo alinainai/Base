@@ -25,7 +25,7 @@ abstract class LazyLoadFragment :LogFragment(){
 
     override fun onResume() {
         super.onResume()
-        if (isFirstLoad) {
+        if (isFirstLoad&&!isHidden) {
             // 将数据加载逻辑放到onResume()方法中
             lazyInit()
             isFirstLoad = false

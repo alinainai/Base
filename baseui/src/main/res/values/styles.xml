@@ -23,6 +23,7 @@
 
 
     <style name="public_style_tab_text_size">
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/public_tab_text_size</item>
     </style>
 

@@ -18,17 +18,19 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:titleText="懒加载" />
 
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:background="@color/public_white"
-            app:tabIndicatorColor="@color/public_black"
+            app:tabIndicatorColor="@color/public_blue"
             app:tabMode="scrollable"
-            app:tabSelectedTextColor="@color/public_black"
-
-            app:tabTextColor="@color/public_text_black_deep" />
-<!--        app:tabTextAppearance="@style/public_style_tab_text_size"-->
+            app:tabSelectedTextColor="@color/public_blue"
+            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorFullWidth="false"
+            app:tabTextAppearance="@style/public_style_tab_text_size"
+            app:tabTextColor="@color/public_black" />
 
 <!--        <com.gas.test.utils.view.tablayout.QMUITabSegment2-->
 <!--            android:id="@+id/tabSegment"-->
@@ -37,12 +39,12 @@
 <!--            android:background="@color/public_white"-->
 <!--            />-->
 
-        <com.gas.test.utils.view.tablayoutkt.QMUITabSegment2
-            android:id="@+id/tabSegment"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@color/public_white"
-            />
+<!--        <com.gas.test.utils.view.tablayoutkt.QMUITabSegment2-->
+<!--            android:id="@+id/tabSegment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@color/public_white"-->
+<!--            />-->
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -53,7 +55,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.viewpager2.widget.ViewPager2
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="0dp"
             android:layout_height="0dp"
