@@ -38,7 +38,7 @@
     </declare-styleable>
 
     <declare-styleable name="AnimLineChartView" tools:ignore="ResourceName">
-        <attr name="circleWidth" format="dimension"/>
+        <attr name="chartLineWidth" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="AnimPieChartView" tools:ignore="ResourceName">

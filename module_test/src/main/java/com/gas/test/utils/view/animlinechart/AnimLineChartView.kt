@@ -23,7 +23,6 @@ import com.gas.test.utils.view.animlinechart.bean.LineInChart
 import com.gas.test.utils.view.animlinechart.bean.XLabel
 import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.lib.commonsdk.kotlin.extension.app.debug
-import com.lib.commonsdk.kotlin.extension.withAlpha
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlin.math.abs
 
@@ -86,7 +85,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     //平滑曲线
-    private var besselCalculator = com.gas.test.utils.view.animlinechart.BesselCalculator()
+    private var besselCalculator = BesselCalculator()
 
     //圆圈点击
     var circleClickIndex = intArrayOf(-1, -1)
@@ -112,7 +111,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     var min = 0f
     var max = 100f
     var density = 5
-    var valueToTag:(Float)->String = {value->value.toInt().toString()}
+    var valueToTag: (Float) -> String = { value -> value.toInt().toString() }
+    var drawXLabelLine = true //是否绘制xLabel竖线（不包含最大最小值的外框线）
+    var drawValueLabelRule: (Int) -> Boolean = { _ -> true } //绘制y轴value标签的规则
 
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AnimLineChartView)
@@ -160,27 +161,31 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         canvas.drawLine(availableLeft, availableTop, availableLeft, availableBottom, gridLinePaint) //左
         canvas.drawLine(factRectRight, availableTop, factRectRight, availableBottom, gridLinePaint) //右
 
-        //最大 最小刻度
-        val graduationTextMaxY = availableTop + peerCoordinateHeight * 0
-        val currentGraduationMAx: String = max.toInt().toString()
-        val currentGraduationMaxTextWidth = titlePaint.measureText(currentGraduationMAx)
-        canvas.drawText(currentGraduationMAx,
-                availableLeft - currentGraduationMaxTextWidth - leftMargin,
-                graduationTextMaxY + gridVerTextSize / 2,
-                titlePaint)
-        val graduationTextMinY = availableTop + peerCoordinateHeight * density
-        val currentGraduationMin: String = min.toInt().toString()
-        val currentGraduationMinTextWidth = titlePaint.measureText(currentGraduationMin)
-        canvas.drawText(currentGraduationMin,
-                availableLeft - currentGraduationMinTextWidth - leftMargin,
-                graduationTextMinY + gridVerTextSize / 2,
-                titlePaint)
-        gridLinePaint.strokeWidth = gridLineWidth
-
         //横向line
         for (i in 0 until density) {
             val currentY = availableTop + i * peerCoordinateHeight
             canvas.drawLine(availableLeft, currentY, factRectRight, currentY, gridLinePaint)
+        }
+        //最大刻度
+        val graduationTextMaxY = availableTop + peerCoordinateHeight * 0
+        val currentGraduationMAx: String = max.toInt().toString()
+        val currentGraduationMaxTextWidth = titlePaint.measureText(currentGraduationMAx)
+        if (drawValueLabelRule(density)) {
+            canvas.drawText(currentGraduationMAx,
+                    availableLeft - currentGraduationMaxTextWidth - leftMargin,
+                    graduationTextMaxY + gridVerTextSize / 2,
+                    titlePaint)
+        }
+
+        //最小刻度
+        val graduationTextMinY = availableTop + peerCoordinateHeight * density
+        val currentGraduationMin: String = min.toInt().toString()
+        val currentGraduationMinTextWidth = titlePaint.measureText(currentGraduationMin)
+        if (drawValueLabelRule(0)) {
+            canvas.drawText(currentGraduationMin,
+                    availableLeft - currentGraduationMinTextWidth - leftMargin,
+                    graduationTextMinY + gridVerTextSize / 2,
+                    titlePaint)
         }
 
         //数字刻度 不包含最大最小
@@ -190,18 +195,22 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             val graduationTextY = availableTop + peerCoordinateHeight * i
             val currentGraduation: String = (max - i * peerDiff).toInt().toString()
             val currentGraduationTextWidth = titlePaint.measureText(currentGraduation)
-            canvas.drawText(currentGraduation,
-                    availableLeft - currentGraduationTextWidth - leftMargin,
-                    graduationTextY + gridVerTextSize / 2,
-                    titlePaint)
+            if (drawValueLabelRule(density - i)) {
+                canvas.drawText(currentGraduation,
+                        availableLeft - currentGraduationTextWidth - leftMargin,
+                        graduationTextY + gridVerTextSize / 2,
+                        titlePaint)
+            }
         }
+
+        gridLinePaint.strokeWidth = gridLineWidth
 
         //竖向line
         var verLineNum = xLabels.size - 2
         if (xLabels.size == 1) {
             verLineNum = 1
         }
-        if (verLineNum > 0) {
+        if (verLineNum > 0 && drawXLabelLine) {
             for (i in 1..verLineNum) {
                 val currentX = availableLeft + i * peerWidth
                 canvas.drawLine(currentX, availableTop, currentX, availableBottom, gridLinePaint)
@@ -836,7 +845,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if(animator.isRunning){
+        if (animator.isRunning) {
             animator.cancel()
         }
     }
