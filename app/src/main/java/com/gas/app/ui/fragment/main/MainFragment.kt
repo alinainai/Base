@@ -1,10 +1,16 @@
 package com.gas.app.ui.fragment.main
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
 import com.base.componentservice.gank.service.GankInfoService
@@ -15,18 +21,16 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.app.R
-
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.lib.commonsdk.constants.RouterHub
-import com.lib.commonsdk.kotlin.extension.app.debug
-import com.lib.commonsdk.kotlin.extension.app.info
 import com.lib.commonsdk.kotlin.extension.app.navigation
-import com.lib.commonsdk.kotlin.extension.time.format
-import com.lib.commonsdk.kotlin.extension.time.toLocalDateTime
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
-import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -38,6 +42,7 @@ import java.util.*
  * ================================================
  */
 class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
+
 
     @JvmField
     @Autowired(name = RouterHub.ZHIHU_SERVICE_ZHIHUINFOSERVICE)
@@ -64,6 +69,13 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
+    private val timeDownNum1 = 10L
+    private val timeDownNum2 = 10L
+    private val holderCompositeSubscription = CompositeDisposable()
+    private val compositeSubscription = CompositeDisposable().apply {
+        add(holderCompositeSubscription)
+    }
+
     override fun initData(savedInstanceState: Bundle?) {
         ARouter.getInstance().inject(this)
         loadModuleInfo()
@@ -78,17 +90,65 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-            val date = Date()
-            info(date.toLocalDateTime().format())
-            info(date.toLocalDateTime().hour)
+            holderCompositeSubscription.clear()
+            holderCompositeSubscription.add(Observable.intervalRange(0, timeDownNum1, 0, 1, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ l ->
+                        btnPlugin2.text = (l).toString()
+                    }, { e -> e.printStackTrace() }, { }))
+            holderCompositeSubscription.add(Observable.intervalRange(0, timeDownNum2, 0, 1, TimeUnit.SECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ l ->
+                        btnPlugin3.text = (l).toString()
+                    }, { e -> e.printStackTrace() }, { }))
+//            val date = Date()
+//            info(date.toLocalDateTime().format())
+//            info(date.toLocalDateTime().hour)
         }
         btnPlugin2.setOnClickListener {
-            debug("点击")
+            tvReportTypeViewNum1.text = textFormatStyle(0)
+//            holderCompositeSubscription.clear()
+//            debug("点击")
         }
         btnPlugin3.setOnClickListener {
-
+            tvReportTypeViewNum1.text = textFormatStyle(521)
+//            compositeSubscription.clear()
+//            initEventTitle()
         }
 
+    }
+
+    private fun textFormatStyle(num:Int): SpannableStringBuilder{
+        return  if(num>0){
+            val startStr = num.toString()
+            val endFix = "条"
+            val str = "$startStr$endFix"
+            SpannableStringBuilder(str).apply {
+                setSpan(ForegroundColorSpan(Color.parseColor("#2B2D2F")), 0, startStr.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(AbsoluteSizeSpan(30, true), 0, startStr.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(ForegroundColorSpan(Color.parseColor("#7A7E8E")), startStr.length, str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                setSpan(AbsoluteSizeSpan(9, true), startStr.length, str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }else{
+             SpannableStringBuilder("暂无消息")
+        }
+    }
+
+    private fun initEventTitle() {
+        llContent.removeAllViews()
+        val list = listOf("第一条Preconditions.checkNotNull(message) setData(data: Any?) setData(data: Any?)",
+                " 第二条 ArmsUtils.snackbarText(message) Preconditions.checkNotNull(intent)",
+                "第三条 ArmsUtils.startActivity(intent) Preconditions.checkNotNull(intent)",
+                "第四条 Preconditions.checkNotNull(message) setData(data: Any?) setData(data: Any?)")
+        list.forEach { title ->
+            val itemView = View.inflate(context, R.layout.layout_event_title, null)
+            val tvTitle = itemView.findViewById<TextView>(R.id.tvReportMessage)
+            tvTitle.text = title
+            val drawable = resources.getDrawable(R.drawable.shape_report_message_ring_blue)
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            tvTitle.setCompoundDrawables(drawable, null, null, null)
+            llContent.addView(itemView)
+        }
     }
 
     override fun setData(data: Any?) {}

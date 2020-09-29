@@ -21,68 +21,71 @@ open class LogFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "onAttach: ")
+        Log.d("LogFragment: $TAG", "onAttach: ")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate: ")
+        Log.d("LogFragment: $TAG", "onCreate: ")
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated: ")
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG, "onCreateView: ")
+        Log.d("LogFragment: $TAG", "onCreateView: ")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d("LogFragment: $TAG", "onViewCreated: ")
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d(TAG, "onActivityCreated: ")
+        Log.d("LogFragment: $TAG", "onActivityCreated: ")
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart: ")
+        Log.d("LogFragment: $TAG", "onStart: ")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume: ")
+        Log.d("LogFragment: $TAG", "onResume: ")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.d(TAG, "onPause: ")
+        Log.d("LogFragment: $TAG", "onPause: ")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "onStop: ")
+        Log.d("LogFragment: $TAG", "onStop: ")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Log.d(TAG, "onDestroyView: ")
+        Log.d("LogFragment: $TAG", "onDestroyView: ")
     }
+
+
 
     override fun onDetach() {
         super.onDetach()
-        Log.d(TAG, "onDetach: ")
+        Log.d("LogFragment: $TAG", "onDetach: ")
     }
+
+
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        Log.d(TAG, "onHiddenChanged:hidden-->$hidden")
+        Log.d("LogFragment: $TAG", "onHiddenChanged:hidden-->$hidden")
     }
 
 }

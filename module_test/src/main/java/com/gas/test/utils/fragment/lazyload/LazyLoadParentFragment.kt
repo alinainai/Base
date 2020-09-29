@@ -15,6 +15,7 @@ import com.gas.test.R
 import com.gas.test.utils.fragment.lazyload.child.*
 import com.gas.test.utils.lazyload.LazyLoadPagerAdapter
 import com.gas.test.utils.lazyload.LazyStatePageAdapter
+import com.gas.test.utils.lazyload.LazyStatePageAdapterV2
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_lazy_load_parent.*
 
@@ -26,6 +27,8 @@ class LazyLoadParentFragment : BaseFragment<IPresenter>() {
     private val fragments = mutableListOf<Fragment>()
     private var mAdapter: LazyLoadPagerAdapter? = null
     private var mAdapter2: LazyStatePageAdapter? = null
+    private var mAdapterV2: LazyStatePageAdapterV2? = null
+    private val fragmentNames = mutableListOf<Class<out Fragment>>()
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -37,12 +40,18 @@ class LazyLoadParentFragment : BaseFragment<IPresenter>() {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        fragments.add(AFragment.newInstance())
-        fragments.add(BFragment.newInstance())
-        fragments.add(CFragment.newInstance())
-        fragments.add(DFragment.newInstance())
-        fragments.add(EFragment.newInstance())
-        fragments.add(FFragment.newInstance())
+//        fragments.add(AFragment.newInstance())
+//        fragments.add(BFragment.newInstance())
+//        fragments.add(CFragment.newInstance())
+//        fragments.add(DFragment.newInstance())
+//        fragments.add(EFragment.newInstance())
+//        fragments.add(FFragment.newInstance())
+        fragmentNames.add(AFragment::class.java)
+        fragmentNames.add(BFragment::class.java)
+        fragmentNames.add(CFragment::class.java)
+        fragmentNames.add(DFragment::class.java)
+        fragmentNames.add(EFragment::class.java)
+        fragmentNames.add(FFragment::class.java)
         titles.add("我家门口大眼")
         titles.add("客厅卫士")
         titles.add("食堂监控")
@@ -50,8 +59,10 @@ class LazyLoadParentFragment : BaseFragment<IPresenter>() {
         titles.add("学校大门口")
         titles.add("餐厅")
         mAdapter2 = LazyStatePageAdapter(fragmentManager!!, fragments, titles)
-        viewPager.adapter = mAdapter2
-        viewPager.offscreenPageLimit = fragments.size - 1
+        mAdapterV2 = LazyStatePageAdapterV2(fragmentManager!!, fragmentNames, titles)
+        viewPager.adapter = mAdapterV2
+//        viewPager.adapter = mAdapter2
+//        viewPager.offscreenPageLimit = fragments.size - 1
 //        ViewUtils.setIndicatorWidth(tabLayout, 10)
         tabLayout.setupWithViewPager(viewPager)
         initTabView()
@@ -168,6 +179,11 @@ class LazyLoadParentFragment : BaseFragment<IPresenter>() {
     }
 
     override fun setData(data: Any?) {
+    }
+
+    override fun onDestroyView() {
+
+        super.onDestroyView()
     }
 
 }

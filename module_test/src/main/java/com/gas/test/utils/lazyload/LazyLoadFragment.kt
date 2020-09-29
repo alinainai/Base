@@ -9,17 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 
-abstract class LazyLoadFragment :LogFragment(){
+abstract class LazyLoadFragment :Fragment(){
     private var isFirstLoad = true // 是否第一次加载
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getContentViewId(), null)
     }
+
+
+
+
 
     abstract fun getContentViewId(): Int
 
@@ -33,7 +34,6 @@ abstract class LazyLoadFragment :LogFragment(){
     }
 
     open fun lazyInit(){
-        Log.d(TAG, "initData: ")
     }
 
 
