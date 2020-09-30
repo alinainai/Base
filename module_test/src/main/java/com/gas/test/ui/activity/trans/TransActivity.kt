@@ -12,7 +12,7 @@ import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.test_activity_trans.*
 
-@Route(path = RouterHub.TEST_HOMEACTIVITY)
+
 class TransActivity : AppCompatActivity() {
 
     companion object {

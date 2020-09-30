@@ -5,8 +5,13 @@
     <application>
         <activity
             android:name=".ui.activity.trans.TransActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/transparent_activity_style" />
+
+        <activity
+            android:name=".ui.activity.trans.TestActivity"
+            android:screenOrientation="portrait"
+           />
+
         <meta-data
             android:name="com.gas.test.app.GlobalConfiguration"
             android:value="ClientConfigModule" />
