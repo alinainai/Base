@@ -3,6 +3,7 @@ package com.gas.test.utils.fragment.asynclist.utils
 import android.os.SystemClock
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.lib.commonsdk.kotlin.extension.app.debug
 import com.lib.commonsdk.kotlin.extension.app.dpToPx
 
 class RecyclerScrollHelper(private val recycler: RecyclerView, private val topHeight: Int = 0) {
@@ -55,6 +56,7 @@ class RecyclerScrollHelper(private val recycler: RecyclerView, private val topHe
                 mListState = newState
                 if (mPendingToScrollPosition != RecyclerView.NO_POSITION && newState == RecyclerView.SCROLL_STATE_IDLE) {
                     scrollTo(mPendingToScrollPosition)
+                    debug("scrollTo $mPendingToScrollPosition")
                     mPendingToScrollPosition = RecyclerView.NO_POSITION
                 }
                 if (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) {

@@ -1,4 +1,4 @@
-package com.gas.test.utils.listadapter
+package com.gas.test.utils.fragment.asynclist.listadapter
 
 import android.os.Handler
 import android.os.Looper

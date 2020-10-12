@@ -1,4 +1,4 @@
-package com.gas.test.utils.listadapter
+package com.gas.test.utils.fragment.asynclist.listadapter
 
 import androidx.recyclerview.widget.AdapterListUpdateCallback
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +11,7 @@ import java.util.*
  */
 abstract class BaseListViewAdapter<VH : RecyclerView.ViewHolder, M> protected constructor(diffCallback: DiffUtil.ItemCallback<M>) : RecyclerView.Adapter<VH>() {
 
-    private val mHelper = CallBackAsyncListDiffer(AdapterListUpdateCallback(this), CallBackAsyncListDiffer.CallbackAsyncDifferConfig.Builder(diffCallback).build())
+    private val mHelper by lazy { CallBackAsyncListDiffer(AdapterListUpdateCallback(this), CallBackAsyncListDiffer.CallbackAsyncDifferConfig.Builder(diffCallback).build()) }
 
     val data: List<M>
         get() = mHelper.currentList

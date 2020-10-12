@@ -19,6 +19,8 @@ interface IModeHelper {
         const val VIEW_TYPE_EVENT_ITEM = 0x01
         // 普通事件类型 grid 风格
         const val VIEW_TYPE_EVENT_ITEM_GRID = 0x02
+        const val VIEW_TYPE_EVENT_ITEM_TIME = 0x03
+        const val VIEW_TYPE_EVENT_ITEM_DATE = 0x04
     }
     var displayMode: DisPlayMode
 }
