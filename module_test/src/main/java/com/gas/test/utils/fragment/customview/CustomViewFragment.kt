@@ -297,21 +297,22 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             drawXLabelLine = false
             drawValueLabelRule={value->value%2!=0}
             val title = listOf(
-                    XLabel("0.5", ""),
-                    XLabel("1", "1"),
-                    XLabel("1.5", ""),
-                    XLabel("2", "2"),
-                    XLabel("2.5", ""),
-                    XLabel("3", "3"),
-                    XLabel("3.5", ""),
-                    XLabel("4", "4"),
-                    XLabel("4.5", ""),
-                    XLabel("5", "5"),
-                    XLabel("5.5", ""),
-                    XLabel("6", "6"),
-                    XLabel("6.5", ""),
-                    XLabel("7", "7"),
-                    XLabel("7.5", "")
+                    XLabel("1", "1")
+//                    XLabel("0.5", ""),
+//                    XLabel("1", "1"),
+//                    XLabel("1.5", ""),
+//                    XLabel("2", "2"),
+//                    XLabel("2.5", ""),
+//                    XLabel("3", "3"),
+//                    XLabel("3.5", ""),
+//                    XLabel("4", "4"),
+//                    XLabel("4.5", ""),
+//                    XLabel("5", "5"),
+//                    XLabel("5.5", ""),
+//                    XLabel("6", "6"),
+//                    XLabel("6.5", ""),
+//                    XLabel("7", "7"),
+//                    XLabel("7.5", "")
             )
             setTitles(title) //底部标题,需与折线数据长度一致
             onLabelClickListener = object : OnLabelClickListener {

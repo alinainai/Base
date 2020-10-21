@@ -8,6 +8,7 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.utils.fragment.asynclist.AsyncListFragment
+import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.activity_test.*
@@ -28,9 +29,10 @@ class TestActivity : BaseActivity<IPresenter>() {
         }
         btnModule2.setOnClickListener {
 
-            val list1 = mutableListOf<String>("11","12","13","14")
-            val list2 = mutableListOf<String>("11","12","13","14")
-            debug("btnModule2=${list1 == list2}")
+            FragmentContainerActivity.startActivity(this, CustomViewFragment::class.java)
+//            val list1 = mutableListOf<String>("11","12","13","14")
+//            val list2 = mutableListOf<String>("11","12","13","14")
+//            debug("btnModule2=${list1 == list2}")
 
         }
         btnModule3.setOnClickListener {
