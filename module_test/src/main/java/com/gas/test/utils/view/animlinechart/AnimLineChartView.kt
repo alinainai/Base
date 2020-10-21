@@ -32,7 +32,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     companion object {
         val ANIMATOR_MIN_AND_MAX = intArrayOf(0, 100)
-        const val DURATION = 800L
+        const val DURATION = 500L
         const val SCROLL_DURATION = 500
         const val DATA_CLICK_OFFSET = 20
         val INIT_X_LABELS = listOf(XLabel("0", ""),
@@ -109,8 +109,8 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     var onLabelClickListener: OnLabelClickListener? = null
     var isScrolling = false
     var min = 0f
-    var max = 100f
-    var density = 5
+    var max = 35f
+    var density = 7
     var valueToTag: (Float) -> String = { value -> value.toInt().toString() }
     var drawXLabelLine = true //是否绘制xLabel竖线（不包含最大最小值的外框线）
     var drawValueLabelRule: (Int) -> Boolean = { _ -> true } //绘制y轴value标签的规则
@@ -220,7 +220,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         //xLabel
         val offset = titleTextSize / 2.toFloat()
         val titleCount = xLabels.size
-        val rectPadding = 8F.coerceAtMost(titleTextSize / 2F)
+        val rectPadding = 8F.coerceAtMost(titleTextSize / 2F)+10
         if (titleCount == 1) {
             val currentTitleWidth = titlePaint.measureText(xLabels[0].title)
             val titleCenterX = availableLeft + peerWidth
@@ -292,6 +292,12 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 tagCircles.add(point)
                 canvas.drawCircle(point.x, point.y, outRadius, circlePaint)
                 circlePaint.color = Color.parseColor("#FFFFFFFF")
+                canvas.drawCircle(point.x, point.y, innerRadius, circlePaint)
+            }
+            if(circleClickIndex[1] != i){
+                circlePaint.color = lineColor
+                val innerRadius = innerCircleRadius/2
+                point.color = lineColor
                 canvas.drawCircle(point.x, point.y, innerRadius, circlePaint)
             }
         }
@@ -392,6 +398,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         //circle click
         val titleCount = xLabels.size
         val points = mutableListOf<Point>()
+        validDataLines.clear()
         //1列的情况
         if (titleCount == 1) {
             dataLines.forEach { line ->
@@ -458,7 +465,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 while (j < besselPoints.size) {
                     if (j == 0) {
                         path.moveTo(besselPoints[j].x, besselPoints[j].y)
-                    } else path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
+                    } else {
+                        path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
+                    }
                     j += 3
                 }
             }
@@ -510,6 +519,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     fun clearData() {
         dataLines.clear()
+        validDataLines.clear()
+        animatorLineAndCircleList.clear()
+        invalidate()
     }
 
     private fun startAnimation() {
@@ -540,17 +552,19 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         })
         animator.removeAllUpdateListeners()
         for (peer in validDataLines) {
-            val lineAndCircle = LineInChart(peer.circlePoints, peer.lineColor)
-            lineAndCircle.path.moveTo(peer.circlePoints[0].x, peer.circlePoints[0].y)
-            val start = floatArrayOf(0.0f)
-            val pathMeasure = PathMeasure(peer.path, false)
-            animator.addUpdateListener(AnimatorUpdateListener { animation ->
-                val animatorValue = animation.animatedValue as Float / (ANIMATOR_MIN_AND_MAX[1] - ANIMATOR_MIN_AND_MAX[0]) * pathMeasure.length
-                pathMeasure.getSegment(start[0], animatorValue, lineAndCircle.path, false)
-                start[0] = animatorValue
-                invalidate()
-            })
-            animatorLineAndCircleList.add(lineAndCircle)
+            if (peer.circlePoints.isNotEmpty()) {
+                val lineAndCircle = LineInChart(peer.circlePoints, peer.lineColor)
+                lineAndCircle.path.moveTo(peer.circlePoints[0].x, peer.circlePoints[0].y)
+                val start = floatArrayOf(0.0f)
+                val pathMeasure = PathMeasure(peer.path, false)
+                animator.addUpdateListener(AnimatorUpdateListener { animation ->
+                    val animatorValue = animation.animatedValue as Float / (ANIMATOR_MIN_AND_MAX[1] - ANIMATOR_MIN_AND_MAX[0]) * pathMeasure.length
+                    pathMeasure.getSegment(start[0], animatorValue, lineAndCircle.path, false)
+                    start[0] = animatorValue
+                    postInvalidateOnAnimation()
+                })
+                animatorLineAndCircleList.add(lineAndCircle)
+            }
         }
     }
 
@@ -599,7 +613,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
     private fun showDataLine() {
         animatorLineAndCircleList.clear()
-        animatorLineAndCircleList.addAll(dataLines)
+        animatorLineAndCircleList.addAll(validDataLines)
         invalidate()
     }
 
@@ -626,22 +640,19 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     }
 
     init {
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
         attrs?.let {
             initAttrs(it)
         }
-
-        setLayerType(LAYER_TYPE_SOFTWARE, null)
         isClickable = true
-
         gridLinePaint.isAntiAlias = true
         linePaint.isAntiAlias = true
         titlePaint.isAntiAlias = true
-
         circlePaint.isAntiAlias = true
         circlePaint.style = Paint.Style.FILL
         circlePaint.textSize = tagTextSize.toFloat()
         mDetector = GestureDetectorCompat(context, MyGestureListener())
-
+        setPaint()
     }
 
     override fun computeScroll() {
@@ -664,8 +675,6 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 val currentY = event.y
                 val distanceX = currentX - lastX
                 val distanceY = currentY - lastY
-                debug("move--$isScrolling")
-                debug("distanceX$distanceX--distanceY$distanceY")
                 if (!isScrolling) {
                     if (kotlin.math.abs(distanceX) < kotlin.math.abs(distanceY)) {
                         requestDisallowIntercept(false)
@@ -686,8 +695,6 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 val currentY = event.y
                 val distanceX = currentX - lastX
                 val distanceY = currentY - lastY
-                debug("move--$isScrolling")
-                debug("distanceX$distanceX--distanceY$distanceY")
                 if (!isScrolling) {
                     if (abs(distanceX) < abs(distanceY)) {
                         requestDisallowIntercept(false)

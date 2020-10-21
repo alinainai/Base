@@ -14,22 +14,30 @@ class BesselCalculator {
      */
     fun computeBesselPoints(points: List<Point>): List<Point> {
         val besselPoints: MutableList<Point> = ArrayList()
-        val count = points.size
-        besselPoints.clear()
-        for (i in 0 until count) {
-            if (i == 0 || i == count - 1) {
-                computeUnMonotonePoints(i, points, besselPoints)
-            } else {
-                val p0 = points[i - 1]
-                val p1 = points[i]
-                val p2 = points[i + 1]
-                if ((p1.y - p0.y) * (p1.y - p2.y) >= 0) { // 极值点
-                    computeUnMonotonePoints(i, points, besselPoints)
-                } else {
-                    computeMonotonePoints(i, points, besselPoints)
+        if(points.isNotEmpty()){
+            if(points.size==1){
+                besselPoints.add(points[0])
+            }else{
+                val count = points.size
+                besselPoints.clear()
+                for (i in 0 until count) {
+                    if (i == 0 || i == count - 1) {
+                        computeUnMonotonePoints(i, points, besselPoints)
+                    } else {
+                        val p0 = points[i - 1]
+                        val p1 = points[i]
+                        val p2 = points[i + 1]
+                        if ((p1.y - p0.y) * (p1.y - p2.y) >= 0) { // 极值点
+                            computeUnMonotonePoints(i, points, besselPoints)
+                        } else {
+                            computeMonotonePoints(i, points, besselPoints)
+                        }
+                    }
                 }
             }
+
         }
+
         return besselPoints
     }
 
