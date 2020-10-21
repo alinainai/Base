@@ -57,7 +57,7 @@ public class RefreshLayout extends ViewGroup {
     private boolean isAutoRefresh;
 
     // 刷新成功，显示500ms成功状态再滚动回顶部
-    private Runnable delayToScrollTopRunnable = new Runnable() {
+    private final Runnable delayToScrollTopRunnable = new Runnable() {
         @Override
         public void run() {
             //自动滚动到初始位置
@@ -65,7 +65,7 @@ public class RefreshLayout extends ViewGroup {
         }
     };
 
-    private Runnable autoRefreshRunnable = new Runnable() {
+    private final Runnable autoRefreshRunnable = new Runnable() {
         @Override
         public void run() {
             // 标记当前是自动刷新状态，finishScroll调用时需要判断
