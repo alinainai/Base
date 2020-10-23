@@ -39,9 +39,7 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     private String mSubtype;//分类
 
 
-    @BindView(R2.id.type_item_recycler)
     RecyclerView mRecyclerView;
-    @BindView(R2.id.type_item_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;//进度条
 
     @Inject
@@ -49,6 +47,13 @@ public class ClassifyFragment extends LazyLoadFragment<ClassifyPresenter> implem
     @Inject
     ClassifyAdapter mClassifyAdapter;
 
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mRecyclerView = getView().findViewById(R.id.type_item_recycler);
+        mSwipeRefreshLayout = getView().findViewById(R.id.type_item_refresh);
+    }
 
     @Override
     public void setupFragmentComponent(@NonNull AppComponent appComponent) {

@@ -12,6 +12,11 @@
             android:screenOrientation="portrait"
            />
 
+        <activity
+            android:name=".ui.activity.album.BrowseAlbumActivity"
+            android:screenOrientation="portrait"
+           />
+
         <meta-data
             android:name="com.gas.test.app.GlobalConfiguration"
             android:value="ClientConfigModule" />

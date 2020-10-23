@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 .inject(this);
     }
 
+
     @Override
     public int initView(@Nullable Bundle savedInstanceState) {
         mContext = this;

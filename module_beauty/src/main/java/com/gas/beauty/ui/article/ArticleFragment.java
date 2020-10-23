@@ -44,11 +44,8 @@ import butterknife.BindView;
 public class ArticleFragment extends LazyLoadFragment<ArticlePresenter> implements ArticleContract.View {
 
 
-    @BindView(R2.id.article_titleView)
     TitleView mTitleView;
-    @BindView(R2.id.magic_indicator)
     TabLayout mTabLayout;
-    @BindView(R2.id.viewpager)
     ViewPager mViewPager;
 
     @Inject
@@ -69,10 +66,17 @@ public class ArticleFragment extends LazyLoadFragment<ArticlePresenter> implemen
         return inflater.inflate(R.layout.gank_fragment_article, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTitleView = getView().findViewById(R.id.article_titleView);
+        mTabLayout = getView().findViewById(R.id.magic_indicator);
+        mViewPager = getView().findViewById(R.id.viewpager);
+    }
+
 
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
-
     }
 
     @Override

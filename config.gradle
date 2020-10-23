@@ -1,10 +1,10 @@
 ext {
 
     android = [
-            compileSdkVersion: 29,
+            compileSdkVersion: 30,
             buildToolsVersion: "29.0.2",
             minSdkVersion    : 19,
-            targetSdkVersion : 28,
+            targetSdkVersion : 30,
             versionCode      : 5,
             versionName      : "1.4.2"
     ]
@@ -13,30 +13,30 @@ ext {
             supportSdkVersion              : '28.0.0',
             constraintVersion              : '1.1.3',
             retrofitSdkVersion             : '2.9.0',
-            dagger2SdkVersion              : '2.26',
+            dagger2SdkVersion              : '2.29.1',
             glideSdkVersion                : '4.11.0',
-            butterknifeSdkVersion          : '10.2.0',
+            butterknifeSdkVersion          : '10.2.3',
 
             rxlifecycleSdkVersion          : '1.0',
             rxlifecycle2SdkVersion         : '2.2.2',
-            canarySdkVersion               : '2.2',
-            constraintLayoutVersion        : '2.0.1',
+            canarySdkVersion               : '2.5',
+            constraintLayoutVersion        : '2.0.2',
             appcompatVersion               : '1.2.0',
             annotationsVersion               : '1.1.0',
             cardviewVersion                : '1.0.0',
             paletteVersion                 : '1.1.0',
-            materialVersion                : '1.1.0',
+            materialVersion                : '1.2.1',
             recyclerviewVersion            : '1.1.0',
             gsonVersion                    : '2.8.6',
 
             //test
-            junitVersion                   : '4.13',
+            junitVersion                   : '4.13.1',
             espressoSdkVersion             : '3.3.0',
             androidJunitVersion            : '1.1.2',
 
 
             //kotlin版本号
-            kotlinVersion                  : '1.3.71',
+            kotlinVersion                  : '1.4.10',
             coreKtxVersion                 : '1.3.0',
 
             //okhttp版本号
@@ -45,7 +45,7 @@ ext {
             okhttpLoggingInterceptorVersion: '4.9.0',
 
             //rx相关
-            rxjavaVersion                  : '2.2.14',
+            rxjavaVersion                  : '2.2.20',
             rxandroidVersion               : '2.1.1',
 
             greenDaoVersion                : '3.2.2',
@@ -89,7 +89,7 @@ ext {
             "nineoldandroids"           : "com.nineoldandroids:library:2.4.0",
             "paginate"                  : "com.github.markomilos:paginate:0.5.1",
             "vlayout"                   : "com.alibaba.android:vlayout:1.1.0@aar",
-            "lottie"                    : "com.airbnb.android:lottie:3.4.2",
+            "lottie"                    : "com.airbnb.android:lottie:3.4.4",
             "autolayout"                : "com.zhy:autolayout:1.4.5",
             "flexbox"                   : "com.google.android:flexbox:1.0.0",
             "viewpager2"                : "androidx.viewpager2:viewpager2:1.0.0",
@@ -112,18 +112,18 @@ ext {
             "dagger2-android-support"   : "com.google.dagger:dagger-android-support:${version["dagger2SdkVersion"]}",
             "dagger2-compiler"          : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
             "dagger2-android-processor" : "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
-            "eventbus"                  : "org.greenrobot:eventbus:3.1.1",
+            "eventbus"                  : "org.greenrobot:eventbus:3.2.0",
             "androideventbus"           : "org.simple:androideventbus:1.0.5.1",
             "gson"                      : "com.google.code.gson:gson:${version["gsonVersion"]}",
-            "multidex"                  : 'androidx.multidex:multidex:2.0.0',
+            "multidex"                  : 'androidx.multidex:multidex:2.0.1',
             "javax.annotation"          : "javax.annotation:jsr250-api:1.0",
             "arouter"                   : "com.alibaba:arouter-api:1.5.0",
             "arouter-compiler"          : "com.alibaba:arouter-compiler:1.2.2",
             "greenDao"                  : "org.greenrobot:greendao:${version["greenDaoVersion"]}",
-            "zxing"                     : "com.google.zxing:core:3.3.0",
+            "zxing"                     : "com.google.zxing:core:3.4.1",
 
             //date
-            "threetenabp"                     : "com.jakewharton.threetenabp:threetenabp:1.1.1",
+            "threetenabp"                     : "com.jakewharton.threetenabp:threetenabp:1.2.4",
 
             //test
             "junit"                     : "junit:junit:${version["junitVersion"]}",

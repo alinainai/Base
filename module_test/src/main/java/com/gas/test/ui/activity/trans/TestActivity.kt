@@ -7,6 +7,8 @@ import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
+import com.gas.test.ui.fragment.coordinate.CoordinateFragment
+import com.gas.test.ui.fragment.scopestorage.ScopeStorageFragment
 import com.gas.test.utils.fragment.asynclist.AsyncListFragment
 import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
@@ -30,6 +32,7 @@ class TestActivity : BaseActivity<IPresenter>() {
         btnModule2.setOnClickListener {
 
             FragmentContainerActivity.startActivity(this, CustomViewFragment::class.java)
+
 //            val list1 = mutableListOf<String>("11","12","13","14")
 //            val list2 = mutableListOf<String>("11","12","13","14")
 //            debug("btnModule2=${list1 == list2}")
@@ -38,12 +41,14 @@ class TestActivity : BaseActivity<IPresenter>() {
         btnModule3.setOnClickListener {
 
 
+            FragmentContainerActivity.startActivity(this, ScopeStorageFragment::class.java)
 
         }
         btnPlugin1.setOnClickListener {
-            val list1 = mutableListOf<String>("11","12","13","14")
-            val list2 = mutableListOf<String>("11","13","12","14")
-            debug("btnPlugin1=${list1 == list2}")
+            FragmentContainerActivity.startActivity(this, CoordinateFragment::class.java)
+//            val list1 = mutableListOf<String>("11","12","13","14")
+//            val list2 = mutableListOf<String>("11","13","12","14")
+//            debug("btnPlugin1=${list1 == list2}")
         }
         btnPlugin2.setOnClickListener {
             val list1 = mutableListOf<String>("11","12","13")

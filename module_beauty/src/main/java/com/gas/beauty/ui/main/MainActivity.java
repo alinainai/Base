@@ -28,9 +28,7 @@ import butterknife.BindView;
 @Route(path = RouterHub.GANK_MAINACTIVITY)
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    @BindView(R2.id.type_item_recyclerview)
     RecyclerView mRecyclerView;
-    @BindView(R2.id.type_item_swipfreshlayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Inject
@@ -58,7 +56,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     @Override
     public void initData(@Nullable Bundle savedInstanceState) {
 
-
+        mRecyclerView = findViewById(R.id.type_item_recyclerview);
+        mSwipeRefreshLayout = findViewById(R.id.type_item_swipfreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
         mSwipeRefreshLayout.setOnRefreshListener(this);
