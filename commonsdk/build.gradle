@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -53,5 +54,24 @@ dependencies {
     api rootProject.ext.dependencies["kotlin-stdlib"]
     api rootProject.ext.dependencies["threetenabp"]
     api 'apache-codec:commons-codec:1.2'
+    // Preferences DataStore
+    api "androidx.datastore:datastore-preferences:1.0.0-alpha03"
+    // Proto DataStore
+    api "androidx.datastore:datastore-core:1.0.0-alpha03"
+
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9'
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+
+    //room
+    api "androidx.room:room-runtime:2.2.5"
+    kapt "androidx.room:room-compiler:2.2.5" // use kapt for Kotlin
+    // optional - RxJava support for Room
+    api "androidx.room:room-rxjava2:2.2.5"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    api "androidx.room:room-guava:2.2.5"
+    // optional - Coroutines support for Room
+    api "androidx.room:room-coroutines:2.1.0-alpha04"
+    // Test helpers
+    api "androidx.room:room-testing:2.2.5"
 
 }

@@ -50,6 +50,7 @@ ext {
 
             greenDaoVersion                : '3.2.2',
             ankoVersion                    : '0.10.8',
+            roomVersion                    : '2.2.5',
 
 
     ]

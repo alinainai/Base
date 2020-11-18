@@ -2,5 +2,7 @@
     <string name="test_app_name">测试组件</string>
     <string name="money_unit_special" translatable="false" tools:ignore="ResourceName">¥%1$1.2f</string>
     <string name="money_unit_special_dollar" translatable="false" tools:ignore="ResourceName">$%1$1.2f</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
