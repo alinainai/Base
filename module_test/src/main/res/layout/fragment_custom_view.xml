@@ -48,7 +48,6 @@
         <!--            app:linedensity="5"-->
         <!--            app:maxColnum="5" />-->
         <com.gas.test.utils.view.animlinechart.AnimLineChartView
-            android:background="@color/test_blue"
             android:id="@+id/lineChart4"
             android:layout_width="match_parent"
             android:layout_height="200dp"

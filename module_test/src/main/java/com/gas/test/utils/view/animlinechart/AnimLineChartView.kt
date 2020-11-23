@@ -25,6 +25,8 @@ import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.lib.commonsdk.kotlin.extension.app.debug
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlin.math.abs
+import kotlin.math.asin
+import kotlin.math.sin
 
 
 class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)
@@ -41,6 +43,8 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 XLabel("3", ""),
                 XLabel("4", ""))
     }
+
+    var pointClickCallBack: ((Int, Int) -> Unit)? = null
 
     private var widthInit = 0
     private var heightInit = 0
@@ -60,6 +64,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private val linePaint = Paint()
     private var lineStrokeWidth = dp2Px(2F)
     private var innerCircleRadius = lineStrokeWidth
+    private var triangleHeight = dp2Px(3F)
 
     private val titlePaint = Paint()
     private var titleColor = Color.parseColor("#A1AAB4")
@@ -93,7 +98,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private var tagPaddingVer = dp2Px(6F)
     private var tagPaddingHor = dp2Px(7F)
     private var tagMargin = dp2Px(5F)
-    var tagCornerRadius = dp2Px(2f)
+    var tagCornerRadius = dp2Px(10F)
     var tagBorderWidth = 1f
     private var tagTextSize = dp2Px(12F)
     private var tagTextColor = Color.parseColor("#6D7075")
@@ -220,7 +225,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
         //xLabel
         val offset = titleTextSize / 2.toFloat()
         val titleCount = xLabels.size
-        val rectPadding = 8F.coerceAtMost(titleTextSize / 2F)+10
+        val rectPadding = 8F.coerceAtMost(titleTextSize / 2F) + 10
         if (titleCount == 1) {
             val currentTitleWidth = titlePaint.measureText(xLabels[0].title)
             val titleCenterX = availableLeft + peerWidth
@@ -280,8 +285,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     // 绘制点
     private fun drawCircleRing(lineIndex: Int, list: List<DataPoint>, lineColor: Int, canvas: Canvas) {
         val isDrawTag = lineIndex == circleClickIndex[0]
-        val circleCount = list.size
-        for (i in 0 until circleCount) {
+        for (i in list.indices) {
             val point = list[i]
             //当前选中的 dataPoint 显示tag
             if (circleClickIndex[1] == i && isDrawTag) {
@@ -293,10 +297,9 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
                 canvas.drawCircle(point.x, point.y, outRadius, circlePaint)
                 circlePaint.color = Color.parseColor("#FFFFFFFF")
                 canvas.drawCircle(point.x, point.y, innerRadius, circlePaint)
-            }
-            if(circleClickIndex[1] != i){
+            } else {
                 circlePaint.color = lineColor
-                val innerRadius = innerCircleRadius/2
+                val innerRadius = innerCircleRadius / 2
                 point.color = lineColor
                 canvas.drawCircle(point.x, point.y, innerRadius, circlePaint)
             }
@@ -307,7 +310,6 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
     private fun drawTagWithBack(canvas: Canvas) {
         if (tagCircles.isEmpty())
             return
-        val sanjiaoHeight = getCircleRadius(innerCircleRadius)
         for (point in tagCircles) {
             val currentX = point.x
             val currentY = point.y
@@ -326,7 +328,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
 
             //tag矩形
             val tagLeft = currentX - tagWidth / 2
-            val tagRectBottom = currentY - tagMargin - sanjiaoHeight
+            val tagRectBottom = currentY - tagMargin - triangleHeight
             val tagRectTop = tagRectBottom - tagRectHeight
             val tagRight = tagLeft + tagWidth
             circlePaint.style = Paint.Style.FILL
@@ -335,6 +337,16 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             canvas.drawRoundRect(RectF().apply {
                 set(tagLeft, tagRectTop, tagRight, tagRectBottom)
             }, tagCornerRadius, tagCornerRadius, circlePaint)
+
+            //三角指针
+            val triangleSideLength =   triangleHeight/sin(Math.toRadians(45.0))
+            debug(triangleSideLength)
+            val path = Path()
+            path.moveTo(((tagLeft + tagRight) / 2 - triangleSideLength / 2).toFloat(), tagRectBottom) //1
+            path.lineTo(((tagLeft + tagRight) / 2 + triangleSideLength / 2).toFloat(), tagRectBottom) //2
+            path.lineTo((tagLeft + tagRight) / 2, tagRectBottom + triangleHeight) //3
+            path.close()
+            canvas.drawPath(path, circlePaint)
 
             //num
             circlePaint.style = Paint.Style.FILL
@@ -460,15 +472,33 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             val path = Path()
             if (titleCount > 1) {
                 //贝塞尔曲线
-                val besselPoints = besselCalculator.computeBesselPoints(points)
+//                val besselPoints = besselCalculator.computeBesselPoints(points)
+//                var j = 0
+//                while (j < besselPoints.size) {
+//                    if (j == 0) {
+//                        path.moveTo(besselPoints[j].x, besselPoints[j].y)
+//                    } else {
+//                        path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
+//                    }
+//                    j += 3
+//                }
+                //ios 贝塞尔算法保持一致（不是很顺，也不很滑）
                 var j = 0
-                while (j < besselPoints.size) {
+                val prePoint = Point()
+                val nowPoint = Point()
+                while (j < points.size) {
                     if (j == 0) {
-                        path.moveTo(besselPoints[j].x, besselPoints[j].y)
+                        path.moveTo(points[j].x, points[j].y)
+                        prePoint.x = points[j].x
+                        prePoint.y = points[j].y
                     } else {
-                        path.cubicTo(besselPoints[j - 2].x, besselPoints[j - 2].y, besselPoints[j - 1].x, besselPoints[j - 1].y, besselPoints[j].x, besselPoints[j].y)
+                        nowPoint.x = points[j].x
+                        nowPoint.y = points[j].y
+                        path.cubicTo((nowPoint.x + prePoint.x) / 2, prePoint.y, (nowPoint.x + prePoint.x) / 2, nowPoint.y, points[j].x, points[j].y)
+                        prePoint.x = points[j].x
+                        prePoint.y = points[j].y
                     }
-                    j += 3
+                    j++
                 }
             }
             validDataLines.add(LineInChart(circlePoints, lineColor).apply { this.path = path })
@@ -791,6 +821,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             if (pressCircleIndex[0] != -1 && pressCircleIndex[1] != -1) {
                 circleClickIndex = pressCircleIndex
                 invalidate()
+                pointClickCallBack?.invoke(pressCircleIndex[0], pressCircleIndex[1])
                 return true
             } else {
                 circleClickIndex = intArrayOf(-1, -1)
