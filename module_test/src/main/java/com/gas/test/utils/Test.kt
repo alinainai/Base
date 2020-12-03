@@ -7,6 +7,6 @@ import java.util.*
 object Test {
     @JvmStatic
     fun main(args: Array<String>) {
-
+        val a= 1
     }
 }
