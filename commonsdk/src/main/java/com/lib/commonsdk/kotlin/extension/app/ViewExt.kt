@@ -1,15 +1,15 @@
 package com.lib.commonsdk.kotlin.extension.app
 
-import android.content.res.Resources
-import android.util.DisplayMetrics
-import androidx.annotation.Dimension
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.lib.commonsdk.kotlin.extension.file.*
 
@@ -23,12 +23,6 @@ import com.lib.commonsdk.kotlin.extension.file.*
  * [toggleVisibility]           : 在 visible 和 invisible 之间切换
  * [showSmoothly]               : 渐渐的显示出这个View,而不是突然出现
  * [hideSmoothly]               : 移动文件或目录
- * [textSizePx]                    : 删除文件或目录
- * [deleteAllInDir]             : 删除目录下所有内容
- * [deleteFilesInDir]           : 删除目录下所有文件
- * [deleteFilesInDirWithFilter] : 删除目录下所有过滤的文件
- * [listFilesInDirWithFilter]   : 获取目录下所有过滤的文件
- * [getFileCharsetSimple]       : 简单获取文件编码格式
  * ================================================
  */
 fun <T : View> T.visible() = apply {
@@ -120,6 +114,7 @@ fun <V : View> V.doWhenAttachedToWindow(detached: ((View) -> Unit)? = null, atta
             override fun onViewAttachedToWindow(view: View) {
                 attached(view)
             }
+
             override fun onViewDetachedFromWindow(view: View) {
                 detached?.let { it(view) }
             }
@@ -139,4 +134,67 @@ var <T : Drawable> T.boundSize: Int
 var <T : Drawable> T.tint: Int
     get() = throw java.lang.UnsupportedOperationException("cannot get tint for Drawable")
     set(v) = DrawableCompat.setTint(this, v)
+
+
+fun TextView.topIcon(@DrawableRes res: Int = 0, ctx: Context = app) = apply {
+    if (res != 0) {
+        ContextCompat.getDrawable(ctx, res)?.let { drawable ->
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            setCompoundDrawables(null, drawable, null, null)
+        }
+    } else {
+        setCompoundDrawables(null, null, null, null)
+    }
+}
+
+fun TextView.startIcon(@DrawableRes res: Int = 0, ctx: Context = app) = apply {
+    if (res != 0) {
+        ContextCompat.getDrawable(ctx, res)?.let { drawable ->
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            setCompoundDrawables(drawable, null, null, null)
+        }
+    } else {
+        setCompoundDrawables(null, null, null, null)
+    }
+}
+
+fun TextView.endIcon(@DrawableRes res: Int = 0, ctx: Context = app) = apply {
+    if (res != 0) {
+        ContextCompat.getDrawable(ctx, res)?.let { drawable ->
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            setCompoundDrawables(null, null, drawable, null)
+        }
+    } else {
+        setCompoundDrawables(null, null, null, null)
+    }
+}
+
+fun TextView.bottomIcon(@DrawableRes res: Int = 0, ctx: Context = app) = apply {
+    if (res != 0) {
+        ContextCompat.getDrawable(ctx, res)?.let { drawable ->
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            setCompoundDrawables(null, null, null, drawable)
+        }
+    } else {
+        setCompoundDrawables(null, null, null, null)
+    }
+}
+
+/**
+ * 渐渐的隐藏这个View,而不是突然消失
+ */
+fun <T : View> T.hideQuickly() = apply {
+    val alphaAnimator = ObjectAnimator.ofFloat(this, View.ALPHA, 1.0F, 0.0F)
+    alphaAnimator.addUpdateListener {
+        this.alpha = it.animatedValue as Float
+    }
+
+    alphaAnimator.addListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator?) {
+            this@apply.gone()
+        }
+    })
+    alphaAnimator.duration = 300L
+    alphaAnimator.start()
+}
 
