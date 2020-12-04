@@ -8,34 +8,25 @@ import android.view.View
 import android.view.WindowManager
 import com.base.baseui.R
 
-class CommonBottomDialog : Dialog {
-    constructor(context: Context, theme: Int) : super(context!!, theme) {}
-    constructor(context: Context) : super(context) {}
+class CommonBottomDialog(context: Context, theme: Int = R.style.public_common_dialog) : Dialog(context, theme) {
 
-    interface OnDialogClickListener {
-        fun onDismiss() {}
-    }
 
     class Builder {
-        private var mCancelable = true
-        private var mDialogClickListener: OnDialogClickListener? = null
-        fun setCancelable(cancelable: Boolean): Builder {
+        var mCancelable = true
+        var mDialogClickListener: DialogInterface.OnDismissListener? = null
+        fun cancelable(cancelable: Boolean) = apply {
             mCancelable = cancelable
-            return this
         }
 
-        fun setDialogClickListener(listener: OnDialogClickListener): Builder {
+        fun onDismissClickListener(listener: DialogInterface.OnDismissListener) = apply {
             mDialogClickListener = listener
-            return this
         }
 
-        fun create(context: Context,view :View): CommonBottomDialog {
+        fun create(context: Context, view: View): CommonBottomDialog {
             val dialog = CommonBottomDialog(context, R.style.public_common_dialog)
             dialog.setContentView(view)
-            dialog.setOnDismissListener {
-                if (mDialogClickListener != null) {
-                    mDialogClickListener!!.onDismiss()
-                }
+            mDialogClickListener?.let {
+                dialog.setOnDismissListener(mDialogClickListener)
             }
             dialog.setCanceledOnTouchOutside(mCancelable)
             //点击back键可以取消dialog

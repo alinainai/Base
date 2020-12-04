@@ -1,5 +1,7 @@
 package com.gas.app.ui.fragment.main
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.baseui.dialog.ItemSelectDialog
 import com.base.componentservice.gank.service.GankInfoService
 import com.base.componentservice.test.service.TestInfoService
 import com.base.componentservice.zhihu.service.ZhihuInfoService
@@ -25,6 +28,7 @@ import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.lib.commonsdk.constants.RouterHub
+import com.lib.commonsdk.kotlin.extension.app.debug
 import com.lib.commonsdk.kotlin.extension.app.navigation
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -90,30 +94,15 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-            holderCompositeSubscription.clear()
-            holderCompositeSubscription.add(Observable.intervalRange(0, timeDownNum1, 0, 1, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ l ->
-                        btnPlugin2.text = (l).toString()
-                    }, { e -> e.printStackTrace() }, { }))
-            holderCompositeSubscription.add(Observable.intervalRange(0, timeDownNum2, 0, 1, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ l ->
-                        btnPlugin3.text = (l).toString()
-                    }, { e -> e.printStackTrace() }, { }))
-//            val date = Date()
-//            info(date.toLocalDateTime().format())
-//            info(date.toLocalDateTime().hour)
+            showBatteryOptimizeTimeDialog(context as Activity,"10"){item->
+                debug(item.key)
+            }
         }
         btnPlugin2.setOnClickListener {
             tvReportTypeViewNum1.text = textFormatStyle(0)
-//            holderCompositeSubscription.clear()
-//            debug("点击")
         }
         btnPlugin3.setOnClickListener {
             tvReportTypeViewNum1.text = textFormatStyle(521)
-//            compositeSubscription.clear()
-//            initEventTitle()
         }
 
     }
@@ -176,6 +165,19 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         }
     }
 
+
+    fun showBatteryOptimizeTimeDialog(ctx: Context, selectKey:String, action:(item: ItemSelectDialog.DefaultItemSelect)->Unit){
+        val items= mutableListOf(
+                ItemSelectDialog.DefaultItemSelect("10$","10"),
+                ItemSelectDialog.DefaultItemSelect("15$111","15"),
+                ItemSelectDialog.DefaultItemSelect("20$111","20"),
+                ItemSelectDialog.DefaultItemSelect("30$111","30"),
+                ItemSelectDialog.DefaultItemSelect("60$111","60")
+        )
+        val dialog = ItemSelectDialog(ctx,"一个title",items,selectKey,action)
+        dialog.show()
+    }
+    
     companion object {
         @JvmStatic
         fun newInstance(): MainFragment {

@@ -29,6 +29,13 @@ fun <T : View> T.visible() = apply {
     visibility = View.VISIBLE
 }
 
+fun <T : View> T.visible(show: Boolean) = apply {
+    visibility = if (show)
+        View.VISIBLE
+    else
+        View.GONE
+}
+
 fun <T : View> T.invisible() = apply {
     visibility = View.INVISIBLE
 }
