@@ -28,13 +28,10 @@ import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
 import com.lib.commonsdk.constants.RouterHub
-import com.lib.commonsdk.kotlin.extension.app.debug
-import com.lib.commonsdk.kotlin.extension.app.navigation
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.lib.commonsdk.extension.app.debug
+import com.lib.commonsdk.extension.app.navigation
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
-import java.util.concurrent.TimeUnit
 
 
 /**

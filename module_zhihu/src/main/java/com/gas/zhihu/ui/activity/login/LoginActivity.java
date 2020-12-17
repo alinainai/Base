@@ -20,7 +20,7 @@ import com.gas.zhihu.app.ZhihuConstants;
 
 import com.gas.zhihu.ui.fragment.mine.MineFragment;
 import com.lib.commonsdk.constants.RouterHub;
-import com.lib.commonsdk.kotlin.extension.app.AppExtKt;
+import com.lib.commonsdk.extension.app.AppExtKt;
 import com.lib.commonsdk.utils.FastClickUtils;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;

@@ -22,10 +22,9 @@ import com.gas.test.utils.view.animlinechart.bean.DataPoint
 import com.gas.test.utils.view.animlinechart.bean.LineInChart
 import com.gas.test.utils.view.animlinechart.bean.XLabel
 import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 import org.jetbrains.anko.collections.forEachWithIndex
 import kotlin.math.abs
-import kotlin.math.asin
 import kotlin.math.sin
 
 

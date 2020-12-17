@@ -15,7 +15,7 @@ import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
 import com.gas.app.utils.RemoteActivity
 import com.gas.app.utils.getProcessName
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 /**

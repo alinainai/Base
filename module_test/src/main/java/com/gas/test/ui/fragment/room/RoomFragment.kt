@@ -1,7 +1,6 @@
 package com.gas.test.ui.fragment.room
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,7 @@ import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_coroutines_layout.*
 import kotlinx.coroutines.*
 

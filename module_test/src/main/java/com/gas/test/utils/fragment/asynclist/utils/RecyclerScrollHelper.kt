@@ -3,8 +3,8 @@ package com.gas.test.utils.fragment.asynclist.utils
 import android.os.SystemClock
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lib.commonsdk.kotlin.extension.app.debug
-import com.lib.commonsdk.kotlin.extension.app.dpToPx
+import com.lib.commonsdk.extension.app.debug
+import com.lib.commonsdk.extension.app.dpToPx
 
 class RecyclerScrollHelper(private val recycler: RecyclerView, private val topHeight: Int = 0) {
 

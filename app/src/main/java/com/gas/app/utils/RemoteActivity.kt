@@ -2,10 +2,9 @@ package com.gas.app.utils
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.gas.app.R
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 import kotlinx.android.synthetic.main.activity_remote.*
 
 

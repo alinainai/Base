@@ -2,14 +2,11 @@ package com.gas.test.ui.activity.trans
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.alibaba.android.arouter.facade.annotation.Route
 import com.base.baseui.ui.base.FragmentContainerActivity
 import com.gas.test.R
-import com.gas.test.utils.fragment.asynclist.AsyncListFragment
 import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.gas.test.utils.fragment.lazyload.LazyLoadParentFragment
-import com.lib.commonsdk.constants.RouterHub
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 import kotlinx.android.synthetic.main.test_activity_trans.*
 
 

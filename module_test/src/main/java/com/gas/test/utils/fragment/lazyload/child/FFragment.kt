@@ -2,7 +2,7 @@ package com.gas.test.utils.fragment.lazyload.child
 
 import com.gas.test.R
 import com.gas.test.utils.lazyload.LazyLoadFragment
-import com.lib.commonsdk.kotlin.extension.app.debug
+import com.lib.commonsdk.extension.app.debug
 
 class FFragment : LazyLoadFragment() {
 

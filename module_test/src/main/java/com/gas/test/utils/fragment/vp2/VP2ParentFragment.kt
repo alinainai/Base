@@ -13,7 +13,6 @@ import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_lazy_load_viewager2.*
 
 

@@ -7,8 +7,8 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.base.lib.di.scope.ActivityScope
 import com.base.lib.mvp.BasePresenter
 import com.gas.app.R
-import com.lib.commonsdk.kotlin.extension.io.closeQuietly
-import com.lib.commonsdk.kotlin.extension.app.getAppVersionName
+import com.lib.commonsdk.extension.io.closeQuietly
+import com.lib.commonsdk.extension.app.getAppVersionName
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

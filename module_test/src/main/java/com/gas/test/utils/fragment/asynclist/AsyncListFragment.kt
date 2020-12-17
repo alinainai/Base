@@ -14,7 +14,6 @@ import com.gas.test.utils.fragment.asynclist.bean.BeanUtils
 import com.gas.test.utils.fragment.asynclist.bean.DataItemBean
 import com.gas.test.utils.fragment.asynclist.utils.RecyclerScrollHelper
 import com.gas.test.utils.fragment.asynclist.utils.RecyclerStickHeaderHelper
-import com.lib.commonsdk.kotlin.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_asynclist.*
 
 class AsyncListFragment : BaseFragment<IPresenter>() {

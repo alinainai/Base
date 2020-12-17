@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.base.baseui.R
-import com.lib.commonsdk.kotlin.extension.app.gone
-import com.lib.commonsdk.kotlin.extension.app.visible
+import com.lib.commonsdk.extension.app.gone
+import com.lib.commonsdk.extension.app.visible
 
 
 class ItemSelectDialog<T : ItemSelectDialog.IItemSelect>(ctx: Context,

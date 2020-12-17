@@ -17,11 +17,8 @@ package com.gas.app.config
 
 import android.app.Application
 import android.content.Context
-import android.os.Process
 import com.base.lib.base.delegate.AppLifecyclers
 import com.gas.app.BuildConfig
-import com.gas.app.utils.getProcessName
-import com.lib.commonsdk.kotlin.extension.app.debug
 import com.lib.commonsdk.kotlin.utils.AppUtils
 
 class AppLifecycleImpl : AppLifecyclers {

@@ -19,7 +19,7 @@ import com.gas.app.utils.AppModuleUtil.startLottieAnimation
 import com.gas.app.utils.AppModuleUtil.stopLottieAnimation
 import com.lib.commonsdk.adapter.AdapterViewPager
 import com.lib.commonsdk.constants.RouterHub
-import com.lib.commonsdk.kotlin.extension.runInTryCatch
+import com.lib.commonsdk.extension.runInTryCatch
 import com.lib.commonsdk.statusbar.StatusBarManager
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
