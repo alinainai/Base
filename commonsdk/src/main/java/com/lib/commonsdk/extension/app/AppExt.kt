@@ -5,11 +5,15 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
+import android.os.Build
 import android.text.TextUtils
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.lib.commonsdk.kotlin.utils.AppUtils
 import com.lib.commonsdk.utils.sp.SPStaticUtils
 import java.io.File
@@ -124,4 +128,27 @@ fun byte2FitMemorySize(byteNum: Long): String {
             String.format(Locale.getDefault(), "%.0fGB", byteNum.toDouble() / 1073741824)
         }
     }
+}
+
+@RequiresApi(Build.VERSION_CODES.M)
+fun Context.getWiFiSsid(): String {
+    var ssid = "unknown id"
+    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.O || Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        val mWifiManager = (applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager)
+        val info = mWifiManager.connectionInfo
+        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            info.ssid
+        } else {
+            info.ssid.replace("\"", "")
+        }
+    } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O_MR1) {
+        val connManager = (applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+        val networkInfo = connManager.activeNetworkInfo
+        if (networkInfo!!.isConnected) {
+            if (networkInfo.extraInfo != null) {
+                return networkInfo.extraInfo.replace("\"", "")
+            }
+        }
+    }
+    return ssid
 }

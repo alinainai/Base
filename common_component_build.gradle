@@ -64,6 +64,10 @@ android {
         abortOnError false
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']

@@ -4,10 +4,12 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.baseui.ui.base.FragmentContainerActivity
 import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
+import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.extension.app.*
 import kotlinx.android.synthetic.main.activity_test.*
@@ -45,6 +47,9 @@ class TestActivity : BaseActivity<IPresenter>() {
             vm.doLogin()
         }
         btnModule2.setOnClickListener {
+            debug("btnModule2")
+            FragmentContainerActivity.startActivity(this, CustomViewFragment::class.java)
+//            debug(getWiFiSsid())
         }
         btnModule3.setOnClickListener {
 

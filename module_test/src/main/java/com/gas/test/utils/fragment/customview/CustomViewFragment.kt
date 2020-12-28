@@ -291,28 +291,28 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             setLineSmoothness(0.4F)
             allowScroll = false
             min = 0F
-            max = getMaxValueToValid(90).toFloat()
+            max = getMaxValueToValid(2100).toFloat()
             density = 7
             showAnimation = true
             drawXLabelLine = false
             drawValueLabelRule={value->value%2!=0}
             val title = listOf(
-                    XLabel("1", "1")
-//                    XLabel("0.5", ""),
-//                    XLabel("1", "1"),
-//                    XLabel("1.5", ""),
-//                    XLabel("2", "2"),
-//                    XLabel("2.5", ""),
-//                    XLabel("3", "3"),
-//                    XLabel("3.5", ""),
-//                    XLabel("4", "4"),
-//                    XLabel("4.5", ""),
-//                    XLabel("5", "5"),
-//                    XLabel("5.5", ""),
-//                    XLabel("6", "6"),
-//                    XLabel("6.5", ""),
-//                    XLabel("7", "7"),
-//                    XLabel("7.5", "")
+                    XLabel("1", "1"),
+                    XLabel("0.5", ""),
+                    XLabel("1", "1"),
+                    XLabel("1.5", ""),
+                    XLabel("2", "2"),
+                    XLabel("2.5", ""),
+                    XLabel("3", "3"),
+                    XLabel("3.5", ""),
+                    XLabel("4", "4"),
+                    XLabel("4.5", ""),
+                    XLabel("5", "5"),
+                    XLabel("5.5", ""),
+                    XLabel("6", "6"),
+                    XLabel("6.5", ""),
+                    XLabel("7", "7"),
+                    XLabel("7.5", "")
             )
             setTitles(title) //底部标题,需与折线数据长度一致
             onLabelClickListener = object : OnLabelClickListener {
@@ -332,7 +332,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
             )
 
             val linePoint2 = listOf(
-                    DataPoint("1", 80f),
+                    DataPoint("1", 1180f),
                     DataPoint("2", 50f),
                     DataPoint("3", 80.5f),
                     DataPoint("4", 70.8f),
@@ -341,7 +341,7 @@ class CustomViewFragment : BaseFragment<IPresenter>() {
                     DataPoint("7", 95f)
             )
 
-            valueToTag = { value -> "${value.toInt()}条" }
+            valueToTag = { value -> "${value.toInt()}PCS" }
             setLineSmoothness(0.38F)
             addData(LineInChart(linePoint1, Color.parseColor("#6DD400"))) //需与title长度一致
             addData(LineInChart(linePoint2, Color.parseColor("#2177FF")))
