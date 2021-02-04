@@ -19,9 +19,9 @@ import kotlinx.android.synthetic.main.activity_test.*
 class TestActivity : BaseActivity<IPresenter>() {
 
 
-    private val vm by lazy {
-        ViewModelProvider(this).get(LoginVm::class.java)
-    }
+//    private val vm by lazy {
+//        ViewModelProvider(this).get(LoginVm::class.java)
+//    }
 
     override fun setupActivityComponent(appComponent: AppComponent) {
     }
@@ -33,18 +33,18 @@ class TestActivity : BaseActivity<IPresenter>() {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        vm.loginBean.observe(this, object : Observer<LoginBean> {
-            override fun onChanged(t: LoginBean) {
-                /*数据发生变化*/
-                toast(t.message)
-            }
-        })
+//        vm.loginBean.observe(this, object : Observer<LoginBean> {
+//            override fun onChanged(t: LoginBean) {
+//                /*数据发生变化*/
+//                toast(t.message)
+//            }
+//        })
 
 
         btnModule1.setOnClickListener {
-            vm.account = "111"
-            vm.pwd = "123"
-            vm.doLogin()
+//            vm.account = "111"
+//            vm.pwd = "123"
+//            vm.doLogin()
         }
         btnModule2.setOnClickListener {
             debug("btnModule2")
@@ -53,6 +53,7 @@ class TestActivity : BaseActivity<IPresenter>() {
         }
         btnModule3.setOnClickListener {
 
+            list2Map()
         }
         btnPlugin1.setOnClickListener {
 
@@ -64,4 +65,15 @@ class TestActivity : BaseActivity<IPresenter>() {
 
         }
     }
+
+    fun list2Map() {
+        val colors = listOf(Color("red",1),
+                Color("green",2),
+                Color("blue",3))
+        val map =  colors.map { it.name to it }
+        debug(map)
+    }
+
+    data class Color(val name:String, val value:Int)
+
 }
