@@ -1,3 +1,4 @@
 [submodule "flutterlib"]
 	path = flutterlib
 	url = git@github.com:alinainai/flutterlib.git
+	branch = main
