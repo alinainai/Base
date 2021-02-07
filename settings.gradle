@@ -1,1 +1,8 @@
+include ':flutterplugin'
 include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate', ':commonsdk', ':module_zhihu', ':module_beauty', ':module_test'
+setBinding(new Binding([gradle: this]))                                // new
+evaluate(new File(
+//        settingsDir.parentFile,
+        settingsDir,
+        'flutterlib/flutter_gas_plugin/.android/include_flutter.groovy'
+))

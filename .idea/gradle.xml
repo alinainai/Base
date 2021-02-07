@@ -15,6 +15,8 @@
             <option value="$PROJECT_DIR$/commonlib" />
             <option value="$PROJECT_DIR$/commonsdk" />
             <option value="$PROJECT_DIR$/componentservice" />
+            <option value="$PROJECT_DIR$/flutterlib/flutter_gas_plugin/.android/Flutter" />
+            <option value="$PROJECT_DIR$/flutterplugin" />
             <option value="$PROJECT_DIR$/module_beauty" />
             <option value="$PROJECT_DIR$/module_test" />
             <option value="$PROJECT_DIR$/module_zhihu" />
