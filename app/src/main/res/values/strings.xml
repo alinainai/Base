@@ -43,6 +43,9 @@
     <string name="next">Go to next</string>
     <string name="calendar">Calendar</string>
 
+    <string name="little_cloud_data_size"><![CDATA[已使用%s / 剩余<font color="#FF0000">%s</font>可用]]></string>
+
+
 </resources>
 
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.gas.flutterplugin.R
-import io.flutter.app.FlutterActivity
+import io.flutter.app.FlutterFragmentActivity
 import io.flutter.plugin.common.MessageCodec
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
@@ -17,7 +17,7 @@ import io.flutter.view.FlutterMain
  * 作者:liuhc
  * 创建日期：2019-09-04 on 23:30
  */
-class InsertAndroidViewFlutterWidget : FlutterActivity() {
+class InsertAndroidViewFlutterWidget : FlutterFragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //强烈建议放到Application里初始化,初始化一次即可,放这里只是举个例子

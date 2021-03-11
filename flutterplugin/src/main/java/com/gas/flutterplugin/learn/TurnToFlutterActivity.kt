@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gas.flutterplugin.FlutterBridgeActivity
+import com.gas.flutterplugin.PageRouter
 import com.gas.flutterplugin.R
 import kotlinx.android.synthetic.main.activity_turn_to_flutter.*
 
@@ -15,13 +16,9 @@ class TurnToFlutterActivity : AppCompatActivity() {
 
         //使用FlutterFragmentActivity
         page3.setOnClickListener {
-            startActivity(Intent(this, FlutterBridgeActivity::class.java))
+            PageRouter.startFlutterMainDart(this,Bundle())
         }
 
-        //使用FlutterActivity
-        page4.setOnClickListener {
-            startActivity(Intent(this,PageFlutterActivity::class.java))
-        }
 
         //进入Flutter页面演示通过Channel跳转到Activity
         jumpByChannel.setOnClickListener {

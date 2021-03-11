@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.webkit.WebView
 import com.airbnb.lottie.LottieAnimationView
 import com.base.baseui.view.TitleView
+import java.text.DecimalFormat
 
 
 /**
@@ -73,6 +74,32 @@ object AppModuleUtil {
         if (view != null) {
             if (!view.isAnimating) view.postDelayed(Runnable { view.playAnimation() }, 150)
         }
+    }
+
+    fun formatMemorySizeB(size: Long): String? {
+        //获取到的size为：1705230
+        val GB = 1024 * 1024 * 1024 //定义GB的计算常量
+        val MB = 1024 * 1024 //定义MB的计算常量
+        val KB = 1024 //定义KB的计算常量
+        val df = DecimalFormat("0.00") //格式化小数
+        return when {
+            size / GB >= 1 -> {
+                //如果当前Byte的值大于等于1GB
+                "${df.format(size / GB.toFloat())}GB"
+            }
+            size / MB >= 1 -> {
+                //如果当前Byte的值大于等于1MB
+                "${df.format(size / MB.toFloat())}MB"
+            }
+            size / KB >= 1 -> {
+                //如果当前Byte的值大于等于1KB
+                "${df.format(size / KB.toFloat())}KB"
+            }
+            else -> {
+                size.toString() + "B"
+            }
+        }
+
     }
 
 

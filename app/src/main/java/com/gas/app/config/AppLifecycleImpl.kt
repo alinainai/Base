@@ -19,6 +19,7 @@ import android.app.Application
 import android.content.Context
 import com.base.lib.base.delegate.AppLifecyclers
 import com.gas.app.BuildConfig
+import com.gas.flutterplugin.FlutterBridge
 import com.lib.commonsdk.kotlin.utils.AppUtils
 
 class AppLifecycleImpl : AppLifecyclers {

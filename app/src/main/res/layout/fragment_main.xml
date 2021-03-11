@@ -13,6 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="组件化"
+        android:textColor="#666666"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

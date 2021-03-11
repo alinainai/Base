@@ -17,6 +17,7 @@ import com.gas.app.ui.activity.main.mvp.MainContract
 import com.gas.app.ui.activity.main.mvp.MainPresenter
 import com.gas.app.utils.AppModuleUtil.startLottieAnimation
 import com.gas.app.utils.AppModuleUtil.stopLottieAnimation
+import com.gas.flutterplugin.FlutterBridge
 import com.lib.commonsdk.adapter.AdapterViewPager
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.extension.runInTryCatch
@@ -53,6 +54,7 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnCl
 
 
     override fun initView(savedInstanceState: Bundle?): Int {
+        FlutterBridge.init(this.applicationContext)
         //如果你不需要框架帮你设置 setContentView(id) 需要自行设置,请返回 0
         StatusBarManager.fullTransStatusBar(this)
         StatusBarManager.setStatusBarLightMode(this)
@@ -107,7 +109,9 @@ class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, View.OnCl
     }
 
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
 
     private val CURRENTTABINDEX = "current_tab_index"
