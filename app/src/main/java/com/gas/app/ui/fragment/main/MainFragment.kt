@@ -39,14 +39,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
-/**
- * ================================================
- * Description:
- *
- *
- * Created by GasMvpFragment on 11/30/2019 15:27
- * ================================================
- */
 class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
 
 

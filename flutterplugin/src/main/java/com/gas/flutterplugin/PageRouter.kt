@@ -14,7 +14,7 @@ object PageRouter {
         jsonObject.put("title", "FlutterBridgeActivity")
         jsonObject.put("channelName", channelName)
         jsonObject.put("androidMethod", androidMethod)
-        FlutterBridgeActivity.start(ctx,jsonObject.toString())
+        FlutterBridgeActivity.start(ctx, jsonObject.toString())
     }
 
 }

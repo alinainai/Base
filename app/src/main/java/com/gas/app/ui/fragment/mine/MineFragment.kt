@@ -18,11 +18,9 @@ import com.gas.app.utils.getProcessName
 import com.lib.commonsdk.extension.app.debug
 import kotlinx.android.synthetic.main.fragment_mine.*
 
-/**
- * Author:
- * Time: 2016/8/12 14:28
- */
+
 class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
+
 
 
 
@@ -37,10 +35,10 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        btnModule1.setOnClickListener {
-            debug(getProcessName(activity!!.application, Process.myPid()))
+        btnMine1.setOnClickListener {
+            debug(getProcessName(requireActivity().application, Process.myPid()))
         }
-        btnModule2.setOnClickListener {
+        btnMine2.setOnClickListener {
             startActivity(Intent(activity,RemoteActivity::class.java))
         }
 
@@ -51,7 +49,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
     override fun lazyLoadData() {}
     override val wrapContext: Context
-        get() = context!!
+        get() = requireContext()
 
     override fun showMessage(message: String) {}
 
