@@ -86,8 +86,8 @@
 <!--    <dimen name="large_textSize_sidebar" tools:ignore="ResourceName">32sp</dimen>-->
 <!--    <dimen name="textSize_sidebar_choose" tools:ignore="ResourceName">12sp</dimen>-->
     <dimen name="textSize_sidebar_padding" tools:ignore="ResourceName">20sp</dimen>
+
 <!--    <dimen name="radius_sidebar" tools:ignore="ResourceName">20dp</dimen>-->
 <!--    <dimen name="ball_radius_sidebar" tools:ignore="ResourceName">24dp</dimen>-->
-
 
 </resources>

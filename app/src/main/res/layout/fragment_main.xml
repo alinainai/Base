@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="组件一"
+        android:text="知乎"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_componentify" />
 
@@ -32,7 +32,7 @@
         android:id="@+id/btnModule2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="组件二"
+        android:text="干货组件"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnModule1" />
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:text="组件三"
+        android:text="测试组件"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btnModule2" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="功能一"
+        android:text="flutter 界面"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_show" />
 
@@ -87,28 +87,6 @@
         android:text="功能三"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPlugin2" />
-
-    <LinearLayout
-        android:id="@+id/llContent"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlugin3" />
-
-    <TextView
-        android:id="@+id/tvReportTypeViewNum1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center_vertical"
-        android:text="暂无消息"
-        android:textColor="#7A7E8E"
-        android:textSize="9sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPlugin3"
-       />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

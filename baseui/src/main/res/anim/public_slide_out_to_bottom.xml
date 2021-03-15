@@ -4,12 +4,12 @@
     android:shareInterpolator="@android:anim/linear_interpolator"
     tools:ignore="ResourceName">
     <translate
-        android:duration="300"
+        android:duration="@android:integer/config_shortAnimTime"
         android:fromYDelta="0"
         android:toYDelta="100%" />
     <alpha
-        android:duration="300"
+        android:duration="@android:integer/config_shortAnimTime"
         android:fromAlpha="1.0"
-        android:toAlpha="0.2" />
+        android:toAlpha="0.7" />
 </set>
 
