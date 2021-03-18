@@ -18,6 +18,7 @@ import com.gas.app.R
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
+import com.gas.flutterplugin.idlefish.MainActivity
 import com.gas.flutterplugin.learn.TurnToFlutterActivity
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.extension.app.navigation
@@ -66,7 +67,8 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-            startActivity(Intent(context, TurnToFlutterActivity::class.java))
+//            startActivity(Intent(context, TurnToFlutterActivity::class.java))
+            startActivity(Intent(context, MainActivity::class.java))
         }
         btnPlugin2.setOnClickListener {
 

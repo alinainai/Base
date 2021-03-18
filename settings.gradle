@@ -1,8 +1,22 @@
-include ':flutterplugin'
 include ':app', ':commonlib', ':componentservice', ':baseui', ':paginate', ':commonsdk', ':module_zhihu', ':module_beauty', ':module_test'
 setBinding(new Binding([gradle: this]))                                // new
 evaluate(new File(
-//        settingsDir.parentFile,
         settingsDir,
         'flutterlib/flutter_gas_plugin/.android/include_flutter.groovy'
 ))
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+
+def plugins = new Properties()
+def pluginsFile = new File('flutterlib/flutter_gas_plugin', '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
+plugins.each { name, path ->
+    def pluginDirectory = flutterProjectRoot.resolve(path).resolve('android').toFile()
+    include ":$name"
+    project(":$name").projectDir = pluginDirectory
+}
+
+include ':flutterplugin'
+project(':flutterplugin').projectDir = new File('flutterplugin')

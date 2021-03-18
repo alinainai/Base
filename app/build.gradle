@@ -160,7 +160,6 @@ dependencies {
         runtimeOnly project(":module_test")
     }
     implementation rootProject.ext.dependencies["threetenabp"]
-    implementation project(':flutter')
     implementation project(':flutterplugin')
 
 

@@ -15,6 +15,89 @@
             android:windowSoftInputMode="adjustResize"
             />
 
+        <meta-data
+            android:name="com.gas.flutterplugin.app.GlobalConfiguration"
+            android:value="ClientConfigModule" />
+
+        <activity
+            android:name="com.idlefish.flutterboost.containers.FlutterBoostActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" >
+            <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background"/>
+
+        </activity>
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.MainActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" >
+            <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background"/>
+
+        </activity>
+
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.tab.TabMainActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" >
+            <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background"/>
+
+        </activity>
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.tab.TabCustomViewActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize" >
+            <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background"/>
+        </activity>
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.FlutterFragmentPageActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            <meta-data android:name="io.flutter.embedding.android.SplashScreenDrawable" android:resource="@drawable/launch_background"/>
+
+        </activity>
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.NativePageActivity"
+            android:theme="@style/Theme.AppCompat"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density"
+            android:windowSoftInputMode="adjustResize"/>
+
+        <activity
+            android:name="com.gas.flutterplugin.idlefish.TransparencyPageActivity"
+            android:theme="@style/TranTheme.Translucente"
+            android:configChanges="screenSize|smallestScreenSize|orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <meta-data android:name="flutterEmbedding"
+            android:value="2">
+        </meta-data>
     </application>
 
 </manifest>
