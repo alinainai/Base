@@ -2,7 +2,6 @@ package com.gas.app.ui.fragment.mine
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Process
@@ -23,18 +22,16 @@ import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
 import com.gas.app.utils.AppModuleUtil
-import com.gas.app.utils.RemoteActivity
 import com.gas.app.utils.getProcessName
 import com.lib.commonsdk.extension.app.debug
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.lib.commonsdk.kotlin.utils.fromJson
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 
 class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
 
-
-    private var btnMine1:View?= null
+    private var btnMine1: View? = null
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -47,7 +44,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
     override fun initData(savedInstanceState: Bundle?) {
 
-        val textV =  view?.findViewById<TextView>(R.id.showCode)
+        val textV = view?.findViewById<TextView>(R.id.showCode)
 
         view?.findViewById<View>(R.id.btnMine1)?.setOnClickListener {
             debug(getProcessName(requireActivity().application, Process.myPid()))
@@ -68,6 +65,20 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         view?.findViewById<View>(R.id.btnMine4)?.setOnClickListener {
             initEventTitle()
         }
+        view?.findViewById<View>(R.id.btnMine5)?.setOnClickListener {
+
+            debug("DeductTime","getDeductTime=${getDeductTime()}")
+
+
+//            val a: String? = null
+//            debug("test", "test =${"1" == a}")
+        }
+        view?.findViewById<View>(R.id.btnMine6)?.setOnClickListener {
+            val testModel =  fromJson<TestModel>(jsonStr2,TestModel::class.java)
+            debug("testModel",testModel.description)
+
+            debug("testModel",testModel.id)
+        }
     }
 
     override fun setData(data: Any?) {}
@@ -78,6 +89,25 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         get() = requireContext()
 
     override fun showMessage(message: String) {}
+
+
+    val  deduct_time:String? = "1.3"
+    fun getDeductTime(): Long = deduct_time?.let {
+        return@let try {
+            it.toLong()
+        } catch (e: NumberFormatException) {
+            0L
+        }
+    } ?: 0L
+
+    val jsonStr = "{\"id\":1,\"description\":\"Test\"}"
+    val jsonStr1 = "{\"id\":1}"
+    val jsonStr2 = "{\"description\":\"Test\"}"
+
+    data class TestModel(
+            val id: Int = 0,
+            val description: String? = null
+    )
 
     private fun showBatteryOptimizeTimeDialog(ctx: Context, selectKey: String, action: (item: ItemSelectDialog.DefaultItemSelect) -> Unit) {
         val items = mutableListOf(
@@ -90,8 +120,6 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         val dialog = ItemSelectDialog(ctx, "一个title", items, selectKey, action)
         dialog.show()
     }
-
-
 
 
     private fun textFormatStyle(num: Int): SpannableStringBuilder {
