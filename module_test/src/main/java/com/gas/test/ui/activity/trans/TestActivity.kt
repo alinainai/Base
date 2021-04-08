@@ -1,14 +1,14 @@
 package com.gas.test.ui.activity.trans
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.base.baseui.ui.base.FragmentContainerActivity
 import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
+import com.gas.test.learn.lesson001_lifecycle.FirstActivity
 import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.extension.app.*
@@ -45,6 +45,7 @@ class TestActivity : BaseActivity<IPresenter>() {
 //            vm.account = "111"
 //            vm.pwd = "123"
 //            vm.doLogin()
+            startActivity(Intent(this, FirstActivity::class.java))
         }
         btnModule2.setOnClickListener {
             debug("btnModule2")

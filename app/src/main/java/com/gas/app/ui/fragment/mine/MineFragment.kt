@@ -2,6 +2,7 @@ package com.gas.app.ui.fragment.mine
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Process
@@ -31,7 +32,6 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
 
-    private var btnMine1: View? = null
 
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
@@ -76,8 +76,9 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         view?.findViewById<View>(R.id.btnMine6)?.setOnClickListener {
             val testModel =  fromJson<TestModel>(jsonStr2,TestModel::class.java)
             debug("testModel",testModel.description)
-
             debug("testModel",testModel.id)
+        }
+        view?.findViewById<View>(R.id.btnMine7)?.setOnClickListener {
         }
     }
 

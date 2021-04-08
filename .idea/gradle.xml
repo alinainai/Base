@@ -9,7 +9,11 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$USER_HOME$/.pub-cache/git/flutter_boost-738bb13a4c8b5e454beea3cafb2a550a1eb7efb9/android" />
+            <option value="$USER_HOME$/.pub-cache/git/flutter_boost-37c3edcd73217c2135ee2595f95957ccf6c8a1e8/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/flutter_plugin_android_lifecycle-1.0.11/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/image_picker-0.6.7+17/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/video_player-0.10.12+5/android" />
+            <option value="$USER_HOME$/.pub-cache/hosted/pub.flutter-io.cn/video_player_web-0.1.4+1/android" />
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/baseui" />

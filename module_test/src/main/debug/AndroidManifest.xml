@@ -35,13 +35,25 @@
 
         <activity
             android:name=".ui.activity.trans.TestActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.album.BrowseAlbumActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
+
+        <!--activity跳转的 lifecycle 测试 -->
+        <activity
+            android:name=".learn.lesson001_lifecycle.SecondActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".learn.lesson001_lifecycle.FirstActivity"
+            android:screenOrientation="portrait" />
+        <!--activity跳转的 启动模式 测试 -->
+        <activity
+            android:name=".learn.lesson002_lauchmode.AStandardActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.lib.commonsdk.core.GlobalConfiguration"
