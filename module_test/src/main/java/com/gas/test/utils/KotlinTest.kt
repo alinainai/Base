@@ -2,7 +2,6 @@ package com.gas.test.utils
 
 import com.google.gson.Gson
 import kotlinx.coroutines.*
-import org.json.JSONObject
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -11,13 +10,20 @@ internal object KotlinTest {
 
     @JvmStatic
     fun main(args: Array<String>) {
+//
+//        GlobalScope.launch { // 在后台启动一个新的协程并继续
+//            delay(1000L) // 非阻塞的等待 1 秒钟（默认时间单位是毫秒）
+//            println("World!") // 在延迟后打印输出
+//        }
+//        println("Hello,") // 协程已在等待时主线程还在继续
+//        Thread.sleep(2000L) // 阻塞主线程 2 秒钟来保证 JVM 存活
 
-        GlobalScope.launch { // 在后台启动一个新的协程并继续
-            delay(1000L) // 非阻塞的等待 1 秒钟（默认时间单位是毫秒）
-            println("World!") // 在延迟后打印输出
+        val arr = intArrayOf(15, 16,1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 )
+        reOrderArray(arr)
+        for (a in arr) {
+            print("$a ")
         }
-        println("Hello,") // 协程已在等待时主线程还在继续
-        Thread.sleep(2000L) // 阻塞主线程 2 秒钟来保证 JVM 存活
+
     }
 
     private fun logMapData(){
@@ -85,14 +91,14 @@ internal object KotlinTest {
     class DataID1 {
         val errorCode: Int = 0
         val errorMsg: String = ""
-        val data: Map<String,Product> = mutableMapOf()
+        val data: Map<String, Product> = mutableMapOf()
 
         override fun toString(): String {
             return data.toString()
         }
     }
 
-    data class Product(val id:String,val name:String)
+    data class Product(val id: String, val name: String)
 
     fun parseJSONP(jsonp: String): Any {
         val startIndex = jsonp.indexOf("(")
@@ -185,5 +191,38 @@ internal object KotlinTest {
     }
 
     data class Color(val name: String, val value: Int)
+
+    /**
+     * 1.要想保证原有次序，则只能顺次移动或相邻交换。
+     * 2.i从左向右遍历，找到第一个偶数。
+     * 3.j从i+1开始向后找，直到找到第一个奇数。
+     * 4.将[i,...,j-1]的元素整体后移一位，最后将找到的奇数放入i位置，然后i++。
+     * 5.終止條件：j向後遍歷查找失敗。
+     */
+    fun reOrderArray(a: IntArray?) {
+        if (a == null || a.isEmpty()) return
+        var i = 0
+        var j: Int
+        while (i < a.size) {
+            while (i < a.size && !isEven(a[i])) i++
+            j = i + 1
+            while (j < a.size && isEven(a[j])) j++
+            if (j < a.size) {
+                val tmp = a[j]
+                for (j2 in j - 1 downTo i) {
+                    a[j2 + 1] = a[j2]
+                }
+                a[i++] = tmp
+            } else { // 查找失敗
+                break
+            }
+        }
+    }
+
+    fun isEven(n: Int): Boolean {
+        return n and(1) == 0
+    }
+
+
 
 }

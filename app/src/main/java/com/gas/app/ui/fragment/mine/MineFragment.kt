@@ -2,8 +2,9 @@ package com.gas.app.ui.fragment.mine
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.text.Html
@@ -14,7 +15,10 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.base.baseui.dialog.ItemSelectDialog
 import com.base.lib.base.LazyLoadFragment
 import com.base.lib.di.component.AppComponent
@@ -31,8 +35,7 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 
 class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
-
-
+    private var tintTest:ImageView?=null
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMineComponent.builder().appComponent(appComponent).view(this).build().inject(this)
@@ -45,6 +48,8 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     override fun initData(savedInstanceState: Bundle?) {
 
         val textV = view?.findViewById<TextView>(R.id.showCode)
+
+        tintTest = view?.findViewById(R.id.tintTest)
 
         view?.findViewById<View>(R.id.btnMine1)?.setOnClickListener {
             debug(getProcessName(requireActivity().application, Process.myPid()))
@@ -67,19 +72,32 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
         }
         view?.findViewById<View>(R.id.btnMine5)?.setOnClickListener {
 
-            debug("DeductTime","getDeductTime=${getDeductTime()}")
+            debug("DeductTime", "getDeductTime=${getDeductTime()}")
 
 
 //            val a: String? = null
 //            debug("test", "test =${"1" == a}")
         }
         view?.findViewById<View>(R.id.btnMine6)?.setOnClickListener {
-            val testModel =  fromJson<TestModel>(jsonStr2,TestModel::class.java)
-            debug("testModel",testModel.description)
-            debug("testModel",testModel.id)
+            val testModel =  fromJson<TestModel>(jsonStr2, TestModel::class.java)
+            debug("testModel", testModel.description)
+            debug("testModel", testModel.id)
         }
         view?.findViewById<View>(R.id.btnMine7)?.setOnClickListener {
+           val str = "https://jia.360.cn/mall/index_guide.html?from=weixin&scheme=buycloudrecord/mini"
+            val uri = Uri.parse(str)
+            debug("scheme=${uri.getQueryParameter("scheme")}")
         }
+
+        tintTest?.setOnClickListener {
+            tintTest?.let {
+                val drawable: Drawable = it.drawable.mutate() //
+                val wrap: Drawable = DrawableCompat.wrap(drawable)
+                DrawableCompat.setTint(wrap, ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+                it.setImageDrawable(wrap)
+            }
+        }
+
     }
 
     override fun setData(data: Any?) {}
