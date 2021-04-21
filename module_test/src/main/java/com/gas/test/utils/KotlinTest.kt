@@ -24,6 +24,10 @@ internal object KotlinTest {
             print("$a ")
         }
 
+        val reflect = Reflect()
+        reflect.fun1("11")
+        reflect.fun1<String>("11")
+
     }
 
     private fun logMapData(){

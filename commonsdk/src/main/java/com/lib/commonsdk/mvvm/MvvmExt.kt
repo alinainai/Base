@@ -1,4 +1,4 @@
-package com.lib.commonsdk.mvvm.fragment
+package com.lib.commonsdk.mvvm
 
 import java.lang.reflect.ParameterizedType
 

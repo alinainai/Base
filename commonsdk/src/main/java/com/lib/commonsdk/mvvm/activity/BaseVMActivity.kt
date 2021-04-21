@@ -6,7 +6,7 @@ import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.lib.commonsdk.mvvm.BaseViewModel
-import com.lib.commonsdk.mvvm.fragment.getVmClazz
+import com.lib.commonsdk.mvvm.getVmClazz
 
 abstract class BaseVMActivity<VM : BaseViewModel>:BaseActivity<IPresenter>() {
 

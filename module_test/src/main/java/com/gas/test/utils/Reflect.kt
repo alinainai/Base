@@ -1,6 +1,6 @@
-package com.gas.test.utils;
+package com.gas.test.utils
 
-public class Reflect {
-    private <T> void fun1(T t){}
-    private  void fun1(String t){}
+class Reflect {
+    fun <T> fun1(t: T) {}
+    fun fun1(t: String?) {}
 }
