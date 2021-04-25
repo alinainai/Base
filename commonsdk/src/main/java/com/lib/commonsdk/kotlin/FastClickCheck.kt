@@ -1,14 +1,16 @@
-package com.lib.commonsdk.utils;
+package com.lib.commonsdk.kotlin
 
-public class FastClickUtils {
-
-    private static long lastClickTime;
+object FastClickCheck {
+    private var lastClickTime: Long = 0
 
     //防止双点击
-    public synchronized static boolean isFastClick() {
-        long time = System.currentTimeMillis();
-        if (time - lastClickTime < 1000) return true;
-        lastClickTime = time;
-        return false;
-    }
+    @JvmStatic
+    @get:Synchronized
+    val isFastClick: Boolean
+        get() {
+            val time = System.currentTimeMillis()
+            if (time - lastClickTime < 1000) return true
+            lastClickTime = time
+            return false
+        }
 }

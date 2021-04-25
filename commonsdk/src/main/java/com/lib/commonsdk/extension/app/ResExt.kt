@@ -12,7 +12,6 @@ fun getResources(): Resources {
     return app.resources
 }
 
-
 fun getString(@StringRes sId: Int, vararg args: Any?): String {
     return app.resources.getString(sId, *args)
 }
@@ -23,12 +22,12 @@ fun getDrawable(@DrawableRes sId: Int): Drawable? {
 
 @JvmOverloads
 @Dimension(unit = Dimension.PX)
-fun Number.dpToPx(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
+fun Number.dp2Px(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
     return toFloat() * metrics.density
 }
 
 @JvmOverloads
 @Dimension(unit = Dimension.DP)
-fun Number.pxToDp(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
+fun Number.px2Dp(metrics: DisplayMetrics = Resources.getSystem().displayMetrics): Float {
     return toFloat() / metrics.density
 }

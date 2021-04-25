@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.base.baseui.R
-import com.lib.commonsdk.extension.app.dpToPx
+import com.lib.commonsdk.extension.app.dp2Px
 import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
@@ -34,21 +34,21 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
     // 波浪画笔
     private var mTipWavePaint = Paint()
     private var mTipWaveColor = 0
-    private var mTipTextSize = 32.dpToPx()
-    private var mTipBallRadius = 24.dpToPx().toInt() // 圆形半径
+    private var mTipTextSize = 32.dp2Px()
+    private var mTipBallRadius = 24.dp2Px().toInt() // 圆形半径
     private val mTipWavePath = Path()  // 波浪路径
     private val mTipBallPath = Path() // 圆形路径
 
-    private var mTextSize = 10.dpToPx()
+    private var mTextSize = 10.dp2Px()
     private var mTextColor = 0
     private var mTextColorChoose = 0
 
     private var mWidth = 0
     private var mHeight = 0
-    private var mItemHeight = 20.dpToPx()
+    private var mItemHeight = 20.dp2Px()
 
     private var mCenterY = 0//中心点Y = 0 // 手指滑动的Y点作为中心点
-    private var mRadius = 20.dpToPx().toInt()  // 贝塞尔曲线的分布半径
+    private var mRadius = 20.dp2Px().toInt()  // 贝塞尔曲线的分布半径
     private val mRatioAnimator: ValueAnimator by lazy {
         ValueAnimator()
     }
@@ -60,7 +60,7 @@ class WaveSideBarView @JvmOverloads constructor(context: Context, attrs: Attribu
     private var mBallCentreX = 0F  // 圆形中心点X
     private var startDrawLetterPosY = 0F  //绘制letter的起始位置
     private var endDrawLetterPosY = 0F  //绘制letter的结束位置
-    private var letterBgCircleRadius = 7.dpToPx()
+    private var letterBgCircleRadius = 7.dp2Px()
 
     private fun init(attrs: AttributeSet?) {
         if (attrs != null) {

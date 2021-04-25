@@ -4,7 +4,7 @@ import android.os.SystemClock
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lib.commonsdk.extension.app.debug
-import com.lib.commonsdk.extension.app.dpToPx
+import com.lib.commonsdk.extension.app.dp2Px
 
 class RecyclerScrollHelper(private val recycler: RecyclerView, private val topHeight: Int = 0) {
 
@@ -24,7 +24,7 @@ class RecyclerScrollHelper(private val recycler: RecyclerView, private val topHe
                         if (firstItem != RecyclerView.NO_POSITION) {
                             if (position in firstItem..lastItem) {
                                 recycler.getChildAt(position - firstItem)?.let { toItemView ->
-                                    val topDistance = toItemView.top - topHeight.dpToPx().toInt()
+                                    val topDistance = toItemView.top - topHeight.dp2Px().toInt()
                                     recycler.smoothScrollBy(0, topDistance)
                                 }
                             } else {

@@ -21,7 +21,7 @@ import com.gas.zhihu.app.ZhihuConstants;
 import com.gas.zhihu.ui.fragment.mine.MineFragment;
 import com.lib.commonsdk.constants.RouterHub;
 import com.lib.commonsdk.extension.app.AppExtKt;
-import com.lib.commonsdk.utils.FastClickUtils;
+import com.lib.commonsdk.kotlin.FastClickCheck;
 import com.base.lib.base.BaseActivity;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.util.ArmsUtils;
@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         } else if (id == R.id.btn_go_login) {
 
-            if (FastClickUtils.isFastClick()) return;
+            if (FastClickCheck.isFastClick()) return;
             login();
 
         } else if (id == R.id.tv_login_other) {

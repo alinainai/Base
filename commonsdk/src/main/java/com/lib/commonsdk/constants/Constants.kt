@@ -13,21 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.lib.commonsdk.constants;
+package com.lib.commonsdk.constants
 
 /**
  * ================================================
  * CommonSDK 的 Constants 可以定义公用的常量, 比如关于业务的常量或者正则表达式, 每个组件的 Constants 可以定义组件自己的私有常量
- * <p>
+ *
+ *
  * Created by JessYan on 30/03/2018 17:32
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-public interface Constants {
-    //电话号码正则
-    String PHONE_REGULAR = "^1[3-9]\\d{9}$";
-    int CODE_REQUEST_PERMISSION = 1001;
-    String PUBLIC_URL="url";
-    String PUBLIC_TITLE="title";
+interface Constants {
+    companion object {
+        //电话号码正则
+        const val PHONE_REGULAR = "^1[3-9]\\d{9}$"
+        const val CODE_REQUEST_PERMISSION = 1001
+        const val PUBLIC_URL = "url"
+        const val PUBLIC_TITLE = "title"
+    }
 }

@@ -1,4 +1,4 @@
-package com.lib.commonsdk.kotlin.utils
+package com.lib.commonsdk.kotlin
 
 import android.os.Handler
 import android.os.Looper
