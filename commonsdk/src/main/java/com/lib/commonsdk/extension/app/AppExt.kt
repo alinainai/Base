@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.lib.commonsdk.kotlin.utils.AppUtils
-import com.lib.commonsdk.utils.sp.SPStaticUtils
+import com.lib.commonsdk.sp.SPStaticUtils
 import java.io.File
 import java.util.*
 
@@ -107,7 +107,7 @@ fun getAppGUID(): String {
         id = UUID.randomUUID().toString()
         SPStaticUtils.put("APP_GUID", id)
     }
-    return id
+    return id!!
 }
 
 fun byte2FitMemorySize(byteNum: Long): String {
