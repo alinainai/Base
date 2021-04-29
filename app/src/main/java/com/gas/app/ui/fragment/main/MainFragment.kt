@@ -75,6 +75,7 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         }
         btnPlugin3.setOnClickListener {
 
+            System.gc()
         }
 
     }

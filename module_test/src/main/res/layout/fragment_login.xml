@@ -96,46 +96,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnMine6" />
 
-        <Button
-            android:id="@+id/btnMineF"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="生命周期"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMine7" />
-
-        <TextView
-            android:id="@+id/showCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:textColor="#666666"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnMineF" />
-
-        <LinearLayout
-            android:id="@+id/llContent"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showCode" />
-        <ImageView
-            app:layout_constraintTop_toBottomOf="@+id/llContent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:id="@+id/tintTest"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/dialog_calendar_select_next_arrow"
-            />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

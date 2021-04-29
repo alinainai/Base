@@ -31,11 +31,16 @@ import com.gas.app.utils.getProcessName
 import com.lib.commonsdk.extension.app.debug
 import com.lib.commonsdk.kotlin.utils.fromJson
 import kotlinx.android.synthetic.main.fragment_mine.*
+import java.lang.StringBuilder
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.util.*
+import kotlin.math.absoluteValue
 
 
 class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
-    private var tintTest:ImageView?=null
+    private var tintTest: ImageView? = null
 
     override fun setupFragmentComponent(appComponent: AppComponent) {
         DaggerMineComponent.builder().appComponent(appComponent).view(this).build().inject(this)
@@ -79,14 +84,35 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 //            debug("test", "test =${"1" == a}")
         }
         view?.findViewById<View>(R.id.btnMine6)?.setOnClickListener {
-            val testModel =  fromJson<TestModel>(jsonStr2, TestModel::class.java)
+            val testModel = fromJson<TestModel>(jsonStr2, TestModel::class.java)
             debug("testModel", testModel.description)
             debug("testModel", testModel.id)
         }
-        view?.findViewById<View>(R.id.btnMine7)?.setOnClickListener {
-           val str = "https://jia.360.cn/mall/index_guide.html?from=weixin&scheme=buycloudrecord/mini"
+        view?.findViewById<View>(R.id.btnMineF)?.setOnClickListener {
+            val str = "https://jia.360.cn/mall/index_guide.html?from=weixin&scheme=buycloudrecord/mini"
             val uri = Uri.parse(str)
             debug("scheme=${uri.getQueryParameter("scheme")}")
+        }
+        view?.findViewById<View>(R.id.btnMine7)?.setOnClickListener {
+
+
+//            val cal = Calendar.getInstance(Locale.getDefault())
+//            val zoneOffset = cal.get(java.util.Calendar.ZONE_OFFSET);
+//            val dstOffset = cal.get(java.util.Calendar.DST_OFFSET);
+            val timeZone = TimeZone.getDefault()
+
+            //取到秒级别减少运算
+            val zoneOffset = TimeZone.getDefault().rawOffset / 1000
+            val hour = zoneOffset / 3600
+            val sb = StringBuilder("UTC")
+            if (hour > 0) sb.append("+")
+
+//
+//            debug("zoneOffset=${zoneOffset/3600000},dstOffset=${dstOffset},zoneOffset1=${zoneOffset1/3600000}")
+            val timeStr = timeZone.getDisplayName(false, TimeZone.SHORT)
+            debug("timeStr=${TimeZone.getDefault().rawOffset}")
+            debug("getFormatTimezone=${getFormatTimezone()}")
+
         }
 
         tintTest?.setOnClickListener {
@@ -100,6 +126,23 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
     }
 
+    private fun getFormatTimezone(): String {
+        //取到秒级别减少运算
+        val zoneOffset = TimeZone.getDefault().rawOffset / 1000
+        val hour = zoneOffset / 3600
+        return StringBuilder("UTC").apply {
+            if (hour >= 0) append("+")
+            append(hour)
+            val remain = zoneOffset % 3600
+            if (remain != 0) {
+                (remain.toFloat() / 3600F * 10).toInt().absoluteValue.also {
+                    if (it > 0)
+                        append(".").append(it)
+                }
+            }
+        }.toString()
+    }
+
     override fun setData(data: Any?) {}
 
 
@@ -110,7 +153,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
     override fun showMessage(message: String) {}
 
 
-    val  deduct_time:String? = "1.3"
+    val deduct_time: String? = "1.3"
     fun getDeductTime(): Long = deduct_time?.let {
         return@let try {
             it.toLong()

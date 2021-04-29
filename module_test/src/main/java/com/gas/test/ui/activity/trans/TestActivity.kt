@@ -9,6 +9,7 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.learn.lesson001_lifecycle.FirstActivity
+import com.gas.test.utils.RegionBusiness
 import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
 import com.lib.commonsdk.extension.app.*
@@ -23,6 +24,8 @@ class TestActivity : BaseActivity<IPresenter>() {
 //        ViewModelProvider(this).get(LoginVm::class.java)
 //    }
 
+    private val region = RegionBusiness.ins
+
     override fun setupActivityComponent(appComponent: AppComponent) {
     }
 
@@ -32,6 +35,8 @@ class TestActivity : BaseActivity<IPresenter>() {
 
 
     override fun initData(savedInstanceState: Bundle?) {
+
+        region.log()
 
 //        vm.loginBean.observe(this, object : Observer<LoginBean> {
 //            override fun onChanged(t: LoginBean) {
