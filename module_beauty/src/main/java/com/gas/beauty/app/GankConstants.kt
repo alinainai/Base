@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.app;
+package com.gas.beauty.app
 
 /**
  * ================================================
  * Created by JessYan on 25/04/2018 16:48
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-public interface GankConstants {
-    int NUMBER_OF_PAGE = 10;
+interface GankConstants {
+    companion object {
+        const val NUMBER_OF_PAGE = 10
+    }
 }

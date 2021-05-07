@@ -13,39 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.ui.article.di;
+package com.gas.beauty.ui.article.di
 
-import com.base.lib.di.component.AppComponent;
-import com.base.lib.di.scope.FragmentScope;
-import com.gas.beauty.ui.article.ArticleFragment;
-import com.gas.beauty.ui.article.mvp.ArticleContract;
-
-import dagger.BindsInstance;
-import dagger.Component;
+import com.base.lib.di.component.AppComponent
+import com.base.lib.di.scope.FragmentScope
+import com.gas.beauty.ui.article.ArticleFragment
+import com.gas.beauty.ui.article.mvp.ArticleContract
+import dagger.BindsInstance
+import dagger.Component
 
 /**
  * ================================================
  * 展示 Component 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.6">Component wiki 官方文档</a>
+ * @see [Component wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.6)
  * Created by JessYan on 09/04/2016 11:17
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @FragmentScope
-@Component(modules = ArticleModule.class, dependencies = AppComponent.class)
-public interface ArticleComponent {
-
-    void inject(ArticleFragment fragment);
-
-    @Component.Builder
-    interface Builder {
-        @BindsInstance
-        ArticleComponent.Builder view(ArticleContract.View view);
-
-        ArticleComponent.Builder appComponent(AppComponent appComponent);
-
-        ArticleComponent build();
-    }
+@Component(modules = [ArticleModule::class], dependencies = [AppComponent::class])
+interface ArticleComponent {
+    fun inject(fragment: ArticleFragment)
 }

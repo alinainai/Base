@@ -1,19 +1,12 @@
-package com.gas.zhihu.ui.fragment.mine.mvp;
+package com.gas.zhihu.ui.fragment.mine.mvp
 
-import android.content.Context;
+import android.content.Context
+import com.base.lib.mvp.IView
 
-import com.base.lib.mvp.IView;
-
-public interface MineContract {
-
-
-    interface View extends IView {
-        Context getWrapContext();
+interface MineContract {
+    interface View : IView {
+        val wrapContext: Context?
     }
 
-    interface Model {
-
-    }
-
-
+    interface Model
 }

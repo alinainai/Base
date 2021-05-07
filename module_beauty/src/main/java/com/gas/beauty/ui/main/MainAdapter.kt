@@ -1,52 +1,38 @@
-package com.gas.beauty.ui.main;
+package com.gas.beauty.ui.main
 
-import android.content.Context;
+import android.content.Context
+import com.base.lib.di.component.AppComponent
+import com.base.lib.https.image.ImageLoader
+import com.base.lib.util.ArmsUtils
+import com.base.paginate.base.SingleAdapter
+import com.base.paginate.viewholder.PageViewHolder
+import com.gas.beauty.R
+import com.gas.beauty.bean.GankItemBean
+import com.lib.commonsdk.glide.ImageConfigImpl
 
-import com.base.lib.di.component.AppComponent;
-import com.base.lib.https.image.ImageLoader;
-import com.base.lib.util.ArmsUtils;
-import com.base.paginate.viewholder.PageViewHolder;
-import com.base.paginate.base.SingleAdapter;
-import com.lib.commonsdk.glide.ImageConfigImpl;
-import com.gas.beauty.R;
-import com.gas.beauty.bean.GankItemBean;
+class MainAdapter(context: Context) : SingleAdapter<GankItemBean>(context) {
+    private val mAppComponent: AppComponent = ArmsUtils.obtainAppComponentFromContext(context)
 
-
-public class MainAdapter extends SingleAdapter<GankItemBean> {
-
-
-    private AppComponent mAppComponent;
     /**
      * 用于加载图片的管理类, 默认使用 Glide, 使用策略模式, 可替换框架
      */
-    private ImageLoader mImageLoader;
-    private Context mContext;
-
-
-
-
-    public MainAdapter(Context context) {
-        super(context);
-        mAppComponent = ArmsUtils.obtainAppComponentFromContext(context);
-        mImageLoader=mAppComponent.imageLoader();
-        mContext=context;
-    }
-
-    @Override
-    protected void convert(PageViewHolder holder, GankItemBean data, int position) {
-
+    private val mImageLoader: ImageLoader = mAppComponent.imageLoader()
+    override fun convert(holder: PageViewHolder, data: GankItemBean, position: Int) {
         mImageLoader.loadImage(mContext,
                 ImageConfigImpl
                         .builder()
-                        .url(data.getUrl())
+                        .url(data.url)
                         .imageView(holder.getView(R.id.iv_avatar))
-                        .build());
+                        .build())
 
 //        ImageLoader.loadSet(mContext,data.getUrl(),holder.getView(R.id.iv_avatar),R.mipmap.public_ic_launcher);
     }
 
-    @Override
-    protected int getItemLayoutId() {
-        return R.layout.gank_recycle_list;
+    override fun getItemLayoutId(): Int {
+        return R.layout.gank_recycle_list
+    }
+
+    init {
+        mContext = context
     }
 }

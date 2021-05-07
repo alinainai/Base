@@ -1,28 +1,16 @@
-package com.gas.zhihu.ui.fragment.mine.mvp;
+package com.gas.zhihu.ui.fragment.mine.mvp
 
-import android.app.Application;
-
-import com.base.lib.di.scope.FragmentScope;
-import com.base.lib.mvp.BasePresenter;
-
-import javax.inject.Inject;
+import android.app.Application
+import com.base.lib.di.scope.FragmentScope
+import com.base.lib.mvp.BasePresenter
+import javax.inject.Inject
 
 @FragmentScope
-public class MinePresenter extends BasePresenter<MineModle, MineContract.View> {
-
-
+class MinePresenter @Inject constructor(model: MineModle?, rootView: MineContract.View?) : BasePresenter<MineModle?, MineContract.View?>(model, rootView) {
+    @JvmField
     @Inject
-    Application mApplication;
-
-    @Inject
-    public MinePresenter(MineModle model, MineContract.View rootView) {
-        super(model, rootView);
+    var mApplication: Application? = null
+    override fun onDestroy() {
+        super.onDestroy()
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
-
 }

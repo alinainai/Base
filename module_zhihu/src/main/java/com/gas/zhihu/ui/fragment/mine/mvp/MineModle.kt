@@ -1,30 +1,17 @@
-package com.gas.zhihu.ui.fragment.mine.mvp;
+package com.gas.zhihu.ui.fragment.mine.mvp
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.OnLifecycleEvent;
-
-import com.base.lib.di.scope.FragmentScope;
-import com.base.lib.integration.repository.IRepositoryManager;
-import com.base.lib.mvp.BaseModel;
-
-import javax.inject.Inject;
-
-import timber.log.Timber;
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.OnLifecycleEvent
+import com.base.lib.di.scope.FragmentScope
+import com.base.lib.integration.repository.IRepositoryManager
+import com.base.lib.mvp.BaseModel
+import timber.log.Timber
+import javax.inject.Inject
 
 @FragmentScope
-public class MineModle extends BaseModel implements MineContract.Model {
-
-    @Inject
-    public MineModle(IRepositoryManager repositoryManager) {
-        super(repositoryManager);
-    }
-
-
+class MineModle @Inject constructor(repositoryManager: IRepositoryManager?) : BaseModel(repositoryManager), MineContract.Model {
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-    void onPause() {
-        Timber.d("Release Resource");
+    fun onPause() {
+        Timber.d("Release Resource")
     }
-
-
-
 }

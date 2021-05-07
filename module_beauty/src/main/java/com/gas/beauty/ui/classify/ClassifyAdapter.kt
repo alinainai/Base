@@ -1,38 +1,24 @@
-package com.gas.beauty.ui.classify;
+package com.gas.beauty.ui.classify
 
-import android.content.Context;
-import android.text.TextUtils;
-
-
-import com.base.paginate.viewholder.PageViewHolder;
-import com.base.paginate.base.SingleAdapter;
-import com.gas.beauty.R;
-import com.gas.beauty.bean.GankItemBean;
-
+import android.content.Context
+import android.text.TextUtils
+import com.base.paginate.base.SingleAdapter
+import com.base.paginate.viewholder.PageViewHolder
+import com.gas.beauty.R
+import com.gas.beauty.bean.GankItemBean
 
 /**
  *
  */
-public class ClassifyAdapter extends SingleAdapter<GankItemBean> {
-
-
-
-    public ClassifyAdapter(Context context) {
-        super(context);
+class ClassifyAdapter(context: Context?) : SingleAdapter<GankItemBean>(context) {
+    protected override fun convert(holder: PageViewHolder, data: GankItemBean, position: Int) {
+        holder.setText(R.id.gank_item_desc, data.desc)
+        val who = if (TextUtils.isEmpty(data.who)) "佚名" else data.who!!
+        holder.setText(R.id.gank_item_who, who)
+        holder.setText(R.id.gank_item_publishedat, if (TextUtils.isEmpty(data.publishedAt)) "" else data.publishedAt!!.substring(0, 10))
     }
 
-    @Override
-    protected void convert(PageViewHolder holder, GankItemBean data, int position) {
-        holder.setText(R.id.gank_item_desc, data.getDesc());
-        String who = TextUtils.isEmpty(data.getWho()) ? "佚名" : data.getWho();
-        holder.setText(R.id.gank_item_who, who);
-        holder.setText(R.id.gank_item_publishedat,TextUtils.isEmpty(data.getPublishedAt())?"":data.getPublishedAt().substring(0, 10));
+    override fun getItemLayoutId(): Int {
+        return R.layout.gank_item_article
     }
-
-
-    @Override
-    protected int getItemLayoutId() {
-        return R.layout.gank_item_article;
-    }
-
 }

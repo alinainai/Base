@@ -13,18 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.http;
+package com.gas.beauty.http
 
 /**
  * ================================================
  * 存放一些与 API 有关的东西,如请求地址,请求码等
- * <p>
+ *
+ *
  * Created by JessYan on 08/05/2016 11:25
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-public interface Api {
-    String GANK_DOMAIN_NAME = "gank";
-    String GANK_DOMAIN = "http://gank.io";
+interface Api {
+    companion object {
+        const val GANK_DOMAIN_NAME = "gank"
+        const val GANK_DOMAIN = "http://gank.io"
+    }
 }

@@ -13,57 +13,64 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.ui.article.di;
+package com.gas.beauty.ui.article.di
 
-import androidx.fragment.app.Fragment;
-
-import com.base.lib.di.scope.FragmentScope;
-import com.gas.beauty.R;
-import com.gas.beauty.ui.article.mvp.ArticleContract;
-import com.gas.beauty.ui.classify.ClassifyFragment;
-import com.lib.commonsdk.adapter.AdapterViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import dagger.Module;
-import dagger.Provides;
+import androidx.fragment.app.Fragment
+import com.base.lib.di.scope.FragmentScope
+import com.gas.beauty.R
+import com.gas.beauty.ui.article.mvp.ArticleContract
+import com.gas.beauty.ui.article.mvp.ArticleModel
+import com.gas.beauty.ui.classify.ClassifyFragment
+import com.lib.commonsdk.adapter.AdapterViewPager
+import dagger.Module
+import dagger.Provides
+import java.util.*
 
 /**
  * ================================================
  * 展示 Module 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
+ * @see [Module wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.5)
  * Created by JessYan on 09/04/2016 11:10
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @Module
-public abstract class ArticleModule {
-
-
-    @FragmentScope
-    @Provides
-    static String[] provideTitles(ArticleContract.View view) {
-        return view.getWrapContext().getResources().getStringArray(R.array.gank_title);
-    }
-
+class ArticleModule(private val view: ArticleContract.View) {
 
     @FragmentScope
     @Provides
-    static AdapterViewPager providePagerAdapter(ArticleContract.View view, List<Fragment> fragments,String[] titles) {
-        return new AdapterViewPager(view.getCurrentFragment().getChildFragmentManager(), fragments, titles);
+    fun provideTitles(): Array<String> {
+        return view.wrapContext.resources.getStringArray(R.array.gank_title)
     }
 
     @FragmentScope
     @Provides
-    static List<Fragment> provideFragments( String[] titles ) {
-        List<Fragment> fragments = new ArrayList<>();
-        for (String subtype : titles) {
-            fragments.add(ClassifyFragment.newInstance(subtype));
+    fun provideFragments(titles: Array<String>):@JvmSuppressWildcards List<Fragment> {
+        val fragments: MutableList<Fragment> = ArrayList()
+        for (subtype in titles) {
+            fragments.add(ClassifyFragment.newInstance(subtype))
         }
-        return fragments;
+        return fragments
+    }
+
+    @FragmentScope
+    @Provides
+    fun providePagerAdapter(view: ArticleContract.View, fragments:@JvmSuppressWildcards List<Fragment>, titles: Array<String>): AdapterViewPager {
+        return AdapterViewPager(view.currentFragment.childFragmentManager, fragments, titles)
+    }
+
+    @FragmentScope
+    @Provides
+    fun provideArticleView(): ArticleContract.View {
+        return this.view
+    }
+
+    @FragmentScope
+    @Provides
+    fun provideArticleModel(model: ArticleModel): ArticleContract.Model {
+        return model
     }
 
 

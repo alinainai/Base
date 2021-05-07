@@ -13,49 +13,48 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.zhihu.app;
+package com.gas.zhihu.app
 
-import java.io.File;
+import java.io.File
 
 /**
  * ================================================
  * Created by JessYan on 25/04/2018 16:48
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-public interface ZhihuConstants {
-    String DETAIL_ID = "detail_id";
-    String ENCODING = "UTF-8";
-    String DEFAULT_TYPE = "-1";
-    /**
-     * 用户名
-     */
-    String ZHIHU_USER_NAME = "qqqqqqqq";
-    /**
-     * 密码
-     */
-    String ZHIHU_PASSWORD = "qqqqqq";
+interface ZhihuConstants {
+    companion object {
+        const val DETAIL_ID = "detail_id"
+        const val ENCODING = "UTF-8"
+        const val DEFAULT_TYPE = "-1"
 
+        /**
+         * 用户名
+         */
+        const val ZHIHU_USER_NAME = "qqqqqqqq"
 
-    String ZHIHU_TEST_IMAGE_FILe_NAME = "testimage";
+        /**
+         * 密码
+         */
+        const val ZHIHU_PASSWORD = "qqqqqq"
+        const val ZHIHU_TEST_IMAGE_FILe_NAME = "testimage"
 
+        //json配置信息
+        val DATA_JSON_PATH = "config" + File.separator + "datajson.json"
+        val EXPERIENCE_JSON_PATH = "config" + File.separator + "paperinit.json"
 
-    //json配置信息
-     String DATA_JSON_PATH = "config" + File.separator + "datajson.json";
-     String EXPERIENCE_JSON_PATH = "config" + File.separator + "paperinit.json";
+        //图片
+        const val IMAGE_ZIP = "testimage.zip"
+        val IMAGE_ZIP_ASSET = "data" + File.separator + IMAGE_ZIP
+        const val IMAGE_ZIP_FOLDER = "testimage"
 
-    //图片
-     String IMAGE_ZIP = "testimage.zip";
-     String IMAGE_ZIP_ASSET = "data" + File.separator + IMAGE_ZIP;
-     String IMAGE_ZIP_FOLDER = "testimage";
-
-    //文件
-     String FILE_ZIP = "tempfile.zip";
-     String FILE_ZIP_FOLDER = "tempfile";
-     String FILE_ZIP_ASSET = "data" + File.separator + FILE_ZIP;
-
-     String FILE_TYPE_WORD="word";
-     String FILE_TYPE_PDF="pdf";
-
+        //文件
+        const val FILE_ZIP = "tempfile.zip"
+        const val FILE_ZIP_FOLDER = "tempfile"
+        val FILE_ZIP_ASSET = "data" + File.separator + FILE_ZIP
+        const val FILE_TYPE_WORD = "word"
+        const val FILE_TYPE_PDF = "pdf"
+    }
 }

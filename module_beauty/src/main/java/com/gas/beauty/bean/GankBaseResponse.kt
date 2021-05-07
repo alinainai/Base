@@ -13,37 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.bean;
+package com.gas.beauty.bean
 
-import java.io.Serializable;
+import java.io.Serializable
 
 /**
  * ================================================
  * 如果你服务器返回的数据格式固定为这种方式(这里只提供思想,服务器返回的数据格式可能不一致,可根据自家服务器返回的格式作更改)
- * 指定范型即可改变 {@code data} 字段的类型, 达到重用 {@link GankBaseResponse}
- * <p>
+ * 指定范型即可改变 `data` 字段的类型, 达到重用 [GankBaseResponse]
+ *
+ *
  * Created by JessYan on 26/09/2016 15:19
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-public class GankBaseResponse<T> implements Serializable {
-    private boolean error;
-    private T results;
+class GankBaseResponse<T> : Serializable {
+    var error = false
+    var results: T? = null
+        private set
 
-    public T getResults() {
-        return results;
-    }
-
-    public void setResults(T results) {
-        this.results = results;
-    }
-
-    public boolean getError() {
-        return error;
-    }
-
-    public void setError(boolean error) {
-        this.error = error;
+    fun setResults(results: T) {
+        this.results = results
     }
 }

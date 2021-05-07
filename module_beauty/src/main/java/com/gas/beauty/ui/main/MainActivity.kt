@@ -1,109 +1,76 @@
-package com.gas.beauty.ui.main;
+package com.gas.beauty.ui.main
 
-import android.app.Activity;
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.base.lib.base.BaseActivity;
-import com.base.lib.di.component.AppComponent;
-import com.base.lib.util.ArmsUtils;
-import com.base.paginate.base.SingleAdapter;
-import com.base.paginate.interfaces.EmptyInterface;
-import com.gas.beauty.R;
-import com.gas.beauty.R2;
-import com.gas.beauty.ui.main.di.DaggerMainComponent;
-import com.gas.beauty.ui.main.mvp.MainContract;
-import com.gas.beauty.ui.main.mvp.MainPresenter;
-import com.lib.commonsdk.constants.RouterHub;
-
-import javax.inject.Inject;
-
-import butterknife.BindView;
+import android.app.Activity
+import android.os.Bundle
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.lib.base.BaseActivity
+import com.base.lib.di.component.AppComponent
+import com.base.lib.util.ArmsUtils
+import com.base.paginate.interfaces.EmptyInterface
+import com.gas.beauty.R
+import com.gas.beauty.ui.main.di.DaggerMainComponent
+import com.gas.beauty.ui.main.mvp.MainContract
+import com.gas.beauty.ui.main.mvp.MainPresenter
+import com.lib.commonsdk.constants.RouterHub
+import javax.inject.Inject
 
 @Route(path = RouterHub.GANK_MAINACTIVITY)
-public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View, SwipeRefreshLayout.OnRefreshListener {
-
-    RecyclerView mRecyclerView;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+class MainActivity : BaseActivity<MainPresenter>(), MainContract.View, SwipeRefreshLayout.OnRefreshListener {
+    lateinit var mRecyclerView: RecyclerView
+    lateinit var mSwipeRefreshLayout: SwipeRefreshLayout
 
     @Inject
-    RecyclerView.LayoutManager mLayoutManager;
+    lateinit var mLayoutManager: RecyclerView.LayoutManager
+
     @Inject
-    RecyclerView.Adapter mAdapter;
-
-    @Override
-    public void setupActivityComponent(@NonNull AppComponent appComponent) {
-
+    lateinit var mAdapter: MainAdapter
+    override fun setupActivityComponent(appComponent: AppComponent) {
         DaggerMainComponent
                 .builder()
-                .appComponent(appComponent)
-                .view(this)
-                .build()
-                .inject(this);
-
+                .appComponent(appComponent)!!
+                .view(this)!!
+                .build()!!
+                .inject(this)
     }
 
-    @Override
-    public int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.gank_activity_main;
+    override fun initView(savedInstanceState: Bundle?): Int {
+        return R.layout.gank_activity_main
     }
 
-    @Override
-    public void initData(@Nullable Bundle savedInstanceState) {
-
-        mRecyclerView = findViewById(R.id.type_item_recyclerview);
-        mSwipeRefreshLayout = findViewById(R.id.type_item_swipfreshlayout);
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(getResources().getColor(R.color.public_black));
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager);
-
-        final SingleAdapter singleAdapter = ((SingleAdapter) mAdapter);
-        singleAdapter.setOnReloadListener(() -> {
-            singleAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
-            mPresenter.requestGirls(true);
-        });
-        singleAdapter.setOnLoadMoreListener(isReload -> mPresenter.requestGirls(false));
-        singleAdapter.setEmptyView(EmptyInterface.STATUS_LOADING);
-
-        mRecyclerView.setAdapter(mAdapter);
-
-        mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.requestGirls(true);
-
-
+    override fun initData(savedInstanceState: Bundle?) {
+        mRecyclerView = findViewById(R.id.type_item_recyclerview)
+        mSwipeRefreshLayout = findViewById(R.id.type_item_swipfreshlayout)
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.public_white)
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.public_black))
+        mSwipeRefreshLayout.setOnRefreshListener(this)
+        ArmsUtils.configRecyclerView(mRecyclerView, mLayoutManager)
+        mAdapter.setOnReloadListener {
+            mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+            mPresenter!!.requestGirls(true)
+        }
+        mAdapter.setOnLoadMoreListener { isReload: Boolean -> mPresenter!!.requestGirls(false) }
+        mAdapter.setEmptyView(EmptyInterface.STATUS_LOADING)
+        mRecyclerView.setAdapter(mAdapter)
+        mSwipeRefreshLayout.setRefreshing(true)
+        mPresenter?.requestGirls(true)
     }
 
-
-    @Override
-    public void onRefresh() {
-        mPresenter.requestGirls(true);
+    override fun onRefresh() {
+        mPresenter?.requestGirls(true)
     }
 
+    override val activity: Activity
+        get() = this
 
-    @Override
-    public Activity getActivity() {
-        return this;
+    override fun success() {
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
-    @Override
-    public void success() {
-        mSwipeRefreshLayout.setRefreshing(false);
+    override fun onError() {
+        mSwipeRefreshLayout.isRefreshing = false
     }
 
-    @Override
-    public void onError() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-
-    @Override
-    public void showMessage(@NonNull String message) {
-
-    }
+    override fun showMessage(message: String) {}
 }

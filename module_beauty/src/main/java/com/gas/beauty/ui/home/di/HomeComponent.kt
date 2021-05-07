@@ -13,39 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.ui.home.di;
+package com.gas.beauty.ui.home.di
 
-import com.base.lib.di.component.AppComponent;
-import com.base.lib.di.scope.ActivityScope;
-import com.gas.beauty.ui.home.HomeActivity;
-import com.gas.beauty.ui.home.mvp.HomeContract;
-
-import dagger.BindsInstance;
-import dagger.Component;
+import com.base.lib.di.component.AppComponent
+import com.base.lib.di.scope.ActivityScope
+import com.gas.beauty.ui.home.HomeActivity
+import com.gas.beauty.ui.home.mvp.HomeContract
+import dagger.BindsInstance
+import dagger.Component
 
 /**
  * ================================================
  * 展示 Component 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.6">Component wiki 官方文档</a>
+ * @see [Component wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.6)
  * Created by JessYan on 09/04/2016 11:17
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @ActivityScope
-@Component(dependencies = AppComponent.class)
-public interface HomeComponent {
-
-    void inject(HomeActivity activity);
+@Component(dependencies = [AppComponent::class])
+interface HomeComponent {
+    fun inject(activity: HomeActivity?)
 
     @Component.Builder
     interface Builder {
         @BindsInstance
-        HomeComponent.Builder view(HomeContract.View view);
-
-        HomeComponent.Builder appComponent(AppComponent appComponent);
-
-        HomeComponent build();
+        fun view(view: HomeContract.View?): Builder?
+        fun appComponent(appComponent: AppComponent?): Builder?
+        fun build(): HomeComponent?
     }
 }

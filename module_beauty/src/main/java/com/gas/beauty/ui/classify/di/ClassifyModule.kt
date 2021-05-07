@@ -13,49 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.ui.classify.di;
+package com.gas.beauty.ui.classify.di
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.base.lib.di.scope.FragmentScope;
-import com.gas.beauty.ui.classify.ClassifyAdapter;
-import com.gas.beauty.ui.classify.mvp.ClassifyContract;
-import com.gas.beauty.ui.classify.mvp.ClassifyModle;
-
-
-import dagger.Binds;
-import dagger.Module;
-import dagger.Provides;
-
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.base.lib.di.scope.FragmentScope
+import com.gas.beauty.ui.classify.ClassifyAdapter
+import com.gas.beauty.ui.classify.mvp.ClassifyContract
+import com.gas.beauty.ui.classify.mvp.ClassifyModle
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
 
 /**
  * ================================================
  * 展示 Module 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
+ * @see [Module wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.5)
  * Created by JessYan on 09/04/2016 11:10
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @Module
-public abstract class ClassifyModule {
+abstract class ClassifyModule {
     @Binds
-    abstract ClassifyContract.Model bindClassifModel(ClassifyModle model);
+    abstract fun bindClassifModel(model: ClassifyModle): ClassifyContract.Model
 
+    companion object {
+        @JvmStatic
+        @FragmentScope
+        @Provides
+        fun provideLayoutManager(view: ClassifyContract.View): RecyclerView.LayoutManager {
+            return GridLayoutManager(view.wrapContext, 2)
+        }
 
-    @FragmentScope
-    @Provides
-    static RecyclerView.LayoutManager provideLayoutManager(ClassifyContract.View view) {
-        return new GridLayoutManager(view.getWrapContext(), 2);
+        @JvmStatic
+        @FragmentScope
+        @Provides
+        fun provideClasseAdapter(view: ClassifyContract.View): ClassifyAdapter {
+            return ClassifyAdapter(view.wrapContext)
+        }
     }
-
-    @FragmentScope
-    @Provides
-    static ClassifyAdapter provideClasseAdapter(ClassifyContract.View view) {
-        return new ClassifyAdapter(view.getWrapContext());
-    }
-
-
 }

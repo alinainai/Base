@@ -13,49 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.ui.main.di;
+package com.gas.beauty.ui.main.di
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.base.lib.di.scope.ActivityScope;
-
-import com.gas.beauty.ui.main.MainAdapter;
-import com.gas.beauty.ui.main.mvp.MainContract;
-import com.gas.beauty.ui.main.mvp.MainModel;
-
-import dagger.Binds;
-import dagger.Module;
-import dagger.Provides;
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.base.lib.di.scope.ActivityScope
+import com.gas.beauty.ui.main.MainAdapter
+import com.gas.beauty.ui.main.mvp.MainContract
+import com.gas.beauty.ui.main.mvp.MainModel
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
 
 /**
  * ================================================
  * 展示 Module 的用法
  *
- * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki#2.4.5">Module wiki 官方文档</a>
+ * @see [Module wiki 官方文档](https://github.com/JessYanCoding/MVPArms/wiki.2.4.5)
  * Created by JessYan on 09/04/2016 11:10
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-
 @Module
-public abstract class MainModule {
-
+abstract class MainModule {
     @Binds
-    abstract MainContract.Model bindGankModel(MainModel model);
+    abstract fun bindGankModel(model: MainModel?): MainContract.Model?
 
-    @ActivityScope
-    @Provides
-    static RecyclerView.LayoutManager provideLayoutManager(MainContract.View view) {
-        return new GridLayoutManager(view.getActivity(),2);
+    companion object {
+        @JvmStatic
+        @ActivityScope
+        @Provides
+        fun provideLayoutManager(view: MainContract.View): RecyclerView.LayoutManager {
+            return GridLayoutManager(view.activity, 2)
+        }
+
+        @JvmStatic
+        @ActivityScope
+        @Provides
+        fun provideMainAdapter(view: MainContract.View): MainAdapter {
+            return MainAdapter(view.activity)
+        }
     }
-
-    @ActivityScope
-    @Provides
-    static RecyclerView.Adapter provideMainAdapter(MainContract.View view) {
-        return new MainAdapter(view.getActivity());
-    }
-
-
 }

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -606,7 +607,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<RecyclerView.V
      *
      * @param data List<T>
      */
-    public void setNewData(List<T> data) {
+    public void setNewData(@Nullable List<T> data) {
         isAutoLoadMore = true;
         dataClear();
         if (null != data && !data.isEmpty()) {

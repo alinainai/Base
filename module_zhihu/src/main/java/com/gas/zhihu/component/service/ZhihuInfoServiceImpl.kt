@@ -13,37 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.zhihu.component.service;
+package com.gas.zhihu.component.service
 
-import android.content.Context;
-
-import com.alibaba.android.arouter.facade.annotation.Route;
-import com.base.componentservice.zhihu.bean.ZhihuInfo;
-import com.base.componentservice.zhihu.service.ZhihuInfoService;
-import com.lib.commonsdk.constants.RouterHub;
-
+import android.content.Context
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.base.componentservice.zhihu.bean.ZhihuInfo
+import com.base.componentservice.zhihu.service.ZhihuInfoService
+import com.lib.commonsdk.constants.RouterHub
 
 /**
  * ================================================
  * 向外提供服务的接口实现类, 在此类中实现一些具有特定功能的方法提供给外部, 即可让一个组件与其他组件或宿主进行交互
  *
- * @see <a href="https://github.com/JessYanCoding/ArmsComponent/wiki#2.2.3.2">CommonService wiki 官方文档</a>
+ * @see [CommonService wiki 官方文档](https://github.com/JessYanCoding/ArmsComponent/wiki.2.2.3.2)
  * Created by JessYan on 2018/4/27 14:27
- * <a href="mailto:jess.yan.effort@gmail.com">Contact me</a>
- * <a href="https://github.com/JessYanCoding">Follow me</a>
+ * [Contact me](mailto:jess.yan.effort@gmail.com)
+ * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
 @Route(path = RouterHub.ZHIHU_SERVICE_ZHIHUINFOSERVICE, name = "知乎信息服务")
-public class ZhihuInfoServiceImpl implements ZhihuInfoService {
-    private Context mContext;
-
-    @Override
-    public ZhihuInfo getInfo() {
-        return new ZhihuInfo("知乎日报");
+class ZhihuInfoServiceImpl : ZhihuInfoService {
+    private var mContext: Context? = null
+    override fun getInfo(): ZhihuInfo {
+        return ZhihuInfo("知乎日报")
     }
 
-    @Override
-    public void init(Context context) {
-        mContext = context;
+    override fun init(context: Context) {
+        mContext = context
     }
 }
