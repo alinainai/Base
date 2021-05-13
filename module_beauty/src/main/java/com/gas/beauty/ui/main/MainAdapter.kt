@@ -7,17 +7,17 @@ import com.base.lib.util.ArmsUtils
 import com.base.paginate.base.SingleAdapter
 import com.base.paginate.viewholder.PageViewHolder
 import com.gas.beauty.R
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 import com.lib.commonsdk.glide.ImageConfigImpl
 
-class MainAdapter(context: Context) : SingleAdapter<GankItemBean>(context) {
+class MainAdapter(context: Context) : SingleAdapter<BeautyBean>(context) {
     private val mAppComponent: AppComponent = ArmsUtils.obtainAppComponentFromContext(context)
 
     /**
      * 用于加载图片的管理类, 默认使用 Glide, 使用策略模式, 可替换框架
      */
     private val mImageLoader: ImageLoader = mAppComponent.imageLoader()
-    override fun convert(holder: PageViewHolder, data: GankItemBean, position: Int) {
+    override fun convert(holder: PageViewHolder, data: BeautyBean, position: Int) {
         mImageLoader.loadImage(mContext,
                 ImageConfigImpl
                         .builder()

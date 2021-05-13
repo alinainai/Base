@@ -14,7 +14,7 @@ import com.base.lib.util.ArmsUtils
 import com.base.paginate.interfaces.EmptyInterface
 import com.base.paginate.viewholder.PageViewHolder
 import com.gas.beauty.R
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 import com.gas.beauty.ui.classify.di.DaggerClassifyComponent
 import com.gas.beauty.ui.classify.mvp.ClassifyContract
 import com.gas.beauty.ui.classify.mvp.ClassifyPresenter
@@ -62,7 +62,7 @@ class ClassifyFragment : LazyLoadFragment<ClassifyPresenter?>(), ClassifyContrac
         mSwipeRefreshLayout!!.setProgressBackgroundColorSchemeColor(resources.getColor(R.color.public_white))
 
         //条目点击
-        mClassifyAdapter!!.setOnMultiItemClickListener { viewHolder: PageViewHolder?, data: GankItemBean, position: Int, viewType: Int ->
+        mClassifyAdapter!!.setOnMultiItemClickListener { viewHolder: PageViewHolder?, data: BeautyBean, position: Int, viewType: Int ->
             ARouter.getInstance()
                     .build(RouterHub.APP_WEBVIEWACTIVITY)
                     .withString(Constants.PUBLIC_TITLE, data.desc)

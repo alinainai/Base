@@ -15,7 +15,7 @@
  */
 package com.gas.beauty.http
 
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 import io.reactivex.Observable
 import io.rx_cache2.*
 import java.util.concurrent.TimeUnit
@@ -34,5 +34,5 @@ import java.util.concurrent.TimeUnit
 interface CommonCache {
     @LifeCache(duration = 2, timeUnit = TimeUnit.DAYS)
     @Encrypt
-    fun getGankItemData(items: Observable<List<GankItemBean>>, key: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<GankItemBean>>>
+    fun getGankItemData(items: Observable<List<BeautyBean>>, key: DynamicKey, evictProvider: EvictProvider): Observable<Reply<List<BeautyBean>>>
 }

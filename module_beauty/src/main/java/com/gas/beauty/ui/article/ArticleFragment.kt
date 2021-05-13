@@ -18,20 +18,9 @@ import com.gas.beauty.ui.article.mvp.ArticleContract
 import com.gas.beauty.ui.article.mvp.ArticlePresenter
 import com.google.android.material.tabs.TabLayout
 import com.lib.commonsdk.adapter.AdapterViewPager
-import dagger.Binds
-import dagger.Provides
 import javax.inject.Inject
 
-/**
- * ================================================
- * 展示 GasLazyLoadFragment 的用法
- *
- * @see [Component wiki 官方文档](https://github.com/JessYanCoding/MVPArms)
- * Created by JessYan on 09/04/2019 11:17
- * [Contact me](mailto:jess.yan.effort@gmail.com)
- * [Follow me](https://github.com/JessYanCoding)
- * ================================================
- */
+
 class ArticleFragment : LazyLoadFragment<ArticlePresenter>(), ArticleContract.View {
     var mTitleView: TitleView? = null
     var mTabLayout: TabLayout? = null

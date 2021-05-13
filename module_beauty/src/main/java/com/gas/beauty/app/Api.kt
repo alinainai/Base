@@ -13,27 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gas.beauty.bean
-
-import java.io.Serializable
+package com.gas.beauty.app
 
 /**
  * ================================================
- * 如果你服务器返回的数据格式固定为这种方式(这里只提供思想,服务器返回的数据格式可能不一致,可根据自家服务器返回的格式作更改)
- * 指定范型即可改变 `data` 字段的类型, 达到重用 [GankBaseResponse]
+ * 存放一些与 API 有关的东西,如请求地址,请求码等
  *
  *
- * Created by JessYan on 26/09/2016 15:19
+ * Created by JessYan on 08/05/2016 11:25
  * [Contact me](mailto:jess.yan.effort@gmail.com)
  * [Follow me](https://github.com/JessYanCoding)
  * ================================================
  */
-class GankBaseResponse<T> : Serializable {
-    var error = false
-    var results: T? = null
-        private set
-
-    fun setResults(results: T) {
-        this.results = results
+interface Api {
+    companion object {
+        const val GANK_DOMAIN_NAME = "gank"
+        const val GANK_DOMAIN = "http://gank.io"
     }
 }

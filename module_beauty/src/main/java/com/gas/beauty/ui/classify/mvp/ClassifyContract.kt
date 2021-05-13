@@ -3,7 +3,7 @@ package com.gas.beauty.ui.classify.mvp
 import android.content.Context
 import com.base.lib.mvp.IModel
 import com.base.lib.mvp.IView
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 import io.reactivex.Observable
 
 interface ClassifyContract {
@@ -13,6 +13,6 @@ interface ClassifyContract {
     }
 
     interface Model : IModel {
-        fun getGankItemData(suburl: String): Observable<List<GankItemBean>>
+        fun getGankItemData(suburl: String): Observable<List<BeautyBean>>
     }
 }

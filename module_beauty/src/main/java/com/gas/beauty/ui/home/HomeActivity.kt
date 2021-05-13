@@ -11,6 +11,7 @@ import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.beauty.R
 import com.gas.beauty.ui.article.ArticleFragment.Companion.newInstance
+import com.gas.beauty.ui.beauty.mvvm.BeautyFragment
 import com.gas.beauty.ui.home.di.DaggerHomeComponent
 import com.gas.beauty.ui.home.mvp.HomeContract
 import com.gas.beauty.ui.home.mvp.HomePresenter
@@ -31,7 +32,7 @@ class HomeActivity : BaseActivity<HomePresenter?>(), HomeContract.View {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        val fragment: Fragment = newInstance()
+        val fragment: Fragment = BeautyFragment.newInstance()
         supportFragmentManager.beginTransaction()
                 .replace(R.id.content, fragment)
                 .commitNow()

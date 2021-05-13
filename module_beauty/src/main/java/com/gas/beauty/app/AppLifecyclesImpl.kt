@@ -19,7 +19,6 @@ import android.app.Application
 import android.content.Context
 import com.base.lib.base.delegate.AppLifecyclers
 import com.gas.beauty.BuildConfig
-import com.gas.beauty.http.Api
 import com.lib.commonsdk.kotlin.utils.AppUtils.init
 import me.jessyan.retrofiturlmanager.RetrofitUrlManager
 

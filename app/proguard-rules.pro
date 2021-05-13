@@ -15,16 +15,70 @@
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
    public *;
 }
+-printconfiguration full-r8-config.txt
+#指定代码的压缩级别
+-optimizationpasses 5
+#包明不混合大小写
+-dontusemixedcaseclassnames
+#不去忽略非公共的库类
+-dontskipnonpubliclibraryclasses
+#优化  不优化输入的类文件
+-dontoptimize
+#混淆时是否记录日志
+-verbose
+# 混淆时所采用的算法
+-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*
+#保护注解
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-renamesourcefileattribute SourceFile
+-ignorewarnings
+# 不做预校验
+-dontpreverify
 
--keep public class android.net.http.SslError
--keep public class android.webkit.WebViewClient
+###记录生成的日志数据,gradle build时在本项目根目录输出##
+##apk 包内所有 class 的内部结构
+#-dump proguard/class_files.txt
+##未混淆的类和成员
+#-printseeds proguard/seeds.txt
+##列出从 apk 中删除的代码
+#-printusage proguard/unused.txt
+##混淆前后的映射
+#-printmapping proguard/mapping.txt
+#########记录生成的日志数据，gradle build时 在本项目根目录输出-end######
 
+-dontwarn java.awt.**
+-dontwarn javax.**
+-dontwarn org.apache.commons.**
+-dontwarn org.ietf.**
+-dontwarn com.android.internal.**
+-dontwarn com.taobao.**
+-dontwarn org.apache.http.**
+-dontwarn demo.**
+
+# webView 相关
 -dontwarn android.net.http.SslError
 -dontwarn android.webkit.WebViewClient
+-keep public class android.net.http.SslError
+-keep public class android.webkit.WebViewClient
+#webview 的js接口方法
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
--keepattributes SourceFile,LineNumberTable
+-keep class org.** { *; }
+-keepnames class * implements java.io.Serializable
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    !static !transient <fields>;
+    !private <fields>;
+    !private <methods>;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
 
 -keep public class * {
     public protected <fields>;
@@ -43,43 +97,16 @@
     native <methods>;
 }
 
-## 注解支持
 -keepclassmembers class *{
    void *(android.view.View);
 }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
--renamesourcefileattribute SourceFile
 
-# This is a configuration file for ProGuard.
-# http://proguard.sourceforge.net/index.html#manual/usage.html
--optimizationpasses 5                                                           # 指定代码的压缩级别
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*        # 混淆时所采用的算法
-
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
--verbose
--ignorewarnings
-
-# Optimization is turned off by default. Dex does not like code run
-# through the ProGuard optimize and preverify steps (and performs some
-# of these optimizations on its own).
--dontoptimize
-# 不做预校验
--dontpreverify
-# Note that if you want to enable optimization, you cannot just
-# include optimization flags in your own project configuration file;
-# instead you will need to point to the
-# "proguard-android-optimize.txt" file instead of this one from your
-# project.properties file.
 
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 
--keepattributes Signature
--keepattributes EnclosingMethod
 
 # 保持内部类
 -keepattributes InnerClasses,EnclosingMethod
@@ -152,6 +179,20 @@
 }
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
 
+#kotlin
+-keep class kotlin.** { *; }
+-keep class kotlin.Metadata { *; }
+-dontwarn kotlin.**
+-keepclassmembers class **$WhenMappings {
+    <fields>;
+}
+-keepclassmembers class kotlin.Metadata {
+    public <methods>;
+}
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    static void checkParameterIsNotNull(java.lang.Object, java.lang.String);
+}
+
 #butterknife
 -keep class butterknife.** { *; }
 -dontwarn butterknife.internal.**
@@ -180,6 +221,18 @@
    *** get*();
 }
 
+#保持自定义控件类不被混淆
+-keepclasseswithmembers class * {
+    public <init>(android.content.Context, android.util.AttributeSet);
+}
+
+-keep public class * extends android.view.View {
+    public <init>(android.content.Context);
+    public <init>(android.content.Context, android.util.AttributeSet);
+    public <init>(android.content.Context, android.util.AttributeSet, int);
+    public void set*(...);
+}
+
 # We want to keep methods in Activity that could be used in the XML attribute onClick
 -keepclassmembers class * extends android.app.Activity {
    public void *(android.view.View);
@@ -201,21 +254,26 @@
 -dontwarn android.support.**
 
 # Understand the @Keep support annotation.
--keep class android.support.annotation.Keep
-
--keep @android.support.annotation.Keep class * {*;}
-
+-keep class androidx.annotation.Keep
+-keep @androidx.annotation.Keep class * {*;}
 -keepclasseswithmembers class * {
-    @android.support.annotation.Keep <methods>;
+    @androidx.annotation.Keep <methods>;
+}
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <fields>;
+}
+-keepclasseswithmembers class * {
+    @androidx.annotation.Keep <init>(...);
 }
 
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep <fields>;
-}
-
--keepclasseswithmembers class * {
-    @android.support.annotation.Keep <init>(...);
-}
+# AndroidX
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
 
 #jPUSH
 -dontwarn cn.jpush.**
@@ -232,7 +290,7 @@
 #jsoup
 -keep class org.jsoup.**
 
-#
+
 #基线包使用，生成mapping.txt
 -printmapping mapping.txt
 #生成的mapping.txt在app/buidl/outputs/mapping/release路径下，移动到/app路径下

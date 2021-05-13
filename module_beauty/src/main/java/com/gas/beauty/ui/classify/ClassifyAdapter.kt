@@ -5,13 +5,13 @@ import android.text.TextUtils
 import com.base.paginate.base.SingleAdapter
 import com.base.paginate.viewholder.PageViewHolder
 import com.gas.beauty.R
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 
 /**
  *
  */
-class ClassifyAdapter(context: Context?) : SingleAdapter<GankItemBean>(context) {
-    protected override fun convert(holder: PageViewHolder, data: GankItemBean, position: Int) {
+class ClassifyAdapter(context: Context?) : SingleAdapter<BeautyBean>(context) {
+    protected override fun convert(holder: PageViewHolder, data: BeautyBean, position: Int) {
         holder.setText(R.id.gank_item_desc, data.desc)
         val who = if (TextUtils.isEmpty(data.who)) "佚名" else data.who!!
         holder.setText(R.id.gank_item_who, who)

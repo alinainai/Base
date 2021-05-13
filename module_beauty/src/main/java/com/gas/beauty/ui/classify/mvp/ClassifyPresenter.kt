@@ -5,7 +5,7 @@ import com.base.lib.di.scope.FragmentScope
 import com.base.lib.mvp.BasePresenter
 import com.base.paginate.interfaces.EmptyInterface
 import com.gas.beauty.app.GankConstants
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.BeautyBean
 import com.gas.beauty.ui.classify.ClassifyAdapter
 import com.lib.commonsdk.rx.RxBindManager
 import io.reactivex.Observer
@@ -28,9 +28,9 @@ class ClassifyPresenter @Inject constructor(model: ClassifyModle?, rootView: Cla
             mPage = 1
         }
         RxBindManager.getInstance().doSubscribe(mModel!!.getGankItemData(String.format(Locale.CHINA, "data/%s/" + GankConstants.NUMBER_OF_PAGE + "/%d", suburl, mPage)),
-                object : Observer<List<GankItemBean>> {
+                object : Observer<List<BeautyBean>> {
                     override fun onSubscribe(d: Disposable) {}
-                    override fun onNext(result: List<GankItemBean>) {
+                    override fun onNext(result: List<BeautyBean>) {
                         mView!!.loadEnd()
                         if (null != result && result.size > 0) {
                             if (mPage == 1) {

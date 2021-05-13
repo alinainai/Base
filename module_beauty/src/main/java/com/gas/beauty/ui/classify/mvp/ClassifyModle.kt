@@ -5,13 +5,11 @@ import androidx.lifecycle.OnLifecycleEvent
 import com.base.lib.di.scope.FragmentScope
 import com.base.lib.integration.repository.IRepositoryManager
 import com.base.lib.mvp.BaseModel
-import com.gas.beauty.bean.GankBaseResponse
-import com.gas.beauty.bean.GankItemBean
+import com.gas.beauty.bean.GankResponse
+import com.gas.beauty.bean.BeautyBean
 import com.gas.beauty.http.CommonCache
 import com.gas.beauty.http.GankService
 import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.functions.Function
 import io.rx_cache2.DynamicKey
 import io.rx_cache2.EvictDynamicKey
 import io.rx_cache2.Reply
@@ -20,14 +18,14 @@ import javax.inject.Inject
 
 @FragmentScope
 class ClassifyModle @Inject constructor(repositoryManager: IRepositoryManager?) : BaseModel(repositoryManager), ClassifyContract.Model {
-    override fun getGankItemData(suburl: String): Observable<List<GankItemBean>> {
+    override fun getGankItemData(suburl: String): Observable<List<BeautyBean>> {
         return Observable.just(mRepositoryManager.obtainRetrofitService(GankService::class.java)
                 .getGankItemData(suburl)
-                .map<List<GankItemBean>>(GankBaseResponse<List<GankItemBean>>::results))
-                .flatMap { httpResultObservable: Observable<List<GankItemBean>> ->
+                .map<List<BeautyBean>>(GankResponse<List<BeautyBean>>::results))
+                .flatMap { httpResultObservable: Observable<List<BeautyBean>> ->
                     mRepositoryManager.obtainCacheService(CommonCache::class.java)
                             .getGankItemData(httpResultObservable, DynamicKey(suburl), EvictDynamicKey(true))
-                            .map { obj: Reply<List<GankItemBean>> -> obj.data }
+                            .map { obj: Reply<List<BeautyBean>> -> obj.data }
                 }
     }
 

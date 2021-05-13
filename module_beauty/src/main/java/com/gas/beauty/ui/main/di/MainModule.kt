@@ -38,7 +38,7 @@ import dagger.Provides
 @Module
 abstract class MainModule {
     @Binds
-    abstract fun bindGankModel(model: MainModel?): MainContract.Model?
+    abstract fun bindGankModel(model: MainModel): MainContract.Model
 
     companion object {
         @JvmStatic
