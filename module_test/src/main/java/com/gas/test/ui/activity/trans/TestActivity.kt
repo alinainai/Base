@@ -1,5 +1,6 @@
 package com.gas.test.ui.activity.trans
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -9,6 +10,7 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.learn.lesson001_lifecycle.FirstActivity
+import com.gas.test.ui.activity.dialog.BottomSheetDialogFragment
 import com.gas.test.utils.RegionBusiness
 import com.gas.test.utils.fragment.customview.CustomViewFragment
 import com.lib.commonsdk.constants.RouterHub
@@ -70,6 +72,16 @@ class TestActivity : BaseActivity<IPresenter>() {
         btnPlugin3.setOnClickListener {
 
         }
+    }
+
+    private fun showBatteryOptimizeTimeDialog(ctx: Context, selectKey: String, action: (item: BottomSheetDialogFragment.DefaultItemSelect) -> Unit) {
+        val items = mutableListOf(
+                BottomSheetDialogFragment.DefaultItemSelect("10$", "10"),
+                BottomSheetDialogFragment.DefaultItemSelect("15$111", "15"),
+                BottomSheetDialogFragment.DefaultItemSelect("20$111", "20"),
+                BottomSheetDialogFragment.DefaultItemSelect("30$111", "30"),
+                BottomSheetDialogFragment.DefaultItemSelect("60$111", "60")
+        )
     }
 
     fun list2Map() {

@@ -1,4 +1,10 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+kapt {
+    generateStubs = true
+}
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -95,14 +101,14 @@ dependencies {
     //==================================================tool============================================
     //dagger
     api rootProject.ext.dependencies["dagger2"]
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+    kapt rootProject.ext.dependencies["dagger2-compiler"]
 
     api rootProject.ext.dependencies["gson"]
     //glide图片加载
     api (rootProject.ext.dependencies["glide"]){
         exclude module: 'annotations'
     }
-    annotationProcessor rootProject.ext.dependencies["glide-compiler"]
+    kapt rootProject.ext.dependencies["glide-compiler"]
     api rootProject.ext.dependencies["glide-loader-okhttp3"]
     //test
     api rootProject.ext.dependencies["timber"]

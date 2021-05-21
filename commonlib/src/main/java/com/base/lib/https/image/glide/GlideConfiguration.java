@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import com.base.lib.di.component.AppComponent;
 import com.base.lib.https.OkHttpUrlLoader;
 import com.base.lib.https.image.BaseImageLoaderStrategy;
+import com.base.lib.https.image.aes.AESModelLoader;
+import com.base.lib.https.image.aes.ImgBean;
 import com.base.lib.util.ArmsUtils;
 import com.base.lib.util.DataHelper;
 import com.bumptech.glide.Glide;
@@ -87,6 +89,7 @@ public class GlideConfiguration extends AppGlideModule {
     public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
         //Glide 默认使用 HttpURLConnection 做网络请求,在这切换成 Okhttp 请求
         AppComponent appComponent = ArmsUtils.obtainAppComponentFromContext(context);
+        registry.prepend(ImgBean.class, InputStream.class, new AESModelLoader.Factory(appComponent.okHttpClient()));
         registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(appComponent.okHttpClient()));
 
         BaseImageLoaderStrategy loadImgStrategy = appComponent.imageLoader().getLoadImgStrategy();

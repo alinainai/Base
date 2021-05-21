@@ -14,7 +14,7 @@ ext {
             constraintVersion              : '1.1.3',
             retrofitSdkVersion             : '2.9.0',
             dagger2SdkVersion              : '2.29.1',
-            glideSdkVersion                : '4.11.0',
+            glideSdkVersion                : '4.12.0',
             butterknifeSdkVersion          : '10.2.3',
 
             rxlifecycleSdkVersion          : '1.0',
