@@ -1,0 +1,14 @@
+<resources>
+    <string name="main_app_name">Gas组件化</string>
+    <string name="app_str_home_title">首页</string>
+    <string name="app_str_product_title">产品</string>
+    <string name="app_str_info_title">信息</string>
+    <string name="app_str_account_title">我的</string>
+    <string name="app_str_skip_with_time">跳过 %s</string>
+    <string name="app_current_version">当前版本v%s</string>
+
+
+</resources>
+
+
+

@@ -1,49 +1,11 @@
 <resources>
-    <string name="main_app_name">Gas组件化</string>
-    <string name="app_str_home_title">首页</string>
-    <string name="app_str_product_title">产品</string>
-    <string name="app_str_info_title">信息</string>
-    <string name="app_str_account_title">账户</string>
-    <string name="app_str_skip_with_time">跳过 %s</string>
-    <string name="title_activity_login">Sign in</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-
-    <string name="smart_home_camera_month_name_1">1月</string>
-    <string name="smart_home_camera_month_name_2">2月</string>
-    <string name="smart_home_camera_month_name_3">3月</string>
-    <string name="smart_home_camera_month_name_4">4月</string>
-    <string name="smart_home_camera_month_name_5">5月</string>
-    <string name="smart_home_camera_month_name_6">6月</string>
-    <string name="smart_home_camera_month_name_7">7月</string>
-    <string name="smart_home_camera_month_name_8">8月</string>
-    <string name="smart_home_camera_month_name_9">9月</string>
-    <string name="smart_home_camera_month_name_10">10月</string>
-    <string name="smart_home_camera_month_name_11">11月</string>
-    <string name="smart_home_camera_month_name_12">12月</string>
-
-    <string name="smart_home_camera_week_day_name_1">一</string>
-    <string name="smart_home_camera_week_day_name_2">二</string>
-    <string name="smart_home_camera_week_day_name_3">三</string>
-    <string name="smart_home_camera_week_day_name_4">四</string>
-    <string name="smart_home_camera_week_day_name_5">五</string>
-    <string name="smart_home_camera_week_day_name_6">六</string>
-    <string name="smart_home_camera_week_day_name_7">日</string>
-
-
-    <string name="common_cancel">取消</string>
-
-    <string name="previous">Go to previous</string>
-    <string name="next">Go to next</string>
-    <string name="calendar">Calendar</string>
-
-    <string name="little_cloud_data_size"><![CDATA[已使用%s / 剩余<font color="#FF0000">%s</font>可用]]></string>
+    <string name="main_app_name">Gas Module</string>
+    <string name="app_str_home_title">Home</string>
+    <string name="app_str_product_title">Product</string>
+    <string name="app_str_info_title">Message</string>
+    <string name="app_str_account_title">Me</string>
+    <string name="app_str_skip_with_time">skip %s</string>
+    <string name="app_current_version">version:%s</string>
 
 
 </resources>

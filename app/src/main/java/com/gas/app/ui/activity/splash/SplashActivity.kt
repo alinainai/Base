@@ -75,11 +75,11 @@ class SplashActivity : BaseActivity<SplashPresenter>(), SplashContract.View, Vie
     }
 
     override fun tvTimeDown(time: Long) {
-        tvSkip.text = String.format(Locale.CHINA, "跳过 %d", time)
+        tvSkip.text =getString(R.string.app_str_skip_with_time,time.toString())
     }
 
     override fun versionCode(code: String?) {
-        tv_version.text = String.format("当前版本 v%s", code)
+        tv_version.text = getString(R.string.app_current_version,code?:"")
     }
 
     override fun onDestroy() {

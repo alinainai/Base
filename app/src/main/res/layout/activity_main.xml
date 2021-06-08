@@ -62,7 +62,7 @@
         <TextView
             android:id="@+id/mainBtn2"
             style="@style/app_main_bottom_btn"
-            android:text="@string/app_str_product_title"
+            android:text= "@string/app_str_product_title"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/mainBtn3"
             app:layout_constraintStart_toEndOf="@+id/mainBtn1" />

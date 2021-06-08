@@ -65,12 +65,7 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
             }
         }
         view?.findViewById<View>(R.id.btnMine3)?.setOnClickListener {
-            val str1 = getString(R.string.little_cloud_data_size, AppModuleUtil.formatMemorySizeB(53687091200), AppModuleUtil.formatMemorySizeB(12345678))
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                textV?.text = Html.fromHtml(str1, Html.FROM_HTML_MODE_LEGACY);
-            } else {
-                textV?.text = Html.fromHtml(str1);
-            }
+
         }
         view?.findViewById<View>(R.id.btnMine4)?.setOnClickListener {
             initEventTitle()
