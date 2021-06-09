@@ -128,7 +128,7 @@
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/showCode" />
-        <ImageView
+        <com.gas.app.view.RecyclerBitmapErrorCatchImageView
             app:layout_constraintTop_toBottomOf="@+id/llContent"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/tintTest"

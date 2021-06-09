@@ -22,7 +22,7 @@ ext {
             canarySdkVersion               : '2.5',
             constraintLayoutVersion        : '2.0.2',
             appcompatVersion               : '1.2.0',
-            annotationsVersion               : '1.1.0',
+            annotationsVersion             : '1.1.0',
             cardviewVersion                : '1.0.0',
             paletteVersion                 : '1.1.0',
             materialVersion                : '1.2.1',
@@ -51,6 +51,8 @@ ext {
             greenDaoVersion                : '3.2.2',
             ankoVersion                    : '0.10.8',
             roomVersion                    : '2.2.5',
+            composeVersion                 : '1.0.0-beta07',
+            coroutinesVersion              : 'xxx',
 
 
     ]
@@ -58,7 +60,7 @@ ext {
     dependencies = [
 
             //kotlin
-            "kotlin-stdlib"        : "org.jetbrains.kotlin:kotlin-stdlib:${version["kotlinVersion"]}",
+            "kotlin-stdlib"             : "org.jetbrains.kotlin:kotlin-stdlib:${version["kotlinVersion"]}",
             "core-ktx"                  : "androidx.core:core-ktx:${version["coreKtxVersion"]}",
 
             //support
@@ -124,7 +126,7 @@ ext {
             "zxing"                     : "com.google.zxing:core:3.4.1",
 
             //date
-            "threetenabp"                     : "com.jakewharton.threetenabp:threetenabp:1.2.4",
+            "threetenabp"               : "com.jakewharton.threetenabp:threetenabp:1.2.4",
 
             //test
             "junit"                     : "junit:junit:${version["junitVersion"]}",

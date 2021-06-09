@@ -1,13 +1,12 @@
 package com.gas.app.ui.fragment.mine
 
-import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Process
-import android.text.Html
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
@@ -26,14 +25,9 @@ import com.gas.app.R
 import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
-import com.gas.app.utils.AppModuleUtil
-import com.gas.app.utils.getProcessName
 import com.lib.commonsdk.extension.app.debug
 import com.lib.commonsdk.kotlin.utils.fromJson
 import kotlinx.android.synthetic.main.fragment_mine.*
-import java.lang.StringBuilder
-import java.time.OffsetDateTime
-import java.time.ZoneOffset
 import java.util.*
 import kotlin.math.absoluteValue
 
@@ -56,16 +50,27 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
         tintTest = view?.findViewById(R.id.tintTest)
 
+        var icon: Bitmap? = null
+
         view?.findViewById<View>(R.id.btnMine1)?.setOnClickListener {
-            debug(getProcessName(requireActivity().application, Process.myPid()))
-        }
-        view?.findViewById<View>(R.id.btnMine2)?.setOnClickListener {
-            showBatteryOptimizeTimeDialog(context as Activity, "10") { item ->
-                debug(item.key)
+//            debug(getProcessName(requireActivity().application, Process.myPid()))
+            icon = BitmapFactory.decodeResource(
+            requireContext().resources,
+            R.mipmap.baseui_adapter_data_empty)
+            icon?.let {
+                tintTest?.setImageBitmap(icon)
             }
         }
+        view?.findViewById<View>(R.id.btnMine2)?.setOnClickListener {
+//            showBatteryOptimizeTimeDialog(context as Activity, "10") { item ->
+//                debug(item.key)
+//            }
+            icon?.recycle()
+        }
         view?.findViewById<View>(R.id.btnMine3)?.setOnClickListener {
-
+            icon?.let {
+                tintTest?.setImageBitmap(icon)
+            }
         }
         view?.findViewById<View>(R.id.btnMine4)?.setOnClickListener {
             initEventTitle()
