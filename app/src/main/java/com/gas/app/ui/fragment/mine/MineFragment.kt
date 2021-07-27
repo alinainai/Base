@@ -19,9 +19,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.base.baseui.dialog.ItemSelectDialog
+import com.base.baseui.ui.base.FragmentContainerActivity
 import com.base.lib.base.LazyLoadFragment
 import com.base.lib.di.component.AppComponent
 import com.gas.app.R
+import com.gas.app.test.fragment.waitnotifytest.TaskFragment
 import com.gas.app.ui.fragment.mine.di.DaggerMineComponent
 import com.gas.app.ui.fragment.mine.mvp.MineContract
 import com.gas.app.ui.fragment.mine.mvp.MinePresenter
@@ -82,6 +84,9 @@ class MineFragment : LazyLoadFragment<MinePresenter>(), MineContract.View {
 
 //            val a: String? = null
 //            debug("test", "test =${"1" == a}")
+        }
+        view?.findViewById<View>(R.id.btnMine8)?.setOnClickListener {
+            FragmentContainerActivity.startActivity(requireActivity(), TaskFragment::class.java)
         }
         view?.findViewById<View>(R.id.btnMine6)?.setOnClickListener {
             val testModel = fromJson<TestModel>(jsonStr2, TestModel::class.java)

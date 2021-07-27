@@ -81,8 +81,8 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
             navigation(activity, RouterHub.TEST_HOMEACTIVITY)
         }
         btnPlugin1.setOnClickListener {
-//            startActivity(Intent(context, TurnToFlutterActivity::class.java))
-            startActivity(Intent(context, MainActivity::class.java))
+            startActivity(Intent(context, TurnToFlutterActivity::class.java))
+//            startActivity(Intent(context, MainActivity::class.java))
         }
         btnPlugin2.setOnClickListener {
             loopSequence()
