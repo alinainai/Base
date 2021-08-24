@@ -23,7 +23,6 @@ import com.gas.test.utils.view.animlinechart.bean.LineInChart
 import com.gas.test.utils.view.animlinechart.bean.XLabel
 import com.gas.test.utils.view.animlinechart.callback.OnLabelClickListener
 import com.lib.commonsdk.extension.app.debug
-import org.jetbrains.anko.collections.forEachWithIndex
 import kotlin.math.abs
 import kotlin.math.sin
 
@@ -446,7 +445,7 @@ class AnimLineChartView @JvmOverloads constructor(context: Context, attrs: Attri
             points.clear()
             val lineColor = line.lineColor
             val circlePoints = mutableListOf<DataPoint>()
-            xLabels.forEachWithIndex { index, label ->
+            xLabels.forEachIndexed { index, label ->
                 val currentX = availableLeft + index * peerWidth
                 val keyPoint = line.circlePoints.firstOrNull { point ->
                     point.key == label.key

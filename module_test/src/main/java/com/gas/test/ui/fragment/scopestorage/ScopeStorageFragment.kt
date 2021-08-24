@@ -3,6 +3,7 @@ package com.gas.test.ui.fragment.scopestorage
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -24,7 +25,6 @@ import com.base.lib.mvp.IPresenter
 import com.gas.test.R
 import com.gas.test.ui.activity.album.BrowseAlbumActivity
 import kotlinx.android.synthetic.main.fragment_storage_scope.*
-import org.jetbrains.anko.runOnUiThread
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
@@ -51,15 +51,15 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
     override fun initData(savedInstanceState: Bundle?) {
 
         val permissionsToRequire = ArrayList<String>()
-        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionsToRequire.add(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             permissionsToRequire.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-        ActivityCompat.requestPermissions(activity!!, permissionsToRequire.toTypedArray(), 0)
+        ActivityCompat.requestPermissions(requireActivity(), permissionsToRequire.toTypedArray(), 0)
         browseAlbum.setOnClickListener {
-            val intent = Intent(activity!!, BrowseAlbumActivity::class.java)
+            val intent = Intent(requireActivity(), BrowseAlbumActivity::class.java)
             startActivity(intent)
         }
         addImageToAlbum.setOnClickListener {
@@ -89,7 +89,7 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
         if (requestCode == 0) {
             for (result in grantResults) {
                 if (result != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(context!!, "You must allow all the permissions.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "You must allow all the permissions.", Toast.LENGTH_SHORT).show()
                     activity?.finish()
                 }
             }
@@ -105,20 +105,20 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
         } else {
             values.put(MediaStore.MediaColumns.DATA, "${Environment.getExternalStorageDirectory().path}/${Environment.DIRECTORY_DCIM}/$displayName")
         }
-        val uri = context!!.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        val uri = requireContext().contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
         if (uri != null) {
-            val outputStream = context!!.contentResolver.openOutputStream(uri)
+            val outputStream = requireContext().contentResolver.openOutputStream(uri)
             if (outputStream != null) {
                 bitmap.compress(compressFormat, 100, outputStream)
                 outputStream.close()
-                Toast.makeText(context!!, "Add bitmap to album succeeded.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Add bitmap to album succeeded.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun downloadFile(fileUrl: String, fileName: String) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            Toast.makeText(context!!, "You must use device running Android 10 or higher", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "You must use device running Android 10 or higher", Toast.LENGTH_SHORT).show()
             return
         }
         thread {
@@ -133,9 +133,9 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
                 val values = ContentValues()
                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
-                val uri = context!!.contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
+                val uri = requireContext().contentResolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values)
                 if (uri != null) {
-                    val outputStream = context!!.contentResolver.openOutputStream(uri)
+                    val outputStream = requireContext().contentResolver.openOutputStream(uri)
                     if (outputStream != null) {
                         val bos = BufferedOutputStream(outputStream)
                         val buffer = ByteArray(1024)
@@ -146,8 +146,9 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
                             bytes = bis.read(buffer)
                         }
                         bos.close()
-                        context!!.runOnUiThread {
-                            Toast.makeText(this, "$fileName is in Download directory now.", Toast.LENGTH_SHORT).show()
+
+                        requireActivity().runOnUiThread {
+                            Toast.makeText(requireActivity(), "$fileName is in Download directory now.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -182,7 +183,7 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
 
     private fun getFileNameByUri(uri: Uri): String {
         var fileName = System.currentTimeMillis().toString()
-        val cursor = context!!.contentResolver.query(uri, null, null, null, null)
+        val cursor = requireContext().contentResolver.query(uri, null, null, null, null)
         if (cursor != null && cursor.count > 0) {
             cursor.moveToFirst()
             fileName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME))
@@ -193,8 +194,8 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
 
     private fun copyUriToExternalFilesDir(uri: Uri, fileName: String) {
         thread {
-            val inputStream = context!!.contentResolver.openInputStream(uri)
-            val tempDir = context!!.getExternalFilesDir("temp")
+            val inputStream = requireContext().contentResolver.openInputStream(uri)
+            val tempDir = requireContext().getExternalFilesDir("temp")
             if (inputStream != null && tempDir != null) {
                 val file = File("$tempDir/$fileName")
                 val fos = FileOutputStream(file)
@@ -209,8 +210,8 @@ class ScopeStorageFragment : BaseFragment<IPresenter>() {
                 }
                 bos.close()
                 fos.close()
-                context!!.runOnUiThread {
-                    Toast.makeText(this, "Copy file into $tempDir succeeded.", Toast.LENGTH_LONG).show()
+                requireActivity().runOnUiThread {
+                    Toast.makeText(requireActivity(), "Copy file into $tempDir succeeded.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

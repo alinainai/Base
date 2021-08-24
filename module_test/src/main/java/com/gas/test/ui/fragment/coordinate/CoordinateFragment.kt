@@ -15,23 +15,11 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.base.lib.base.BaseFragment
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
-import com.gas.test.ui.activity.album.BrowseAlbumActivity
-import kotlinx.android.synthetic.main.fragment_storage_scope.*
-import org.jetbrains.anko.runOnUiThread
-import java.io.BufferedInputStream
-import java.io.BufferedOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.net.HttpURLConnection
-import java.net.URL
-import kotlin.concurrent.thread
+
 
 class CoordinateFragment : BaseFragment<IPresenter>() {
 

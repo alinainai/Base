@@ -125,11 +125,23 @@ android {
 
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.1'
+        kotlinCompilerVersion "$kotlin_version"
     }
 
     dataBinding {
         enabled = true
     }
+
+
 
 }
 
@@ -161,6 +173,5 @@ dependencies {
     }
     implementation rootProject.ext.dependencies["threetenabp"]
     implementation project(':flutterplugin')
-
 
 }

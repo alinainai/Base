@@ -4,7 +4,6 @@ import android.os.Bundle
 import io.flutter.app.FlutterActivity
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.view.FlutterMain
-import org.jetbrains.anko.startActivity
 
 /**
  * 描述:这个页面包含FlutterView,然后点击FlutterView中的按钮跳转到另一个Activity,
@@ -37,7 +36,6 @@ class JumpActivityFlutterWidget : FlutterActivity() {
         )
         methodChannel.setMethodCallHandler { methodCall, result ->
             if (methodCall.method == "jumpTestActivity") {
-                startActivity<TestActivity>()
             }
         }
     }

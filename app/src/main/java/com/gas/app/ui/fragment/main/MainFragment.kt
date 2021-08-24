@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.launcher.ARouter
+import com.base.baseui.ui.base.FragmentContainerActivity
 import com.base.componentservice.gank.service.GankInfoService
 import com.base.componentservice.test.service.TestInfoService
 import com.base.componentservice.zhihu.service.ZhihuInfoService
@@ -16,9 +17,12 @@ import com.base.lib.di.component.AppComponent
 import com.base.lib.util.ArmsUtils
 import com.base.lib.util.Preconditions
 import com.gas.app.R
+import com.gas.app.test.fragment.composeLearn.ComposeLearnFragment
+import com.gas.app.test.fragment.waitnotifytest.TaskFragment
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
+import com.gas.app.utils.TimeUtils
 import com.gas.flutterplugin.idlefish.MainActivity
 import com.gas.flutterplugin.learn.TurnToFlutterActivity
 import com.lib.commonsdk.constants.RouterHub
@@ -85,13 +89,16 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
 //            startActivity(Intent(context, MainActivity::class.java))
         }
         btnPlugin2.setOnClickListener {
-            loopSequence()
-            debug("start")
+//            btnPlugin3.text = TimeUtils.timeStampToDuration(86400000L+3600000L*5+3*60000L)
+
+//            loopSequence()
+//            debug("start")
         }
         btnPlugin3.setOnClickListener {
-            compositeDisposable.clear()
-            debug("stop")
+//            compositeDisposable.clear()
+//            debug("stop")
 //            System.gc()
+            FragmentContainerActivity.startActivity(requireActivity(), ComposeLearnFragment::class.java)
         }
     }
 
