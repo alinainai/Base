@@ -9,7 +9,8 @@ import com.base.lib.base.BaseActivity
 import com.base.lib.di.component.AppComponent
 import com.base.lib.mvp.IPresenter
 import com.gas.test.R
-import com.gas.test.learn.lesson001_lifecycle.FirstActivity
+import com.gas.test.learn.lesson001_lifecycle.MainActivity
+import com.gas.test.learn.lesson002_lauchmode.AStandardActivity
 import com.gas.test.ui.activity.dialog.BottomSheetDialogFragment
 import com.gas.test.utils.RegionBusiness
 import com.gas.test.utils.fragment.customview.CustomViewFragment
@@ -52,7 +53,7 @@ class TestActivity : BaseActivity<IPresenter>() {
 //            vm.account = "111"
 //            vm.pwd = "123"
 //            vm.doLogin()
-            startActivity(Intent(this, FirstActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
         btnModule2.setOnClickListener {
             debug("btnModule2")
@@ -70,7 +71,7 @@ class TestActivity : BaseActivity<IPresenter>() {
 
         }
         btnPlugin3.setOnClickListener {
-
+            startActivity(Intent(this, AStandardActivity::class.java))
         }
     }
 

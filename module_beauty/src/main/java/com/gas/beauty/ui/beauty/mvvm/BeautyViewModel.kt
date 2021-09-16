@@ -1,25 +1,28 @@
 package com.gas.beauty.ui.beauty.mvvm
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.gas.beauty.bean.BeautyBean
 import com.lib.commonsdk.mvvm.BaseViewModel
 import kotlinx.coroutines.launch
 
-class BeautyViewModel :BaseViewModel(){
+class BeautyViewModel : BaseViewModel() {
 
     private val beautyModel = BeautyDataBiz()
-    val beautiesLiveData = MutableLiveData<List<BeautyBean>>()
+    private val _beautiesLiveData = MutableLiveData<List<BeautyBean>>()
+    val beautiesLiveData: LiveData<List<BeautyBean>>
+        get() = _beautiesLiveData
 
-    fun getBeauties(){
+    fun getBeauties() {
         viewModelScope.launch {
             val list = try {
                 beautyModel.getBeauties()
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 null
             }
-            if(list!=null && list.error){
-                beautiesLiveData.postValue(list.results)
+            if (list != null && !list.error && list.results != null) {
+                _beautiesLiveData.postValue(list.results!!)
             }
         }
 

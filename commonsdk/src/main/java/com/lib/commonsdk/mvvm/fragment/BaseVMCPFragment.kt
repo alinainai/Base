@@ -13,6 +13,7 @@ import com.base.lib.mvp.IPresenter
 import com.lib.commonsdk.mvvm.BaseViewModel
 import com.lib.commonsdk.mvvm.getVmClazz
 
+//ViewModel 结合 Compose
 abstract class BaseVMCPFragment<VM : BaseViewModel> : BaseVMFragment<VM>() {
 
     //fake

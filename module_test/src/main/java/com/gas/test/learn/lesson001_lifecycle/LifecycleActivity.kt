@@ -7,49 +7,48 @@ import android.view.View
 import com.gas.test.R
 import com.lib.commonsdk.extension.app.debug
 
-class FirstActivity : AppCompatActivity() {
+open class LifecycleActivity : AppCompatActivity() {
 
+
+   private val tag = this.javaClass.simpleName
+    
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        debug("lifecycle","${tag}_onCreate")
+    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        debug("lifecycle","FirstActivity_onNewIntent")
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_first_lifecycle)
-        findViewById<View>(R.id.button6).setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
-        }
+        debug("lifecycle","${tag}_onNewIntent")
     }
     override fun onRestart() {
         super.onRestart()
-        debug("lifecycle","FirstActivity_onRestart")
+        debug("lifecycle","${tag}_onRestart")
     }
 
     override fun onStart() {
         super.onStart()
-        debug("lifecycle","FirstActivity_onStart")
+        debug("lifecycle","${tag}_onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        debug("lifecycle","FirstActivity_onResume")
+        debug("lifecycle","${tag}_onResume")
     }
 
 
     override fun onPause() {
         super.onPause()
-        debug("lifecycle","FirstActivity_onPause")
+        debug("lifecycle","${tag}_onPause")
     }
 
     override fun onStop() {
-        debug("lifecycle","FirstActivity_onStop")
+        debug("lifecycle","${tag}_onStop")
         super.onStop()
     }
 
     override fun onDestroy() {
-        debug("lifecycle","FirstActivity_onDestroy")
+        debug("lifecycle","${tag}_onDestroy")
         super.onDestroy()
     }
 }

@@ -49,30 +49,30 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
         if (StatusBarManager.setStatusBarLightMode(activity)) {
             StatusBarManager.setStatusBarColor(activity, Color.parseColor("#FFFFFF"))
         }
-        Timber.i("$activity - onActivityCreated")
+//        Timber.i("$activity - onActivityCreated")
     }
 
     override fun onActivityStarted(activity: Activity) {
-        Timber.i("$activity - onActivityStarted")
+//        Timber.i("$activity - onActivityStarted")
     }
 
     override fun onActivityResumed(activity: Activity) {
-        Timber.i("$activity - onActivityResumed")
+//        Timber.i("$activity - onActivityResumed")
     }
 
     override fun onActivityPaused(activity: Activity) {
-        Timber.i("$activity - onActivityPaused")
+//        Timber.i("$activity - onActivityPaused")
     }
 
     override fun onActivityStopped(activity: Activity) {
-        Timber.i("$activity - onActivityStopped")
+//        Timber.i("$activity - onActivityStopped")
     }
 
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        Timber.i("$activity - onActivitySaveInstanceState")
+//        Timber.i("$activity - onActivitySaveInstanceState")
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        Timber.i("$activity - onActivityDestroyed")
+//        Timber.i("$activity - onActivityDestroyed")
     }
 }

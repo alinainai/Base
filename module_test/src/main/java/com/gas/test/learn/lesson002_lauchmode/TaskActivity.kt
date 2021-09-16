@@ -8,19 +8,18 @@ import android.widget.TextView
 import com.gas.test.R
 import com.lib.commonsdk.extension.app.debug
 
-class AStandardActivity : AppCompatActivity() {
+class TaskActivity : AppCompatActivity() {
 
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        debug("lauchmode","AStandardActivity_onNewIntent")
+        debug("lauchmode","TaskActivity_onNewIntent")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lauchmode_standard)
-
-        findViewById<TextView>(R.id.textView2).text="标准启动模式"
+        findViewById<TextView>(R.id.textView2).text="SingleTask启动模式"
         findViewById<View>(R.id.button1).setOnClickListener {
             startActivity(Intent(this,AStandardActivity::class.java))
         }
@@ -33,32 +32,32 @@ class AStandardActivity : AppCompatActivity() {
     }
     override fun onRestart() {
         super.onRestart()
-        debug("lauchmode","AStandardActivity_onRestart")
+        debug("lauchmode","TaskActivity_onRestart")
     }
 
     override fun onStart() {
         super.onStart()
-        debug("lauchmode","AStandardActivity_onStart")
+        debug("lauchmode","TaskActivity_onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        debug("lauchmode","AStandardActivity_onResume")
+        debug("lauchmode","TaskActivity_onResume")
     }
 
 
     override fun onPause() {
         super.onPause()
-        debug("lauchmode","AStandardActivity_onPause")
+        debug("lauchmode","TaskActivity_onPause")
     }
 
     override fun onStop() {
-        debug("lauchmode","AStandardActivity_onStop")
+        debug("lauchmode","TaskActivity_onStop")
         super.onStop()
     }
 
     override fun onDestroy() {
-        debug("lauchmode","AStandardActivity_onDestroy")
+        debug("lauchmode","TaskActivity_onDestroy")
         super.onDestroy()
     }
 }

@@ -1,6 +1,7 @@
 package com.gas.app.ui.activity.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -99,11 +100,7 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
     public void initData(@Nullable Bundle savedInstanceState) {
 
         mContext = this;
-
-
-
         initTitleView();
-
         url = getIntent().getStringExtra(PUBLIC_URL);//地址
         mTitle = getIntent().getStringExtra(PUBLIC_TITLE);//标题
 
@@ -178,4 +175,12 @@ public class WebViewActivity extends BaseActivity<WebViewPresenter> implements W
     public void showMessage(@NonNull String message) {
 
     }
+
+    public static void startActivity(Context ctx,String url,String title){
+        Intent intent = new Intent(ctx,WebViewActivity.class);
+        intent.putExtra(PUBLIC_URL,url);
+        intent.putExtra(PUBLIC_TITLE,title);
+        ctx.startActivity(intent);
+    }
+
 }

@@ -19,6 +19,7 @@ import com.base.lib.util.Preconditions
 import com.gas.app.R
 import com.gas.app.test.fragment.composeLearn.ComposeLearnFragment
 import com.gas.app.test.fragment.waitnotifytest.TaskFragment
+import com.gas.app.ui.activity.utils.WebViewActivity
 import com.gas.app.ui.fragment.main.di.DaggerMainComponent
 import com.gas.app.ui.fragment.main.mvp.MainContract
 import com.gas.app.ui.fragment.main.mvp.MainPresenter
@@ -76,7 +77,9 @@ class MainFragment : BaseFragment<MainPresenter?>(), MainContract.View {
         loadModuleInfo()
 
         btnModule1.setOnClickListener {
-            navigation(activity, RouterHub.ZHIHU_HOMEACTIVITY)
+//            navigation(activity, RouterHub.ZHIHU_HOMEACTIVITY)
+
+            WebViewActivity.startActivity(activity,"https://www.4husp225.com","秘密基地")
         }
         btnModule2.setOnClickListener {
             navigation(activity, RouterHub.GANK_MAINACTIVITY)

@@ -34,6 +34,10 @@
         </activity>
 
         <activity
+            android:name=".learn.lesson001_lifecycle.TransActivity"
+            android:theme="@style/transparent_activity_style" />
+
+        <activity
             android:name=".ui.activity.trans.TestActivity"
             android:screenOrientation="portrait" />
 
@@ -46,12 +50,20 @@
             android:name=".learn.lesson001_lifecycle.SecondActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".learn.lesson001_lifecycle.FirstActivity"
+            android:name=".learn.lesson001_lifecycle.MainActivity"
             android:screenOrientation="portrait" />
         <!--activity跳转的 启动模式 测试 -->
         <activity
             android:name=".learn.lesson002_lauchmode.AStandardActivity"
             android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".learn.lesson002_lauchmode.TopActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".learn.lesson002_lauchmode.TaskActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
 
